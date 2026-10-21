@@ -198,24 +198,26 @@
   {
    "src": "https://upload.wikimedia.org/wikipedia/commons/b/b3/The_Philosophers_Walk_is_about_2km_long_and_runs_along_a_canal.jpg",
    "kind": "wikimedia",
-   "w": 6016,
-   "h": 4016,
+   "w": 1920,
+   "h": 1282,
    "page": "https://commons.wikimedia.org/w/index.php?curid=82633735",
    "title": "The Philosophers Walk is about 2km long and runs along a canal",
    "author": "shankar s.",
-   "license": "CC BY 2.0"
+   "license": "CC BY 2.0",
+   "file": "hanami-at-dawn-0"
   }
  ],
  "onigiri-ranking": [
   {
    "src": "https://upload.wikimedia.org/wikipedia/commons/4/45/Onigiri_002.jpg",
    "kind": "wikimedia",
-   "w": 2818,
-   "h": 2114,
+   "w": 1920,
+   "h": 1440,
    "page": "https://commons.wikimedia.org/w/index.php?curid=110007929",
    "title": "Onigiri 002",
    "author": "Ocdp",
-   "license": "CC0 1.0"
+   "license": "CC0 1.0",
+   "file": "onigiri-ranking-0"
   }
  ],
  "dunes-by-camel": [
@@ -234,36 +236,39 @@
   {
    "src": "https://upload.wikimedia.org/wikipedia/commons/6/6e/TAGINE_COOKED_CHICKEN_AND_VEGETABLES_WITH_MINT_TEA_IN_JEMAA_EL_FNA_SQUARE_MARRAKECH_MOROCCO_APRIL_2013_%288704488002%29.jpg",
    "kind": "wikimedia",
-   "w": 4837,
-   "h": 2719,
+   "w": 1920,
+   "h": 1079,
    "page": "https://commons.wikimedia.org/w/index.php?curid=26359715",
    "title": "TAGINE COOKED CHICKEN AND VEGETABLES WITH MINT TEA IN JEMAA EL FNA SQUARE MARRAKECH MOROCC",
    "author": "calflier001",
-   "license": "CC BY-SA 2.0"
+   "license": "CC BY-SA 2.0",
+   "file": "tagine-economics-0"
   }
  ],
  "day-three-ladder": [
   {
    "src": "https://upload.wikimedia.org/wikipedia/commons/b/bb/Seilbr%C3%BCcken-Via-Ferrata-Dibona_3178a.jpg",
    "kind": "wikimedia",
-   "w": 3264,
-   "h": 2448,
+   "w": 1920,
+   "h": 1440,
    "page": "https://commons.wikimedia.org/w/index.php?curid=7787021",
    "title": "Seilbr\u00fccken-Via-Ferrata-Dibona 3178a",
    "author": "R\u00fcdiger Kratz, St. Ingbert",
-   "license": "CC BY-SA 3.0"
+   "license": "CC BY-SA 3.0",
+   "file": "day-three-ladder-0"
   }
  ],
  "pastel-de-nata-crawl": [
   {
    "src": "https://upload.wikimedia.org/wikipedia/commons/9/9c/Pastel_de_nata_septembre_2015.jpg",
    "kind": "wikimedia",
-   "w": 3200,
-   "h": 2133,
+   "w": 1920,
+   "h": 1280,
    "page": "https://commons.wikimedia.org/w/index.php?curid=43147541",
    "title": "Pastel de nata septembre 2015",
    "author": "Photo Claude TRUONG-NGOC",
-   "license": "CC BY-SA 3.0"
+   "license": "CC BY-SA 3.0",
+   "file": "pastel-de-nata-crawl-0"
   }
  ],
  "packing-list": [],
@@ -271,24 +276,26 @@
   {
    "src": "https://upload.wikimedia.org/wikipedia/commons/0/0e/Torres_del_Paine_sunrise_%2853467301192%29.jpg",
    "kind": "wikimedia",
-   "w": 5037,
-   "h": 2519,
+   "w": 1920,
+   "h": 960,
    "page": "https://commons.wikimedia.org/w/index.php?curid=144187718",
    "title": "Torres del Paine sunrise (53467301192)",
    "author": "Pedro Szekely from Los Angeles, USA",
-   "license": "CC BY-SA 2.0"
+   "license": "CC BY-SA 2.0",
+   "file": "wind-and-towers-0"
   }
  ],
  "powder-day": [
   {
    "src": "https://upload.wikimedia.org/wikipedia/commons/a/aa/New_Year%27s_Eve_in_Niseko_area._%2855016930110%29.jpg",
    "kind": "wikimedia",
-   "w": 6000,
-   "h": 3375,
+   "w": 1920,
+   "h": 1080,
    "page": "https://commons.wikimedia.org/w/index.php?curid=181226305",
    "title": "New Year's Eve in Niseko area. (55016930110)",
    "author": "MIKI Yoshihito from Sapporo City,Hokkaido., JAPAN",
-   "license": "CC BY 4.0"
+   "license": "CC BY 4.0",
+   "file": "powder-day-0"
   }
  ],
  "the-ferry-we-missed": [
