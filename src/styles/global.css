@@ -89,7 +89,7 @@ a:hover .photo img.ready { transform: scale(1.03); }
 .nav a { padding: 8px 14px; border-radius: 99px; font-weight: 500; font-size: 15px; color: var(--muted); }
 .nav a:hover { color: var(--ink); }
 .nav a.active { color: var(--ink); background: var(--surface); }
-.nav .btn { color: var(--accent-ink); margin-left: 8px; padding: 9px 18px; }
+.nav .btn, .nav .btn.active { color: var(--accent-ink); background: var(--accent); margin-left: 8px; padding: 9px 18px; }
 .icon-btn { width: 40px; height: 40px; border-radius: 99px; display: grid; place-items: center; color: var(--ink); }
 .icon-btn:hover { background: var(--surface); }
 .menu-btn { display: none; }
