@@ -1,18 +1,4 @@
 [
-  {
-    "slug": "wanderlog-gang",
-    "branch": "claude/modest-mayer-eyddvw",
-    "title": "Wanderlog Gang",
-    "kind": "Website",
-    "brief": "Retro illustrated travel blog: photo banner, yearly trip calendar, a blog per trip and email subscription.",
-    "thumb": "thumbs/wanderlog-gang.webp"
-  },
-  {
-    "slug": "proof",
-    "branch": "claude/photo-video-marketplace-app",
-    "title": "Proof",
-    "kind": "Mobile app",
-    "brief": "Photography and videography marketplace: portfolios, booking with availability, payment and a creator studio.",
-    "thumb": "thumbs/proof.webp"
-  }
+  { "slug": "project1", "branch": "claude/modest-mayer-eyddvw", "title": "Wanderlog Gang" },
+  { "slug": "project2", "branch": "claude/photo-video-marketplace-app", "title": "Proof" }
 ]

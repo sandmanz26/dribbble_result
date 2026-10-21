@@ -1,7 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
-  "installCommand": "echo \"Dependencies are installed per project in build.mjs\"",
   "buildCommand": "node build.mjs",
   "outputDirectory": "out",
   "trailingSlash": true
