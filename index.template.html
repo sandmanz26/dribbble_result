@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Project briefs</title>
+  <meta name="description" content="Design and prototype responses to project briefs.">
+  <style>
+    :root { --bg: #fafafa; --ink: #18181b; --muted: #71717a; --line: rgb(24 24 27 / 0.1); --tile: #ececee; color-scheme: light; }
+    @media (prefers-color-scheme: dark) { :root { --bg: #111113; --ink: #f4f4f5; --muted: #a1a1aa; --line: rgb(244 244 245 / 0.12); --tile: #1c1c1f; color-scheme: dark; } }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; -webkit-font-smoothing: antialiased; }
+    main { width: min(1120px, 100% - 32px); margin: 0 auto; padding: 72px 0 96px; }
+    h1 { font-size: clamp(32px, 4vw, 44px); line-height: 1.1; letter-spacing: -0.03em; margin: 0 0 8px; font-weight: 650; }
+    .lede { color: var(--muted); margin: 0 0 48px; max-width: 52ch; }
+    ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 40px 28px; }
+    a { color: inherit; text-decoration: none; display: grid; gap: 6px; }
+    .thumb { position: relative; display: block; aspect-ratio: 16 / 10; border-radius: 12px; overflow: hidden; background: var(--tile); margin-bottom: 10px; }
+    .thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+    .thumb.phone img { position: absolute; top: 6%; left: 50%; width: auto; height: 88%; translate: -50% 0; object-fit: contain; border-radius: 18px; box-shadow: 0 12px 30px -12px rgb(0 0 0 / 0.35); }
+    a:hover .thumb img { transform: scale(1.02); }
+    .meta { font-size: 13px; color: var(--muted); }
+    strong { font-size: 20px; letter-spacing: -0.01em; font-weight: 620; }
+    .brief { color: var(--muted); font-size: 15px; }
+    a:focus-visible { outline: 2px solid var(--ink); outline-offset: 6px; border-radius: 12px; }
+    @media (prefers-reduced-motion: reduce) { .thumb img { transition: none; } }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Project briefs</h1>
+    <p class="lede">Each project is designed and built separately, on its own branch. Open one to try the live prototype.</p>
+    <ul><!-- PROJECTS -->
+    </ul>
+  </main>
+</body>
+</html>
