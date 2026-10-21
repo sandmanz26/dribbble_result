@@ -61,7 +61,7 @@ export default function YearCalendar({ headingLevel = 'h2' }) {
           <h3>{trips.length} {trips.length === 1 ? 'trip' : 'trips'} in {year}</h3>
           {trips.length ? trips.map((t) => (
             <Link key={t.slug} to={`/trip/${t.slug}`} className={`cal-item ${hl === t.slug ? 'hl' : ''}`} {...hover(t.slug)}>
-              <Photo src={photo(t.slug, 500)} />
+              <Photo src={photo(t.slug, 480)} />
               <span><b>{t.title}</b><span className="meta">{fmtRange(t.start, t.end)}{t.upcoming ? ', upcoming' : ''}</span></span>
             </Link>
           )) : <p className="cal-empty">No trips logged for {year} yet.</p>}

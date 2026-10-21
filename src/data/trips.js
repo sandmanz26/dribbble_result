@@ -3,18 +3,14 @@ import commons from './photos.json'
 // Mock data only, no backend.
 // Photos are location-matched, openly licensed images from Wikimedia Commons
 // (found via Openverse, credited on /credits), standing in for the gang's own
-// photos. Keyed by trip slug or post id.
-const SIZES = [500, 960, 1280, 1920]
-const sized = (p, w) => {
-  const m = p.src.match(/^(https:\/\/upload\.wikimedia\.org\/wikipedia\/commons)\/(\w\/\w\w)\/([^/]+)$/)
-  const size = SIZES.find((s) => s >= w) || 1920
-  if (!m || (p.w && p.w <= size)) return p.src
-  return `${m[1]}/thumb/${m[2]}/${m[3]}/${size}px-${m[3]}`
+// photos. They are self-hosted as WebP in /public/photos at 480px and 1600px.
+const first = (key) => (commons[key] || []).find((p) => p.file)
+export const photo = (key, w = 1600) => {
+  const p = first(key)
+  return p ? `photos/${p.file}-${w <= 480 ? 480 : 1600}.webp` : null
 }
-const first = (key) => (commons[key] || [])[0]
-export const photo = (key, w = 1280) => (first(key) ? sized(first(key), w) : null)
 export const postPhoto = (trip, post, w) => photo(post.id, w) || photo(trip.slug, w)
-export const credits = () => Object.entries(commons).filter(([, v]) => v && v.length).map(([k, v]) => [k, v[0]])
+export const credits = () => Object.entries(commons).map(([k]) => [k, first(k)]).filter(([, p]) => p)
 
 export const trips = [
   // 2026

@@ -43,7 +43,7 @@ export default function Trip() {
           <h2 id="blog-h">The trip blog</h2>
           {posts.map((p, n) => (
             <Link key={p.id} to={`/trip/${trip.slug}/${p.id}`} className="entry">
-              <Photo src={postPhoto(trip, p, 500)} />
+              <Photo src={postPhoto(trip, p, 480)} />
               <div>
                 <span className="meta">Day {n + 1}, {fmtDate(p.date)}, by {crewById[p.author].name}</span>
                 <h3>{p.title}</h3>

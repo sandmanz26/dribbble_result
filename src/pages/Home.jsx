@@ -36,7 +36,7 @@ export default function Home() {
           <h2>Five friends, one shared calendar and a blog for every trip.</h2>
           {next && (
             <Link to={`/trip/${next.slug}`} className="next-trip">
-              <Photo src={photo(next.slug, 500)} alt={next.place} />
+              <Photo src={photo(next.slug, 480)} alt={next.place} />
               <span>
                 <span className="meta">Next trip, {fmtRange(next.start, next.end)}</span>
                 <strong>{next.title}</strong>
@@ -64,7 +64,7 @@ export default function Home() {
             {posts.map((p, n) => (
               <Reveal key={p.trip.slug + p.id} delay={n * 0.05}>
                 <Link to={`/trip/${p.trip.slug}/${p.id}`} className="entry">
-                  <Photo src={postPhoto(p.trip, p, 500)} />
+                  <Photo src={postPhoto(p.trip, p, 480)} />
                   <div>
                     <span className="meta">{fmtDate(p.date)}, by {crewById[p.author].name}</span>
                     <h3>{p.title}</h3>

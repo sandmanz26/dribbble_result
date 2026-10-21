@@ -57,7 +57,7 @@ export default function PhotoBanner({ trips }) {
       <div className="banner-thumbs" role="tablist" aria-label="Choose a trip">
         {trips.map((t, n) => (
           <button key={t.slug} role="tab" aria-selected={n === i} className="thumb-btn" onClick={() => setI(n)} aria-label={t.title}>
-            <Photo src={photo(t.slug, 500)} />
+            <Photo src={photo(t.slug, 480)} />
             <span className="label">{t.place}</span>
             <span className="bar">
               {n === i && (
