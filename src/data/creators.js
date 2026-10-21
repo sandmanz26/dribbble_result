@@ -151,5 +151,5 @@ export const reviewsPool = [
 
 export const getCreator = (id) => creators.find((c) => c.id === id)
 export const fromPrice = (c) => Math.min(...c.packages.map((p) => p.price))
-export const money = (n) => `£${n.toLocaleString('en-GB')}`
+export const money = (n) => `£${n.toLocaleString('en-GB', Number.isInteger(n) ? {} : { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
 export const SERVICE_FEE = 0.06 // client-side marketplace fee (sample)
