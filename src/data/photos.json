@@ -224,12 +224,13 @@
   {
    "src": "https://upload.wikimedia.org/wikipedia/commons/b/b4/Camels_in_Merzouga_Desert.jpg",
    "kind": "wikimedia",
-   "w": 2880,
-   "h": 1280,
+   "w": 1920,
+   "h": 853,
    "page": "https://commons.wikimedia.org/w/index.php?curid=108935059",
    "title": "Camels in Merzouga Desert",
    "author": "Yair Haklai",
-   "license": "CC BY-SA 4.0"
+   "license": "CC BY-SA 4.0",
+   "file": "dunes-by-camel-0"
   }
  ],
  "tagine-economics": [
