@@ -1,7 +1,7 @@
 import pool from './portfolio.json'
 
-// Portfolio stills are openly licensed images from Wikimedia Commons, found via
-// Openverse and credited under Profile > Photo credits. They are self-hosted as
+// Portfolio stills are Unsplash photos (via Picsum) and openly licensed Wikimedia
+// Commons images, credited under Profile > Photo credits. They are self-hosted as
 // WebP in /public/portfolio at 480px and 1280px. Each creator references
 // [category, index, duration?]; a duration marks the item as a video.
 const ready = (cat) => (pool[cat] || []).filter((p) => p.file)

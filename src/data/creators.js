@@ -22,7 +22,7 @@ export const creators = [
     medium: 'photo', title: 'Wedding photographer', cats: ['wedding', 'portrait'],
     rating: 4.9, reviews: 128, jobs: 214, responds: 'within 2 hours', since: 2017,
     bio: 'Documentary-style wedding photography. I stay in the background and photograph what actually happens on the day.',
-    media: [['wedding', 0], ['wedding', 1], ['wedding', 2], ['wedding', 3], ['portrait', 6], ['wedding', 5]],
+    media: [['wedding', 0], ['wedding', 1], ['wedding', 2], ['wedding', 3], ['portrait', 6]],
     packages: [
       pkg('elopement', 'Elopement', 3, '2 weeks', 850, ['Up to 3 hours of coverage', '150+ edited photos', 'Online gallery']),
       pkg('half-day', 'Half day', 6, '3 weeks', 1650, ['Ceremony to first dance', '400+ edited photos', 'Online gallery', 'Second shooter']),
@@ -109,7 +109,7 @@ export const creators = [
     medium: 'photo', title: 'Food and restaurants', cats: ['food'],
     rating: 4.7, reviews: 73, jobs: 160, responds: 'within 2 hours', since: 2018,
     bio: 'Menus, openings and cookbooks. I shoot in your kitchen during service hours so the food is real and hot.',
-    media: [['food', 0], ['food', 1], ['food', 2], ['food', 3]],
+    media: [['food', 0], ['food', 1], ['food', 2], ['food', 3], ['food', 4], ['food', 5]],
     packages: [
       pkg('menu', 'Menu refresh', 3, '4 days', 290, ['Up to 12 dishes', 'Overhead and 45° angles', 'Delivery app crops']),
       pkg('opening', 'Restaurant opening', 6, '1 week', 720, ['Dishes, team and interior', '60 edited images']),
@@ -121,7 +121,7 @@ export const creators = [
     medium: 'both', title: 'Sport and action', cats: ['sport'],
     rating: 4.8, reviews: 45, jobs: 93, responds: 'within 3 hours', since: 2019,
     bio: 'Clubs, athletes and sportswear brands. Fast lenses, high frame rates and quick turnaround on match days.',
-    media: [['sport', 0], ['sport', 1, '0:45'], ['sport', 2]],
+    media: [['sport', 0], ['sport', 1, '0:45'], ['sport', 2], ['sport', 3], ['sport', 4, '0:32']],
     packages: [
       pkg('match', 'Match day', 3, '24 hours', 400, ['Full match coverage', '120 edited photos', '10 images within 1 hour']),
       pkg('athlete', 'Athlete campaign', 6, '1 week', 1250, ['Photo and slow-motion video', '30 retouched images', '30s edit']),
@@ -133,7 +133,7 @@ export const creators = [
     medium: 'video', title: 'Wedding films', cats: ['wedding'],
     rating: 4.9, reviews: 58, jobs: 96, responds: 'within a day', since: 2016,
     bio: 'Wedding films with real audio from your vows and speeches. Calm, unobtrusive, and delivered with a full-length edit.',
-    media: [['wedding', 4, '4:30'], ['wedding', 6, '2:15'], ['wedding', 7, '6:02'], ['portrait', 7, '1:20']],
+    media: [['wedding', 4, '4:30'], ['wedding', 5, '2:15'], ['wedding', 6, '6:02'], ['portrait', 7, '1:20']],
     packages: [
       pkg('highlights', 'Highlights film', 8, '6 weeks', 1200, ['8 hours of coverage', '4 minute highlight film', 'Ceremony audio']),
       pkg('feature', 'Feature film', 10, '8 weeks', 2350, ['10 hours, two shooters', '15 minute film', 'Full ceremony and speeches']),
