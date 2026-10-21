@@ -1,9 +1,9 @@
 import { Link, useParams } from 'react-router-dom'
-import Scene from '../components/Scene.jsx'
-import { Avatar } from '../components/Crew.jsx'
+import { CaretRight } from '@phosphor-icons/react'
+import Photo from '../components/Photo.jsx'
 import NotFound from './NotFound.jsx'
 import { crewById } from '../data/crew.js'
-import { getTrip, fmtDate } from '../data/trips.js'
+import { getTrip, postPhoto, fmtDate } from '../data/trips.js'
 
 export default function Post() {
   const { slug, postId } = useParams()
@@ -11,24 +11,34 @@ export default function Post() {
   const posts = trip ? [...trip.posts].sort((a, b) => a.date.localeCompare(b.date)) : []
   const i = posts.findIndex((p) => p.id === postId)
   if (i < 0) return <NotFound />
-  const post = posts[i]; const prev = posts[i - 1]; const next = posts[i + 1]
+  const post = posts[i]
+  const prev = posts[i - 1]
+  const next = posts[i + 1]
   const author = crewById[post.author]
 
   return (
     <div className="wrap">
-      <nav className="crumbs" aria-label="Breadcrumb"><Link to="/">Home</Link> / <Link to={`/trip/${trip.slug}`}>{trip.title}</Link> / Day {i + 1}</nav>
+      <nav className="crumbs" aria-label="Breadcrumb">
+        <Link to="/calendar">{trip.year} calendar</Link><CaretRight size={12} />
+        <Link to={`/trip/${trip.slug}`}>{trip.title}</Link><CaretRight size={12} />
+        <span aria-current="page">Day {i + 1}</span>
+      </nav>
       <article className="article">
-        <span className="eyebrow">{trip.place}, {trip.country}</span>
+        <p className="meta">{trip.place}, {trip.country}</p>
         <h1>{post.title}</h1>
         <div className="byline">
-          <Avatar id={author.id} large />
-          <div><b>{author.name}</b> · {author.role}<br /><span className="meta">{fmtDate(post.date)} · {post.read} min read</span></div>
+          <img src={author.photo} alt="" />
+          <span><b>{author.name}</b><br /><span className="meta">{fmtDate(post.date)}, {post.read} min read</span></span>
         </div>
-        <div className="cover"><Scene type={post.scene} palette={trip.palette} seed={post.id} label={`Illustration for ${post.title}`} /></div>
+        <Photo className="cover" src={postPhoto(trip, post, 1920)} alt={`${trip.place}`} eager />
         {post.body.map((para, n) => <p key={n}>{para}</p>)}
         <div className="pager">
-          {prev ? <Link to={`/trip/${trip.slug}/${prev.id}`}><small>← Earlier</small><strong>{prev.title}</strong></Link> : <Link to={`/trip/${trip.slug}`}><small>← Back</small><strong>All entries from {trip.place}</strong></Link>}
-          {next ? <Link className="next" to={`/trip/${trip.slug}/${next.id}`}><small>Next entry →</small><strong>{next.title}</strong></Link> : <Link className="next" to="/subscribe"><small>Want more?</small><strong>Subscribe for the next trip →</strong></Link>}
+          {prev
+            ? <Link to={`/trip/${trip.slug}/${prev.id}`}><span className="meta">Previous post</span><b>{prev.title}</b></Link>
+            : <Link to={`/trip/${trip.slug}`}><span className="meta">Back to</span><b>{trip.title}</b></Link>}
+          {next
+            ? <Link className="next" to={`/trip/${trip.slug}/${next.id}`}><span className="meta">Next post</span><b>{next.title}</b></Link>
+            : <Link className="next" to="/subscribe"><span className="meta">That’s the last post</span><b>Subscribe</b></Link>}
         </div>
       </article>
     </div>

@@ -1,9 +1,9 @@
+// Portrait placeholders from randomuser.me; swap for the gang's real photos.
 export const crew = [
-  { id: 'maya', name: 'Maya', role: 'Navigator', color: '#e8563a' },
-  { id: 'dimas', name: 'Dimas', role: 'Photographer', color: '#2f6f73' },
-  { id: 'lena', name: 'Lena', role: 'Storyteller', color: '#e9a23b' },
-  { id: 'theo', name: 'Theo', role: 'Chief Snacker', color: '#6b4b8a' },
-  { id: 'sari', name: 'Sari', role: 'Budget Keeper', color: '#4f7d3a' },
+  { id: 'maya', name: 'Maya', role: 'Plans the routes', photo: 'https://randomuser.me/api/portraits/women/68.jpg' },
+  { id: 'dimas', name: 'Dimas', role: 'Takes the photos', photo: 'https://randomuser.me/api/portraits/men/32.jpg' },
+  { id: 'lena', name: 'Lena', role: 'Writes most posts', photo: 'https://randomuser.me/api/portraits/women/44.jpg' },
+  { id: 'theo', name: 'Theo', role: 'Finds the food', photo: 'https://randomuser.me/api/portraits/men/75.jpg' },
+  { id: 'sari', name: 'Sari', role: 'Keeps the budget', photo: 'https://randomuser.me/api/portraits/women/90.jpg' },
 ]
-
 export const crewById = Object.fromEntries(crew.map((c) => [c.id, c]))

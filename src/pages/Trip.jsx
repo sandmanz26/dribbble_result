@@ -1,10 +1,10 @@
 import { Link, useParams } from 'react-router-dom'
-import Scene from '../components/Scene.jsx'
-import { Avatars, Avatar } from '../components/Crew.jsx'
-import SubscribeForm from '../components/SubscribeForm.jsx'
+import { ArrowRight, CaretRight } from '@phosphor-icons/react'
+import Photo from '../components/Photo.jsx'
+import Reveal from '../components/Reveal.jsx'
 import NotFound from './NotFound.jsx'
 import { crewById } from '../data/crew.js'
-import { getTrip, trips, fmtRange, fmtDate } from '../data/trips.js'
+import { getTrip, trips, photo, postPhoto, fmtRange, fmtDate } from '../data/trips.js'
 
 export default function Trip() {
   const { slug } = useParams()
@@ -12,65 +12,66 @@ export default function Trip() {
   if (!trip) return <NotFound />
   const sorted = [...trips].sort((a, b) => a.start.localeCompare(b.start))
   const idx = sorted.findIndex((t) => t.slug === slug)
-  const prev = sorted[idx - 1]; const next = sorted[idx + 1]
+  const prev = sorted[idx - 1]
+  const next = sorted[idx + 1]
   const posts = [...trip.posts].sort((a, b) => a.date.localeCompare(b.date))
 
   return (
     <div className="wrap">
-      <nav className="crumbs" aria-label="Breadcrumb"><Link to="/">Home</Link> / <Link to="/#calendar">{trip.year} calendar</Link> / {trip.place}</nav>
-      <header className="trip-hero">
-        <div className="art"><Scene type={trip.scene} palette={trip.palette} seed={trip.slug} label={`Illustration of ${trip.place}`} /></div>
-        <div className="info">
-          <div>
-            <span className="stamp" style={{ color: 'var(--tomato)' }}>{trip.upcoming ? 'Upcoming' : trip.tag}</span>
-            <h1>{trip.title}</h1>
-            <p className="sum">{trip.summary}</p>
-          </div>
-          <div className="facts">
-            <div className="fact wide"><span>When</span><b>{fmtRange(trip.start, trip.end)}, {trip.year}</b></div>
-            <div className="fact"><span>Where</span><b>{trip.place}</b></div>
-            <div className="fact"><span>Country</span><b>{trip.country}</b></div>
-            <div className="fact"><span>Distance</span><b>{trip.stats.distance}</b></div>
-            <div className="fact"><span>Budget</span><b>{trip.stats.budget}</b></div>
-          </div>
-        </div>
+      <nav className="crumbs" aria-label="Breadcrumb">
+        <Link to="/calendar">{trip.year} calendar</Link><CaretRight size={12} /><span aria-current="page">{trip.title}</span>
+      </nav>
+
+      <header className="trip-top">
+        <Reveal>
+          <p className="meta">{trip.tag}{trip.upcoming ? ', upcoming' : ''}</p>
+          <h1>{trip.title}</h1>
+          <p className="lede">{trip.summary}</p>
+        </Reveal>
+        <Photo src={photo(trip.slug, 1920)} alt={`${trip.place}, ${trip.country}`} eager />
       </header>
 
-      <div className="trip-layout">
+      <dl className="facts">
+        <div><dt>Dates</dt><dd>{fmtRange(trip.start, trip.end)}, {trip.year}</dd></div>
+        <div><dt>Country</dt><dd>{trip.country}</dd></div>
+        <div><dt>Distance</dt><dd>{trip.stats.distance}</dd></div>
+        <div><dt>Cost per person</dt><dd>{trip.stats.budget}</dd></div>
+      </dl>
+
+      <div className="trip-body">
         <section aria-labelledby="blog-h">
-          <div className="section-head" style={{ marginBottom: 24 }}>
-            <div><span className="eyebrow">Trip blog</span><h2 id="blog-h" style={{ fontSize: 40 }}>{posts.length} {posts.length === 1 ? 'entry' : 'entries'} from {trip.place}</h2></div>
-          </div>
-          <div>
-            {posts.map((p, n) => (
-              <Link key={p.id} to={`/trip/${trip.slug}/${p.id}`} className="dispatch">
-                <div className="thumb"><Scene type={p.scene} palette={trip.palette} seed={p.id} /></div>
-                <div>
-                  <div className="meta"><span>Day {n + 1}</span><span>· {fmtDate(p.date)}</span><span>· {p.read} min · {crewById[p.author].name}</span></div>
-                  <h3>{p.title}</h3>
-                  <p style={{ color: 'var(--ink-soft)', fontSize: 15, marginTop: 4 }}>{p.body[0].slice(0, 110)}…</p>
-                </div>
-                <span className="arrow" aria-hidden="true">→</span>
-              </Link>
-            ))}
-          </div>
-          <div className="pager" style={{ marginTop: 50 }}>
-            {prev ? <Link to={`/trip/${prev.slug}`}><small>← Previous trip</small><strong>{prev.title}</strong></Link> : <span />}
-            {next ? <Link className="next" to={`/trip/${next.slug}`}><small>Next trip →</small><strong>{next.title}</strong></Link> : <span />}
+          <h2 id="blog-h">The trip blog</h2>
+          {posts.map((p, n) => (
+            <Link key={p.id} to={`/trip/${trip.slug}/${p.id}`} className="entry">
+              <Photo src={postPhoto(trip, p, 500)} />
+              <div>
+                <span className="meta">Day {n + 1}, {fmtDate(p.date)}, by {crewById[p.author].name}</span>
+                <h3>{p.title}</h3>
+                <p className="muted" style={{ fontSize: 15, marginTop: 4 }}>{p.read} min read</p>
+              </div>
+              <CaretRight className="go" size={20} />
+            </Link>
+          ))}
+          <div className="pager">
+            {prev ? <Link to={`/trip/${prev.slug}`}><span className="meta">Previous trip</span><b>{prev.title}</b></Link> : <span />}
+            {next ? <Link className="next" to={`/trip/${next.slug}`}><span className="meta">Next trip</span><b>{next.title}</b></Link> : <span />}
           </div>
         </section>
 
-        <aside className="side" aria-label="Trip sidebar">
-          <div className="box">
-            <h4>Who went</h4>
+        <aside className="aside" aria-label="About this trip">
+          <div>
+            <h3>Who went</h3>
             {trip.crew.map((id) => (
-              <div className="row" key={id}><Avatar id={id} /><div><b>{crewById[id].name}</b><br /><small style={{ fontFamily: 'var(--mono)', color: 'var(--ink-soft)' }}>{crewById[id].role}</small></div></div>
+              <div className="who" key={id}>
+                <img src={crewById[id].photo} alt="" loading="lazy" />
+                <span><b>{crewById[id].name}</b><span className="meta">{crewById[id].role}</span></span>
+              </div>
             ))}
           </div>
-          <div className="box" style={{ background: 'var(--mustard)' }}>
-            <h4>Get the next one</h4>
-            <p className="fine" style={{ color: 'var(--ink)', marginBottom: 14 }}>Join the list and hear when new entries land.</p>
-            <Link to="/subscribe" className="btn sm ghost">Subscribe →</Link>
+          <div>
+            <h3>Get new posts</h3>
+            <p className="muted" style={{ marginBottom: 14 }}>We’ll email you when the next post goes up.</p>
+            <Link to="/subscribe" className="btn">Subscribe <ArrowRight size={16} weight="bold" /></Link>
           </div>
         </aside>
       </div>

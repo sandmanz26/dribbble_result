@@ -1,9 +1,5 @@
-import SubscribeBlock from '../components/SubscribeBlock.jsx'
+import { SubscribeSection } from './Home.jsx'
 
 export default function SubscribePage() {
-  return (
-    <div className="wrap" style={{ padding: '56px 0 90px' }}>
-      <SubscribeBlock />
-    </div>
-  )
+  return <div className="wrap" style={{ paddingTop: 32 }}><SubscribeSection as="h1" /></div>
 }

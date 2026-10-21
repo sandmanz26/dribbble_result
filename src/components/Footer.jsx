@@ -1,28 +1,30 @@
 import { Link } from 'react-router-dom'
-import { featuredTrips } from '../data/trips.js'
+import { recentTrips } from '../data/trips.js'
 
 export default function Footer() {
   return (
     <footer className="site-footer">
       <div className="wrap">
-        <div className="foot-grid">
+        <div className="foot">
           <div>
-            <h4>Wanderlog Gang</h4>
-            <p style={{ maxWidth: '36ch', color: '#d6cfbb' }}>Five friends, one shared calendar, and a blog for every adventure. Written between buses.</p>
+            <strong>Wanderlog Gang</strong>
+            <p className="muted" style={{ maxWidth: '38ch' }}>Five friends writing up every trip we take together.</p>
           </div>
           <div>
-            <h4>Latest trips</h4>
-            <ul>{featuredTrips().slice(0, 4).map((t) => <li key={t.slug}><Link to={`/trip/${t.slug}`}>{t.title}</Link></li>)}</ul>
+            <h4>Recent trips</h4>
+            <ul>{recentTrips().slice(0, 4).map((t) => <li key={t.slug}><Link to={`/trip/${t.slug}`}>{t.title}</Link></li>)}</ul>
           </div>
           <div>
-            <h4>Explore</h4>
+            <h4>Site</h4>
             <ul>
-              <li><Link to="/journal">All journal entries</Link></li>
-              <li><Link to="/subscribe">Subscribe for updates</Link></li>
+              <li><Link to="/calendar">Calendar</Link></li>
+              <li><Link to="/journal">Journal</Link></li>
+              <li><Link to="/subscribe">Subscribe</Link></li>
+              <li><Link to="/credits">Photo credits</Link></li>
             </ul>
           </div>
         </div>
-        <div className="copy"><span>© 2026 Wanderlog Gang</span><span>Mock data · No backend</span></div>
+        <p className="foot-base">© 2026 Wanderlog Gang</p>
       </div>
     </footer>
   )
