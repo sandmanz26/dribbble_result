@@ -302,36 +302,39 @@
   {
    "src": "https://upload.wikimedia.org/wikipedia/commons/6/61/Ferry_Ride_Between_Amalfi_and_Positano_%2842250218604%29.jpg",
    "kind": "wikimedia",
-   "w": 7952,
-   "h": 5304,
+   "w": 1920,
+   "h": 1281,
    "page": "https://commons.wikimedia.org/w/index.php?curid=131039315",
    "title": "Ferry Ride Between Amalfi and Positano (42250218604)",
    "author": "Nan Palmero from San Antonio, TX, USA",
-   "license": "CC BY 2.0"
+   "license": "CC BY 2.0",
+   "file": "the-ferry-we-missed-0"
   }
  ],
  "nine-buses": [
   {
    "src": "https://upload.wikimedia.org/wikipedia/commons/7/73/Shkoder_098.JPG",
    "kind": "wikimedia",
-   "w": 3410,
-   "h": 2411,
+   "w": 1920,
+   "h": 1358,
    "page": "https://commons.wikimedia.org/w/index.php?curid=15681055",
    "title": "Shkoder 098",
    "author": "Sigismund von Dobsch\u00fctz",
-   "license": "CC BY-SA 3.0"
+   "license": "CC BY-SA 3.0",
+   "file": "nine-buses-0"
   }
  ],
  "sheep-have-right-of-way": [
   {
    "src": "https://upload.wikimedia.org/wikipedia/commons/e/e1/Sheep_on_the_road_in_Scotland.jpg",
    "kind": "wikimedia",
-   "w": 3456,
-   "h": 2304,
+   "w": 1920,
+   "h": 1280,
    "page": "https://commons.wikimedia.org/w/index.php?curid=3160383",
    "title": "Sheep on the road in Scotland",
    "author": "Alexandre Dulaunoy from Les Bulles, Chiny, Belgium",
-   "license": "CC BY-SA 2.0"
+   "license": "CC BY-SA 2.0",
+   "file": "sheep-have-right-of-way-0"
   }
  ],
  "seven-moles": [
