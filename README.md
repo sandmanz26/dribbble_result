@@ -1,5 +1,7 @@
 # Project briefs: deploy hub
 
+> AI assistants: read [`AGENTS.md`](AGENTS.md) first. It explains the one-project-per-branch setup.
+
 This branch (`main`) holds no project code. It builds every project branch into one Vercel site and
 puts each project behind its own password:
 
