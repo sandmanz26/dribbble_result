@@ -1,0 +1,451 @@
+{
+  "panel": {
+    "width": 1200,
+    "height": 700
+  },
+  "units": "Logical pixels at 1x. Multiply by 2 for the @2x assets.",
+  "controls": [
+    {
+      "id": "drive",
+      "label": "Drive",
+      "module": "input",
+      "kind": "knob",
+      "size": "lg",
+      "x": 106,
+      "y": 196,
+      "def": 0.35,
+      "sprite": "knob-lg",
+      "hitRadius": 62
+    },
+    {
+      "id": "tone",
+      "label": "Tone",
+      "module": "input",
+      "kind": "knob",
+      "size": "sm",
+      "x": 106,
+      "y": 300,
+      "def": 0.5,
+      "bipolar": true,
+      "sprite": "knob-sm",
+      "hitRadius": 40
+    },
+    {
+      "id": "chaos",
+      "label": "Chaos",
+      "module": "meter",
+      "kind": "momentary",
+      "x": 824,
+      "y": 298,
+      "r": 30,
+      "sprite": "momentary",
+      "hitRadius": 28
+    },
+    {
+      "id": "mix",
+      "label": "Mix",
+      "module": "out",
+      "kind": "knob",
+      "size": "md",
+      "x": 1070,
+      "y": 172,
+      "def": 1,
+      "sprite": "knob-md",
+      "hitRadius": 50
+    },
+    {
+      "id": "output",
+      "label": "Output",
+      "module": "out",
+      "kind": "knob",
+      "size": "md",
+      "x": 1070,
+      "y": 290,
+      "def": 0.7,
+      "sprite": "knob-md",
+      "hitRadius": 50
+    },
+    {
+      "id": "target",
+      "label": "Target",
+      "module": "steps",
+      "kind": "selector",
+      "x": 74,
+      "y": 446,
+      "def": 0,
+      "options": [
+        "Cut",
+        "Bits",
+        "Gate",
+        "Time"
+      ],
+      "sprite": "selector",
+      "hitRadius": 28
+    },
+    {
+      "id": "division",
+      "label": "Rate",
+      "module": "steps",
+      "kind": "toggle3",
+      "x": 176,
+      "y": 438,
+      "def": 1,
+      "options": [
+        "1/8",
+        "1/16",
+        "1/32"
+      ],
+      "sprite": "toggle3",
+      "hitRadius": 28
+    },
+    {
+      "id": "swing",
+      "label": "Swing",
+      "module": "steps",
+      "kind": "knob",
+      "size": "sm",
+      "x": 262,
+      "y": 434,
+      "def": 0,
+      "sprite": "knob-sm",
+      "hitRadius": 40
+    },
+    {
+      "id": "amount",
+      "label": "Amount",
+      "module": "steps",
+      "kind": "knob",
+      "size": "sm",
+      "x": 348,
+      "y": 434,
+      "def": 0.6,
+      "sprite": "knob-sm",
+      "hitRadius": 40
+    },
+    {
+      "id": "bits",
+      "label": "Bits",
+      "module": "crush",
+      "kind": "knob",
+      "size": "md",
+      "x": 76,
+      "y": 598,
+      "def": 1,
+      "sprite": "knob-md",
+      "hitRadius": 50
+    },
+    {
+      "id": "rate",
+      "label": "Rate",
+      "module": "crush",
+      "kind": "knob",
+      "size": "md",
+      "x": 176,
+      "y": 598,
+      "def": 0,
+      "sprite": "knob-md",
+      "hitRadius": 50
+    },
+    {
+      "id": "cutoff",
+      "label": "Cutoff",
+      "module": "filter",
+      "kind": "knob",
+      "size": "md",
+      "x": 312,
+      "y": 598,
+      "def": 0.8,
+      "sprite": "knob-md",
+      "hitRadius": 50
+    },
+    {
+      "id": "reso",
+      "label": "Reso",
+      "module": "filter",
+      "kind": "knob",
+      "size": "md",
+      "x": 412,
+      "y": 598,
+      "def": 0.2,
+      "sprite": "knob-md",
+      "hitRadius": 50
+    },
+    {
+      "id": "depth",
+      "label": "Depth",
+      "module": "wobble",
+      "kind": "knob",
+      "size": "md",
+      "x": 548,
+      "y": 598,
+      "def": 0.15,
+      "sprite": "knob-md",
+      "hitRadius": 50
+    },
+    {
+      "id": "speed",
+      "label": "Speed",
+      "module": "wobble",
+      "kind": "knob",
+      "size": "md",
+      "x": 648,
+      "y": 598,
+      "def": 0.3,
+      "sprite": "knob-md",
+      "hitRadius": 50
+    },
+    {
+      "id": "time",
+      "label": "Time",
+      "module": "echo",
+      "kind": "knob",
+      "size": "md",
+      "x": 784,
+      "y": 598,
+      "def": 0.4,
+      "sprite": "knob-md",
+      "hitRadius": 50
+    },
+    {
+      "id": "feedback",
+      "label": "Repeats",
+      "module": "echo",
+      "kind": "knob",
+      "size": "md",
+      "x": 884,
+      "y": 598,
+      "def": 0.3,
+      "sprite": "knob-md",
+      "hitRadius": 50
+    },
+    {
+      "id": "bypass",
+      "label": "Bypass",
+      "module": "header",
+      "kind": "bat",
+      "x": 1144,
+      "y": 46,
+      "def": 0,
+      "sprite": "bat",
+      "hitRadius": 28
+    }
+  ],
+  "steps": [
+    {
+      "index": 0,
+      "x": 440,
+      "y": 452,
+      "ledY": 406,
+      "sprite": "step"
+    },
+    {
+      "index": 1,
+      "x": 488,
+      "y": 452,
+      "ledY": 406,
+      "sprite": "step"
+    },
+    {
+      "index": 2,
+      "x": 536,
+      "y": 452,
+      "ledY": 406,
+      "sprite": "step"
+    },
+    {
+      "index": 3,
+      "x": 584,
+      "y": 452,
+      "ledY": 406,
+      "sprite": "step"
+    },
+    {
+      "index": 4,
+      "x": 632,
+      "y": 452,
+      "ledY": 406,
+      "sprite": "step"
+    },
+    {
+      "index": 5,
+      "x": 680,
+      "y": 452,
+      "ledY": 406,
+      "sprite": "step"
+    },
+    {
+      "index": 6,
+      "x": 728,
+      "y": 452,
+      "ledY": 406,
+      "sprite": "step"
+    },
+    {
+      "index": 7,
+      "x": 776,
+      "y": 452,
+      "ledY": 406,
+      "sprite": "step"
+    },
+    {
+      "index": 8,
+      "x": 824,
+      "y": 452,
+      "ledY": 406,
+      "sprite": "step"
+    },
+    {
+      "index": 9,
+      "x": 872,
+      "y": 452,
+      "ledY": 406,
+      "sprite": "step"
+    },
+    {
+      "index": 10,
+      "x": 920,
+      "y": 452,
+      "ledY": 406,
+      "sprite": "step"
+    },
+    {
+      "index": 11,
+      "x": 968,
+      "y": 452,
+      "ledY": 406,
+      "sprite": "step"
+    },
+    {
+      "index": 12,
+      "x": 1016,
+      "y": 452,
+      "ledY": 406,
+      "sprite": "step"
+    },
+    {
+      "index": 13,
+      "x": 1064,
+      "y": 452,
+      "ledY": 406,
+      "sprite": "step"
+    },
+    {
+      "index": 14,
+      "x": 1112,
+      "y": 452,
+      "ledY": 406,
+      "sprite": "step"
+    },
+    {
+      "index": 15,
+      "x": 1160,
+      "y": 452,
+      "ledY": 406,
+      "sprite": "step"
+    }
+  ],
+  "scope": {
+    "x": 240,
+    "y": 142,
+    "w": 424,
+    "h": 196,
+    "drawnInCode": true
+  },
+  "meter": {
+    "face": "vu-face",
+    "needle": "vu-needle",
+    "x": 724,
+    "y": 128,
+    "w": 200,
+    "h": 120
+  },
+  "hatch": {
+    "x": 960,
+    "y": 496,
+    "w": 224,
+    "h": 188,
+    "bay": "hatch-bay",
+    "screws": [
+      {
+        "x": 974,
+        "y": 510
+      },
+      {
+        "x": 1170,
+        "y": 510
+      },
+      {
+        "x": 974,
+        "y": 670
+      },
+      {
+        "x": 1170,
+        "y": 670
+      }
+    ],
+    "jacks": [
+      {
+        "id": "o-seq",
+        "label": "Steps",
+        "dir": "out",
+        "x": 1004,
+        "y": 552
+      },
+      {
+        "id": "o-noise",
+        "label": "Noise",
+        "dir": "out",
+        "x": 1072,
+        "y": 552
+      },
+      {
+        "id": "o-lfo",
+        "label": "Wobble",
+        "dir": "out",
+        "x": 1140,
+        "y": 552
+      },
+      {
+        "id": "i-time",
+        "label": "Time",
+        "dir": "in",
+        "x": 1004,
+        "y": 610
+      },
+      {
+        "id": "i-cutoff",
+        "label": "Cutoff",
+        "dir": "in",
+        "x": 1072,
+        "y": 610
+      },
+      {
+        "id": "i-bits",
+        "label": "Bits",
+        "dir": "in",
+        "x": 1140,
+        "y": 610
+      }
+    ],
+    "pads": [
+      {
+        "id": "freeze",
+        "label": "Freeze",
+        "x": 1004,
+        "y": 662
+      },
+      {
+        "id": "starve",
+        "label": "Starve",
+        "x": 1072,
+        "y": 662
+      },
+      {
+        "id": "spit",
+        "label": "Spit",
+        "x": 1140,
+        "y": 662
+      }
+    ]
+  }
+}
