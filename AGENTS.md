@@ -27,22 +27,36 @@ branch, no shared code, how deployment and passwords work) are in `AGENTS.md` on
 - NuBrakes: brake-caliper yellow accent on near-black ink, rounded (12px controls), sentence case.
 - Valvoline: red accent on navy, condensed uppercase display (`wdth` 72), 4px controls, uppercase buttons.
   Error red is deliberately deeper than the brand red and always carries an icon and text.
-- One accent per brand. Light and dark for both. All semantic text pairs pass WCAG AA (4.5:1).
+- One accent per brand. Light and dark for both. Text pairs are checked by `contrast()` in tokens.js and shown in
+  the System page contrast table (all pass AA today).
+- Selection uses `selected-bg` / `selected-line`, never `accent-soft` (that is for tags). Destructive buttons
+  follow the `button-danger-style` token (`data-danger-style` on `<html>` and on `BrandScope`): filled on
+  NuBrakes, outline on Valvoline, always with an icon.
+- Display sizes and spacing are tokens (`display-*-size`, `space-1..8`). Do not add per-brand size overrides in CSS.
+- Brand content (booking prefix, statement name, full name, van livery) lives in `BRAND_META`.
 
 ## Code map
 ```
 src/brand/          tokens.js (tokens + DTCG export), BrandContext.jsx (provider, scope, prototype switches)
-src/data/           mock data and api.js (delayed promises, simulated failures, bookings in localStorage)
+src/data/           mock data and api.js (delayed promises, simulated failures, bookings in localStorage),
+                    history.js (seeded 2025 NuBrakes visits for the migration demo)
 src/ui/index.jsx    primitives: Button, Field, Input, Select, Choice, Check, Segmented, Alert, Empty, Skeleton, Sheet, Wordmark
-src/service/        proposed mobile-service components: ServiceAreaCheck, ArrivalWindowPicker, VehicleChip,
-                    QuoteBreakdown, TechnicianCard, StatusTimeline, ApprovalRequest, LocationSummary
-src/flows/          quote draft context, QuoteStarter (hero widget), QuoteFlow (6 steps)
-src/pages/          Home, Services, ServicePage, Booking (visit tracker), Bookings, System, Notes, Chrome, PrototypePanel
+src/service/        proposed mobile-service components: ServiceAreaCheck, OutOfArea, WaitlistForm, ArrivalWindowPicker,
+                    VehicleChip, QuoteBreakdown, TechnicianCard, StatusTimeline, ApprovalRequest, LocationSummary,
+                    Receipt, WarrantyCard, WarrantyClaimSheet, FindBooking
+src/flows/          quote draft context (hold, price-change and resume helpers), QuoteStarter (hero widget, checks
+                    plate and ZIP together), QuoteFlow (6 steps, 3 when out of area), ResumeQuote
+src/pages/          Home, Services, ServicePage, Booking (visit tracker), Bookings, System, Notes, Chrome, PrototypePanel,
+                    PriceBySize (phone price board)
 docs/strategy.md    brief read, hypotheses, IA, flow decisions, competitor frame, open questions
 ```
 
 ## Conventions here
-- localStorage keys: `nb-prefs`, `nb-quote-draft`, `nb-bookings`.
+- localStorage keys: `nb-prefs`, `nb-quote-draft`, `nb-bookings`, `nb-migr-dismissed`.
+- Quote draft fields worth knowing: `quotedAt` (7-day hold, re-priced on load when expired), `lastStep` (resume),
+  `priceChange` (set through `invalidateQuote(d, reason)`, never a bare `quote: null`), `noBooking`
+  (out-of-area price-only flow), `spotOk`, `keysAt`, `slotDropped`.
+- Review links pass `state: { returnTo: 'details' }`; `next()` returns there and redirects keep the state.
 - Day strings are local `YYYY-MM-DD`; parse with `toDate()` from `src/data/schedule.js`, never `new Date(str)`.
 - Demo data: plate `LKD4821` (TX) finds a 2019 Toyota RAV4; ZIPs 786/787 (Austin), 770-775 (Houston),
   750-752/760-761 (DFW), 780-782 (San Antonio); anything else is out of area. The third open day is always
@@ -52,8 +66,9 @@ docs/strategy.md    brief read, hypotheses, IA, flow decisions, competitor frame
   `src/styles/v2.css` scoped to `[data-style='v2']`, and `src/pages/HomeV2.jsx`. Everything else is shared.
 - UX notes: numbered recommendation markers (`src/ui/UXNote.jsx`, content in `src/data/uxnotes.js`), on by
   default, toggled in the Prototype panel. Keep the numbering in sync with the Notes page (it reads the same list).
-- The floating Prototype panel switches brand and scheme and can make the mock API slow or fail the first
-  attempt of every call. It is a reviewer tool, not product UI.
+- The Prototype panel switches brand and scheme, can make the mock API slow or fail the first attempt of
+  every call, and can seed a returning NuBrakes customer. Desktop: bottom right toggle. Under 820px: an icon
+  in the header that opens a bottom sheet. It is a reviewer tool, not product UI.
 - Photos: none yet. Image hosts were blocked in the build environment. If added, self-host WebP in
   `public/photos/` with credits, per the repo rules.
 - Real company names appear because this is a response to their brief. No logos: wordmarks are plain text.

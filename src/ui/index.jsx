@@ -3,7 +3,8 @@ import { forwardRef, useEffect, useId, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { AlertTriangle, CheckCircle2, Info, Loader2, X, XCircle } from 'lucide-react'
 
-export function Button({ variant = 'primary', size = 'md', loading, icon: Icon, iconEnd: IconEnd, to, block, children, className = '', ...rest }) {
+// Danger buttons carry an icon by default so they never rely on colour alone. Pass icon={null} to drop it.
+export function Button({ variant = 'primary', size = 'md', loading, icon: Icon = variant === 'danger' ? XCircle : undefined, iconEnd: IconEnd, to, block, children, className = '', ...rest }) {
   const cls = `btn btn-${variant} btn-${size}${block ? ' btn-block' : ''} ${className}`
   const inner = (
     <>
@@ -89,15 +90,28 @@ export function Check({ checked, onChange, children, detail }) {
   )
 }
 
+// Radio group pattern: one tab stop (the checked option), arrows wrap, Home and End jump. Moving selects.
 export function Segmented({ label, value, onChange, options, size }) {
+  const ref = useRef(null)
+  function onKey(e) {
+    const i = options.findIndex((o) => o.value === value)
+    const n = options.length
+    const to = { ArrowRight: (i + 1) % n, ArrowDown: (i + 1) % n, ArrowLeft: (i - 1 + n) % n, ArrowUp: (i - 1 + n) % n, Home: 0, End: n - 1 }[e.key]
+    if (to === undefined) return
+    e.preventDefault()
+    onChange(options[to].value)
+    requestAnimationFrame(() => ref.current?.querySelectorAll('[role="radio"]')[to]?.focus())
+  }
+  const hasValue = options.some((o) => o.value === value)
   return (
-    <div className={`segmented${size === 'sm' ? ' segmented-sm' : ''}`} role="radiogroup" aria-label={label}>
-      {options.map((o) => (
+    <div className={`segmented${size === 'sm' ? ' segmented-sm' : ''}`} role="radiogroup" aria-label={label} ref={ref} onKeyDown={onKey}>
+      {options.map((o, i) => (
         <button
           key={o.value}
           type="button"
           role="radio"
           aria-checked={value === o.value}
+          tabIndex={value === o.value || (!hasValue && i === 0) ? 0 : -1}
           className={value === o.value ? 'is-on' : ''}
           onClick={() => onChange(o.value)}
         >
@@ -114,7 +128,7 @@ const ALERT_ICON = { info: Info, success: CheckCircle2, warning: AlertTriangle, 
 export function Alert({ tone = 'info', title, children, action }) {
   const Icon = ALERT_ICON[tone]
   return (
-    <div className={`alert alert-${tone}`} role={tone === 'danger' ? 'alert' : 'status'}>
+    <div className={`alert alert-${tone}`} role={tone === 'danger' ? 'alert' : 'status'} tabIndex={tone === 'danger' ? -1 : undefined}>
       <Icon size={20} aria-hidden className="alert-icon" />
       <div className="alert-body">
         {title && <p className="alert-title">{title}</p>}

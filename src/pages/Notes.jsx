@@ -2,14 +2,18 @@ import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import { UX_NOTES } from '../data/uxnotes.js'
 import { Alert } from '../ui/index.jsx'
+import { PROPOSED } from './System.jsx'
+
+const WORDS = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen', 'Twenty']
+const asWord = (n) => WORDS[n] || String(n)
 
 // What the role description asks for, and where this prototype answers it.
 const BRIEF = [
   ['Translate existing pages and flows into Valvoline’s system', 'Home, services, service detail, quote, booking and my bookings, all built from one component set.', '/'],
   ['Extend the system for both brands', 'Shared components, brand themes as tokens. NuBrakes and Valvoline, light and dark, side by side.', '/system'],
-  ['Redesign key flows from path-to-purchase findings', 'Twelve small, reasoned changes to quote and book, each with a metric. Numbered on the screens.', '/quote/vehicle'],
+  ['Redesign key flows from path-to-purchase findings', `${asWord(UX_NOTES.length)} small, reasoned changes to quote, book and after the visit, each with a metric. Numbered on the screens.`, '/quote/vehicle'],
   ['Responsive hi-fi screens with empty, loading and error states', 'Every data surface has all three. The Prototype panel can slow the network or fail requests.', '/bookings'],
-  ['Propose components where the system has no mobile-service pattern', 'Eight components, from service area check to approving extra work remotely.', '/system'],
+  ['Propose components where the system has no mobile-service pattern', `${asWord(PROPOSED.length)} components, from service area check to the receipt and warranty after the job.`, '/system'],
   ['Clean, developer-ready files', 'Tokens export as W3C DTCG JSON. Component props match the Figma properties listed on the System page.', '/system'],
 ]
 
@@ -94,7 +98,7 @@ export default function Notes() {
           </div>
           <div className="stack-sm">
             <p>NuBrakes keeps its name with a Valvoline endorsement. The Valvoline version runs the same product as "Mobile Brake Service". Both are token sets on one component library, so the business can run both, or move markets from one to the other, without a redesign.</p>
-            <p className="muted">Found while theming: Valvoline red reads as both the primary action and the error colour. I would raise this with the UX lead before any screens go to review.</p>
+            <p className="muted">Found while theming: Valvoline red read as the primary action, the selected state and the error colour at once. Selection is now navy and the cancel button an outline, so red fill only means the main action. To confirm with the UX lead.</p>
             <Link to="/system" className="text-link">See the design system <ArrowRight size={16} aria-hidden /></Link>
           </div>
         </div>

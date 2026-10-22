@@ -12,9 +12,6 @@
 [data-style='v2'] .step-num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
 
 /* type */
-[data-style='v2'] .display-xl { font-size: clamp(40px, 6vw, 80px); line-height: 0.98; }
-[data-style='v2'][data-brand='valvoline'] .display-xl,
-[data-style='v2'] [data-brand='valvoline'] .display-xl { font-size: clamp(44px, 6.8vw, 92px); line-height: 0.94; }
 [data-style='v2'] .lede { color: var(--c-ink); opacity: 0.78; max-width: 52ch; }
 
 /* controls: 2px rules, no soft fills */
@@ -30,7 +27,7 @@
 [data-style='v2'] .choice,
 [data-style='v2'] .check { border-width: 2px; border-color: var(--c-line); background: var(--c-bg); padding-left: 18px; }
 [data-style='v2'] .choice.is-on,
-[data-style='v2'] .check.is-on { background: var(--c-bg); border-color: var(--c-ink); box-shadow: inset 6px 0 0 var(--c-accent); }
+[data-style='v2'] .check.is-on { background: var(--c-bg); border-color: var(--c-selected-line); box-shadow: inset 6px 0 0 var(--c-selected-line); }
 [data-style='v2'] .check-box { border-radius: 0; }
 
 [data-style='v2'] .segmented { background: transparent; border: 2px solid var(--c-ink); padding: 0; gap: 0; border-radius: var(--radius-control); }
@@ -89,9 +86,9 @@
 .strip-ymm { grid-template-columns: 110px minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, 0.9fr) auto; }
 .strip .grid-plate, .strip .grid-ymm { display: contents; }
 .strip .field { padding: 12px 16px 14px; border-right: 2px solid var(--c-ink); gap: 4px; }
-.strip .input { border: 0; min-height: 40px; padding: 0; background: transparent; font-size: 20px; font-weight: 500; }
+.strip .input { border: 0; border-bottom: 1px solid var(--c-line-strong); min-height: 40px; padding: 0; background: transparent; font-size: 20px; font-weight: 500; }
 .strip .input:focus { outline: none; }
-.strip .field:focus-within { box-shadow: inset 0 -4px 0 var(--c-accent); }
+.strip .field:focus-within { outline: 2px solid var(--c-focus); outline-offset: -2px; box-shadow: inset 0 -4px 0 var(--c-accent); }
 .strip .select-wrap::after { right: 2px; }
 .strip .field-hint { font-size: 13px; }
 .strip-go { border-radius: 0 !important; min-height: 100% !important; padding: 0 28px !important; }
@@ -134,7 +131,7 @@
 .v2-board tbody th a:hover { text-decoration: underline; text-decoration-color: var(--c-accent); text-decoration-thickness: 3px; }
 .v2-board td.num { font-size: 18px; text-align: right; }
 .v2-board td + td, .v2-board th + th { border-left: 1px solid var(--c-line); }
-.v2-board tbody tr:hover > * { background: var(--c-accent-soft); }
+.v2-board tbody tr:hover > * { background: var(--c-selected-bg); }
 
 .v2-timeline { border-top: 2px solid var(--c-ink); }
 .v2-timeline li { display: grid; grid-template-columns: 170px 1fr; gap: 20px; padding: 18px 0; border-bottom: 1px solid var(--c-line-strong); }
@@ -213,3 +210,10 @@
 [data-style='v2'] .tiers > div,
 [data-style='v2'] .compare-pane { border: 2px solid var(--c-ink); }
 [data-style='v2'] .step-num { border-radius: 0; }
+[data-style='v2'] .resume { border-width: 2px; border-color: var(--c-ink); border-radius: 0; }
+[data-style='v2'] .receipt,
+[data-style='v2'] .warranty { border: 2px solid var(--c-ink); border-radius: 0; background: var(--c-bg); }
+[data-style='v2'] .warranty { box-shadow: inset 6px 0 0 var(--c-success); }
+[data-style='v2'] .warranty-expiring { box-shadow: inset 6px 0 0 var(--c-warning); }
+[data-style='v2'] .warranty-expired { box-shadow: inset 6px 0 0 var(--c-line-strong); }
+[data-style='v2'] .size-board { border: 2px solid var(--c-ink); border-radius: 0; }

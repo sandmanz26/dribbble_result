@@ -12,6 +12,8 @@ export const SERVICES = {
     price: { compact: 189, mid: 209, suv: 239, truck: 269, ev: 259 },
     premiumAdd: 60,
     partsShare: 0.45,
+    warrantyMonths: 12,
+    warrantyParts: 'pads',
   },
   'pads-rotors': {
     id: 'pads-rotors',
@@ -25,6 +27,8 @@ export const SERVICES = {
     price: { compact: 359, mid: 389, suv: 449, truck: 519, ev: 489 },
     premiumAdd: 90,
     partsShare: 0.55,
+    warrantyMonths: 24,
+    warrantyParts: 'pads and rotors',
   },
   calipers: {
     id: 'calipers',
@@ -38,6 +42,8 @@ export const SERVICES = {
     price: { compact: 449, mid: 479, suv: 529, truck: 589, ev: 569 },
     premiumAdd: 0,
     partsShare: 0.6,
+    warrantyMonths: 24,
+    warrantyParts: 'calipers',
   },
   fluid: {
     id: 'fluid',
@@ -51,6 +57,8 @@ export const SERVICES = {
     price: { compact: 129, mid: 129, suv: 139, truck: 149, ev: 149 },
     premiumAdd: 0,
     partsShare: 0.3,
+    warrantyMonths: 6,
+    warrantyParts: 'brake fluid',
   },
   inspection: {
     id: 'inspection',
@@ -64,7 +72,27 @@ export const SERVICES = {
     price: { compact: 49, mid: 49, suv: 49, truck: 49, ev: 49 },
     premiumAdd: 0,
     partsShare: 0,
+    warrantyMonths: 0,
   },
+  // Booked from a WarrantyCard. Not sold, so no price and not in SERVICE_ORDER.
+  'warranty-check': {
+    id: 'warranty-check',
+    name: 'Warranty check',
+    short: 'Warranty check',
+    perAxle: false,
+    hours: 'About 30 minutes',
+    blurb: 'The technician checks work we did that does not feel right.',
+    free: true,
+    warrantyMonths: 0,
+  },
+}
+
+// When the warranty on a finished job ends. Day strings are local YYYY-MM-DD.
+export function warrantyEndFor(service, day) {
+  const months = SERVICES[service]?.warrantyMonths
+  if (!months || !day) return null
+  const d = new Date(+day.slice(0, 4), +day.slice(5, 7) - 1 + months, +day.slice(8, 10))
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
 }
 
 export const SERVICE_ORDER = ['pads', 'pads-rotors', 'calipers', 'fluid', 'inspection']
@@ -74,7 +102,7 @@ const SEVERITY = ['inspection', 'fluid', 'pads', 'calipers', 'pads-rotors']
 
 export const SYMPTOMS = [
   { id: 'squeal', label: 'High squeal when braking', service: 'pads', note: 'Usually worn pads. The wear indicator makes that sound on purpose.' },
-  { id: 'grind', label: 'Grinding or scraping', service: 'pads-rotors', note: 'Pads may be worn through and scoring the rotors. Drive as little as you can until it is fixed.', urgent: true },
+  { id: 'grind', label: 'Grinding or scraping', service: 'pads-rotors', note: 'Pads may be worn through and scoring the rotors.', urgent: true },
   { id: 'shake', label: 'Pedal or wheel shakes when braking', service: 'pads-rotors', note: 'Most often uneven rotors. New pads alone will not fix it.' },
   { id: 'soft', label: 'Soft or spongy pedal', service: 'fluid', note: 'Could be air or moisture in the fluid, or a leak. The technician checks for leaks first.', urgent: true },
   { id: 'pull', label: 'Car pulls to one side', service: 'calipers', note: 'Often a caliper that is sticking. The technician confirms before any work.' },
@@ -105,7 +133,7 @@ const TAX = 0.0825
 
 export function priceQuote({ service, axle, size, tier }) {
   const s = SERVICES[service]
-  if (!s || !size) return null
+  if (!s || !s.price || !size) return null
   const axles = s.perAxle ? (axle === 'both' ? 2 : 1) : 1
   const unit = s.price[size] + (tier === 'premium' ? s.premiumAdd : 0)
   const subtotal = unit * axles

@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
-import { BRAND_META, STYLE_META, tokenVars } from './tokens.js'
+import { BRAND_META, shapeFor, STYLE_META, tokenVars } from './tokens.js'
 import { simulation } from '../data/api.js'
 
 const KEY = 'nb-prefs'
@@ -57,6 +57,7 @@ export function BrandProvider({ children }) {
     root.dataset.brand = brand
     root.dataset.style = style
     root.dataset.scheme = scheme
+    root.dataset.dangerStyle = shapeFor(brand, style)['button-danger-style']
     root.style.colorScheme = scheme
     document.title = `${BRAND_META[brand].name} ${brand === 'valvoline' ? 'Mobile Brake Service' : 'Mobile Brake Repair'}`
   }, [brand, scheme, style])
@@ -72,14 +73,16 @@ export const useBrand = () => useContext(Ctx)
 
 // Renders children with another brand/scheme's tokens, scoped to this element.
 // Used on the System page to show both brands side by side.
-export function BrandScope({ brand, scheme, style = 'v1', className = '', children, ...rest }) {
+// `vars` overrides single tokens (the System page uses it to show a before state).
+export function BrandScope({ brand, scheme, style = 'v1', className = '', vars, dangerStyle, children, ...rest }) {
   return (
     <div
       data-brand={brand}
       data-scheme={scheme}
       data-style={style}
+      data-danger-style={dangerStyle || shapeFor(brand, style)['button-danger-style']}
       className={`brand-scope ${className}`}
-      style={{ ...tokenVars(brand, scheme, style), colorScheme: scheme }}
+      style={{ ...tokenVars(brand, scheme, style), ...vars, colorScheme: scheme }}
       {...rest}
     >
       {children}

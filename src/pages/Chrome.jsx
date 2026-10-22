@@ -3,6 +3,7 @@ import { Link, NavLink, useLocation } from 'react-router-dom'
 import { Menu, X } from 'lucide-react'
 import { useBrand } from '../brand/BrandContext.jsx'
 import { Button, IconButton, Wordmark } from '../ui/index.jsx'
+import { ProtoTrigger } from './PrototypePanel.jsx'
 
 const NAV = [
   { to: '/services', label: 'Services and prices' },
@@ -32,6 +33,7 @@ export function SiteHeader() {
         </nav>
         <div className="header-cta">
           <Button to="/quote/vehicle" size="sm">Get a quote</Button>
+          <ProtoTrigger />
           <IconButton className="menu-btn" icon={open ? X : Menu} label={open ? 'Close menu' : 'Open menu'} aria-expanded={open} onClick={() => setOpen(!open)} />
         </div>
       </div>

@@ -2,8 +2,7 @@ import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import { money, SERVICE_ORDER, SERVICES } from '../data/services.js'
 import { SIZE_LABEL } from '../data/vehicles.js'
-
-const SIZES = ['compact', 'mid', 'suv', 'truck', 'ev']
+import { PriceBySize, SIZES } from './PriceBySize.jsx'
 
 export default function Services() {
   return (
@@ -13,7 +12,8 @@ export default function Services() {
           <h1 className="display-lg">Services and prices</h1>
           <p className="lede">Standard parts, labor included, per axle unless noted. Sales tax applies to parts. Your quote shows the exact total for your vehicle.</p>
         </div>
-        <div className="table-scroll" role="region" aria-label="Prices by vehicle type" tabIndex={0}>
+        <PriceBySize />
+        <div className="table-scroll size-board-wide" role="region" aria-label="Prices by vehicle type" tabIndex={0}>
           <table className="price-table">
             <thead>
               <tr>

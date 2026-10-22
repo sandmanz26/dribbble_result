@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import { SiteFooter, SiteHeader } from './pages/Chrome.jsx'
-import { PrototypePanel } from './pages/PrototypePanel.jsx'
+import { PrototypePanel, ProtoProvider } from './pages/PrototypePanel.jsx'
 import Home from './pages/Home.jsx'
 import HomeV2 from './pages/HomeV2.jsx'
 import { useBrand } from './brand/BrandContext.jsx'
@@ -46,7 +46,7 @@ function Site({ children }) {
 
 export default function App() {
   return (
-    <>
+    <ProtoProvider>
       <ScrollReset />
       <Routes>
         <Route path="/" element={<Site><HomeForStyle /></Site>} />
@@ -61,6 +61,6 @@ export default function App() {
         <Route path="*" element={<Site><NotFound /></Site>} />
       </Routes>
       <PrototypePanel />
-    </>
+    </ProtoProvider>
   )
 }

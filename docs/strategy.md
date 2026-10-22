@@ -22,8 +22,8 @@ What the role description adds to the brief:
 How the prototype answers this:
 - A **UX notes** layer (on by default, toggle in the Prototype panel) puts numbered markers on the
   screens. Each opens the recommendation, the reason and the metric. Source list: `src/data/uxnotes.js`.
-- The Notes page maps each line of the role description to where it is answered, lists the twelve
-  recommendations, the Figma file setup, an eight-week plan and questions for the PM and UX lead.
+- The Notes page maps each line of the role description to where it is answered, lists every
+  recommendation (the count is derived from the list), the Figma file setup, an eight-week plan and questions for the PM and UX lead.
 - The System page lists the Figma variants and properties for each component.
 
 Constraints at build time:
@@ -49,8 +49,9 @@ Home            hero quote starter, acquisition note, how a visit works, service
 Services        price table by vehicle type
 Service detail  what is included, signs, price by vehicle, quote starter (preselects the service)
 Quote flow      vehicle > brakes > location > price > time > book   (/quote/:step, resumable draft)
-Booking         visit tracker: status timeline, technician, approval, report, reschedule, cancel
-My bookings     list with loading and empty states
+Booking         visit tracker: status timeline, technician, approval, report, receipt and payment,
+                warranty, reschedule, cancel (reason-aware), book again
+My bookings     Upcoming and Past visits, NuBrakes-origin visits labelled, find a booking by number + phone
 System          token tiers, brands side by side, token tables, proposed components, states, handoff
 Notes           this document in short, for the client
 ```
@@ -60,13 +61,21 @@ Notes           this document in short, for the client
   Valvoline light/dark) > component (only where brands differ: button case, control radius, display width).
 - **Brand architecture:** NuBrakes keeps its name with "A Valvoline company". The Valvoline version runs the
   same product as "Mobile Brake Service". Markets can switch brand without a redesign.
-- **Found while theming:** Valvoline red reads as both "primary" and "error". Errors use a deeper red and
-  always an icon and text. To confirm with the Valvoline UX lead.
-- **Handoff:** tokens export as W3C DTCG JSON (System page). Component props mirror Figma properties.
+- **Found while theming:** Valvoline red read as "primary", "selected" and "error" at once. Errors use a
+  deeper red and always an icon and text; selection uses `selected-bg` / `selected-line` (navy mist on
+  Valvoline); the `button-danger-style` component token makes destructive buttons an outline on Valvoline.
+  The System page shows the before and after. To confirm with the Valvoline UX lead.
+- **Brand content tokens** (`BRAND_META`): booking prefix (`NB-`, `VMB-`), statement name, full name and van
+  livery, so ids, receipts and the technician card follow the brand.
+- **Handoff:** tokens export as W3C DTCG JSON (System page) with `$type` wherever DTCG defines one and semantic colours
+  written as aliases of core colours. Type ramp and spacing are tokens. A contrast table is computed from
+  the tokens (WCAG 2) for every mode. Component props mirror Figma properties; the Figma table lists every
+  exported component with the routes that use it.
 
 ## 5. Proposed components for mobile service
-ServiceAreaCheck, ArrivalWindowPicker, VehicleChip, QuoteBreakdown, TechnicianCard, StatusTimeline,
-ApprovalRequest, LocationSummary. Each has loading, empty and error states where it loads data.
+ServiceAreaCheck (with OutOfArea and WaitlistForm), ArrivalWindowPicker, VehicleChip, QuoteBreakdown, quote
+summary sheet, LocationSummary, TechnicianCard, StatusTimeline, ApprovalRequest, Receipt, WarrantyCard (plus
+WarrantyClaimSheet), FindBooking. Each has loading, empty and error states where it loads data.
 
 ## 6. Competitor frame
 | Service | Pattern worth noting |
@@ -94,3 +103,34 @@ Switchable in the Prototype panel. Same components, data, brands and recommendat
 | Flow | Steps in a left column, summary in a right column | Steps as a numbered rail on top, quote as a ticket on the right |
 | Fits | Consumer brand voice, closer to NuBrakes today | Service desk tone, closer to Valvoline retail and fleet |
 Mechanism: V2 is a third token dimension (style) next to brand and scheme, plus scoped layout rules.
+
+## 9. Second UX pass (what changed and why)
+Each item is also a numbered UX note on the screens and on the Notes page.
+- **Coverage first.** The hero starter checks the plate and the ZIP together. Out of area: the waitlist shows
+  in place, with "See the price anyway", which runs vehicle > brakes > price and ends in the waitlist. A failed
+  ZIP check never blocks the quote; Location checks again. Copy no longer claims the ZIP changes the price.
+- **Price changes explained.** Edits that drop the quote record `{from, reason}`. The price step says
+  "Price updated from $X to $Y" and why (vehicle, service, axle, or the 7-day hold ran out). The total is
+  announced politely when the tier changes.
+- **Resume and a dated hold.** Home offers "Continue your quote" when a draft is in progress. "Save and exit"
+  confirms on the home page. The hold reads "Price held until <date>"; drafts older than 7 days are re-priced.
+- **ZIP edits keep the price.** Only a change of metro (a different team) drops the arrival window, with a
+  warning on the Time step. Stale ZIP checks are ignored.
+- **Edit from the summary.** Every summary and review row has a Change link; edits made from the review return
+  to it. The Book step shows the review first, then contact fields, and the button carries the total.
+- **Access where the choice is made.** Keys are asked under "I will leave the keys". Apartment, work and street
+  spots ask whether there is a flat spot with room to open the doors; "Not sure" adds a text before arrival.
+- **Symptoms.** Urgent symptoms lead the advice with "Drive gently until it is fixed". "No symptoms, just due"
+  is exclusive. Urgent drafts open the picker on the first free day and mark the soonest window.
+- **Keyboard.** Segmented controls and the day strip are one tab stop with arrow, Home and End keys. Closed days
+  are skipped. Step errors take focus and scroll into view.
+- **After the visit.** Receipt from the stored quote lines with pay, failed and paid states, statement name and
+  print. Warranty card with end date and "Something feels wrong", which books a free warranty check. A
+  declined finding stays in the report with "Book this for later".
+- **Cancel routes.** "Need a different day" offers a new window; "Price is higher than expected" offers
+  standard parts with the difference. "Book again" keeps the car and address and goes straight to times.
+- **Migration.** A "Returning NuBrakes customer" switch (Prototype panel) seeds two 2025 NuBrakes visits. In
+  Valvoline they show as Past visits labelled "Booked with NuBrakes", with an info note and warranties honored
+  by Valvoline. Old NB- numbers find a booking with the last 4 digits of the phone.
+- **Phones.** The price board shows one vehicle type at a time (default: the customer's car). The service page
+  has a "Price this for my car" jump. The Prototype toggle moved into the header as an icon on phones.

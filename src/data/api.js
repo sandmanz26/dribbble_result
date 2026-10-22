@@ -4,6 +4,7 @@ import { PLATES } from './vehicles.js'
 import { metroFor } from './areas.js'
 import { priceQuote, SERVICES } from './services.js'
 import { TECHNICIANS, windowsFor } from './schedule.js'
+import { BRAND_META } from '../brand/tokens.js'
 
 export const simulation = { slow: false, failures: false }
 const attempts = {}
@@ -72,13 +73,32 @@ function writeBookings(list) {
   } catch {}
 }
 
-export async function createBooking(draft) {
+// Only booking fields are stored; quote drafts carry transient flags (priceChange, lastStep...).
+export async function createBooking(draft, brand = 'nubrakes') {
   await wait(1200)
   maybeFail('book', 'slot_taken', 'Someone just booked that arrival window.')
   const techs = TECHNICIANS[draft.metro] || TECHNICIANS.austin
+  const q = draft.quote?.[draft.tier] || draft.quote?.standard
   const booking = {
-    ...draft,
-    id: `NB-${String(Date.now()).slice(-5)}`,
+    id: `${BRAND_META[brand].bookingPrefix}${String(Date.now()).slice(-5)}`,
+    brand,
+    vehicle: draft.vehicle,
+    size: draft.size,
+    service: draft.service,
+    axle: draft.axle,
+    tier: q?.hasTiers ? draft.tier : 'standard',
+    lines: q ? { parts: q.parts, labor: q.labor, tax: q.tax, total: q.total } : null,
+    total: q?.total ?? 0,
+    metro: draft.metro,
+    zip: draft.zip,
+    address: draft.address,
+    locationType: draft.locationType,
+    accessNotes: draft.accessNotes,
+    spotOk: draft.spotOk,
+    slot: draft.slot,
+    presence: draft.presence,
+    keysNote: draft.presence === 'keys' ? draft.keysAt : '',
+    contact: draft.contact,
     createdAt: new Date().toISOString(),
     status: 'scheduled',
     tech: techs[0],
@@ -97,7 +117,62 @@ export async function getBooking(id) {
 
 export async function listBookings() {
   await wait(600)
+  maybeFail('list', 'network', 'Your visits did not load.')
   return readBookings()
+}
+
+// Warranty check booked from a WarrantyCard: same car and address, no charge.
+export async function createWarrantyCheck(from, { symptom, slot }, brand = 'nubrakes') {
+  await wait(1000)
+  maybeFail('warranty', 'network', 'That request did not go through.')
+  const techs = TECHNICIANS[from.metro] || TECHNICIANS.austin
+  const booking = {
+    id: `${BRAND_META[brand].bookingPrefix}${String(Date.now()).slice(-5)}`,
+    brand,
+    vehicle: from.vehicle,
+    size: from.size,
+    service: 'warranty-check',
+    axle: from.axle,
+    tier: 'standard',
+    lines: { parts: 0, labor: 0, tax: 0, total: 0 },
+    total: 0,
+    warrantyFor: from.id,
+    symptom,
+    metro: from.metro,
+    zip: from.zip,
+    address: from.address,
+    locationType: from.locationType,
+    accessNotes: from.accessNotes,
+    slot,
+    presence: from.presence,
+    keysNote: from.keysNote,
+    contact: from.contact,
+    createdAt: new Date().toISOString(),
+    status: 'scheduled',
+    tech: techs[0],
+    extra: null,
+  }
+  writeBookings([booking, ...readBookings()])
+  return booking
+}
+
+// Find a booking by number and the last 4 digits of the phone. Old NB- numbers keep working
+// after the move to Valvoline, so both prefixes are accepted.
+export async function findBooking(id, last4) {
+  await wait(800)
+  maybeFail('find')
+  const want = String(id).trim().toUpperCase().replace(/\s+/g, '')
+  if (!/^(NB|VMB)-?\w+$/.test(want)) throw new ApiError('not_found', 'No visit matches that number and phone.')
+  const norm = (x) => x.toUpperCase().replace('-', '')
+  const hit = readBookings().find(
+    (b) => norm(b.id) === norm(want) && (b.contact?.phone || '').replace(/\D/g, '').endsWith(String(last4).trim()),
+  )
+  if (!hit) throw new ApiError('not_found', 'No visit matches that number and phone.')
+  return hit
+}
+
+export function writeBookingList(list) {
+  writeBookings(list)
 }
 
 export async function updateBooking(id, patch) {
@@ -114,12 +189,14 @@ export function extraFinding(booking) {
   const rotors = SERVICES['pads-rotors'].price[size] - SERVICES.pads.price[size]
   return booking.service === 'pads'
     ? {
+        service: 'pads-rotors',
         title: 'Front rotors below minimum thickness',
         reading: 'Measured 25.1 mm. Minimum for this vehicle is 26.0 mm.',
         why: 'New pads on thin rotors can shake and wear out early.',
         price: rotors,
       }
     : {
+        service: 'fluid',
         title: 'Brake fluid failed the moisture test',
         reading: 'Measured 3.5% water. Replace above 3%.',
         why: 'Wet fluid boils sooner under hard braking and makes the pedal soft.',

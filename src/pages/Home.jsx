@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { ArrowRight, BadgeCheck, CreditCard, Gauge, ShieldCheck } from 'lucide-react'
 import { useBrand } from '../brand/BrandContext.jsx'
 import { QuoteStarter } from '../flows/QuoteStarter.jsx'
+import { ResumeQuote, SavedNotice } from '../flows/ResumeQuote.jsx'
 import { useDraft } from '../flows/draft.jsx'
 import { METROS } from '../data/areas.js'
 import { money, recommend, SERVICE_ORDER, SERVICES, SYMPTOMS } from '../data/services.js'
@@ -98,9 +99,13 @@ export default function Home() {
               <li><CreditCard size={20} aria-hidden /> Pay after the job</li>
             </ul>
           </div>
-          <div className="hero-card">
-            <UXNote id="price-first" className="uxnote-corner" />
-            <QuoteStarter />
+          <div className="stack-sm">
+            <SavedNotice />
+            <ResumeQuote />
+            <div className="hero-card">
+              <UXNote id="price-first" className="uxnote-corner" />
+              <QuoteStarter />
+            </div>
           </div>
         </div>
       </section>

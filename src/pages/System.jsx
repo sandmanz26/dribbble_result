@@ -1,13 +1,18 @@
 import { useState } from 'react'
-import { ArrowRight, CalendarPlus, Download, MapPinOff } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { ArrowRight, CalendarPlus, ChevronUp, Download, MapPinOff } from 'lucide-react'
 import { BrandScope, useBrand } from '../brand/BrandContext.jsx'
-import { BRAND_META, BRANDS, SEMANTIC_DOCS, STYLE_META, semantic, shapeFor, toDTCG } from '../brand/tokens.js'
-import { priceQuote } from '../data/services.js'
+import {
+  BRAND_META, BRANDS, CONTRAST_PAIRS, contrastFor, SEMANTIC_DOCS, STYLE_META, semantic, shapeFor, toDTCG,
+} from '../brand/tokens.js'
+import { money, priceQuote } from '../data/services.js'
 import { TECHNICIANS } from '../data/schedule.js'
 import {
-  ApprovalRequest, ArrivalWindowPicker, QuoteBreakdown, ServiceAreaCheck, StatusTimeline, TechnicianCard, VehicleChip,
+  ApprovalRequest, ArrivalWindowPicker, FindBooking, LocationSummary, QuoteBreakdown, Receipt, ServiceAreaCheck, StatusTimeline,
+  TechnicianCard, VehicleChip, WarrantyCard,
 } from '../service/index.jsx'
-import { Alert, Button, Choice, Empty, Field, Input, Segmented, Wordmark } from '../ui/index.jsx'
+import { Alert, Button, Choice, Empty, Field, Input, Segmented, Sheet, Wordmark } from '../ui/index.jsx'
+import { UXNote } from '../ui/UXNote.jsx'
 
 const sampleQuote = {
   standard: priceQuote({ service: 'pads', axle: 'front', size: 'suv', tier: 'standard' }),
@@ -17,27 +22,60 @@ const sampleVehicle = { year: 2019, make: 'Toyota', model: 'RAV4' }
 const tech = TECHNICIANS.austin[0]
 const finding = { title: 'Front rotors below minimum thickness', reading: 'Measured 25.1 mm. Minimum is 26.0 mm.', why: 'New pads on thin rotors can shake and wear out early.', price: 210 }
 
-const FIGMA = [
-  ['Button', 'variant: primary, secondary, ghost, danger', 'size: sm, md, lg. state: default, hover, focus, disabled, loading. icon start/end'],
-  ['Field', 'state: default, focus, error, disabled', 'label, hint, error text, optional'],
-  ['Choice / Check', 'checked, disabled', 'title, detail, aside slot'],
-  ['Alert', 'tone: info, success, warning, danger', 'title, body, action slot'],
-  ['ServiceAreaCheck', 'state: idle, checking, in area, out of area, waitlist sent, error', 'ZIP prefilled'],
-  ['ArrivalWindowPicker', 'state: loading, open, last spot, full day, closed day, error', 'selected day, selected window'],
-  ['QuoteBreakdown', 'status: loading, ready, error', 'tiers on/off, per axle or per visit'],
-  ['TechnicianCard', 'status: assigned, on the way, working, done', 'ETA, van'],
-  ['StatusTimeline', 'step: booked to done', ''],
-  ['ApprovalRequest', 'state: pending, sending, approved, declined', 'reading, reason, price'],
+// Every exported component, its Figma variants and properties, and the routes that use it.
+// The Figma table on this page is generated from this one list.
+const COMPONENTS = [
+  ['Button', 'variant: primary, secondary, ghost, danger', 'size: sm, md, lg. state: default, hover, focus, disabled, loading. icon start/end. Danger is filled or outline per brand', ['/', '/quote/details']],
+  ['IconButton', 'state: default, hover, focus', 'icon, label', ['/']],
+  ['Field', 'state: default, focus, error, disabled', 'label, hint, error text, optional', ['/quote/details']],
+  ['Input / Select', 'state: default, hover, focus, invalid, disabled', 'placeholder', ['/quote/vehicle']],
+  ['Choice', 'checked, disabled', 'title, detail, aside slot', ['/quote/location']],
+  ['Check', 'checked', 'title, detail', ['/quote/issue']],
+  ['Segmented', 'size: md, sm', 'options, icon per option', ['/quote/vehicle']],
+  ['Alert', 'tone: info, success, warning, danger', 'title, body, action slot', ['/quote/issue']],
+  ['Empty', 'with or without action', 'icon, title, body', ['/bookings']],
+  ['Skeleton / Loading', 'shape: line, block', 'width, height, radius, label', ['/quote/price']],
+  ['Sheet', 'open, closed', 'title, body, footer', ['/bookings']],
+  ['Wordmark', 'brand: NuBrakes, Valvoline. compact', '', ['/']],
+  ['VehicleChip', 'editable or not', 'vehicle, size', ['/quote/price']],
+  ['ServiceAreaCheck', 'state: idle, checking, in area, out of area, waitlist sent, error', 'ZIP prefilled', ['/']],
+  ['OutOfArea / WaitlistForm', 'state: idle, invalid, sending, sent', 'ZIP, action slot', ['/']],
+  ['ArrivalWindowPicker', 'state: loading, open, last spot, soonest, full day, closed day, error', 'selected day, selected window, urgent', ['/quote/time']],
+  ['QuoteBreakdown', 'status: loading, ready, error', 'tiers on/off, per axle or per visit, hold date', ['/quote/price']],
+  ['LocationSummary', '', 'address, location type, access notes', ['/bookings']],
+  ['Quote summary sheet', 'collapsed, open', 'rows with Change links, total', ['/quote/issue']],
+  ['TechnicianCard', 'status: assigned, on the way, working, done', 'ETA, van, livery', ['/bookings']],
+  ['StatusTimeline', 'step: booked to done', '', ['/bookings']],
+  ['ApprovalRequest', 'state: pending, sending, approved, declined', 'reading, reason, price', ['/bookings']],
+  ['Receipt', 'state: unpaid, paying, failed, paid. extra: approved, declined', 'lines, statement name', ['/bookings']],
+  ['WarrantyCard', 'status: active, expiring, expired. migrated', 'service, axle, end date, origin brand', ['/bookings']],
+  ['FindBooking', 'state: idle, invalid, loading, not found, error', 'booking number, last 4 of phone', ['/bookings']],
 ]
 
-const PROPOSED = [
+const sampleBooking = {
+  id: 'NB-41873', brand: 'nubrakes', service: 'pads', axle: 'front', size: 'suv', tier: 'standard',
+  lines: { parts: sampleQuote.standard.parts, labor: sampleQuote.standard.labor, tax: sampleQuote.standard.tax, total: sampleQuote.standard.total },
+  extra: 'declined', paid: false,
+}
+const inDays = (n) => {
+  const d = new Date()
+  d.setDate(d.getDate() + n)
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+}
+
+export const PROPOSED = [
   { name: 'ServiceAreaCheck', why: 'A shop system never has to say "we do not come to you". Covers in area, out of area with a waitlist, invalid ZIP and lookup error.', demo: () => <ServiceAreaCheck initialZip="73301" /> },
-  { name: 'ArrivalWindowPicker', why: 'Mobile service sells a window, not a slot at a bay. Day strip plus windows, with closed day, fully booked day, last spot and load error.', demo: () => <DemoPicker /> },
+  { name: 'ArrivalWindowPicker', why: 'Mobile service sells a window, not a slot at a bay. Day strip plus windows, with closed day, fully booked day, last spot and load error. One tab stop; arrow keys move between open days.', demo: () => <DemoPicker /> },
   { name: 'VehicleChip', why: 'The vehicle drives price, so it stays visible and editable through the flow.', demo: () => <VehicleChip vehicle={sampleVehicle} size="suv" onEdit={() => {}} /> },
-  { name: 'QuoteBreakdown', why: 'Itemised parts, labor and tax with an optional parts tier. Answers "what will this cost" before contact details.', demo: () => <DemoQuote /> },
-  { name: 'TechnicianCard', why: 'Someone is coming to your home. Name, credentials, vehicle to look for and live arrival status.', demo: () => <TechnicianCard tech={tech} status="en_route" eta={14} window="10 am to 12 pm" /> },
+  { name: 'QuoteBreakdown', why: 'Itemised parts, labor and tax with an optional parts tier and the date the price is held until. Answers "what will this cost" before contact details.', demo: () => <DemoQuote /> },
+  { name: 'Quote summary sheet', why: 'On phones the running quote sits behind one line with the total. Every row links back to its step.', demo: () => <DemoSummarySheet /> },
+  { name: 'LocationSummary', why: 'The spot, its type and the access notes the technician reads before driving out.', demo: () => <LocationSummary address="4500 Duval St, Apt lot B" type="Apartment lot" notes="Gate code 4412. Visitor spaces by the leasing office" /> },
+  { name: 'TechnicianCard', why: 'Someone is coming to your home. Name, credentials, the van to look for, including its livery during the rebrand, and live arrival status.', demo: () => <TechnicianCard tech={tech} status="en_route" eta={14} window="10 am to 12 pm" livery="NuBrakes livery" /> },
   { name: 'StatusTimeline', why: 'Booked to done in five steps, so customers do not have to call to ask where the technician is.', demo: () => <StatusTimeline status="en_route" /> },
   { name: 'ApprovalRequest', why: 'Extra work found on site is approved remotely with the measurement and price. Declining is always allowed.', demo: () => <DemoApproval /> },
+  { name: 'Receipt', why: 'The bill uses the quote lines, shows what was approved or declined on site, how it appears on the card statement, and pays in place.', demo: () => <DemoReceipt /> },
+  { name: 'WarrantyCard', why: 'What is covered and until when, with a way to report a problem. Visits made under NuBrakes say who issued and who honors the warranty.', demo: () => <DemoWarranty /> },
+  { name: 'FindBooking', why: 'Booking number plus the last 4 digits of the phone. Old NB- numbers keep working after the move to Valvoline.', demo: () => <FindBooking /> },
 ]
 
 function DemoPicker() {
@@ -46,11 +84,141 @@ function DemoPicker() {
 }
 function DemoQuote() {
   const [tier, setTier] = useState('standard')
-  return <QuoteBreakdown service="pads" axle="front" quote={sampleQuote} tier={tier} onTier={setTier} />
+  return <QuoteBreakdown service="pads" axle="front" quote={sampleQuote} tier={tier} onTier={setTier} holdLabel="Price held until Thu, Oct 29" />
 }
 function DemoApproval() {
   const [d, setD] = useState(null)
   return <ApprovalRequest finding={finding} techName="Marcus" decided={d} onDecide={setD} />
+}
+function DemoSummarySheet() {
+  const [open, setOpen] = useState(false)
+  return (
+    <>
+      <button type="button" className="summary-trigger" aria-expanded={open} onClick={() => setOpen(true)}>
+        <span>Your quote</span>
+        <span className="num">{money(sampleQuote.standard.total)}</span>
+        <ChevronUp size={18} aria-hidden />
+      </button>
+      <Sheet open={open} onClose={() => setOpen(false)} title="Your quote">
+        <dl className="lines lines-review">
+          <div><dt>Vehicle</dt><dd>2019 Toyota RAV4 <button type="button" className="link-btn change-link">Change<span className="sr-only"> vehicle</span></button></dd></div>
+          <div><dt>Service</dt><dd>Brake pads, front axle <button type="button" className="link-btn change-link">Change<span className="sr-only"> service</span></button></dd></div>
+          <div className="lines-total"><dt>Total</dt><dd className="num">{money(sampleQuote.standard.total)}</dd></div>
+        </dl>
+        <p className="small muted">Pay after the job. Price held until Thu, Oct 29.</p>
+      </Sheet>
+    </>
+  )
+}
+function DemoReceipt() {
+  const [b, setB] = useState(sampleBooking)
+  return (
+    <Receipt
+      booking={b}
+      finding={finding}
+      onPay={async () => {
+        await new Promise((r) => setTimeout(r, 600))
+        setB((x) => ({ ...x, paid: true, paidAt: new Date().toISOString() }))
+      }}
+    />
+  )
+}
+function DemoWarranty() {
+  const { brand } = useBrand()
+  return (
+    <div className="stack-sm">
+      <WarrantyCard originBrand={brand} currentBrand={brand} service="pads-rotors" axle="front" endDate={inDays(500)} status="active" onReport={() => {}} />
+      <WarrantyCard originBrand={brand} currentBrand={brand} service="pads" axle="both" endDate={inDays(30)} status="expiring" onReport={() => {}} />
+      <WarrantyCard originBrand={brand} currentBrand={brand} service="fluid" endDate={inDays(-90)} status="expired" />
+      <WarrantyCard originBrand="nubrakes" currentBrand="valvoline" service="pads-rotors" axle="front" endDate={inDays(500)} status="active" onReport={() => {}} />
+    </div>
+  )
+}
+
+// Type ramp, read from the shape tokens of the current brand and direction.
+const TYPE_ROWS = [
+  ['Display XL', 'display-xl', 'display-xl-size', 'display-xl-leading'],
+  ['Display L', 'display-lg', 'display-lg-size', '1.04'],
+  ['Display M', 'display-md', 'display-md-size', '1.04'],
+  ['Display S', 'display-sm', 'display-sm-size', '1.1'],
+  ['Display XS', 'display-xs', 'display-xs-size', '1.15'],
+]
+
+function TypeTable({ brand, style }) {
+  const t = shapeFor(brand, style)
+  const family = (f) => f.split(',')[0].replace(/'/g, '').replace(' Variable', '')
+  return (
+    <div className="table-scroll" role="region" aria-label="Type ramp" tabIndex={0}>
+      <table className="token-table type-table">
+        <thead>
+          <tr><th scope="col">Style</th><th scope="col">Specimen</th><th scope="col">Family</th><th scope="col">Size</th><th scope="col">Line height</th><th scope="col">Tracking</th><th scope="col">Case</th></tr>
+        </thead>
+        <tbody>
+          {TYPE_ROWS.map(([name, cls, size, lead]) => (
+            <tr key={name}>
+              <th scope="row">{name}</th>
+              <td><span className={`${cls} type-spec`}>Brakes</span></td>
+              <td>{family(t['font-display'])}, wdth {t['display-wdth']}, {t['display-wght']}</td>
+              <td><code>{t[size]}</code></td>
+              <td><code>{t[lead] || lead}</code></td>
+              <td><code>{t['display-track']}</code></td>
+              <td>{t['display-case'] === 'uppercase' ? 'Upper' : 'Sentence'}</td>
+            </tr>
+          ))}
+          <tr>
+            <th scope="row">Body</th>
+            <td><span className="type-body">Brakes fixed where you park.</span></td>
+            <td>{family(t['font-body'])}</td>
+            <td><code>16px</code></td>
+            <td><code>{style === 'v2' ? '1.5' : '1.55'}</code></td>
+            <td><code>0</code></td>
+            <td>Sentence</td>
+          </tr>
+          <tr>
+            <th scope="row">Button</th>
+            <td><span className="btn btn-primary btn-sm type-btn">Book</span></td>
+            <td>{family(t['font-body'])}, {t['button-wght']}</td>
+            <td><code>{brand === 'valvoline' ? '14px' : '15px'}</code></td>
+            <td><code>1</code></td>
+            <td><code>{t['button-track']}</code></td>
+            <td>{t['button-case'] === 'uppercase' ? 'Upper' : 'Sentence'}</td>
+          </tr>
+          <tr>
+            <th scope="row">Figures</th>
+            <td><span className="num type-num">$289.50</span></td>
+            <td>{family(t['font-mono'])}, tabular</td>
+            <td><code>inherit</code></td>
+            <td><code>inherit</code></td>
+            <td><code>{style === 'v2' ? '-0.01em' : '0'}</code></td>
+            <td>n/a</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
+function ContrastTable({ scheme }) {
+  return (
+    <div className="table-scroll" role="region" aria-label="Contrast checks" tabIndex={0}>
+      <table className="token-table">
+        <thead>
+          <tr><th scope="col">Text on fill</th>{BRANDS.map((b) => <th scope="col" key={b}>{BRAND_META[b].name}, {scheme}</th>)}</tr>
+        </thead>
+        <tbody>
+          {CONTRAST_PAIRS.map((pair) => (
+            <tr key={pair.join('/')}>
+              <th scope="row"><code>{pair[0]}</code> on <code>{pair[1]}</code></th>
+              {BRANDS.map((b) => {
+                const r = contrastFor(b, scheme, pair)
+                return <td key={b}><span className="num">{r.toFixed(2)}:1</span> <span className={r >= 4.5 ? 'ok' : 'field-error'}>{r >= 4.5 ? 'Pass AA' : 'Below 4.5'}</span></td>
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
 }
 
 function Specimen({ brand, style }) {
@@ -80,6 +248,48 @@ function Specimen({ brand, style }) {
   )
 }
 
+// Before and after for the Valvoline selected-vs-error fix. "Before" re-points the selected tokens at
+// accent-soft and forces a filled danger button, so both panes use the same components.
+function SelectedFix({ scheme, style }) {
+  const t = semantic.valvoline[scheme]
+  const pane = (label, before) => (
+    <figure className="fix-pane stack-sm">
+      <figcaption className="field-label">{label}</figcaption>
+      <BrandScope
+        brand="valvoline"
+        scheme={scheme}
+        style={style}
+        className="compare-pane stack-sm"
+        dangerStyle={before ? 'filled' : undefined}
+        vars={before ? { '--c-selected-bg': t['accent-soft'], '--c-selected-line': t.ink } : undefined}
+      >
+        <Choice name={`fix-${label}`} value="front" checked onChange={() => {}} title="Front axle" />
+        <Field label="Mobile number" error="Enter a 10-digit mobile number">
+          {(a) => <Input {...a} defaultValue="(512) 555-01" />}
+        </Field>
+        <div className="row-actions">
+          <Button size="sm">Book</Button>
+          <Button size="sm" variant="danger">Cancel visit</Button>
+        </div>
+      </BrandScope>
+    </figure>
+  )
+  return (
+    <div className="stack-sm note-anchor">
+      <UXNote id="selected-state" className="uxnote-corner" />
+      <div className="fix-pair">
+        {pane('Before', true)}
+        {pane('After', false)}
+      </div>
+      <p className="small muted">
+        Red fill now only means the main action. Before, a chosen option and a field with an error were both pale red and
+        the cancel button matched Book. After, selection is navy, errors keep a deeper red with an icon and text, and
+        cancel is an outline.
+      </p>
+    </div>
+  )
+}
+
 function download() {
   const blob = new Blob([JSON.stringify(toDTCG(), null, 2)], { type: 'application/json' })
   const a = document.createElement('a')
@@ -90,7 +300,7 @@ function download() {
 }
 
 export default function System() {
-  const { scheme: appScheme, style } = useBrand()
+  const { scheme: appScheme, style, brand } = useBrand()
   const [scheme, setScheme] = useState(appScheme)
 
   return (
@@ -168,17 +378,22 @@ export default function System() {
               </tbody>
             </table>
           </div>
-          <Alert tone="warning" title="Found while theming: Valvoline red is both the brand accent and the obvious error colour">
-            If both use the same red, customers cannot tell a primary button from an error. Proposal: errors use a deeper red, always with an icon and
-            text, and never colour alone. To confirm with the Valvoline UX lead.
-          </Alert>
+          <h2 className="display-sm">Contrast, {scheme}</h2>
+          <p className="muted">Computed from the tokens with the WCAG 2 formula. Tints with transparency are measured over the page background.</p>
+          <ContrastTable scheme={scheme} />
 
-          <h2 className="display-sm">Type and shape tokens, {STYLE_META[style].name} {STYLE_META[style].label.toLowerCase()}</h2>
+          <h2 className="display-sm">Selected is not an error</h2>
+          <SelectedFix scheme={scheme} style={style} />
+
+          <h2 className="display-sm">Type, {BRAND_META[brand].name}, {STYLE_META[style].name} {STYLE_META[style].label.toLowerCase()}</h2>
+          <TypeTable brand={brand} style={style} />
+
+          <h2 className="display-sm">Type, shape and space tokens, {STYLE_META[style].name} {STYLE_META[style].label.toLowerCase()}</h2>
           <div className="table-scroll" role="region" aria-label="Type and shape tokens" tabIndex={0}>
             <table className="token-table">
               <thead><tr><th scope="col">Token</th>{BRANDS.map((b) => <th scope="col" key={b}>{BRAND_META[b].name}</th>)}</tr></thead>
               <tbody>
-                {Object.keys(shapeFor('nubrakes', style)).filter((k) => !k.startsWith('font-')).map((k) => (
+                {Object.keys(shapeFor('nubrakes', style)).map((k) => (
                   <tr key={k}>
                     <th scope="row"><code>{k}</code></th>
                     {BRANDS.map((b) => <td key={b}><code>{shapeFor(b, style)[k]}</code></td>)}
@@ -237,15 +452,22 @@ export default function System() {
               <li>Figma: one Semantic collection with four modes. Frames switch brand by changing the mode, not by swapping components.</li>
               <li>Code: tokens become CSS variables on a brand scope element. Components read only <code>--c-*</code> and shape variables.</li>
               <li>Component props match Figma properties one to one (<code>variant</code>, <code>size</code>, <code>loading</code>, <code>tone</code>).</li>
-              <li>Every interactive component has hover, focus-visible, disabled and error states. Text meets WCAG AA in all four modes.</li>
+              <li>Every interactive component has hover, focus-visible, disabled and error states. Text pairs are checked in the contrast table above for each mode.</li>
               <li>Motion is limited to state changes and turns off with reduced motion.</li>
             </ul>
-            <p className="muted">The token download above is in W3C DTCG format, ready for Tokens Studio or Style Dictionary.</p>
+            <p className="muted">The token download above is in W3C DTCG format with <code>$type</code> wherever DTCG defines one (colour, dimension, font family, weight, shadow) and semantic colours as aliases of core colours, ready for Tokens Studio or Style Dictionary.</p>
             <div className="table-scroll" role="region" aria-label="Figma component properties" tabIndex={0}>
               <table className="token-table figma-table">
-                <thead><tr><th scope="col">Component</th><th scope="col">Variants</th><th scope="col">Other properties</th></tr></thead>
+                <thead><tr><th scope="col">Component</th><th scope="col">Variants</th><th scope="col">Other properties</th><th scope="col">Used on</th></tr></thead>
                 <tbody>
-                  {FIGMA.map(([c, v, o]) => <tr key={c}><th scope="row"><code>{c}</code></th><td>{v}</td><td className="muted">{o}</td></tr>)}
+                  {COMPONENTS.map(([c, v, o, routes]) => (
+                    <tr key={c}>
+                      <th scope="row"><code>{c}</code></th>
+                      <td>{v}</td>
+                      <td className="muted">{o}</td>
+                      <td>{routes.map((to) => <Link key={to} to={to} className="text-link small">{to}</Link>)}</td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>

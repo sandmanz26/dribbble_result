@@ -1,11 +1,14 @@
-// First step of the quote, embedded in the home hero and service pages. Asks for the two
-// things that change the price (vehicle, ZIP) and nothing else.
+// First step of the quote, embedded in the home hero and service pages. Asks for the vehicle
+// (it sets the price) and the ZIP (it tells us whether we come to you), and checks both at once,
+// so an out-of-area customer learns it here, not on step 3, and can still see a price.
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
-import { lookupPlate } from '../data/api.js'
+import { checkZip, lookupPlate } from '../data/api.js'
 import { MAKES, SAMPLE_PLATE, STATES, YEARS } from '../data/vehicles.js'
 import { Alert, Button, Field, Input, Segmented, Select } from '../ui/index.jsx'
+import { OutOfArea } from '../service/index.jsx'
+import { UXNote } from '../ui/UXNote.jsx'
 import { useDraft } from './draft.jsx'
 
 export function VehicleInputs({ entry, value, onChange, errors = {} }) {
@@ -82,6 +85,8 @@ export function useQuoteStart(service) {
   const [errors, setErrors] = useState({})
   const [busy, setBusy] = useState(false)
   const [lookupError, setLookupError] = useState(null)
+  // ZIP that came back out of area. The starter shows the waitlist and a way to see the price.
+  const [outZip, setOutZip] = useState(null)
 
   async function submit(e) {
     e.preventDefault()
@@ -95,28 +100,44 @@ export function useQuoteStart(service) {
     if (!/^\d{5}$/.test(zip)) err.zip = 'Enter a 5-digit ZIP code'
     setErrors(err)
     setLookupError(null)
+    setOutZip(null)
     if (Object.keys(err).length) return
 
-    let vehicle = { year: v.year, make: v.make, model: v.model }
-    if (entry === 'plate') {
-      setBusy(true)
-      try {
-        vehicle = await lookupPlate(v.plateState, v.plate)
-      } catch (ex) {
-        setBusy(false)
-        return setLookupError(ex.code === 'not_found' ? 'not_found' : 'network')
-      }
+    setBusy(true)
+    const vehicleP = entry === 'plate' ? lookupPlate(v.plateState, v.plate) : Promise.resolve({ year: v.year, make: v.make, model: v.model })
+    // A failed ZIP check never blocks the quote: the Location step checks again.
+    const zipP = checkZip(zip).then((m) => ({ metro: m }), () => ({ failed: true }))
+    let vehicle
+    let area
+    try {
+      ;[vehicle, area] = await Promise.all([vehicleP, zipP])
+    } catch (ex) {
       setBusy(false)
+      return setLookupError(ex.code === 'not_found' ? 'not_found' : 'network')
     }
-    update((d) => ({
-      vehicle,
-      entry,
-      plate: v.plate,
-      plateState: v.plateState,
-      zip,
-      metro: d.zip === zip ? d.metro : null,
-      ...(service ? { mode: 'known', service } : {}),
-    }))
+    setBusy(false)
+    const metro = area.failed ? undefined : area.metro?.id || null
+    update((d) => {
+      const nextMetro = metro === undefined ? (d.zip === zip ? d.metro : null) : metro
+      return {
+        vehicle,
+        entry,
+        plate: v.plate,
+        plateState: v.plateState,
+        zip,
+        metro: nextMetro,
+        // An arrival window belongs to one metro's team.
+        ...(nextMetro !== d.metro ? { slot: null } : {}),
+        noBooking: false,
+        ...(service ? { mode: 'known', service } : {}),
+      }
+    })
+    if (metro === null) return setOutZip(zip)
+    nav('/quote/issue')
+  }
+
+  const seePriceAnyway = () => {
+    update({ noBooking: true })
     nav('/quote/issue')
   }
 
@@ -125,11 +146,28 @@ export function useQuoteStart(service) {
     setErrors({})
     setLookupError(null)
   }
-  return { entry, switchEntry, v, setV, zip, setZip, errors, busy, lookupError, submit }
+  const changeZip = (z) => {
+    setZip(z)
+    setOutZip(null)
+  }
+  return { entry, switchEntry, v, setV, zip, setZip: changeZip, errors, busy, lookupError, submit, outZip, seePriceAnyway }
+}
+
+// Out-of-area result, shared by the V1 card and the V2 strip.
+export function StarterOut({ zip, onSeePrice }) {
+  return (
+    <div className="starter-out note-anchor" aria-live="polite">
+      <UXNote id="coverage-first" className="uxnote-corner" />
+      <OutOfArea
+        zip={zip}
+        action={<button type="button" className="link-btn" onClick={onSeePrice}>See the price anyway</button>}
+      />
+    </div>
+  )
 }
 
 export function QuoteStarter({ title = 'See your price', service }) {
-  const { entry, switchEntry, v, setV, zip, setZip, errors, busy, lookupError, submit } = useQuoteStart(service)
+  const { entry, switchEntry, v, setV, zip, setZip, errors, busy, lookupError, submit, outZip, seePriceAnyway } = useQuoteStart(service)
   return (
     <form className="starter" onSubmit={submit} noValidate aria-labelledby="starter-title">
       <h2 id="starter-title" className="starter-title">{title}</h2>
@@ -148,14 +186,15 @@ export function QuoteStarter({ title = 'See your price', service }) {
       {lookupError === 'network' && (
         <Alert tone="danger" title="Plate lookup is not responding">Try again, or enter year, make and model.</Alert>
       )}
-      <Field label="ZIP code where the car is parked" error={errors.zip}>
+      <Field label="ZIP code where the car is parked" error={errors.zip} hint="Your ZIP tells us if we come to you. Price depends on the car and the work.">
         {(a) => (
           <Input {...a} inputMode="numeric" autoComplete="postal-code" maxLength={5} value={zip} onChange={(e) => setZip(e.target.value.replace(/\D/g, ''))} />
         )}
       </Field>
       <Button type="submit" block size="lg" loading={busy} iconEnd={ArrowRight}>
-        {busy ? 'Finding your vehicle' : 'See my price'}
+        {busy ? 'Checking your car and ZIP' : 'See my price'}
       </Button>
+      {outZip && <StarterOut zip={outZip} onSeePrice={seePriceAnyway} />}
       <p className="small muted center">No phone number or email until you book.</p>
     </form>
   )

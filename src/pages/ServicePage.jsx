@@ -1,14 +1,24 @@
 import { Link, useParams } from 'react-router-dom'
-import { ArrowLeft, Check, Clock } from 'lucide-react'
+import { ArrowDown, ArrowLeft, Check, Clock } from 'lucide-react'
 import { money, SERVICE_ORDER, SERVICES } from '../data/services.js'
 import { SIZE_LABEL } from '../data/vehicles.js'
 import { QuoteStarter } from '../flows/QuoteStarter.jsx'
+import { Button } from '../ui/index.jsx'
 import NotFound from './NotFound.jsx'
+
+// On phones the quote card stacks below a long page. This jumps to it and puts the cursor in the
+// first field, so pricing never needs a long scroll.
+function jumpToQuote() {
+  const card = document.getElementById('quote')
+  if (!card) return
+  card.scrollIntoView({ block: 'start' })
+  card.querySelector('input, select')?.focus({ preventScroll: true })
+}
 
 export default function ServicePage() {
   const { id } = useParams()
   const s = SERVICES[id]
-  if (!s) return <NotFound />
+  if (!s || !s.price) return <NotFound />
   const others = SERVICE_ORDER.filter((x) => x !== id)
   return (
     <>
@@ -19,6 +29,7 @@ export default function ServicePage() {
             <h1 className="display-lg">{s.name}</h1>
             <p className="lede">{s.blurb}</p>
             <p className="meta-line"><Clock size={18} aria-hidden /> {s.hours}, at your home or work</p>
+            <Button block size="lg" icon={ArrowDown} className="jump-quote" onClick={jumpToQuote}>Price this for my car</Button>
 
             <div className="two-col">
               <div>
@@ -45,7 +56,7 @@ export default function ServicePage() {
               <p className="small muted">Standard parts. Sample prices for the prototype.</p>
             </div>
           </div>
-          <div className="hero-card sticky-card">
+          <div className="hero-card sticky-card" id="quote">
             <QuoteStarter title={`Price ${s.short.toLowerCase()} for your car`} service={id} />
           </div>
         </div>

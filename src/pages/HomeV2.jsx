@@ -3,7 +3,8 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import { useBrand } from '../brand/BrandContext.jsx'
-import { useQuoteStart, VehicleInputs } from '../flows/QuoteStarter.jsx'
+import { StarterOut, useQuoteStart, VehicleInputs } from '../flows/QuoteStarter.jsx'
+import { ResumeQuote, SavedNotice } from '../flows/ResumeQuote.jsx'
 import { useDraft } from '../flows/draft.jsx'
 import { METROS } from '../data/areas.js'
 import { money, SERVICE_ORDER, SERVICES, SYMPTOMS } from '../data/services.js'
@@ -12,6 +13,7 @@ import { ServiceAreaCheck } from '../service/index.jsx'
 import { Alert, Button, Field, Input } from '../ui/index.jsx'
 import { UXNote } from '../ui/UXNote.jsx'
 import { FAQ } from './Home.jsx'
+import { PriceBySize, SIZES } from './PriceBySize.jsx'
 
 const COPY = {
   nubrakes: {
@@ -41,8 +43,6 @@ const VISIT = [
   ['After', 'Report, then payment', 'Measurements for every wheel, then a payment link. The warranty starts that day.'],
 ]
 
-const SIZES = ['compact', 'mid', 'suv', 'truck', 'ev']
-
 function QuoteStrip() {
   const q = useQuoteStart()
   return (
@@ -54,7 +54,7 @@ function QuoteStrip() {
           {(a) => <Input {...a} inputMode="numeric" autoComplete="postal-code" maxLength={5} value={q.zip} onChange={(e) => q.setZip(e.target.value.replace(/\D/g, ''))} />}
         </Field>
         <Button type="submit" size="lg" loading={q.busy} iconEnd={ArrowRight} className="strip-go">
-          {q.busy ? 'Finding it' : 'See my price'}
+          {q.busy ? 'Checking' : 'See my price'}
         </Button>
       </div>
       {q.lookupError === 'not_found' && (
@@ -63,11 +63,12 @@ function QuoteStrip() {
         </Alert>
       )}
       {q.lookupError === 'network' && <Alert tone="danger" title="Plate lookup is not responding">Try again, or use make and model.</Alert>}
+      {q.outZip && <StarterOut zip={q.outZip} onSeePrice={q.seePriceAnyway} />}
       <p className="strip-foot small muted">
         <button type="button" className="link-btn" onClick={() => q.switchEntry(q.entry === 'plate' ? 'ymm' : 'plate')}>
           {q.entry === 'plate' ? 'No plate handy? Use make and model' : 'Use the license plate instead'}
         </button>
-        <span>No phone number or email until you book.</span>
+        <span>Your ZIP tells us if we come to you. No phone number or email until you book.</span>
       </p>
     </form>
   )
@@ -87,6 +88,8 @@ export default function HomeV2() {
             <h1 className="display-xl">{t.h1}</h1>
             <p className="lede">{t.lede}</p>
           </div>
+          <SavedNotice />
+          <ResumeQuote />
           <QuoteStrip />
           <dl className="v2-facts">
             {FACTS.map(([k, v]) => <div key={k}><dt>{k}</dt><dd>{v}</dd></div>)}
@@ -104,7 +107,8 @@ export default function HomeV2() {
             <h2 id="board-title" className="display-md">Prices</h2>
             <p className="muted">Standard parts and labor, per axle unless noted. Sample prices for the prototype.</p>
           </div>
-          <div className="table-scroll v2-board-wrap" role="region" aria-label="Prices by vehicle type" tabIndex={0}>
+          <PriceBySize />
+          <div className="table-scroll v2-board-wrap size-board-wide" role="region" aria-label="Prices by vehicle type" tabIndex={0}>
             <table className="v2-board">
               <thead>
                 <tr><th scope="col">Service</th>{SIZES.map((z) => <th scope="col" key={z} className="num">{SIZE_LABEL[z]}</th>)}</tr>
