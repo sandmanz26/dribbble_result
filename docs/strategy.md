@@ -1,23 +1,37 @@
 # Strategy notes: NuBrakes dual-brand customer experience
 
-## 1. Read of the brief
-NuBrakes sends certified technicians to fix brakes at homes and workplaces. After Valvoline acquired it,
-the customer-facing experience has to move onto Valvoline's design system, and the system has to grow to
-serve two brands at once. The work is three things in one: a reskin, a design system extension, and a
-flow redesign driven by a path-to-purchase study.
+## 1. Read of the brief and the role description
+Sources: the Dribbble brief and the role description PDF ("Contract Product Designer (UI/UX)").
 
-Design read: trustworthy consumer service site, website plus booking flow, mobile first. Visual language is
-dictated by the client (Valvoline), so the design effort goes into structure, flows, states and the token
-architecture rather than a new look.
+NuBrakes sends certified technicians to fix brakes at homes and workplaces. After Valvoline acquired it,
+the customer-facing experience moves onto Valvoline's design system, in Figma, and the system grows to
+serve two brands with shared components and brand themes.
+
+What the role description adds to the brief:
+- **It is a reskin first.** "The structure and logic of most flows already exist." The job is to bring
+  them to a high, consistent standard in the new design language and to **flag where small UX
+  improvements would make a real difference**, with clear, reasoned recommendations, not a reinvention.
+- **Path-to-purchase findings** should become "clear, measurable improvements to how customers quote
+  and book". So every recommendation carries a metric.
+- **People:** the NuBrakes PM owns requirements; Valvoline's UX lead sets direction and signs off.
+- **Output:** polished, developer-ready UI in Figma (components, variants, auto layout), responsive,
+  with empty, loading and error states; gaps in the system for mobile service proposed as components.
+- **Engagement:** contract, hourly, 20 to 40 hours a week through November and December, async with
+  some US East Coast overlap. They want someone AI-native who explains how they use it.
+
+How the prototype answers this:
+- A **UX notes** layer (on by default, toggle in the Prototype panel) puts numbered markers on the
+  screens. Each opens the recommendation, the reason and the metric. Source list: `src/data/uxnotes.js`.
+- The Notes page maps each line of the role description to where it is answered, lists the twelve
+  recommendations, the Figma file setup, an eight-week plan and questions for the PM and UX lead.
+- The System page lists the Figma variants and properties for each component.
 
 Constraints at build time:
-- The Valvoline design system reference site was not reachable from the build environment. Brand values in
-  `src/brand/tokens.js` are placeholders: Valvoline is a red and navy brand with condensed type; NuBrakes is
-  given a brake-caliper yellow. The token structure is the deliverable; values swap in one file.
-- The path-to-purchase study was not shared. Findings below are hypotheses from public reviews of NuBrakes
-  and other mobile repair services, each tied to a design change so it is easy to confirm or rewrite.
+- The Valvoline design system site, the current NuBrakes screens and the path-to-purchase study were not
+  available. Brand values in `src/brand/tokens.js` are placeholders; recommendations are written so the
+  study can confirm, reprioritise or drop them.
 
-## 2. Hypotheses and design responses
+## 2. Hypotheses behind the recommendations
 | Hypothesis | Design response |
 |---|---|
 | Price is the first question; asking for contact details before price loses people | Vehicle + ZIP in the hero, price on step 4, contact on step 6. "No phone number or email until you book" |

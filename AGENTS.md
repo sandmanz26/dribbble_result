@@ -10,6 +10,9 @@ branch, no shared code, how deployment and passwords work) are in `AGENTS.md` on
   design system, the system extended for dual branding (shared components, brand themes and tokens for
   NuBrakes and Valvoline), and key flows redesigned from a path-to-purchase study. Deliverables: responsive
   hi-fi screens with empty, loading and error states, proposed mobile-service components, dev-ready files.
+- **Role description:** a PDF supplied by the owner ("Contract Product Designer (UI/UX)"). Key point: flows
+  already exist; the job is a reskin plus small, reasoned, measurable UX recommendations, delivered in Figma.
+  See `docs/strategy.md` section 1.
 - **Live:** `/project3/` on the hub site, password `PR003`.
 - **Stack:** React 18, Vite 5 (`base: './'`), react-router `HashRouter`, Lucide icons, Archivo (variable,
   with width axis) + Public Sans via Fontsource. CSS transitions only, no animation library.
@@ -44,6 +47,8 @@ docs/strategy.md    brief read, hypotheses, IA, flow decisions, competitor frame
 - Demo data: plate `LKD4821` (TX) finds a 2019 Toyota RAV4; ZIPs 786/787 (Austin), 770-775 (Houston),
   750-752/760-761 (DFW), 780-782 (San Antonio); anything else is out of area. The third open day is always
   fully booked; Sundays are closed.
+- UX notes: numbered recommendation markers (`src/ui/UXNote.jsx`, content in `src/data/uxnotes.js`), on by
+  default, toggled in the Prototype panel. Keep the numbering in sync with the Notes page (it reads the same list).
 - The floating Prototype panel switches brand and scheme and can make the mock API slow or fail the first
   attempt of every call. It is a reviewer tool, not product UI.
 - Photos: none yet. Image hosts were blocked in the build environment. If added, self-host WebP in

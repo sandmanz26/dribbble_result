@@ -10,6 +10,8 @@ This prototype answers it in code:
 - **Visit tracker:** technician card, live status, approving extra work remotely, reschedule and cancel.
 - **Dual-brand system:** one component set, NuBrakes and Valvoline token sets, light and dark each.
   The System page shows both brands side by side and downloads the tokens as DTCG JSON.
+- **UX notes:** numbered markers on the screens, each a small recommendation with its reason and the
+  metric to watch. The Notes page lists all of them against the role description.
 - **States:** loading, empty and error on every data surface. Use the Prototype panel (bottom corner)
   to switch brand, scheme, and to simulate a slow network or failing requests.
 

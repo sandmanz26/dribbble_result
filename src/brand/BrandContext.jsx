@@ -35,6 +35,8 @@ export function BrandProvider({ children }) {
   // Prototype-only switches so reviewers can see loading and error states inside the real flows.
   const [slow, setSlow] = useState(Boolean(saved.slow))
   const [failures, setFailures] = useState(Boolean(saved.failures))
+  // Numbered UX recommendation markers on the screens. On by default so reviewers see the reasoning.
+  const [uxNotes, setUxNotes] = useState(saved.uxNotes ?? true)
   const systemDark = useSystemDark()
   const scheme = schemePref === 'system' ? (systemDark ? 'dark' : 'light') : schemePref
 
@@ -43,9 +45,9 @@ export function BrandProvider({ children }) {
 
   useEffect(() => {
     try {
-      localStorage.setItem(KEY, JSON.stringify({ brand, scheme: schemePref, slow, failures }))
+      localStorage.setItem(KEY, JSON.stringify({ brand, scheme: schemePref, slow, failures, uxNotes }))
     } catch {}
-  }, [brand, schemePref, slow, failures])
+  }, [brand, schemePref, slow, failures, uxNotes])
 
   useEffect(() => {
     const root = document.documentElement
@@ -57,8 +59,8 @@ export function BrandProvider({ children }) {
   }, [brand, scheme])
 
   const value = useMemo(
-    () => ({ brand, setBrand, scheme, schemePref, setSchemePref, slow, setSlow, failures, setFailures, meta: BRAND_META[brand] }),
-    [brand, scheme, schemePref, slow, failures],
+    () => ({ brand, setBrand, scheme, schemePref, setSchemePref, slow, setSlow, failures, setFailures, uxNotes, setUxNotes, meta: BRAND_META[brand] }),
+    [brand, scheme, schemePref, slow, failures, uxNotes],
   )
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>
 }

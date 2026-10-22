@@ -13,15 +13,16 @@ import { sizeOf, vehicleLabel } from '../data/vehicles.js'
 import { ArrivalWindowPicker, QuoteBreakdown, VehicleChip } from '../service/index.jsx'
 import { Alert, Button, Check, Choice, Empty, Field, Input, Segmented, Wordmark } from '../ui/index.jsx'
 import { useDraft } from './draft.jsx'
+import { UXNote } from '../ui/UXNote.jsx'
 import { VehicleInputs } from './QuoteStarter.jsx'
 
 const STEPS = [
-  { id: 'vehicle', label: 'Vehicle', title: 'Which car needs brakes?', ready: () => true },
-  { id: 'issue', label: 'Brakes', title: 'What is going on?', ready: (d) => Boolean(d.vehicle) },
-  { id: 'location', label: 'Location', title: 'Where will the car be?', ready: (d) => Boolean(d.vehicle && d.service) },
-  { id: 'price', label: 'Price', title: 'Your price', ready: (d) => Boolean(d.vehicle && d.service && d.metro && d.address) },
-  { id: 'time', label: 'Time', title: 'When should we come?', ready: (d) => Boolean(d.vehicle && d.service && d.metro && d.address && d.quote) },
-  { id: 'details', label: 'Book', title: 'Who should we contact?', ready: (d) => Boolean(d.vehicle && d.service && d.metro && d.address && d.quote && d.slot) },
+  { id: 'vehicle', label: 'Vehicle', title: 'Which car needs brakes?', notes: ['mobile-summary'], ready: () => true },
+  { id: 'issue', label: 'Brakes', title: 'What is going on?', notes: ['symptoms'], ready: (d) => Boolean(d.vehicle) },
+  { id: 'location', label: 'Location', title: 'Where will the car be?', notes: ['location'], ready: (d) => Boolean(d.vehicle && d.service) },
+  { id: 'price', label: 'Price', title: 'Your price', notes: ['breakdown'], ready: (d) => Boolean(d.vehicle && d.service && d.metro && d.address) },
+  { id: 'time', label: 'Time', title: 'When should we come?', notes: ['windows', 'presence'], ready: (d) => Boolean(d.vehicle && d.service && d.metro && d.address && d.quote) },
+  { id: 'details', label: 'Book', title: 'Who should we contact?', notes: ['contact-last'], ready: (d) => Boolean(d.vehicle && d.service && d.metro && d.address && d.quote && d.slot) },
 ]
 
 const focusFirstError = () =>
@@ -593,7 +594,9 @@ export default function QuoteFlow() {
             </summary>
             <Summary draft={draft} />
           </details>
-          <h1 className="display-md flow-title" tabIndex={-1} ref={heading}>{current.title}</h1>
+          <h1 className="display-md flow-title" tabIndex={-1} ref={heading}>
+            {current.title} {current.notes.map((n) => <UXNote key={n} id={n} />)}
+          </h1>
           <div className="stack-md">
             <Body next={next} back={back} />
           </div>

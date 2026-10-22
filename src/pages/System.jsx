@@ -17,6 +17,19 @@ const sampleVehicle = { year: 2019, make: 'Toyota', model: 'RAV4' }
 const tech = TECHNICIANS.austin[0]
 const finding = { title: 'Front rotors below minimum thickness', reading: 'Measured 25.1 mm. Minimum is 26.0 mm.', why: 'New pads on thin rotors can shake and wear out early.', price: 210 }
 
+const FIGMA = [
+  ['Button', 'variant: primary, secondary, ghost, danger', 'size: sm, md, lg. state: default, hover, focus, disabled, loading. icon start/end'],
+  ['Field', 'state: default, focus, error, disabled', 'label, hint, error text, optional'],
+  ['Choice / Check', 'checked, disabled', 'title, detail, aside slot'],
+  ['Alert', 'tone: info, success, warning, danger', 'title, body, action slot'],
+  ['ServiceAreaCheck', 'state: idle, checking, in area, out of area, waitlist sent, error', 'ZIP prefilled'],
+  ['ArrivalWindowPicker', 'state: loading, open, last spot, full day, closed day, error', 'selected day, selected window'],
+  ['QuoteBreakdown', 'status: loading, ready, error', 'tiers on/off, per axle or per visit'],
+  ['TechnicianCard', 'status: assigned, on the way, working, done', 'ETA, van'],
+  ['StatusTimeline', 'step: booked to done', ''],
+  ['ApprovalRequest', 'state: pending, sending, approved, declined', 'reading, reason, price'],
+]
+
 const PROPOSED = [
   { name: 'ServiceAreaCheck', why: 'A shop system never has to say "we do not come to you". Covers in area, out of area with a waitlist, invalid ZIP and lookup error.', demo: () => <ServiceAreaCheck initialZip="73301" /> },
   { name: 'ArrivalWindowPicker', why: 'Mobile service sells a window, not a slot at a bay. Day strip plus windows, with closed day, fully booked day, last spot and load error.', demo: () => <DemoPicker /> },
@@ -228,6 +241,14 @@ export default function System() {
               <li>Motion is limited to state changes and turns off with reduced motion.</li>
             </ul>
             <p className="muted">The token download above is in W3C DTCG format, ready for Tokens Studio or Style Dictionary.</p>
+            <div className="table-scroll" role="region" aria-label="Figma component properties" tabIndex={0}>
+              <table className="token-table figma-table">
+                <thead><tr><th scope="col">Component</th><th scope="col">Variants</th><th scope="col">Other properties</th></tr></thead>
+                <tbody>
+                  {FIGMA.map(([c, v, o]) => <tr key={c}><th scope="row"><code>{c}</code></th><td>{v}</td><td className="muted">{o}</td></tr>)}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </section>

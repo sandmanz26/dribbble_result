@@ -58,6 +58,10 @@ export function PrototypePanel() {
             />
           </div>
           <div className="proto-group">
+            <p className="proto-label">Review</p>
+            <Check checked={b.uxNotes} onChange={b.setUxNotes} detail="Numbered markers with the reason and the metric">UX notes</Check>
+          </div>
+          <div className="proto-group">
             <p className="proto-label">Simulate</p>
             <Check checked={b.slow} onChange={b.setSlow} detail="Every request takes 3x longer">Slow network</Check>
             <Check checked={b.failures} onChange={b.setFailures} detail="First try fails, retry works">Errors</Check>

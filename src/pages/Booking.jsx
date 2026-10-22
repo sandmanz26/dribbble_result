@@ -10,6 +10,7 @@ import {
   ApprovalRequest, ArrivalWindowPicker, LocationSummary, StatusTimeline, TechnicianCard,
 } from '../service/index.jsx'
 import { Alert, Button, Choice, Empty, Loading, Sheet, Skeleton } from '../ui/index.jsx'
+import { UXNote } from '../ui/UXNote.jsx'
 
 const ORDER = ['scheduled', 'assigned', 'en_route', 'working', 'approval', 'done']
 const CANCEL_REASONS = ['Fixed it somewhere else', 'Need a different day', 'Price is higher than expected', 'Something else']
@@ -125,7 +126,10 @@ export default function Booking() {
         ) : (
           <div className="booking-grid">
             <div className="stack-lg">
-              <StatusTimeline status={b.status} />
+              <div className="note-anchor">
+                <UXNote id="tech" className="uxnote-corner" />
+                <StatusTimeline status={b.status} />
+              </div>
 
               {b.status === 'scheduled' && (
                 <Alert tone="info" title="Technician assigned the evening before">
@@ -136,6 +140,8 @@ export default function Booking() {
                 <TechnicianCard tech={b.tech} status={b.status} eta={eta} window={b.slot.label} />
               )}
               {b.status === 'approval' && (
+                <div className="note-anchor">
+                <UXNote id="approval" className="uxnote-corner" />
                 <ApprovalRequest
                   finding={finding}
                   techName={b.tech.name.split(' ')[0]}
@@ -143,6 +149,7 @@ export default function Booking() {
                   decided={b.extra}
                   onDecide={(d) => save({ extra: d }, d)}
                 />
+                </div>
               )}
               {b.status === 'done' && (
                 <div className="stack-md">
@@ -177,6 +184,7 @@ export default function Booking() {
                 <LocationSummary address={b.address} type={LOCATION_TYPES.find((t) => t.id === b.locationType)?.label} notes={b.accessNotes} />
                 {['scheduled', 'assigned'].includes(b.status) && (
                   <div className="row-actions">
+                    <UXNote id="reschedule" />
                     <Button variant="secondary" icon={CalendarClock} onClick={() => { setSlot(null); setActionError(null); setSheet('reschedule') }}>Reschedule</Button>
                     <Button variant="ghost" icon={CalendarX2} onClick={() => { setActionError(null); setSheet('cancel') }}>Cancel</Button>
                   </div>

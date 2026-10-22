@@ -565,3 +565,38 @@ th.num, td.num { text-align: right; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
 }
+
+/* ---------- UX note markers (review layer, not product UI) ---------- */
+.uxnote { position: relative; display: inline-flex; vertical-align: middle; font-family: var(--font-body); text-transform: none; letter-spacing: 0; font-variation-settings: normal; line-height: 1.4; }
+.uxnote-corner { position: absolute; top: -12px; right: -12px; z-index: 6; }
+.hero-card, .note-anchor { position: relative; }
+.uxnote-pin {
+  width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--c-bg);
+  background: var(--c-inverse); color: var(--c-on-inverse);
+  font-size: 13px; font-weight: 800; line-height: 1; cursor: pointer;
+  display: inline-grid; place-items: center; box-shadow: 0 0 0 2px var(--c-inverse), var(--shadow-1);
+}
+.uxnote-pin[aria-expanded='true'] { background: var(--c-accent); color: var(--c-on-accent); box-shadow: 0 0 0 2px var(--c-accent); }
+.uxnote-card {
+  position: absolute; top: calc(100% + 10px); left: 50%; transform: translateX(-50%); z-index: 30;
+  width: min(320px, calc(100vw - 32px)); display: grid; gap: 8px; padding: 14px 16px; text-align: left;
+  background: var(--c-raised); color: var(--c-ink); border: 1px solid var(--c-line-strong); border-radius: 12px; box-shadow: var(--shadow-2);
+  font-size: 14px; font-weight: 400;
+}
+.uxnote-corner .uxnote-card { left: auto; right: 0; transform: none; }
+.uxnote-head { display: flex; justify-content: space-between; gap: 8px; align-items: flex-start; font-size: 15px; }
+.uxnote-close { border: 0; background: none; color: var(--c-muted); cursor: pointer; padding: 2px; display: inline-grid; }
+.uxnote-why { color: var(--c-ink); }
+.uxnote-measure { color: var(--c-muted); font-size: 13px; }
+@media (max-width: 640px) {
+  .uxnote-card, .uxnote-corner .uxnote-card { position: fixed; left: 16px; right: 16px; top: auto; bottom: 16px; width: auto; transform: none; z-index: 60; }
+}
+.notes-table-3 td { width: auto; }
+.notes-table-3 td:first-child { width: 30%; }
+.notes-table-3 td:first-child strong { display: block; margin-bottom: 6px; }
+.notes-table-3 td:last-child { width: 26%; }
+.notes-table .text-link { white-space: nowrap; }
+.flow-list-plan li { counter-increment: none; grid-template-columns: 120px 1fr; }
+.flow-list-plan li::before { display: none; }
+@media (max-width: 560px) { .flow-list-plan li { grid-template-columns: 1fr; } .flow-list-plan li span { grid-column: 1; } }
+.figma-table td { white-space: normal; min-width: 180px; }

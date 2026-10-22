@@ -8,6 +8,7 @@ import { METROS } from '../data/areas.js'
 import { money, recommend, SERVICE_ORDER, SERVICES, SYMPTOMS } from '../data/services.js'
 import { ServiceAreaCheck } from '../service/index.jsx'
 import { Alert, Button } from '../ui/index.jsx'
+import { UXNote } from '../ui/UXNote.jsx'
 
 const COPY = {
   nubrakes: {
@@ -98,6 +99,7 @@ export default function Home() {
             </ul>
           </div>
           <div className="hero-card">
+            <UXNote id="price-first" className="uxnote-corner" />
             <QuoteStarter />
           </div>
         </div>
@@ -105,7 +107,7 @@ export default function Home() {
 
       <section className="band">
         <div className="wrap band-row">
-          <h2 className="display-sm">{t.bandTitle}</h2>
+          <h2 className="display-sm">{t.bandTitle} <UXNote id="acquisition" /></h2>
           <p>{t.band}</p>
         </div>
       </section>
