@@ -9,6 +9,7 @@ puts each project behind its own password:
 |---|---|---|---|
 | `/project1/` | Wanderlog Gang (website) | `claude/modest-mayer-eyddvw` | `PR001` |
 | `/project2/` | Proof (mobile app) | `claude/photo-video-marketplace-app` | `PR002` |
+| `/project3/` | NuBrakes dual-brand (website + booking flow) | `claude/nubrakes-dual-brand` | `PR003` |
 | `/` and anything else | "Nothing to see here." | | |
 
 - `build.mjs` clones each branch in `projects.json`, runs `npm ci && npm run build` and copies its

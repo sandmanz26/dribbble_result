@@ -10,6 +10,7 @@ import { next } from '@vercel/functions'
 const PASSWORDS = {
   project1: 'PR001', // Wanderlog Gang
   project2: 'PR002', // Proof
+  project3: 'PR003', // NuBrakes dual-brand
 }
 
 const COOKIE_DAYS = 30

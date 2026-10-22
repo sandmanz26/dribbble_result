@@ -1,4 +1,5 @@
 [
   { "slug": "project1", "branch": "claude/modest-mayer-eyddvw", "title": "Wanderlog Gang" },
-  { "slug": "project2", "branch": "claude/photo-video-marketplace-app", "title": "Proof" }
+  { "slug": "project2", "branch": "claude/photo-video-marketplace-app", "title": "Proof" },
+  { "slug": "project3", "branch": "claude/nubrakes-dual-brand", "title": "NuBrakes dual-brand" }
 ]

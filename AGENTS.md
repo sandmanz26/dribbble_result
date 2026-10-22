@@ -22,7 +22,8 @@ GitHub repo: sandmanz26/dribbble_result
 │
 ├── claude/modest-mayer-eyddvw            ← project1: Wanderlog Gang (own code, own design)
 ├── claude/photo-video-marketplace-app    ← project2: Proof (own code, own design)
-└── <new branch per new brief>            ← project3, project4, ...
+├── claude/nubrakes-dual-brand            ← project3: NuBrakes dual-brand (own code, own design)
+└── <new branch per new brief>            ← project4, project5, ...
 ```
 
 - Every project lives on **its own branch**, created as an **orphan branch** (no shared history).
@@ -40,6 +41,7 @@ If a task says "work on project X", check out that project's branch and stay on 
 |---|---|---|---|---|---|
 | `/project1/` | `PR001` | `claude/modest-mayer-eyddvw` | Wanderlog Gang: retro illustrated travel blog | Website | React 18, Vite 5, react-router (HashRouter), Motion, Phosphor icons. Big Shoulders Display + Figtree. Paper/navy ink + one cobalt accent. Light/dark. Photos self-hosted in `public/photos/` |
 | `/project2/` | `PR002` | `claude/photo-video-marketplace-app` | Proof: photography and videography marketplace | **Mobile app** | React 18, Vite 5, react-router (HashRouter), Motion, Tabler icons. Geist. Monochrome + one vermilion accent. Light/dark. On desktop renders inside a phone frame; on phones runs full screen. Portfolio images self-hosted in `public/portfolio/` |
+| `/project3/` | `PR003` | `claude/nubrakes-dual-brand` | NuBrakes + Valvoline: dual-brand reskin and quote/booking redesign | Website + flow | React 18, Vite 5, react-router (HashRouter), Lucide icons, no animation library. Archivo (variable width) + Public Sans. One component set, two brand token sets (NuBrakes yellow, Valvoline red/navy), light/dark. Brand colours are placeholders. No photos yet (image hosts were blocked) |
 
 Live site: `https://proposal-virid-eight.vercel.app/<slug>/` (the domain may be renamed in Vercel).
 The root `/` and any unknown path intentionally return "Nothing to see here." There is no index page.
@@ -79,7 +81,7 @@ push to main ──► Vercel builds main ──► node build.mjs
    rewrites, so BrowserRouter routes would 404 on refresh.
 3. `npm run build` outputs to `dist/`, and a committed `package-lock.json` exists (`npm ci` is used).
 4. localStorage keys are **prefixed per project** (all projects share one origin).
-   In use: `wg-*` (project1), `proof-state-v1` (project2).
+   In use: `wg-*` (project1), `proof-state-v1` (project2), `nb-*` (project3).
 5. No backend calls. Data is mock data in `src/data/`. State may persist to localStorage.
 6. Images are **self-hosted** in the project's `public/` folder (WebP renditions), with credits in
    the app. Do not hotlink Wikimedia/Picsum/Unsplash at runtime: Wikimedia rate-limits hotlinks.

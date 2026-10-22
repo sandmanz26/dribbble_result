@@ -10,7 +10,7 @@ const cookieOf = (res) => res.headers.get('set-cookie').split(';')[0]
 
 const cases = [
   ['root shows nothing', async () => { const r = await get('/'); assert.equal(r.status, 404); assert.match(await r.text(), /Nothing to see here/) }],
-  ['unknown path shows nothing', async () => assert.equal((await get('/project3/')).status, 404)],
+  ['unknown path shows nothing', async () => assert.equal((await get('/project9/')).status, 404)],
   ['project without cookie asks for password', async () => { const r = await get('/project1/'); assert.equal(r.status, 401); assert.match(await r.text(), /type="password"/) }],
   ['assets are gated too', async () => assert.equal((await get('/project2/assets/index.js')).status, 401)],
   ['no trailing slash redirects', async () => { const r = await get('/project1'); assert.equal(r.status, 308); assert.equal(r.headers.get('location'), BASE + '/project1/') }],
@@ -23,6 +23,7 @@ const cases = [
     assert.ok(passed(await get('/project1/', cookieOf(r))))
     assert.ok(passed(await get('/project1/photos/kyoto-in-bloom-0-480.webp', cookieOf(r))))
   }],
+  ['project3 accepts PR003', async () => { const r = await post('/project3/', { password: 'PR003', hash: '#/quote/vehicle' }); assert.equal(r.headers.get('location'), '/project3/#/quote/vehicle'); assert.ok(passed(await get('/project3/assets/index.js', cookieOf(r)))) }],
   ['project2 accepts PR002', async () => { const r = await post('/project2/', { password: 'PR002' }); assert.ok(passed(await get('/project2/', cookieOf(r)))) }],
   ['project1 cookie does not open project2', async () => {
     const r = await post('/project1/', { password: 'PR001' })
