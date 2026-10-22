@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { ArrowRight, CalendarPlus, Download, MapPinOff } from 'lucide-react'
 import { BrandScope, useBrand } from '../brand/BrandContext.jsx'
-import { BRAND_META, BRANDS, SEMANTIC_DOCS, semantic, shape, toDTCG } from '../brand/tokens.js'
+import { BRAND_META, BRANDS, SEMANTIC_DOCS, STYLE_META, semantic, shapeFor, toDTCG } from '../brand/tokens.js'
 import { priceQuote } from '../data/services.js'
 import { TECHNICIANS } from '../data/schedule.js'
 import {
@@ -53,13 +53,13 @@ function DemoApproval() {
   return <ApprovalRequest finding={finding} techName="Marcus" decided={d} onDecide={setD} />
 }
 
-function Specimen({ brand }) {
+function Specimen({ brand, style }) {
   const [axle, setAxle] = useState('front')
   return (
     <div className="specimen stack-md">
       <Wordmark brand={brand} />
       <p className="spec-h">Brakes fixed where you park.</p>
-      <p className="muted">Body text in Public Sans. Same size, weight and line height in both brands.</p>
+      <p className="muted">Body text in {style === 'v2' ? 'IBM Plex Sans' : 'Public Sans'}. Same size, weight and line height in both brands.</p>
       <div className="row-actions">
         <Button size="sm">Book</Button>
         <Button size="sm" variant="secondary">Reschedule</Button>
@@ -90,7 +90,7 @@ function download() {
 }
 
 export default function System() {
-  const { scheme: appScheme } = useBrand()
+  const { scheme: appScheme, style } = useBrand()
   const [scheme, setScheme] = useState(appScheme)
 
   return (
@@ -139,8 +139,8 @@ export default function System() {
           </div>
           <div className="compare">
             {BRANDS.map((b) => (
-              <BrandScope key={b} brand={b} scheme={scheme} className="compare-pane" aria-label={`${BRAND_META[b].name} ${scheme}`}>
-                <Specimen brand={b} />
+              <BrandScope key={b} brand={b} scheme={scheme} style={style} className="compare-pane" aria-label={`${BRAND_META[b].name} ${scheme}`}>
+                <Specimen brand={b} style={style} />
               </BrandScope>
             ))}
           </div>
@@ -173,15 +173,15 @@ export default function System() {
             text, and never colour alone. To confirm with the Valvoline UX lead.
           </Alert>
 
-          <h2 className="display-sm">Type and shape tokens</h2>
+          <h2 className="display-sm">Type and shape tokens, {STYLE_META[style].name} {STYLE_META[style].label.toLowerCase()}</h2>
           <div className="table-scroll" role="region" aria-label="Type and shape tokens" tabIndex={0}>
             <table className="token-table">
               <thead><tr><th scope="col">Token</th>{BRANDS.map((b) => <th scope="col" key={b}>{BRAND_META[b].name}</th>)}</tr></thead>
               <tbody>
-                {Object.keys(shape.nubrakes).filter((k) => !k.startsWith('font-')).map((k) => (
+                {Object.keys(shapeFor('nubrakes', style)).filter((k) => !k.startsWith('font-')).map((k) => (
                   <tr key={k}>
                     <th scope="row"><code>{k}</code></th>
-                    {BRANDS.map((b) => <td key={b}><code>{shape[b][k]}</code></td>)}
+                    {BRANDS.map((b) => <td key={b}><code>{shapeFor(b, style)[k]}</code></td>)}
                   </tr>
                 ))}
               </tbody>

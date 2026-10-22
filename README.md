@@ -12,6 +12,8 @@ This prototype answers it in code:
   The System page shows both brands side by side and downloads the tokens as DTCG JSON.
 - **UX notes:** numbered markers on the screens, each a small recommendation with its reason and the
   metric to watch. The Notes page lists all of them against the role description.
+- **Two design directions:** V1 Editorial and V2 Job ticket, switchable in the Prototype panel (or `#/?v=2`).
+  Same components and colour tokens; V2 changes type (IBM Plex, mono figures), shape and a few layouts.
 - **States:** loading, empty and error on every data surface. Use the Prototype panel (bottom corner)
   to switch brand, scheme, and to simulate a slow network or failing requests.
 

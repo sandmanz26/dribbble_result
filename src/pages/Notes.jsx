@@ -78,6 +78,18 @@ export default function Notes() {
 
         <div className="split">
           <div className="split-side">
+            <h2 className="display-sm">Two directions</h2>
+            <p className="muted">Switch between them in the Prototype panel. Same flows, data, brands and recommendations.</p>
+          </div>
+          <dl className="lines lines-directions">
+            <div><dt>V1 Editorial</dt><dd>Large type, soft surfaces, quote card beside the headline, summary in a side column. Closer to a consumer brand site. Suits the NuBrakes voice.</dd></div>
+            <div><dt>V2 Job ticket</dt><dd>Square edges, ruled lines, IBM Plex with mono figures. Quote as one search strip, prices as a board, the visit as a timeline with times, steps as a rail. Closer to a service desk. Suits Valvoline's retail and fleet tone.</dd></div>
+            <div><dt>What stays fixed</dt><dd>Components, props, colour tokens and the single accent per brand. V2 only changes type, shape and layout tokens plus a few layouts, which is the same mechanism the brand switch uses.</dd></div>
+          </dl>
+        </div>
+
+        <div className="split">
+          <div className="split-side">
             <h2 className="display-sm">Dual brand</h2>
           </div>
           <div className="stack-sm">

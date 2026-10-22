@@ -600,3 +600,8 @@ th.num, td.num { text-align: right; }
 .flow-list-plan li::before { display: none; }
 @media (max-width: 560px) { .flow-list-plan li { grid-template-columns: 1fr; } .flow-list-plan li span { grid-column: 1; } }
 .figma-table td { white-space: normal; min-width: 180px; }
+
+.lines-directions > div { display: grid; grid-template-columns: 160px 1fr; text-align: left; }
+.lines-directions dt { color: var(--c-ink); font-weight: 700; }
+.lines-directions dd { text-align: left; font-weight: 400; color: var(--c-muted); }
+@media (max-width: 560px) { .lines-directions > div { grid-template-columns: 1fr; gap: 4px; } }

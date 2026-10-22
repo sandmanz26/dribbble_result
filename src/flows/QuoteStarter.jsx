@@ -66,7 +66,8 @@ export function VehicleInputs({ entry, value, onChange, errors = {} }) {
   )
 }
 
-export function QuoteStarter({ title = 'See your price', service }) {
+// Shared by the V1 side card and the V2 search strip: same fields, same validation.
+export function useQuoteStart(service) {
   const { draft, update } = useDraft()
   const nav = useNavigate()
   const [entry, setEntry] = useState(draft.entry)
@@ -119,22 +120,28 @@ export function QuoteStarter({ title = 'See your price', service }) {
     nav('/quote/issue')
   }
 
+  const switchEntry = (x) => {
+    setEntry(x)
+    setErrors({})
+    setLookupError(null)
+  }
+  return { entry, switchEntry, v, setV, zip, setZip, errors, busy, lookupError, submit }
+}
+
+export function QuoteStarter({ title = 'See your price', service }) {
+  const { entry, switchEntry, v, setV, zip, setZip, errors, busy, lookupError, submit } = useQuoteStart(service)
   return (
     <form className="starter" onSubmit={submit} noValidate aria-labelledby="starter-title">
       <h2 id="starter-title" className="starter-title">{title}</h2>
       <Segmented
         label="How to find your vehicle"
         value={entry}
-        onChange={(x) => {
-          setEntry(x)
-          setErrors({})
-          setLookupError(null)
-        }}
+        onChange={switchEntry}
         options={[{ value: 'plate', label: 'License plate' }, { value: 'ymm', label: 'Make and model' }]}
       />
       <VehicleInputs entry={entry} value={v} errors={errors} onChange={(p) => setV((x) => ({ ...x, ...p }))} />
       {lookupError === 'not_found' && (
-        <Alert tone="warning" title="We could not match that plate" action={<Button type="button" size="sm" variant="ghost" onClick={() => { setEntry('ymm'); setLookupError(null) }}>Use year, make, model</Button>}>
+        <Alert tone="warning" title="We could not match that plate" action={<Button type="button" size="sm" variant="ghost" onClick={() => switchEntry('ymm')}>Use year, make, model</Button>}>
           New plates can take a few weeks to show up.
         </Alert>
       )}

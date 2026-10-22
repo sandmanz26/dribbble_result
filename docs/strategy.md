@@ -83,3 +83,14 @@ NuBrakes' gap: the strongest at-home trust and transparency story, carried by a 
 3. Which markets stay NuBrakes and which move to the Valvoline brand, and when?
 4. Can the technician app send measurements, so approval requests carry real readings?
 5. Can the path-to-purchase study and current funnel numbers be shared to replace section 2?
+
+## 8. Two design directions
+Switchable in the Prototype panel. Same components, data, brands and recommendations.
+| | V1 Editorial | V2 Job ticket |
+|---|---|---|
+| Type | Archivo display, Public Sans body | IBM Plex Sans (variable width), Plex Mono for figures |
+| Shape | Rounded (NuBrakes) or 4px (Valvoline), soft surfaces | Square, 2px ruled lines, no tinted fills |
+| Home | Headline with quote card beside it, service rows, symptom chips | Full-width quote strip, price board, visit timeline with times, symptom table |
+| Flow | Steps in a left column, summary in a right column | Steps as a numbered rail on top, quote as a ticket on the right |
+| Fits | Consumer brand voice, closer to NuBrakes today | Service desk tone, closer to Valvoline retail and fleet |
+Mechanism: V2 is a third token dimension (style) next to brand and scheme, plus scoped layout rules.

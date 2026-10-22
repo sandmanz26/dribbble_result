@@ -39,7 +39,7 @@ export default function ServicePage() {
               <h2 className="display-xs">Price by vehicle</h2>
               <dl className="lines lines-wide">
                 {Object.entries(s.price).map(([k, v]) => (
-                  <div key={k}><dt>{SIZE_LABEL[k]}</dt><dd className="num">{money(v)}{s.perAxle ? ' per axle' : ''}</dd></div>
+                  <div key={k}><dt>{SIZE_LABEL[k]}</dt><dd><span className="num">{money(v)}</span>{s.perAxle ? ' per axle' : ''}</dd></div>
                 ))}
               </dl>
               <p className="small muted">Standard parts. Sample prices for the prototype.</p>

@@ -32,7 +32,7 @@ const STEPS = [
   { title: 'Approve, then pay', text: 'Anything beyond the quote needs your OK in the app. You pay when the work is finished.' },
 ]
 
-const FAQ = [
+export const FAQ = [
   ['Do I need to be there?', 'No. Choose "I will leave the keys" when you book and tell us where. The technician texts photos when done.'],
   ['How much space does the technician need?', 'A flat spot with room to open the doors and the van parked behind or beside you. Most driveways and parking lots work.'],
   ['What if the technician finds something else?', 'They measure it, send you the reading and the price in the app, and wait for your answer. Saying no never changes the original quote.'],

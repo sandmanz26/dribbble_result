@@ -3,6 +3,8 @@ import { Route, Routes, useLocation } from 'react-router-dom'
 import { SiteFooter, SiteHeader } from './pages/Chrome.jsx'
 import { PrototypePanel } from './pages/PrototypePanel.jsx'
 import Home from './pages/Home.jsx'
+import HomeV2 from './pages/HomeV2.jsx'
+import { useBrand } from './brand/BrandContext.jsx'
 import Services from './pages/Services.jsx'
 import ServicePage from './pages/ServicePage.jsx'
 import QuoteFlow from './flows/QuoteFlow.jsx'
@@ -24,6 +26,11 @@ function ScrollReset() {
   return null
 }
 
+function HomeForStyle() {
+  const { style } = useBrand()
+  return style === 'v2' ? <HomeV2 /> : <Home />
+}
+
 function Site({ children }) {
   return (
     <>
@@ -42,7 +49,7 @@ export default function App() {
     <>
       <ScrollReset />
       <Routes>
-        <Route path="/" element={<Site><Home /></Site>} />
+        <Route path="/" element={<Site><HomeForStyle /></Site>} />
         <Route path="/services" element={<Site><Services /></Site>} />
         <Route path="/services/:id" element={<Site><ServicePage /></Site>} />
         <Route path="/quote" element={<QuoteFlow />} />

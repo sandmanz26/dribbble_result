@@ -219,10 +219,43 @@ export const SEMANTIC_DOCS = {
   'on-inverse': 'Text on inverse',
 }
 
-export function tokenVars(brand, scheme) {
+// Design direction. V1 "Editorial": large type, soft surfaces, side summary.
+// V2 "Job ticket": square edges, ruled lines instead of fills, IBM Plex with mono figures,
+// dense price board. Same components and brand colours; only type, shape and layout change.
+export const STYLES = ['v1', 'v2']
+export const STYLE_META = {
+  v1: { name: 'V1', label: 'Editorial' },
+  v2: { name: 'V2', label: 'Job ticket' },
+}
+
+const V2_BASE = {
+  'font-display': "'IBM Plex Sans Variable', 'Arial Narrow', sans-serif",
+  'font-body': "'IBM Plex Sans Variable', system-ui, sans-serif",
+  'font-mono': "'IBM Plex Mono', ui-monospace, Menlo, monospace",
+  'radius-sm': '0px',
+  'radius-md': '2px',
+  'radius-lg': '2px',
+  'radius-control': '2px',
+  'shadow-1': 'none',
+  'shadow-2': '0 12px 32px rgb(0 0 0 / 0.18)',
+}
+
+export const styleShape = {
+  v1: { nubrakes: {}, valvoline: {} },
+  v2: {
+    nubrakes: { ...V2_BASE, 'display-wdth': '88', 'display-wght': '640', 'display-track': '-0.015em', 'button-wght': '600' },
+    valvoline: { ...V2_BASE, 'display-wdth': '75', 'display-wght': '700', 'display-track': '0', 'button-wght': '650' },
+  },
+}
+
+export function shapeFor(brand, style = 'v1') {
+  return { 'font-mono': shape[brand]['font-body'], ...shape[brand], ...styleShape[style][brand] }
+}
+
+export function tokenVars(brand, scheme, style = 'v1') {
   const vars = {}
   for (const [k, v] of Object.entries(semantic[brand][scheme])) vars[`--c-${k}`] = v
-  for (const [k, v] of Object.entries(shape[brand])) vars[`--${k}`] = v
+  for (const [k, v] of Object.entries(shapeFor(brand, style))) vars[`--${k}`] = v
   return vars
 }
 
@@ -237,7 +270,9 @@ export function toDTCG() {
         Object.entries(semantic[b][s]).map(([k, v]) => [k, { $type: 'color', $value: v, $description: SEMANTIC_DOCS[k] }]),
       )
     }
-    out.shape[b] = Object.fromEntries(Object.entries(shape[b]).map(([k, v]) => [k, { $value: v }]))
+    out.shape[b] = Object.fromEntries(
+      STYLES.map((st) => [st, Object.fromEntries(Object.entries(shapeFor(b, st)).map(([k, v]) => [k, { $value: v }]))]),
+    )
   }
   return out
 }

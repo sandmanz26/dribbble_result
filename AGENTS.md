@@ -15,7 +15,7 @@ branch, no shared code, how deployment and passwords work) are in `AGENTS.md` on
   See `docs/strategy.md` section 1.
 - **Live:** `/project3/` on the hub site, password `PR003`.
 - **Stack:** React 18, Vite 5 (`base: './'`), react-router `HashRouter`, Lucide icons, Archivo (variable,
-  with width axis) + Public Sans via Fontsource. CSS transitions only, no animation library.
+  with width axis) + Public Sans via Fontsource for V1; IBM Plex Sans (variable width) + Plex Mono for V2. CSS transitions only, no animation library.
 - **Not available at build time:** the Valvoline design system site and the path-to-purchase study.
   Brand colour values are placeholders and research findings are labelled hypotheses. Keep it that way
   until the real sources are shared.
@@ -47,6 +47,9 @@ docs/strategy.md    brief read, hypotheses, IA, flow decisions, competitor frame
 - Demo data: plate `LKD4821` (TX) finds a 2019 Toyota RAV4; ZIPs 786/787 (Austin), 770-775 (Houston),
   750-752/760-761 (DFW), 780-782 (San Antonio); anything else is out of area. The third open day is always
   fully booked; Sundays are closed.
+- Design directions: `style` in `BrandContext` (`v1` Editorial, `v2` Job ticket), persisted in `nb-prefs`,
+  URL `#/?v=2`. Type/shape overrides in `styleShape` (`src/brand/tokens.js`), layout rules in
+  `src/styles/v2.css` scoped to `[data-style='v2']`, and `src/pages/HomeV2.jsx`. Everything else is shared.
 - UX notes: numbered recommendation markers (`src/ui/UXNote.jsx`, content in `src/data/uxnotes.js`), on by
   default, toggled in the Prototype panel. Keep the numbering in sync with the Notes page (it reads the same list).
 - The floating Prototype panel switches brand and scheme and can make the mock API slow or fail the first

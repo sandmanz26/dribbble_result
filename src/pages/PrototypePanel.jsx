@@ -34,6 +34,16 @@ export function PrototypePanel() {
             <button className="icon-btn" aria-label="Close" onClick={() => setOpen(false)}><X size={18} /></button>
           </div>
           <div className="proto-group">
+            <p className="proto-label">Design direction</p>
+            <Segmented
+              size="sm"
+              label="Design direction"
+              value={b.style}
+              onChange={b.setStyle}
+              options={[{ value: 'v1', label: 'V1 Editorial' }, { value: 'v2', label: 'V2 Job ticket' }]}
+            />
+          </div>
+          <div className="proto-group">
             <p className="proto-label">Brand theme</p>
             <Segmented
               size="sm"
@@ -88,7 +98,7 @@ export function PrototypePanel() {
         </div>
       )}
       <button className="proto-toggle" aria-label="Prototype controls" aria-expanded={open} onClick={() => setOpen(!open)}>
-        <SlidersHorizontal size={16} aria-hidden /> <span>Prototype</span>
+        <SlidersHorizontal size={16} aria-hidden /> <span>Prototype · {b.styleMeta.name}</span>
       </button>
     </div>
   )
