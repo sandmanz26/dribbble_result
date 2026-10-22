@@ -23,7 +23,8 @@ GitHub repo: sandmanz26/dribbble_result
 ├── claude/modest-mayer-eyddvw            ← project1: Wanderlog Gang (own code, own design)
 ├── claude/photo-video-marketplace-app    ← project2: Proof (own code, own design)
 ├── claude/nubrakes-dual-brand            ← project3: NuBrakes dual-brand (own code, own design)
-└── <new branch per new brief>            ← project4, project5, ...
+├── claude/busticated-audio-plugin        ← project4: Scrapyard BC-01 (own code, own design)
+└── <new branch per new brief>            ← project5, project6, ...
 ```
 
 - Every project lives on **its own branch**, created as an **orphan branch** (no shared history).
@@ -42,6 +43,7 @@ If a task says "work on project X", check out that project's branch and stay on 
 | `/project1/` | `PR001` | `claude/modest-mayer-eyddvw` | Wanderlog Gang: retro illustrated travel blog | Website | React 18, Vite 5, react-router (HashRouter), Motion, Phosphor icons. Big Shoulders Display + Figtree. Paper/navy ink + one cobalt accent. Light/dark. Photos self-hosted in `public/photos/` |
 | `/project2/` | `PR002` | `claude/photo-video-marketplace-app` | Proof: photography and videography marketplace | **Mobile app** | React 18, Vite 5, react-router (HashRouter), Motion, Tabler icons. Geist. Monochrome + one vermilion accent. Light/dark. On desktop renders inside a phone frame; on phones runs full screen. Portfolio images self-hosted in `public/portfolio/` |
 | `/project3/` | `PR003` | `claude/nubrakes-dual-brand` | NuBrakes + Valvoline: dual-brand reskin and quote/booking redesign | Website + flow | React 18, Vite 5, react-router (HashRouter), Lucide icons, no animation library. Archivo (variable width) + Public Sans. One component set, two brand token sets (NuBrakes yellow, Valvoline red/navy), light/dark. Brand colours are placeholders. Numbered UX notes layer (recommendation, reason, metric) from the role description PDF. Two design directions switchable in the Prototype panel: V1 Editorial and V2 Job ticket (IBM Plex + Plex Mono, square, ruled). No photos yet (image hosts were blocked) |
+| `/project4/` | `PR004` | `claude/busticated-audio-plugin` | Scrapyard BC-01: hardware-style audio plugin UI for The Busticated Co. | Plugin UI + handoff | React 18, Vite 5, react-router (HashRouter), Web Audio, iconoir icons, no animation library. Anybody (variable width) + Martian Mono. Cream enamel, bakelite, black ink, one signal-orange accent. Page light/dark; the plugin keeps its materials. Exported sprite sheets in `public/sprites/` (scripted export) |
 
 Live site: `https://proposal-virid-eight.vercel.app/<slug>/` (the domain may be renamed in Vercel).
 The root `/` and any unknown path intentionally return "Nothing to see here." There is no index page.
@@ -81,7 +83,7 @@ push to main ──► Vercel builds main ──► node build.mjs
    rewrites, so BrowserRouter routes would 404 on refresh.
 3. `npm run build` outputs to `dist/`, and a committed `package-lock.json` exists (`npm ci` is used).
 4. localStorage keys are **prefixed per project** (all projects share one origin).
-   In use: `wg-*` (project1), `proof-state-v1` (project2), `nb-*` (project3).
+   In use: `wg-*` (project1), `proof-state-v1` (project2), `nb-*` (project3), `bz-*` (project4).
 5. No backend calls. Data is mock data in `src/data/`. State may persist to localStorage.
 6. Images are **self-hosted** in the project's `public/` folder (WebP renditions), with credits in
    the app. Do not hotlink Wikimedia/Picsum/Unsplash at runtime: Wikimedia rate-limits hotlinks.

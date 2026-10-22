@@ -11,6 +11,7 @@ const PASSWORDS = {
   project1: 'PR001', // Wanderlog Gang
   project2: 'PR002', // Proof
   project3: 'PR003', // NuBrakes dual-brand
+  project4: 'PR004', // Scrapyard BC-01
 }
 
 const COOKIE_DAYS = 30
