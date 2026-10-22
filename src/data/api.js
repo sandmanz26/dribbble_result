@@ -28,7 +28,9 @@ function maybeFail(name, code = 'network', message = 'We could not reach our ser
 export async function lookupPlate(state, plate) {
   await wait(900)
   maybeFail('plate')
-  const hit = PLATES[`${state}:${plate.replace(/\s+/g, '').toUpperCase()}`]
+  const p = plate.replace(/[\s-]+/g, '').toUpperCase()
+  // Demo plates are matched in any state, so a reviewer who picks the wrong state still gets a car.
+  const hit = PLATES[`${state}:${p}`] || Object.entries(PLATES).find(([k]) => k.endsWith(`:${p}`))?.[1]
   if (!hit) throw new ApiError('not_found', 'We could not match that plate.')
   return hit
 }
@@ -164,11 +166,16 @@ export async function findBooking(id, last4) {
   const want = String(id).trim().toUpperCase().replace(/\s+/g, '')
   if (!/^(NB|VMB)-?\w+$/.test(want)) throw new ApiError('not_found', 'No visit matches that number and phone.')
   const norm = (x) => x.toUpperCase().replace('-', '')
-  const hit = readBookings().find(
-    (b) => norm(b.id) === norm(want) && (b.contact?.phone || '').replace(/\D/g, '').endsWith(String(last4).trim()),
-  )
-  if (!hit) throw new ApiError('not_found', 'No visit matches that number and phone.')
-  return hit
+  const match = (b) => norm(b.id) === norm(want) && (b.contact?.phone || '').replace(/\D/g, '').endsWith(String(last4).trim())
+  const hit = readBookings().find(match)
+  if (hit) return hit
+  // The demo NuBrakes visits are findable even when they were never seeded into My bookings.
+  // history.js imports this module, so it is loaded lazily here.
+  const { HISTORY } = await import('./history.js')
+  const demo = HISTORY.find(match)
+  if (!demo) throw new ApiError('not_found', 'No visit matches that number and phone.')
+  writeBookings([...readBookings().filter((b) => b.id !== demo.id), demo])
+  return demo
 }
 
 export function writeBookingList(list) {

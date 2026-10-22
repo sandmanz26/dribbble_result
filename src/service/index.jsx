@@ -570,7 +570,7 @@ export function FindBooking({ compact }) {
         <Field label="Booking number" error={err.id} hint={err.id ? null : 'Starts with NB- or VMB-. Your old NuBrakes number works.'}>
           {(a) => <Input {...a} autoCapitalize="characters" spellCheck={false} value={id} onChange={(e) => setId(e.target.value.toUpperCase())} placeholder="NB-41873" />}
         </Field>
-        <Field label="Last 4 of your phone" error={err.last4}>
+        <Field label="Last 4 of your phone" error={err.last4} hint={err.last4 ? null : 'Demo: NB-41873 with 0142'}>
           {(a) => <Input {...a} inputMode="numeric" maxLength={4} value={last4} onChange={(e) => setLast4(e.target.value.replace(/\D/g, ''))} />}
         </Field>
       </div>
