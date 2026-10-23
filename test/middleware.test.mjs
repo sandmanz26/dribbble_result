@@ -24,7 +24,7 @@ const cases = [
     assert.ok(passed(await get('/project1/photos/kyoto-in-bloom-0-480.webp', cookieOf(r))))
   }],
   ['project3 accepts PR003', async () => { const r = await post('/project3/', { password: 'PR003', hash: '#/quote/vehicle' }); assert.equal(r.headers.get('location'), '/project3/#/quote/vehicle'); assert.ok(passed(await get('/project3/assets/index.js', cookieOf(r)))) }],
-  ['project5 accepts PR005', async () => { const r = await post('/project5/', { password: 'PR005' }); assert.ok(passed(await get('/project5/', cookieOf(r)))) }],
+  ['project5 accepts DRI05', async () => { const r = await post('/project5/', { password: 'DRI05' }); assert.ok(passed(await get('/project5/', cookieOf(r)))) }],
   ['project4 accepts PR004', async () => { const r = await post('/project4/', { password: 'PR004' }); assert.ok(passed(await get('/project4/sprites/layout.json', cookieOf(r)))) }],
   ['project2 accepts PR002', async () => { const r = await post('/project2/', { password: 'PR002' }); assert.ok(passed(await get('/project2/', cookieOf(r)))) }],
   ['project1 cookie does not open project2', async () => {
