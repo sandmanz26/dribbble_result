@@ -1,0 +1,28 @@
+/* Reset and the two script stacks. Each version sets its own tokens under .v1 / .v2. */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body { margin: 0; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, p, ul, ol, dl, dd, figure { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+button, input, select { font: inherit; color: inherit; }
+button { cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+svg { display: block; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.num { font-variant-numeric: tabular-nums; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 1ms !important; transition-duration: 1ms !important; scroll-behavior: auto !important; }
+}
+
+/* Prototype panel: outside both designs, deliberately plain. */
+.proto { position: fixed; z-index: 50; right: 12px; bottom: 12px; font-size: 13px; line-height: 18px; color: #111; }
+.proto-v1 { font-family: 'Inter Variable', 'Noto Sans Sinhala Variable', sans-serif; }
+.proto-v2 { font-family: 'Yaldevi Variable', sans-serif; }
+.proto-btn { height: 36px; padding: 0 14px; border-radius: 18px; border: 1px solid #c9c9c9; background: #fff; }
+.proto-card { position: absolute; right: 0; bottom: 44px; width: 260px; padding: 14px; border-radius: 10px; background: #fff; border: 1px solid #ddd; box-shadow: 0 8px 28px rgba(0,0,0,.16); display: grid; gap: 12px; }
+.proto-card h2 { font-size: 12px; font-weight: 600; color: #555; }
+.proto-seg { display: flex; flex-wrap: wrap; gap: 4px; }
+.proto-seg button { flex: 1 1 auto; height: 32px; padding: 0 8px; border-radius: 6px; border: 1px solid #ccc; background: #fff; }
+.proto-seg button[aria-pressed="true"] { background: #111; color: #fff; border-color: #111; }
+.proto-note { color: #555; font-size: 12px; }
+.proto-link { background: none; border: 0; padding: 0; text-decoration: underline; justify-self: start; color: #111; }
