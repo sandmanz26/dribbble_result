@@ -12,6 +12,7 @@ const PASSWORDS = {
   project2: 'PR002', // Proof
   project3: 'PR003', // NuBrakes dual-brand
   project4: 'PR004', // Scrapyard BC-01
+  project5: 'PR005', // Nelum Vidyalaya student management
 }
 
 const COOKIE_DAYS = 30
