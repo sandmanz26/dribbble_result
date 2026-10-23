@@ -25,6 +25,7 @@ GitHub repo: sandmanz26/dribbble_result
 ├── claude/nubrakes-dual-brand            ← project3: NuBrakes dual-brand (own code, own design)
 ├── claude/busticated-audio-plugin        ← project4: Scrapyard BC-01 (own code, own design)
 ├── claude/student-portal-bilingual       ← project5: Nelum Vidyalaya SMS (own code, own design)
+├── claude/westpoint-case-study           ← project6: Westpoint case study (owner's page, served as-is)
 └── <new branch per new brief>            ← project5, project6, ...
 ```
 
@@ -46,6 +47,7 @@ If a task says "work on project X", check out that project's branch and stay on 
 | `/project3/` | `PR003` | `claude/nubrakes-dual-brand` | NuBrakes + Valvoline: dual-brand reskin and quote/booking redesign | Website + flow | React 18, Vite 5, react-router (HashRouter), Lucide icons, no animation library. Archivo (variable width) + Public Sans. One component set, two brand token sets (NuBrakes yellow, Valvoline red/navy), light/dark. Brand colours are placeholders. Numbered UX notes layer (recommendation, reason, metric) from the role description PDF. Two design directions switchable in the Prototype panel: V1 Editorial and V2 Job ticket (IBM Plex + Plex Mono, square, ruled). After-booking flows: receipt, warranty claim, past visits, returning NuBrakes customer (NB-/VMB- booking numbers; demo: plate LKD4821, ZIP 78704, booking NB-41873 + 0142). No photos yet (image hosts were blocked) |
 | `/project4/` | `PR004` | `claude/busticated-audio-plugin` | Scrapyard BC-01: hardware-style audio plugin UI for The Busticated Co. | Plugin UI + handoff | React 18, Vite 5, react-router (HashRouter), Web Audio, iconoir icons, no animation library. Anybody (variable width) + Martian Mono. Cream enamel, bakelite, black ink, one signal-orange accent. Page light/dark; the plugin keeps its materials. Exported sprite sheets in `public/sprites/` (scripted export) |
 | `/project5/` | `DRI05` | `claude/student-portal-bilingual` | Nelum Vidyalaya: bilingual (English/Sinhala) Student Management System | Web app, two versions | React 18, Vite 5, react-router (HashRouter), Remix Icon, no animation library. V1 Brief: client's #0B2545/#134074, Inter + Noto Sans Sinhala, achromatic-ledger portal (overview, students). V2 Concept: Gemunu Libre + Yaldevi, paper/ink + one marigold, grade picker as a chart of the school, the school day as the dashboard, every label in both scripts. Switch in the Prototype panel. Demo clock Thu 23 Oct 2026 10:05. Deep links `#/v2/today?lang=si&grade=12`. No photos (drawn motif) |
+| `/project6/` | `wp-3xsf-qcya` | `claude/westpoint-case-study` | Westpoint: the owner's private case study (charter bus ERP, driver and passenger apps) | Case study page | Not a prototype: the owner's own single self-contained HTML (images inlined, no scripts), hosted here because Dribbble limits proposal domains. `npm run build` only copies `index.html` to `dist/`. Client work under NDA: do not edit or reuse its copy or images |
 
 Live site: `https://proposal-virid-eight.vercel.app/<slug>/` (the domain may be renamed in Vercel).
 The root `/` and any unknown path intentionally return "Nothing to see here." There is no index page.
@@ -72,6 +74,10 @@ push to main ──► Vercel builds main ──► node build.mjs
   - Anything else → "Nothing to see here." (404).
   - Passwords are hardcoded in `PASSWORDS`; env var `PASSWORD_<SLUG>` (e.g. `PASSWORD_PROJECT1`)
     overrides them. Changing `SECRET` signs everyone out.
+- **Never indexed.** Everything on this site is private. `vercel.json` sends
+  `X-Robots-Tag: noindex, nofollow, noarchive, nosnippet, noimageindex` on every path, the middleware
+  sends the same header on its own pages and serves `/robots.txt` as `Disallow: /`, and `build.mjs`
+  adds a robots noindex meta to every built HTML page that lacks one. Keep all three.
 - **`vercel.json`:** `buildCommand: node build.mjs`, `outputDirectory: out`, `trailingSlash: true`
   (needed so `/project1` becomes `/project1/` and relative asset paths resolve).
 - **Important:** pushing to a project branch does **not** redeploy the live site. After changing a
@@ -113,8 +119,8 @@ git push origin main              # triggers the Vercel deploy
 ```
 
 Passwords follow `PR001`, `PR002`, `PR003`, ... matching `project1`, `project2`, `project3`, ...
-From project5 on, each project gets its own unrelated password (project5: `DRI05`) so knowing one
-password does not let anyone guess the others.
+From project5 on, each project gets its own unrelated password (project5: `DRI05`, project6: a random
+`wp-xxxx-xxxx`) so knowing one password does not let anyone guess the others.
 
 ## 7. Per-project working method (what the owner expects)
 

@@ -13,7 +13,12 @@ const PASSWORDS = {
   project3: 'PR003', // NuBrakes dual-brand
   project4: 'PR004', // Scrapyard BC-01
   project5: 'DRI05', // Nelum Vidyalaya student management
+  project6: 'wp-3xsf-qcya', // Westpoint case study (private, under NDA)
 }
+
+// Nothing on this site may be indexed: every response says so, and robots.txt turns crawlers away.
+const NOINDEX = 'noindex, nofollow, noarchive, nosnippet, noimageindex'
+const ROBOTS_TXT = 'User-agent: *\nDisallow: /\n'
 
 const COOKIE_DAYS = 30
 const SECRET = 'project-briefs-gate-v1' // bump to sign everyone out
@@ -39,7 +44,7 @@ const readCookie = (request, name) => {
 const html = (body, status, extra = {}) =>
   new Response(body, {
     status,
-    headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store', 'x-robots-tag': 'noindex', ...extra },
+    headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store', 'x-robots-tag': NOINDEX, ...extra },
   })
 
 const PAGE_STYLE = `
@@ -55,12 +60,12 @@ const PAGE_STYLE = `
 `
 
 const nothingPage = () => html(`<!doctype html><html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex, nofollow">
 <title>Nothing to see here</title><style>${PAGE_STYLE}</style></head>
 <body><main><p>Nothing to see here.</p></main></body></html>`, 404)
 
 const loginPage = (slug, error) => html(`<!doctype html><html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex, nofollow">
 <title>Password required</title><style>${PAGE_STYLE}
   form { display: grid; gap: 8px; margin-top: 28px; }
   label { font-size: 14px; font-weight: 600; }
@@ -90,6 +95,10 @@ export default async function middleware(request) {
   const url = new URL(request.url)
   const slug = url.pathname.split('/')[1]
 
+  if (url.pathname === '/robots.txt') {
+    return new Response(ROBOTS_TXT, { headers: { 'content-type': 'text/plain; charset=utf-8', 'x-robots-tag': NOINDEX } })
+  }
+
   if (!slug || !passwordFor(slug)) return nothingPage()
   if (url.pathname === `/${slug}`) return Response.redirect(new URL(`/${slug}/${url.search}`, url), 308)
 
@@ -110,6 +119,7 @@ export default async function middleware(request) {
         location: `/${slug}/${hash}`,
         'set-cookie': `${cookieName}=${token}; Path=/${slug}/; Max-Age=${COOKIE_DAYS * 86400}; HttpOnly; Secure; SameSite=Lax`,
         'cache-control': 'no-store',
+        'x-robots-tag': NOINDEX,
       },
     })
   }

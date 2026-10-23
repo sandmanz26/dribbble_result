@@ -24,6 +24,15 @@ const cases = [
     assert.ok(passed(await get('/project1/photos/kyoto-in-bloom-0-480.webp', cookieOf(r))))
   }],
   ['project3 accepts PR003', async () => { const r = await post('/project3/', { password: 'PR003', hash: '#/quote/vehicle' }); assert.equal(r.headers.get('location'), '/project3/#/quote/vehicle'); assert.ok(passed(await get('/project3/assets/index.js', cookieOf(r)))) }],
+  ['project6 accepts its own password only', async () => {
+    assert.equal((await post('/project6/', { password: 'PR006' })).status, 401)
+    const r = await post('/project6/', { password: 'wp-3xsf-qcya' })
+    assert.ok(passed(await get('/project6/', cookieOf(r))))
+  }],
+  ['robots.txt turns every crawler away', async () => { const r = await get('/robots.txt'); assert.equal(r.status, 200); assert.match(await r.text(), /Disallow: \//) }],
+  ['every gate page says noindex', async () => {
+    for (const r of [await get('/'), await get('/project6/'), await post('/project1/', { password: 'x' })]) assert.match(r.headers.get('x-robots-tag'), /noindex/)
+  }],
   ['project5 accepts DRI05', async () => { const r = await post('/project5/', { password: 'DRI05' }); assert.ok(passed(await get('/project5/', cookieOf(r)))) }],
   ['project4 accepts PR004', async () => { const r = await post('/project4/', { password: 'PR004' }); assert.ok(passed(await get('/project4/sprites/layout.json', cookieOf(r)))) }],
   ['project2 accepts PR002', async () => { const r = await post('/project2/', { password: 'PR002' }); assert.ok(passed(await get('/project2/', cookieOf(r)))) }],

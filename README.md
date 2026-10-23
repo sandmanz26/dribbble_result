@@ -12,6 +12,7 @@ puts each project behind its own password:
 | `/project3/` | NuBrakes dual-brand (website + booking flow) | `claude/nubrakes-dual-brand` | `PR003` |
 | `/project4/` | Scrapyard BC-01 (audio plugin UI) | `claude/busticated-audio-plugin` | `PR004` |
 | `/project5/` | Nelum Vidyalaya (bilingual student management, V1 and V2) | `claude/student-portal-bilingual` | `DRI05` |
+| `/project6/` | Westpoint case study (private, NDA) | `claude/westpoint-case-study` | `wp-3xsf-qcya` |
 | `/` and anything else | "Nothing to see here." | | |
 
 - `build.mjs` clones each branch in `projects.json`, runs `npm ci && npm run build` and copies its
