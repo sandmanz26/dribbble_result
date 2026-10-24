@@ -2,48 +2,57 @@
    as the one accent, each traveller a pale tint of their own hue, maps of the real coast
    instead of stock photos. Manrope throughout. Radius 20 on cards, 12 on controls, 8 inside. */
 :root {
-  --ground: #f3f5f4;
-  --surface: #ffffff;
-  --raised: #f1f6f5;
-  --border: #e4e8e6;
-  --rule: #eef1f0;
-  --control: #d3d9d7;
-  --text: #17201e;
-  --muted: #56605d;
-  --accent: #0e7a6d;
-  --accent-soft: #d9f2ee;
-  --accent-ink: #064239;
+  /* Brand: a sand ground, deep forest green fields, one sea-glass teal for action and data. */
+  --ground: #f4f1ea;
+  --surface: #fffdf8;
+  --raised: #efebe1;
+  --border: #e4dfd2;
+  --rule: #ece7dc;
+  --control: #d3cdbf;
+  --text: #13231f;
+  --muted: #5a625e;
+  --accent: #0f7a6a;
+  --accent-soft: #d6eee8;
+  --accent-ink: #06443a;
   --on-accent: #ffffff;
+  --field: #11302a;
+  --field-2: #19403a;
+  --on-field: #f4f1ea;
+  --on-field-muted: #a9c4bc;
+  --glow: #7fd6c4;
   --positive: #2f7a45;
   --negative: #c41c29;
   --neg-soft: #ffedea;
   --neg-ink: #831c1e;
-  --warn-soft: #fff6e0;
-  --warn-ink: #7a4a05;
-  --map-sea: #cfe5df;
-  --map-land: #e4e9e5;
-  --map-home: #fbfbf8;
-  --map-edge: #9ebab2;
+  --warn-soft: #fbefd2;
+  --warn-ink: #6f4606;
+  --map-sea: #cfe3dc;
+  --map-land: #e9e5da;
+  --map-home: #fffdf8;
+  --map-edge: #a7bdb4;
   --r-card: 20px;
   --r-ctl: 12px;
   --r-in: 8px;
   --pad: 20px;
   --font: 'Manrope Variable', system-ui, -apple-system, sans-serif;
+  --display: 'Bricolage Grotesque Variable', 'Manrope Variable', sans-serif;
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    --ground: #0d1211; --surface: #151b1a; --raised: #1b2422; --border: #253230; --rule: #1f2927; --control: #34433f;
-    --text: #eef3f1; --muted: #a4b0ac; --accent: #4cc0ae; --accent-soft: #163a35; --accent-ink: #a6eadf; --on-accent: #062a25;
+    --ground: #0c1513; --surface: #13201d; --raised: #1a2a26; --border: #24362f; --rule: #1d2d29; --control: #35493f;
+    --text: #eef3ef; --muted: #a4b3ad; --accent: #4cc0ae; --accent-soft: #163a35; --accent-ink: #a6eadf; --on-accent: #062a25;
+    --field: #0a2520; --field-2: #12332d; --on-field: #eef3ef; --on-field-muted: #94b4ab;
     --positive: #5ccb83; --negative: #ff7a74; --neg-soft: #3a1d1d; --neg-ink: #ffb3ae; --warn-soft: #33290f; --warn-ink: #f1c76c;
-    --map-sea: #0f2420; --map-land: #1b2724; --map-home: #26362f; --map-edge: #35504a; color-scheme: dark;
+    --map-sea: #0f2420; --map-land: #1b2b26; --map-home: #26382f; --map-edge: #35504a; color-scheme: dark;
   }
 }
 :root[data-theme='dark'] {
-  --ground: #0d1211; --surface: #151b1a; --raised: #1b2422; --border: #253230; --rule: #1f2927; --control: #34433f;
-  --text: #eef3f1; --muted: #a4b0ac; --accent: #4cc0ae; --accent-soft: #163a35; --accent-ink: #a6eadf; --on-accent: #062a25;
+  --ground: #0c1513; --surface: #13201d; --raised: #1a2a26; --border: #24362f; --rule: #1d2d29; --control: #35493f;
+  --text: #eef3ef; --muted: #a4b3ad; --accent: #4cc0ae; --accent-soft: #163a35; --accent-ink: #a6eadf; --on-accent: #062a25;
+  --field: #0a2520; --field-2: #12332d; --on-field: #eef3ef; --on-field-muted: #94b4ab;
   --positive: #5ccb83; --negative: #ff7a74; --neg-soft: #3a1d1d; --neg-ink: #ffb3ae; --warn-soft: #33290f; --warn-ink: #f1c76c;
-  --map-sea: #0f2420; --map-land: #1b2724; --map-home: #26362f; --map-edge: #35504a; color-scheme: dark;
+  --map-sea: #0f2420; --map-land: #1b2b26; --map-home: #26382f; --map-edge: #35504a; color-scheme: dark;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -110,16 +119,17 @@ a { color: inherit; text-decoration: none; }
 .tab { display: grid; justify-items: center; gap: 2px; padding: 6px 0 2px; color: var(--muted); font-size: 11.5px; font-weight: 600; border-radius: 12px; }
 .tab-icon { position: relative; }
 .tab.active { color: var(--accent); }
+.tab.active .tab-icon::after { content: ''; position: absolute; left: 50%; bottom: -5px; width: 5px; height: 5px; margin-left: -2.5px; border-radius: 50%; background: var(--accent); }
 .tab-dot { position: absolute; top: -1px; right: -3px; width: 9px; height: 9px; border-radius: 50%; background: var(--negative); border: 2px solid var(--surface); }
 
 .pagehead { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding-top: 8px; }
-.pagehead h1 { font-size: 28px; line-height: 34px; font-weight: 700; letter-spacing: -0.02em; }
+.pagehead h1 { font-family: var(--display); font-size: 30px; line-height: 34px; font-weight: 700; letter-spacing: -0.03em; }
 .topbar {
   position: sticky; top: 0; z-index: 5; display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; align-items: center; gap: 4px;
   margin: 0 -20px; padding: 6px 12px; background: var(--ground);
 }
 .topbar-title { min-width: 0; }
-.topbar-title h1 { font-size: 17px; line-height: 22px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.topbar-title h1 { font-family: var(--display); font-size: 18px; line-height: 22px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .topbar-title p { font-size: 13px; line-height: 18px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .topbar-right { display: flex; }
 .iconbtn {
@@ -184,7 +194,7 @@ label { font-size: 14px; font-weight: 600; }
 
 /* ---------- Cards ---------- */
 .sechead { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
-.sechead h2 { font-size: 20px; line-height: 26px; font-weight: 700; letter-spacing: -0.01em; }
+.sechead h2 { font-family: var(--display); font-size: 21px; line-height: 26px; font-weight: 700; letter-spacing: -0.02em; }
 .rail { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 20px; margin: 0 -20px; padding: 0 20px 4px; scrollbar-width: none; }
 .rail::-webkit-scrollbar { display: none; }
 .stack { display: grid; gap: 14px; }
@@ -358,7 +368,7 @@ a.row:hover, button.row:hover { background: var(--raised); }
 .onb-progress span.on { background: var(--accent); }
 .onb-progress.wide { margin-top: -10px; }
 .onb-body { display: grid; gap: 12px; align-content: start; padding: 16px 20px 24px; }
-.onb-body h1 { font-size: 28px; line-height: 34px; font-weight: 800; letter-spacing: -0.02em; }
+.onb-body h1 { font-family: var(--display); font-size: 30px; line-height: 34px; font-weight: 700; letter-spacing: -0.03em; }
 .onb-body > p { color: var(--muted); margin-bottom: 8px; }
 .onb-body .btn.primary { margin-top: 8px; }
 .otp { font-size: 30px !important; letter-spacing: 0.5em; text-align: center; font-weight: 700; }
@@ -377,7 +387,7 @@ a.row:hover, button.row:hover { background: var(--raised); }
 .tripcard-body { display: grid; gap: 8px; padding: 14px 16px 16px; }
 .tripcard-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
 .tripcard-top strong { font-size: 18px; line-height: 24px; }
-.count { font-size: 24px; font-weight: 700; }
+.count { font-family: var(--display); font-size: 28px; font-weight: 700; }
 .count small { font-size: 13px; color: var(--muted); font-weight: 500; }
 .needs { display: inline-flex; align-items: center; gap: 6px; justify-self: start; padding: 4px 10px; border-radius: 999px; background: var(--warn-soft); color: var(--warn-ink); font-size: 13px; font-weight: 700; }
 .needs.ok { background: var(--accent-soft); color: var(--accent-ink); }
@@ -388,7 +398,7 @@ a.row:hover, button.row:hover { background: var(--raised); }
 .tabbody { display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; }
 .page > *, .tabbody > * { min-width: 0; }
 .card { display: grid; gap: 8px; padding: 18px; border-radius: var(--r-card); background: var(--surface); border: 1px solid var(--border); }
-.big { font-size: 32px; line-height: 38px; font-weight: 700; letter-spacing: -0.02em; }
+.big { font-family: var(--display); font-size: 34px; line-height: 38px; font-weight: 700; letter-spacing: -0.02em; }
 .track { height: 10px; border-radius: 5px; background: var(--raised); overflow: hidden; }
 .track span { display: block; height: 100%; border-radius: 5px; background: var(--accent); }
 .track-ends { display: flex; justify-content: space-between; }
@@ -479,3 +489,84 @@ a.row:hover, button.row:hover { background: var(--raised); }
 .summary svg { height: 110px; }
 .summary strong, .summary .meta { padding: 0 16px; }
 .summary strong { font-size: 18px; margin-top: 6px; }
+
+@media (prefers-reduced-motion: reduce) { .route-arc, .loader i { animation: none !important; } }
+
+/* ---------- Brand layer ---------- */
+.mark .mark-bg { fill: var(--accent); }
+.mark .mark-arc { fill: none; stroke: #fff; stroke-width: 2.2; stroke-linecap: round; stroke-dasharray: 0.1 4.4; opacity: 0.9; }
+.mark .mark-dot { fill: #fff; opacity: 0.8; }
+.mark .mark-lead { fill: #fff; }
+.mark-field .mark-bg { fill: var(--glow); }
+.mark-field .mark-arc { stroke: var(--field); }
+.mark-field .mark-dot, .mark-field .mark-lead { fill: var(--field); }
+.wordmark { display: inline-flex; align-items: center; gap: 9px; font-family: var(--display); font-weight: 700; letter-spacing: -0.04em; color: var(--text); }
+.wordmark-field { color: var(--on-field); }
+
+.route { display: block; width: 100%; height: 100%; }
+.route-sea { fill: var(--map-sea); }
+.route-land { fill: var(--map-land); stroke: var(--map-edge); stroke-width: 0.4; }
+.route-arc { fill: none; stroke: var(--accent); stroke-width: 1.6; stroke-dasharray: 2 5; stroke-linecap: round; animation: march 1.6s linear infinite; }
+.route-home circle { fill: hsl(var(--h) 70% 90%); stroke: var(--surface); stroke-width: 2; }
+.route-home text { font: 800 10px var(--font); text-anchor: middle; fill: hsl(var(--h) 55% 24%); }
+.route-dest circle { fill: var(--accent); stroke: var(--surface); stroke-width: 2.5; }
+.route-dest .route-dest-halo { fill: var(--accent); opacity: 0.2; stroke: none; }
+.route-dark .route-sea { fill: var(--field); }
+.route-dark .route-land { fill: var(--field-2); stroke: #2a564d; }
+.route-dark .route-arc { stroke: var(--glow); }
+.route-dark .route-home circle { stroke: var(--field); }
+.route-dark .route-dest circle { fill: var(--glow); stroke: var(--field); }
+.route-dark .route-dest .route-dest-halo { fill: var(--glow); }
+@keyframes march { to { stroke-dashoffset: -14; } }
+
+/* A brand field: the deep green surface used for the moments that matter. */
+.field { position: relative; display: grid; border-radius: 24px; background: var(--field); color: var(--on-field); overflow: hidden; }
+.field .meta { color: var(--on-field-muted); }
+.field-map { height: 168px; }
+.field-body { display: grid; gap: 10px; padding: 4px 18px 18px; }
+.field-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; }
+.field-title { font-family: var(--display); font-size: 24px; line-height: 28px; font-weight: 700; letter-spacing: -0.03em; }
+.countdown { font-family: var(--display); font-size: 52px; line-height: 46px; font-weight: 700; letter-spacing: -0.05em; color: var(--glow); }
+.countdown small { display: block; font-family: var(--font); font-size: 13px; line-height: 18px; letter-spacing: 0; font-weight: 600; color: var(--on-field-muted); text-align: right; }
+.field .needs { background: rgb(127 214 196 / 0.16); color: var(--glow); }
+.field .btn.primary { background: var(--glow); color: var(--field); }
+.field .faces .avatar { box-shadow: 0 0 0 2px var(--field); }
+
+.greet { font-family: var(--display); font-size: 32px; line-height: 36px; font-weight: 700; letter-spacing: -0.035em; }
+.homehead { display: flex; align-items: center; justify-content: space-between; padding-top: 6px; }
+
+/* Group cards as tickets: map stub, a perforated tear line, then the pass. */
+.ticket { position: relative; }
+.ticket .gcard-body { position: relative; padding-top: 16px; }
+.ticket .gcard-body::before { content: ''; position: absolute; left: 14px; right: 14px; top: 0; border-top: 2px dashed var(--rule); }
+.ticket::before, .ticket::after {
+  content: ''; position: absolute; z-index: 2; width: 18px; height: 18px; border-radius: 50%; background: var(--ground); border: 1px solid var(--border);
+  top: calc(var(--stub, 120px) - 9px);
+}
+.ticket::before { left: -10px; }
+.ticket::after { right: -10px; }
+.gcard.wide.ticket { --stub: 140px; }
+.ticket-place { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.ticket-place b { font-family: var(--display); font-size: 26px; line-height: 28px; font-weight: 700; letter-spacing: -0.035em; }
+.ticket-place span { font-size: 13px; color: var(--muted); font-weight: 600; }
+.gcard-body strong.ticket-title { font-size: 15px; line-height: 20px; font-weight: 600; color: var(--muted); }
+
+.loader { display: flex; justify-content: center; gap: 8px; padding: 28px 0; }
+.loader i { width: 9px; height: 9px; border-radius: 50%; background: var(--accent); animation: hop 1s ease-in-out infinite; }
+.loader i:nth-child(2) { animation-delay: 0.15s; opacity: 0.75; }
+.loader i:nth-child(3) { animation-delay: 0.3s; opacity: 0.5; }
+@keyframes hop { 0%, 100% { transform: translateY(0); } 40% { transform: translateY(-8px); } }
+
+/* Welcome: the brand at full size */
+.welcome.brand { background: var(--field); color: var(--on-field); grid-template-rows: auto auto 1fr auto; padding: 18px 20px 24px; }
+.welcome.brand .welcome-copy p { color: var(--on-field-muted); }
+.welcome-map { margin: 6px -20px 0; height: 300px; }
+.welcome.brand .welcome-copy h1 { font-family: var(--display); font-size: 40px; line-height: 40px; font-weight: 700; letter-spacing: -0.045em; }
+.welcome.brand .btn.primary { background: var(--glow); color: var(--field); }
+.welcome.brand .btn.ghost { background: transparent; color: var(--on-field); border-color: rgb(255 255 255 / 0.22); }
+.welcome-proof { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--on-field-muted); }
+.welcome-proof .faces .avatar { box-shadow: 0 0 0 2px var(--field); }
+
+.hero-route { margin: 0 -20px; height: 230px; background: var(--field); border-radius: 0 0 26px 26px; overflow: hidden; position: relative; }
+.hero-route-cap { position: absolute; left: 20px; bottom: 14px; display: inline-flex; gap: 6px; align-items: center; padding: 5px 10px; border-radius: 10px; background: rgb(10 37 32 / 0.78); color: var(--on-field); font-size: 12.5px; font-weight: 600; }
+.trip-field { margin: 4px 0 0; }

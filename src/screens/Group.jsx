@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
 import { useStore } from '../store.jsx'
 import Icon from '../ui/Icon.jsx'
-import MapArt from '../map/MapArt.jsx'
+import RouteMap from '../map/RouteMap.jsx'
 import { Avatar, Sheet, TopBar, Trust } from '../ui/kit.jsx'
 import { membersOf, spots } from '../ui/cards.jsx'
 import { GROUPS, fmtRange, fmtWeekday, group, nights, untilStart, usd } from '../data/groups.js'
@@ -53,8 +53,9 @@ export default function Group() {
       <TopBar title={g.title} sub={`${p.name}, ${p.country}`} right={
         <button className="iconbtn" aria-label="Share group" onClick={() => notify({ text: 'Link copied. Only verified travellers can open it.' })}><Icon name="share" size={20} /></button>
       } />
-      <div className="hero-map">
-        <MapArt place={p} w={360} h={190} />
+      <div className="hero-route">
+        <RouteMap dest={p} people={members} w={390} h={230} tone="dark" pad={30} />
+        <span className="hero-route-cap"><Icon name="route" size={14} /> {members.length} travellers from {new Set(members.map((m) => PEOPLE[m].home)).size} cities to {p.name}</span>
       </div>
 
       <div className="facts four">

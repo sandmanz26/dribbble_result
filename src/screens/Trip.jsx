@@ -8,6 +8,8 @@ import { firstName } from '../data/people.js'
 import { DATE_POLL, PLAN } from '../data/trip.js'
 import { KYOTO, costs, itinerary, packing, poll } from '../data/plan.js'
 import { todos } from './Trips.jsx'
+import RouteMap from '../map/RouteMap.jsx'
+import { place } from '../data/places.js'
 
 const TABS = [['', 'Overview'], ['dates', 'Dates'], ['budget', 'Budget'], ['plan', 'Plan'], ['packing', 'Packing']]
 
@@ -36,8 +38,22 @@ function Overview() {
   const list = todos(s)
   const c = costs(s.expenses)
   const pl = poll(s.pollVotes)
+  const members = KYOTO.members
   return (
     <div className="tabbody">
+      <div className="field trip-field">
+        <div className="field-map"><RouteMap dest={place('kyoto')} people={members} w={350} h={168} tone="dark" pad={24} /></div>
+        <div className="field-body">
+          <div className="field-row">
+            <div>
+              <span className="meta small">Machiya in Higashiyama</span>
+              <div className="field-title">{fmtRange(KYOTO.start, KYOTO.end)}</div>
+              <span className="meta small">Check in {fmtWeekday(KYOTO.start)} 15:00 · {members.length} travellers</span>
+            </div>
+            <span className="countdown num">{untilStart(KYOTO)}<small>days</small></span>
+          </div>
+        </div>
+      </div>
       <section aria-labelledby="todo-h">
         <div className="sechead"><h2 id="todo-h">Waiting on you</h2><span className="meta num">{list.length}</span></div>
         {list.length ? (

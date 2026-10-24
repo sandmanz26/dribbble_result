@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useStore } from '../store.jsx'
 import Icon from '../ui/Icon.jsx'
-import MapArt from '../map/MapArt.jsx'
+import RouteMap from '../map/RouteMap.jsx'
 import { Empty, Faces } from '../ui/kit.jsx'
 import { membersOf } from '../ui/cards.jsx'
 import { GROUPS, fmtRange, group, untilStart } from '../data/groups.js'
@@ -23,14 +23,16 @@ export default function Trips() {
           const kyoto = g.id === 'kyoto'
           const todo = kyoto ? todos(s) : []
           return (
-            <Link key={g.id} to={kyoto ? '/trip/kyoto' : `/chats/${g.id}`} className="tripcard">
-              <MapArt place={place(g.place)} w={340} h={110} />
-              <div className="tripcard-body">
-                <div className="tripcard-top">
-                  <strong>{g.title}</strong>
-                  <span className="count num">{untilStart(g)}<small> days</small></span>
+            <Link key={g.id} to={kyoto ? '/trip/kyoto' : `/chats/${g.id}`} className="field">
+              <div className="field-map"><RouteMap dest={place(g.place)} people={membersOf(g, s)} w={350} h={150} tone="dark" pad={22} /></div>
+              <div className="field-body">
+                <div className="field-row">
+                  <div>
+                    <div className="field-title">{g.title}</div>
+                    <span className="meta small">{fmtRange(g.start, g.end)} · {place(g.place).name}</span>
+                  </div>
+                  <span className="countdown num">{untilStart(g)}<small>days</small></span>
                 </div>
-                <span className="meta">{fmtRange(g.start, g.end)}</span>
                 <Faces ids={membersOf(g, s)} max={5} size={26} />
                 {kyoto ? (
                   todo.length ? <span className="needs"><Icon name="info" size={16} /> {todo.length} {todo.length === 1 ? 'thing needs' : 'things need'} you</span> : <span className="needs ok"><Icon name="tick" size={16} /> Nothing waiting on you</span>

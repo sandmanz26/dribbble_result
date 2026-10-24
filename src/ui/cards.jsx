@@ -22,13 +22,14 @@ export function GroupCard({ g, wide = false }) {
   const mine = membersOf(g, s).includes('nadia')
   const soon = untilStart(g)
   return (
-    <Link to={`/g/${g.id}`} className={`gcard ${wide ? 'wide' : ''}`}>
+    <Link to={`/g/${g.id}`} className={`gcard ticket ${wide ? 'wide' : ''}`}>
       <div className="gcard-map">
-        <MapArt place={p} w={wide ? 340 : 260} h={wide ? 150 : 120} />
+        <MapArt place={p} w={wide ? 340 : 260} h={wide ? 150 : 120} label={false} />
         {g.idOnly && <span className="gcard-flag"><Icon name="verified" size={14} /> ID verified only</span>}
       </div>
       <div className="gcard-body">
-        <strong>{g.title}</strong>
+        <div className="ticket-place"><b>{p.name}</b><span>{p.country}</span></div>
+        <strong className="ticket-title">{g.title}</strong>
         <span className="meta">{fmtRange(g.start, g.end)} · {nights(g)} nights{soon <= 14 && soon >= 0 ? ` · in ${soon} days` : ''}</span>
         <div className="gcard-foot">
           <Faces ids={membersOf(g, s)} max={4} size={24} />

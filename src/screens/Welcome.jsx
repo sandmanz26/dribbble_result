@@ -2,7 +2,10 @@ import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useStore } from '../store.jsx'
 import Icon from '../ui/Icon.jsx'
-import MapArt from '../map/MapArt.jsx'
+import RouteMap from '../map/RouteMap.jsx'
+import { Wordmark } from '../ui/Logo.jsx'
+import { Faces } from '../ui/kit.jsx'
+import { GROUPS } from '../data/groups.js'
 import { place } from '../data/places.js'
 
 // Sign-up is four short steps. Phone and email are required to join any group;
@@ -37,18 +40,17 @@ export default function Welcome() {
   const n = STEPS.indexOf(step)
 
   if (step === 'intro') {
+    const crew = GROUPS.kyoto.members
     return (
-      <div className="welcome">
-        <div className="welcome-maps" aria-hidden="true">
-          <MapArt place={place('kyoto')} w={180} h={150} label={false} />
-          <MapArt place={place('lisbon')} w={180} h={150} label={false} />
-          <MapArt place={place('cusco')} w={180} h={150} label={false} />
-          <MapArt place={place('lofoten')} w={180} h={150} label={false} />
+      <div className="welcome brand">
+        <Wordmark size={30} tone="field" />
+        <div className="welcome-map">
+          <RouteMap dest={place('kyoto')} people={crew} w={390} h={300} tone="dark" pad={34} label="Five travellers from five cities heading to Kyoto" />
         </div>
         <div className="welcome-copy">
-          <span className="brand-mark" aria-hidden="true" />
-          <h1>Travel with people you can trust</h1>
-          <p>Find a group going where you want to go, plan the trip together, and know who everyone is before you meet.</p>
+          <h1>Five cities. One trip.</h1>
+          <p>Find a group going where you want to go, plan it together, and know who everyone is before you meet.</p>
+          <span className="welcome-proof"><Faces ids={crew} size={26} /> Kuala Lumpur, Osaka, Porto, Bengaluru and Berlin to Kyoto</span>
         </div>
         <div className="welcome-actions">
           <button className="btn primary block" onClick={() => go('phone')}>Create an account</button>

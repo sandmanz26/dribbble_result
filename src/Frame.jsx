@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useStore } from './store.jsx'
+import { Mark } from './ui/Logo.jsx'
 
 // On a computer the app sits in a phone frame with a reviewer panel beside it.
 // On a phone (or any narrow window) the frame goes and the app takes the whole screen.
@@ -36,9 +37,9 @@ export default function Frame({ children }) {
     <div className="stage">
       <aside className="panel" aria-label="Prototype panel">
         <div className="panel-brand">
-          <span className="panel-mark" aria-hidden="true" />
+          <Mark size={40} />
           <div>
-            <strong>Caravan</strong>
+            <strong className="wordmark">caravan</strong>
             <span>Travel with people you can trust</span>
           </div>
         </div>

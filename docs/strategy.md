@@ -53,6 +53,20 @@ Trust is the product; planning is the habit that keeps people in it.
 - Chats: groups and people; Requests for unverified strangers; block and report in every chat
 - You: profile, ID verification, Safety, Notifications, Community guidelines, appearance
 
+## Brand
+The first pass read as a well-made kit with no brand. The brand layer now comes from the name:
+a caravan is people from different places moving together.
+- **Signature: the convergence map.** Every group is drawn as dashed routes from each member's home
+  city to the destination, on a deep forest-green field. It is the welcome screen, the "your next
+  trip" card, the group header and every trip card. No other travel app shows who is coming from where.
+- **Mark:** three travellers on one dotted arc, the lead one larger. Wordmark in lowercase.
+- **Type:** Bricolage Grotesque for headlines, countdowns and place names; Manrope for everything else.
+- **Palette:** warm sand ground (#f4f1ea), deep forest field (#11302a), sea-glass teal as the one
+  accent, with a lighter teal glow only on the dark field.
+- **Travel artefact:** group cards are tickets: the map is the stub, a perforated tear line, then the
+  place in large type.
+- **Voice:** short and plain. "Five cities. One trip." "Where to next, Nadia?"
+
 ## Design
 - taste-skill app style "pastel consumer": pale tiles with the dark of their own hue, one 20px card
   radius, no shadows at rest. Its face here: sea-glass teal (#0e7a6d) as the only accent, each

@@ -2,7 +2,7 @@
 
 Mobile app prototype for a Dribbble brief: discover destinations, join verified travel groups,
 plan trips together and travel safely. React 18, Vite 5, react-router (HashRouter), Hugeicons,
-Manrope, d3-geo with world-atlas for the maps. No backend; sample data in `src/data/`.
+Bricolage Grotesque + Manrope, d3-geo with world-atlas for the maps. No backend; sample data in `src/data/`.
 
 - On a computer it renders inside a phone frame, with a reviewer panel (tours, slow or failing
   network, theme, reset). On a phone it runs full screen.

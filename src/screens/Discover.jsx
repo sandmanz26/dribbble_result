@@ -3,8 +3,12 @@ import { Link } from 'react-router-dom'
 import { useFetch, useStore } from '../store.jsx'
 import Icon from '../ui/Icon.jsx'
 import { Empty, Failed, Skeleton } from '../ui/kit.jsx'
-import { GroupCard, PlaceTile, spots } from '../ui/cards.jsx'
-import { GROUPS, TODAY, group } from '../data/groups.js'
+import { GroupCard, PlaceTile, membersOf, spots } from '../ui/cards.jsx'
+import { Wordmark } from '../ui/Logo.jsx'
+import RouteMap from '../map/RouteMap.jsx'
+import { place } from '../data/places.js'
+import { todos } from './Trips.jsx'
+import { GROUPS, TODAY, fmtRange, group, untilStart } from '../data/groups.js'
 import { PLACES } from '../data/places.js'
 import { NOTIFICATIONS } from '../data/trip.js'
 
@@ -19,6 +23,9 @@ export default function Discover() {
   const [open, setOpen] = useState(false)
 
   const unread = NOTIFICATIONS.filter((n) => !s.read.includes(n.id)).length
+  const kg = group('kyoto')
+  const next = membersOf(kg, s).includes('nadia') ? kg : null
+  const todo = todos(s)
   const needle = q.trim().toLowerCase()
 
   const groups = useMemo(() => Object.keys(GROUPS).map(group)
@@ -34,16 +41,33 @@ export default function Discover() {
 
   return (
     <div className="page">
-      <header className="pagehead">
-        <div>
-          <h1>Discover</h1>
-          <p className="meta">Groups heading out, and places worth going</p>
-        </div>
+      <header className="homehead">
+        <Wordmark size={28} />
         <Link to="/notifications" className="iconbtn" aria-label={`Notifications, ${unread} unread`}>
           <Icon name="bell" size={22} />
           {unread > 0 && <i className="dot-count num">{unread}</i>}
         </Link>
       </header>
+      <h1 className="greet">Where to next, Nadia?</h1>
+
+      {next && (
+        <Link to="/trip/kyoto" className="field" aria-label={`Your next trip: ${next.title}, in ${untilStart(next)} days`}>
+          <div className="field-map">
+            <RouteMap dest={place(next.place)} people={membersOf(next, s)} w={350} h={168} tone="dark" pad={24} />
+          </div>
+          <div className="field-body">
+            <div className="field-row">
+              <div>
+                <span className="meta small">Your next trip</span>
+                <div className="field-title">{next.title}</div>
+                <span className="meta small">{fmtRange(next.start, next.end)} · {membersOf(next, s).length} travellers, {membersOf(next, s).length} home cities</span>
+              </div>
+              <span className="countdown num">{untilStart(next)}<small>days</small></span>
+            </div>
+            {todo.length > 0 && <span className="needs"><Icon name="info" size={16} /> {todo.length} {todo.length === 1 ? 'thing needs' : 'things need'} you before you go</span>}
+          </div>
+        </Link>
+      )}
 
       <label className="search">
         <Icon name="search" size={18} />
@@ -63,7 +87,7 @@ export default function Discover() {
           <h2 id="g-h">Groups going</h2>
           {state === 'ready' && <span className="meta num">{groups.length}</span>}
         </div>
-        {state === 'loading' && <Skeleton rows={2} tall={220} />}
+        {state === 'loading' && <div className="loader" aria-busy="true" aria-label="Loading groups"><i /><i /><i /></div>}
         {state === 'error' && <Failed what="Groups" onRetry={retry} />}
         {state === 'ready' && (groups.length ? (
           <div className="rail">
