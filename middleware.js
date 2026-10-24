@@ -14,6 +14,7 @@ const PASSWORDS = {
   project4: 'PR004', // Scrapyard BC-01
   project5: 'DRI05', // Nelum Vidyalaya student management
   project6: 'wp-3xsf-qcya', // Westpoint case study (private, under NDA)
+  project7: 'cv-cqkr-rhyg', // Caravan group travel app
 }
 
 // Nothing on this site may be indexed: every response says so, and robots.txt turns crawlers away.
