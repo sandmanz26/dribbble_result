@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Tend: research and design direction</title>
+<style>
+@font-face { font-family: 'IS'; src: url('../../node_modules/@fontsource/instrument-sans/files/instrument-sans-latin-400-normal.woff2'); font-weight: 400; }
+@font-face { font-family: 'IS'; src: url('../../node_modules/@fontsource/instrument-sans/files/instrument-sans-latin-600-normal.woff2'); font-weight: 600; }
+@font-face { font-family: 'ISerif'; src: url('../../node_modules/@fontsource/instrument-serif/files/instrument-serif-latin-400-normal.woff2'); }
+@font-face { font-family: 'ISerif'; font-style: italic; src: url('../../node_modules/@fontsource/instrument-serif/files/instrument-serif-latin-400-italic.woff2'); }
+@page { size: A4; margin: 18mm 16mm 18mm; }
+* { box-sizing: border-box; }
+body { margin: 0; font: 10pt/1.5 'IS', sans-serif; color: #1f2420; }
+h1, h2, h3 { font-family: 'ISerif', serif; font-weight: 400; margin: 0; }
+h1 { font-size: 40pt; line-height: 1.02; letter-spacing: -0.01em; }
+h2 { font-size: 20pt; margin: 0 0 8pt; page-break-after: avoid; }
+h3 { font-size: 13pt; margin: 12pt 0 4pt; }
+p { margin: 0 0 7pt; }
+.cover { height: 250mm; display: flex; flex-direction: column; justify-content: space-between; page-break-after: always; }
+.cover .band { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6pt; }
+.cover .band div { height: 70mm; border-radius: 14pt; }
+.sky { background: #dde9f0; color: #1d4360; } .sage { background: #e1e9d8; color: #31502a; } .clay { background: #f0e2d6; color: #6b3a20; } .night { background: #1d2433; color: #e8ebf2; } .paper { background: #f5f0e6; color: #4b3d22; }
+.lede { font-size: 13pt; line-height: 1.45; color: #3d443e; max-width: 140mm; }
+.meta { color: #5d645d; font-size: 9pt; }
+section { margin-bottom: 14pt; }
+.page { page-break-before: always; }
+table { width: 100%; border-collapse: collapse; font-size: 8.6pt; margin: 6pt 0 10pt; }
+th { text-align: left; font-weight: 600; color: #5d645d; padding: 5pt 6pt; border-bottom: 1.2pt solid #1f2420; }
+td { padding: 6pt; border-bottom: 0.6pt solid #e2e5df; vertical-align: top; }
+td:first-child { font-weight: 600; white-space: nowrap; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10pt; }
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8pt; }
+.card { padding: 10pt 12pt; border-radius: 10pt; background: #f4f5f1; break-inside: avoid; }
+.card.sky { background: #dde9f0; } .card.sage { background: #e1e9d8; } .card.clay { background: #f0e2d6; } .card.night { background: #1d2433; } .card.paper { background: #f5f0e6; }
+.card h3 { margin-top: 0; }
+.tag { display: inline-block; padding: 1pt 6pt; border-radius: 6pt; background: #dcefeb; color: #1b5e57; font-size: 8pt; font-weight: 600; }
+ol, ul { margin: 0 0 8pt; padding-left: 14pt; }
+li { margin-bottom: 3pt; }
+.big { font-family: 'ISerif'; font-size: 26pt; line-height: 1; }
+.src li { font-size: 8.4pt; color: #3d443e; word-break: break-all; }
+.quote { font-family: 'ISerif'; font-style: italic; font-size: 15pt; line-height: 1.3; padding: 10pt 0; }
+</style></head>
+<body>
+
+<div class="cover">
+  <div>
+    <p class="meta">Research and design direction · October 2026 · Prepared for the wellness ritual app brief</p>
+    <h1>Tend: a one-minute check-in that becomes a ritual you trust.</h1>
+  </div>
+  <div class="band"><div class="sky"></div><div class="sage"></div><div class="clay"></div></div>
+  <div>
+    <p class="lede">What the brief asks for, how the leading breathwork, meditation and herbal apps answer it, where they leave a gap, and the design decisions in the accompanying prototype. The prototype is clickable and covers the conversational intake, onboarding, profile, the personalised ritual, dashboard, breath and meditation players, the herbal protocol and the journal.</p>
+    <p class="meta">Desk research from public app store listings, reviews and NIH NCCIH herb summaries. Prices are U.S. listings at the time of writing and change often. No user interviews were run for this report; section 8 proposes them.</p>
+  </div>
+</div>
+
+<section>
+  <h2>1. The brief, read closely</h2>
+  <p>A mobile-first wellness app turns a short check-in into a personalised ritual drawn from breathwork, meditation and herbal guidance. The client already has a requirements specification across twelve functional domains, an architecture blueprint, a relational data model for a governed knowledge base, a user journey and clickable HTML mockups. They want the experience refined, usability improved and polished visuals, with a serene, enjoyable feel.</p>
+  <p>The first milestone is fixed price: the design system and three core screens. Work then continues hourly.</p>
+  <div class="grid3">
+    <div class="card sky"><h3>The promise</h3><p>Tell us how you are; get the right practice for right now, not a library to browse.</p></div>
+    <div class="card sage"><h3>The hard part</h3><p>Herbal guidance carries real safety risk: interactions, pregnancy, allergies. It must be governed, sourced and explained.</p></div>
+    <div class="card clay"><h3>The feel</h3><p>Serene and enjoyable, but not monotone. Calm without being a beige wall of meditation stock imagery.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>2. Who it is for</h2>
+  <div class="grid3">
+    <div class="card"><h3>The wound-up worker</h3><p>30s, desk job, checks in before the laptop opens. Has five minutes, wants to feel less tight by 9:00. Bounced off Headspace because the catalogue felt like homework.</p></div>
+    <div class="card"><h3>The light sleeper</h3><p>Wants a wind-down routine that ends with a cup of something. Already drinks chamomile; does not know whether it clashes with her medicine.</p></div>
+    <div class="card"><h3>The herbal-curious</h3><p>Interested in plants, sceptical of wellness claims. Will only trust guidance that says where it came from and what it cannot promise.</p></div>
+  </div>
+  <p class="meta">Proto-personas built from the brief and competitor reviews. To be validated in the interviews proposed in section 8.</p>
+</section>
+
+<section class="page">
+  <h2>3. Competitor landscape</h2>
+  <table>
+    <thead><tr><th>App</th><th>What it is</th><th>Price (U.S.)</th><th>Does well</th><th>Leaves open</th></tr></thead>
+    <tbody>
+      <tr><td>Headspace</td><td>Guided meditation with a structured path</td><td>$12.99 / month, $69.99 / year</td><td>Easiest to recommend for people who do not want to browse a large catalogue; clear beginner path</td><td>Plans are course-shaped, not shaped by how you feel today</td></tr>
+      <tr><td>Calm</td><td>Meditation, sleep stories, breathing</td><td>Free tier; Premium varies</td><td>Strongest for sleep; includes guided breathing for stress relief</td><td>Large catalogue; personalisation is light; no herbal layer</td></tr>
+      <tr><td>Balance</td><td>Personalised meditation programme</td><td>$11.99 / month, $69.99 / year, $399.99 lifetime</td><td>Guides beginners through a clear path; asks questions to tailor</td><td>Meditation only; tailoring is set at onboarding, less day to day</td></tr>
+      <tr><td>Insight Timer</td><td>Huge free library and timer</td><td>Free, optional paid</td><td>Enormous catalogue and a flexible timer</td><td>Choice overload; no guidance on what to pick today</td></tr>
+      <tr><td>Othership</td><td>Music-led breathwork classes</td><td>$17.99 / month, $129.99 / year</td><td>500+ classes; daily styles (UP, DOWN, All Around); music matched to the session; 4.9 average from about 2,100 U.S. reviews</td><td>Music can drown the instructions (T3); price is the most common complaint</td></tr>
+      <tr><td>Breathwrk</td><td>Guided breathwork</td><td>Free tier; Pro from $9 / month</td><td>Breathwork focus rather than conventional meditation</td><td>Single modality; no reflection or herbal context</td></tr>
+      <tr><td>HealisticMD</td><td>AI wellness companions for natural remedies</td><td>Free with in-app purchases</td><td>Always-on companions; tracking what helps over time</td><td>States it does not provide medical advice; trust and sourcing are the open question</td></tr>
+      <tr><td>Herbal Natural Care</td><td>Ayurveda herb reference</td><td>App store listing</td><td>A database of herbs, uses and preparation</td><td>A reference, not a routine; no personal safety checks</td></tr>
+    </tbody>
+  </table>
+
+  <h3>What the market tells us</h3>
+  <div class="grid2">
+    <div class="card"><p><span class="tag">Gap 1</span> Every leader is a <strong>library first</strong>. Personalisation, where it exists, is set at onboarding. Nobody turns <em>today's</em> state into <em>today's</em> plan in under a minute.</p></div>
+    <div class="card"><p><span class="tag">Gap 2</span> Breath, meditation and herbs live in <strong>separate apps</strong>. A single ritual that sequences them, with the tea steeping while you sit, does not exist in this set.</p></div>
+    <div class="card"><p><span class="tag">Gap 3</span> Herbal apps are either references or AI companions. None we found <strong>checks a herb against your profile</strong> and shows its evidence level and source on the same screen.</p></div>
+    <div class="card"><p><span class="tag">Gap 4</span> Reviews keep naming <strong>price and noise</strong>: subscriptions feel heavy, and music-led sessions can drown instructions. Calm needs clear voice and quiet defaults.</p></div>
+  </div>
+</section>
+
+<section class="page">
+  <h2>4. Patterns to borrow, and to avoid</h2>
+  <div class="grid2">
+    <div class="card sage">
+      <h3>Borrow</h3>
+      <ul>
+        <li>Headspace and Balance: one obvious next step instead of a catalogue.</li>
+        <li>Othership: sessions named by the state they serve (up, down), not by technique.</li>
+        <li>Insight Timer: a plain timer for people who know what they want.</li>
+        <li>Calm: an evening mode that ends the day softly.</li>
+      </ul>
+    </div>
+    <div class="card clay">
+      <h3>Avoid</h3>
+      <ul>
+        <li>Streak counters that turn a missed day into failure.</li>
+        <li>Music over instructions in guided sessions.</li>
+        <li>Herb tips without dose, timing, cautions or a source.</li>
+        <li>Stock landscape photos and purple gradients: they make every wellness app look the same.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 style="margin-top:14pt">5. Herbal guidance: safety by design</h2>
+  <p>Herbs are the differentiator and the liability. NIH NCCIH rates chamomile in tea-level amounts as likely safe, notes that people allergic to ragweed or daisies are more likely to react, and reports preliminary evidence that it might reduce the effect of birth control pills. Secondary sources mention interactions with warfarin and cyclosporine. Ashwagandha studies are small (one 8-week trial with 58 participants). The design treats this as a rule set, not a disclaimer:</p>
+  <ol>
+    <li><strong>Ask once, gently, at onboarding:</strong> pregnancy, blood thinners, sleep or anxiety medicine, thyroid medicine, ragweed allergy, reflux. Stored on device. "None of these" is an explicit answer.</li>
+    <li><strong>Check before showing.</strong> A herb whose cautions match the profile is swapped before the person sees it, and the ritual says why ("Swapped from chamomile because of your ragweed allergy").</li>
+    <li><strong>Label like an apothecary.</strong> Every protocol shows the Latin name, part used, preparation, amount, steep time, when, how often, cautions, an evidence level in words, and the source.</li>
+    <li><strong>Claims stay modest.</strong> "Traditionally used for" and "small studies suggest", never "treats" or "cures". This fits the client's governed knowledge base: each herb record carries cautions, evidence level and source as fields, reviewed by a qualified herbalist and clinician.</li>
+  </ol>
+</section>
+
+<section class="page">
+  <h2>6. Design direction</h2>
+  <p class="quote">Colour means place. Each practice has its own calm field, and one teal marks only what to do next.</p>
+  <div class="grid3">
+    <div class="card sky"><h3>Sky</h3><p>Breath and mornings.</p></div>
+    <div class="card sage"><h3>Sage</h3><p>Herbs and the apothecary label.</p></div>
+    <div class="card clay"><h3>Clay</h3><p>Grounding and warmth.</p></div>
+    <div class="card night"><h3>Night</h3><p>Evenings and sleep. The home screen turns to night after dark.</p></div>
+    <div class="card paper"><h3>Paper</h3><p>The journal.</p></div>
+    <div class="card"><h3>Type</h3><p>Instrument Serif for greetings, ritual names and the journal; Instrument Sans for everything you read quickly.</p></div>
+  </div>
+  <h3>Signature moments</h3>
+  <ul>
+    <li><strong>Mood as weather.</strong> The check-in opens with "If today were weather, what would it be?": bright, steady, heavy, stormy, tired. It is quicker than a 1 to 10 scale and easier to answer honestly. The fortnight on the dashboard reads like a forecast.</li>
+    <li><strong>A conversation, not a form.</strong> Five questions, one at a time, each answered with a tap: weather, sleep, energy, what is on your mind, time available.</li>
+    <li><strong>The ritual explains itself.</strong> Every step has "Why this?", tied back to what the person said.</li>
+    <li><strong>The tide.</strong> In the breath player the whole screen fills as you breathe in and empties as you breathe out, over the real counts. No spinning circle.</li>
+    <li><strong>The moon.</strong> In the meditation player a moon fills from new to full as the sit goes on, with rain or a low hum made in the browser, and a soft bell at the end.</li>
+    <li><strong>The tea steeps while you sit,</strong> so a 9-minute ritual stays 9 minutes.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>7. Proposed first milestone</h2>
+  <div class="grid2">
+    <div class="card"><h3>Design system</h3><p>Tokens (colour, fields, type, radius, motion), components (buttons, chips, weather picker, conversation bubbles, ritual step, players, apothecary label), accessibility rules: 4.5:1 contrast, 44 px targets, reduced motion.</p></div>
+    <div class="card"><h3>Three core screens</h3><p>1. The conversational check-in. 2. Today's ritual with explanations. 3. The breath player. These carry the product's promise; everything else builds on their components.</p></div>
+  </div>
+
+  <h2>8. Next: validate with real people</h2>
+  <ul>
+    <li>Five 45-minute interviews and a usability test of the check-in and ritual with the three proto-personas.</li>
+    <li>Measure: time to finish the check-in (target under 60 seconds), share of people who start the first step, and whether "Why this?" raises trust in a herb suggestion.</li>
+    <li>Review every herb record with a qualified herbalist and clinician before launch.</li>
+  </ul>
+
+  <h2>9. Open questions for you</h2>
+  <ul>
+    <li>Which of the twelve domains and launch gates are in scope for launch, and which are later?</li>
+    <li>Is the intake free text (a language model) or structured choices? The prototype uses structured taps for speed and safety.</li>
+    <li>Who owns herb content review, and how often is it re-reviewed?</li>
+    <li>Audio: recorded voice guidance, or text and ambient sound only?</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Sources</h2>
+  <ul class="src">
+    <li>Headspace, Balance and Insight Timer comparison: breethe.com/sleep-and-meditation-app-guide/compare-evaluate/best-meditation-apps-in-2026-honest-comparisons-real-user-insights</li>
+    <li>10 best meditation apps reviewed in 2026: macmyths.com/10-best-meditation-apps-reviewed-in-2026</li>
+    <li>Breathing app comparison (vendor written, used with care): bmcks-apps.onrender.com/best-breathing-app</li>
+    <li>Othership App Store listing: apps.apple.com/app/id1590348936 and appfollow.io listing</li>
+    <li>Othership review: t3.com/features/othership-breathwork-app</li>
+    <li>HealisticMD App Store listing: apps.apple.com/us/app/-/id1618609995</li>
+    <li>NIH NCCIH, Chamomile at a glance: nccih.nih.gov/health/chamomile/ataglance.htm</li>
+    <li>Herbs for anxiety (ashwagandha studies): medicalnewstoday.com/articles/herbs-for-anxiety</li>
+  </ul>
+</section>
+</body></html>
