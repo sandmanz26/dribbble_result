@@ -57,19 +57,20 @@ Trust is the product; planning is the habit that keeps people in it.
 The first pass read as a well-made kit with no brand. The brand layer now comes from the name:
 a caravan is people from different places moving together.
 - **Signature: the convergence map.** Every group is drawn as dashed routes from each member's home
-  city to the destination, on a deep forest-green field. It is the welcome screen, the "your next
+  city to the destination, on a night-navy field. It is the welcome screen, the "your next
   trip" card, the group header and every trip card. No other travel app shows who is coming from where.
 - **Mark:** three travellers on one dotted arc, the lead one larger. Wordmark in lowercase.
 - **Type:** Bricolage Grotesque for headlines, countdowns and place names; Manrope for everything else.
-- **Palette:** warm sand ground (#f4f1ea), deep forest field (#11302a), sea-glass teal as the one
-  accent, with a lighter teal glow only on the dark field.
+- **Palette:** cool white ground (#f5f6fa) with white cards on a faint lift, a night-flight navy field
+  (#0b1a33) for brand moments where the routes glow like flight paths, and one rose accent (#d81f5c)
+  for actions and the destination. Sand and forest green from the first pass read muddy and were dropped.
 - **Travel artefact:** group cards are tickets: the map is the stub, a perforated tear line, then the
   place in large type.
 - **Voice:** short and plain. "Five cities. One trip." "Where to next, Nadia?"
 
 ## Design
 - taste-skill app style "pastel consumer": pale tiles with the dark of their own hue, one 20px card
-  radius, no shadows at rest. Its face here: sea-glass teal (#0e7a6d) as the only accent, each
+  radius, no shadows at rest. Its face here: one rose accent, each
   traveller a pale tint of their own hue, and destination art drawn from real geography (Natural
   Earth coastlines) instead of stock photos.
 - Manrope only. Hugeicons (stroke). Light and dark.
