@@ -14,6 +14,7 @@ puts each project behind its own password:
 | `/project5/` | Nelum Vidyalaya (bilingual student management, V1 and V2) | `claude/student-portal-bilingual` | `DRI05` |
 | `/project6/` | Westpoint case study (private, NDA) | `claude/westpoint-case-study` | `wp-3xsf-qcya` |
 | `/project7/` | Caravan (group travel mobile app) | `claude/caravan-group-travel` | `cv-cqkr-rhyg` |
+| `/project8/` | Tend (wellness ritual mobile app, research PDF) | `claude/tend-wellness-ritual` | `td-9ymu-nhd4` |
 | `/` and anything else | "Nothing to see here." | | |
 
 - `build.mjs` clones each branch in `projects.json`, runs `npm ci && npm run build` and copies its

@@ -27,6 +27,7 @@ GitHub repo: sandmanz26/dribbble_result
 ├── claude/student-portal-bilingual       ← project5: Nelum Vidyalaya SMS (own code, own design)
 ├── claude/westpoint-case-study           ← project6: Westpoint case study (owner's page, served as-is)
 ├── claude/caravan-group-travel           ← project7: Caravan group travel app (own code, own design)
+├── claude/tend-wellness-ritual           ← project8: Tend wellness ritual app (own code, own design)
 └── <new branch per new brief>            ← project5, project6, ...
 ```
 
@@ -50,6 +51,7 @@ If a task says "work on project X", check out that project's branch and stay on 
 | `/project5/` | `DRI05` | `claude/student-portal-bilingual` | Nelum Vidyalaya: bilingual (English/Sinhala) Student Management System | Web app, two versions | React 18, Vite 5, react-router (HashRouter), Remix Icon, no animation library. V1 Brief: client's #0B2545/#134074, Inter + Noto Sans Sinhala, achromatic-ledger portal (overview, students). V2 Concept: Gemunu Libre + Yaldevi, paper/ink + one marigold, grade picker as a chart of the school, the school day as the dashboard, every label in both scripts. Switch in the Prototype panel. Demo clock Thu 23 Oct 2026 10:05. Deep links `#/v2/today?lang=si&grade=12`. No photos (drawn motif) |
 | `/project6/` | `wp-3xsf-qcya` | `claude/westpoint-case-study` | Westpoint: the owner's private case study (charter bus ERP, driver and passenger apps) | Case study page | Not a prototype: the owner's own single self-contained HTML (images inlined, no scripts), hosted here because Dribbble limits proposal domains. `npm run build` only copies `index.html` to `dist/`. Client work under NDA: do not edit or reuse its copy or images |
 | `/project7/` | `cv-cqkr-rhyg` | `claude/caravan-group-travel` | Caravan: group travel app (discover, join verified groups, plan together, travel safely) | **Mobile app** | React 18, Vite 5, react-router (HashRouter), Hugeicons, d3-geo + world-atlas, no animation library. Bricolage Grotesque (display) + Manrope. Brand: "convergence map" (dashed routes from each member's home city to the destination on a night-navy field), ticket-style group cards, three-dots-on-an-arc mark, cool white ground + one rose accent (#d81f5c). Destination art drawn from real Natural Earth coastlines (photo hosts were blocked). Phone frame + reviewer panel on desktop, full screen on phones. Demo SMS code 2468; "Explore as Nadia" skips sign-up. Light/dark |
+| `/project8/` | `td-9ymu-nhd4` | `claude/tend-wellness-ritual` | Tend: wellness app where a one-minute check-in becomes a ritual of breathwork, meditation and herbal guidance | **Mobile app** + research PDF | React 18, Vite 5, react-router (HashRouter), Heroicons, Web Audio (rain, hum, bell made in the browser), no animation library. Instrument Serif + Instrument Sans. taste-skill editorial-greeting style; one calm field per practice (sky, sage, clay, night, paper) + one teal accent. Mood as weather, conversational check-in, "Why this?" on every ritual step, herbs checked against health flags, apothecary-label protocol, tide breath player, moon meditation player. `#/system` design system page; `research.pdf` competitor report (source `docs/report/research.html`). Phone frame + panel on desktop, full screen on phones. Light/dark, morning/evening |
 
 Live site: `https://proposal-virid-eight.vercel.app/<slug>/` (the domain may be renamed in Vercel).
 The root `/` and any unknown path intentionally return "Nothing to see here." There is no index page.
@@ -93,7 +95,7 @@ push to main ──► Vercel builds main ──► node build.mjs
    rewrites, so BrowserRouter routes would 404 on refresh.
 3. `npm run build` outputs to `dist/`, and a committed `package-lock.json` exists (`npm ci` is used).
 4. localStorage keys are **prefixed per project** (all projects share one origin).
-   In use: `wg-*` (project1), `proof-state-v1` (project2), `nb-*` (project3), `bz-*` (project4), `sp-state-v1` (project5), `cv-state-v1` (project7).
+   In use: `wg-*` (project1), `proof-state-v1` (project2), `nb-*` (project3), `bz-*` (project4), `sp-state-v1` (project5), `cv-state-v1` (project7), `td-state-v1` (project8).
 5. No backend calls. Data is mock data in `src/data/`. State may persist to localStorage.
 6. Images are **self-hosted** in the project's `public/` folder (WebP renditions), with credits in
    the app. Do not hotlink Wikimedia/Picsum/Unsplash at runtime: Wikimedia rate-limits hotlinks.
