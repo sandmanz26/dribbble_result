@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import Icon from '../ui/Icon.jsx'
 import { Mark } from '../ui/kit.jsx'
 import { MOODS } from '../data/library.js'
+import { DECISIONS } from '../data/decisions.js'
 
 // The design system, milestone one of the brief: tokens, type, fields and the core components.
 const CORE = [
@@ -29,6 +30,23 @@ export default function System() {
           <li><strong>Colour means place, not decoration.</strong> Each practice has its own calm field; the teal accent only marks what to do next.</li>
           <li><strong>No guilt.</strong> No streak counters, no red. Missed days are blank, not broken.</li>
           <li><strong>Safety is designed in.</strong> Herb cautions are checked against the profile before they are shown.</li>
+        </ol>
+      </section>
+
+      <section className="sys-sec">
+        <h2>Decisions, and why</h2>
+        <ol className="sys-decisions">
+          {DECISIONS.map((d) => (
+            <li key={d.title}>
+              <span className="meta small">{d.area}</span>
+              <strong className="serif">{d.title}</strong>
+              <dl>
+                <div><dt>What we saw</dt><dd>{d.saw}</dd></div>
+                <div><dt>What we did</dt><dd>{d.did}</dd></div>
+                <div><dt>Why</dt><dd>{d.why}</dd></div>
+              </dl>
+            </li>
+          ))}
         </ol>
       </section>
 

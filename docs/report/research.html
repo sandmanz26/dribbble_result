@@ -1,191 +1,321 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><title>Tend: research and design direction</title>
+<html lang="en"><head><meta charset="utf-8"><title>Tend: competitor research</title>
 <style>
 @font-face { font-family: 'IS'; src: url('../../node_modules/@fontsource/instrument-sans/files/instrument-sans-latin-400-normal.woff2'); font-weight: 400; }
 @font-face { font-family: 'IS'; src: url('../../node_modules/@fontsource/instrument-sans/files/instrument-sans-latin-600-normal.woff2'); font-weight: 600; }
 @font-face { font-family: 'ISerif'; src: url('../../node_modules/@fontsource/instrument-serif/files/instrument-serif-latin-400-normal.woff2'); }
-@font-face { font-family: 'ISerif'; font-style: italic; src: url('../../node_modules/@fontsource/instrument-serif/files/instrument-serif-latin-400-italic.woff2'); }
-@page { size: A4; margin: 18mm 16mm 18mm; }
+@page { size: A4; margin: 16mm 15mm 16mm; }
 * { box-sizing: border-box; }
-body { margin: 0; font: 10pt/1.5 'IS', sans-serif; color: #1f2420; }
-h1, h2, h3 { font-family: 'ISerif', serif; font-weight: 400; margin: 0; }
-h1 { font-size: 40pt; line-height: 1.02; letter-spacing: -0.01em; }
-h2 { font-size: 20pt; margin: 0 0 8pt; page-break-after: avoid; }
-h3 { font-size: 13pt; margin: 12pt 0 4pt; }
-p { margin: 0 0 7pt; }
-.cover { height: 250mm; display: flex; flex-direction: column; justify-content: space-between; page-break-after: always; }
-.cover .band { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6pt; }
-.cover .band div { height: 70mm; border-radius: 14pt; }
-.sky { background: #dde9f0; color: #1d4360; } .sage { background: #e1e9d8; color: #31502a; } .clay { background: #f0e2d6; color: #6b3a20; } .night { background: #1d2433; color: #e8ebf2; } .paper { background: #f5f0e6; color: #4b3d22; }
-.lede { font-size: 13pt; line-height: 1.45; color: #3d443e; max-width: 140mm; }
-.meta { color: #5d645d; font-size: 9pt; }
-section { margin-bottom: 14pt; }
+body { margin: 0; font: 9.6pt/1.48 'IS', sans-serif; color: #1f2420; }
+h1, h2 { font-family: 'ISerif', serif; font-weight: 400; margin: 0; }
+h1 { font-size: 38pt; line-height: 1.02; }
+h2 { font-size: 22pt; line-height: 1.1; }
+p { margin: 0 0 6pt; }
+.meta { color: #5d645d; font-size: 8.6pt; }
+.cover { height: 258mm; display: flex; flex-direction: column; justify-content: space-between; page-break-after: always; }
+.lede { font-size: 12.5pt; line-height: 1.45; max-width: 150mm; color: #333a34; }
+.how { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6pt; }
+.how div { padding: 10pt; border-radius: 10pt; background: #f4f5f1; }
+.how b { display: block; font-family: 'ISerif'; font-weight: 400; font-size: 14pt; margin-bottom: 3pt; }
+table { width: 100%; border-collapse: collapse; font-size: 8.4pt; }
+th { text-align: left; font-weight: 600; color: #5d645d; padding: 5pt 5pt; border-bottom: 1.2pt solid #1f2420; }
+td { padding: 6pt 5pt; border-bottom: 0.6pt solid #e2e5df; vertical-align: top; }
+td:first-child { font-weight: 600; }
+.group td { padding-top: 10pt; font-family: 'ISerif'; font-weight: 400; font-size: 12pt; border-bottom: 0; color: #1b6e66; }
+.comp { break-inside: avoid; padding: 14pt 0 12pt; border-top: 1.2pt solid #1f2420; }
+.comp + .comp { margin-top: 8pt; }
+.comp-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10pt; }
+.comp-head .meta { text-align: right; }
+.one { font-size: 11pt; color: #333a34; margin: 4pt 0 8pt; }
+.facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6pt; margin-bottom: 9pt; }
+.facts div { padding: 7pt 9pt; border-radius: 8pt; background: #f4f5f1; font-size: 8.6pt; }
+.facts b { display: block; font-weight: 600; color: #5d645d; font-size: 7.8pt; }
+.sw { display: grid; grid-template-columns: 1fr 1fr; gap: 10pt; }
+.sw h3 { margin: 0 0 4pt; font: 600 9pt 'IS'; }
+.s h3 { color: #1d4e3f; } .w h3 { color: #7a3a1c; }
+.sw ul { margin: 0; padding-left: 12pt; }
+.sw li { margin-bottom: 3.5pt; }
+.lesson { display: grid; grid-template-columns: 1fr 1fr; gap: 6pt; margin-top: 9pt; }
+.lesson div { padding: 7pt 9pt; border-radius: 8pt; font-size: 8.8pt; }
+.take { background: #e1efe9; color: #1d4e3f; } .avoid { background: #f6e9df; color: #6b3a20; }
+.lesson b { font-weight: 600; }
 .page { page-break-before: always; }
-table { width: 100%; border-collapse: collapse; font-size: 8.6pt; margin: 6pt 0 10pt; }
-th { text-align: left; font-weight: 600; color: #5d645d; padding: 5pt 6pt; border-bottom: 1.2pt solid #1f2420; }
-td { padding: 6pt; border-bottom: 0.6pt solid #e2e5df; vertical-align: top; }
-td:first-child { font-weight: 600; white-space: nowrap; }
-.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10pt; }
-.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8pt; }
-.card { padding: 10pt 12pt; border-radius: 10pt; background: #f4f5f1; break-inside: avoid; }
-.card.sky { background: #dde9f0; } .card.sage { background: #e1e9d8; } .card.clay { background: #f0e2d6; } .card.night { background: #1d2433; } .card.paper { background: #f5f0e6; }
-.card h3 { margin-top: 0; }
-.tag { display: inline-block; padding: 1pt 6pt; border-radius: 6pt; background: #dcefeb; color: #1b5e57; font-size: 8pt; font-weight: 600; }
-ol, ul { margin: 0 0 8pt; padding-left: 14pt; }
-li { margin-bottom: 3pt; }
-.big { font-family: 'ISerif'; font-size: 26pt; line-height: 1; }
-.src li { font-size: 8.4pt; color: #3d443e; word-break: break-all; }
-.quote { font-family: 'ISerif'; font-style: italic; font-size: 15pt; line-height: 1.3; padding: 10pt 0; }
+.gap li { margin-bottom: 6pt; font-size: 10.5pt; }
+.src { font-size: 8pt; color: #3d443e; padding-left: 12pt; }
+.src li { margin-bottom: 2pt; word-break: break-all; }
 </style></head>
 <body>
 
 <div class="cover">
   <div>
-    <p class="meta">Research and design direction · October 2026 · Prepared for the wellness ritual app brief</p>
-    <h1>Tend: a one-minute check-in that becomes a ritual you trust.</h1>
+    <p class="meta">Competitor research · October 2026 · For the wellness ritual app brief</p>
+    <h1>Ten apps people already use to breathe, sit, journal and take herbs.</h1>
   </div>
-  <div class="band"><div class="sky"></div><div class="sage"></div><div class="clay"></div></div>
-  <div>
-    <p class="lede">What the brief asks for, how the leading breathwork, meditation and herbal apps answer it, where they leave a gap, and the design decisions in the accompanying prototype. The prototype is clickable and covers the conversational intake, onboarding, profile, the personalised ritual, dashboard, breath and meditation players, the herbal protocol and the journal.</p>
-    <p class="meta">Desk research from public app store listings, reviews and NIH NCCIH herb summaries. Prices are U.S. listings at the time of writing and change often. No user interviews were run for this report; section 8 proposes them.</p>
+  <p class="lede">For each app: what it is, what it costs, how it is rated, its strengths, its weaknesses, and the one lesson Tend takes from it. The apps are grouped by the part of the brief they compete with.</p>
+  <div class="how">
+    <div><b>Meditation</b>Headspace, Calm, Balance, Insight Timer</div>
+    <div><b>Breathwork</b>Othership, Breathwrk, Open</div>
+    <div><b>Journal</b>Stoic</div>
+    <div><b>Herbal</b>HealisticMD, Herbal Natural Care</div>
   </div>
+  <p class="meta">Desk research from app store listings and published reviews (Simply Psychology, Choosing Therapy, Healthline, TechRadar, T3, Sleep Foundation and others). Ratings and prices are U.S. listings at the time of writing and change often. Where a source is a vendor or an automated review summary, it is marked. No user interviews were run for this report.</p>
 </div>
 
 <section>
-  <h2>1. The brief, read closely</h2>
-  <p>A mobile-first wellness app turns a short check-in into a personalised ritual drawn from breathwork, meditation and herbal guidance. The client already has a requirements specification across twelve functional domains, an architecture blueprint, a relational data model for a governed knowledge base, a user journey and clickable HTML mockups. They want the experience refined, usability improved and polished visuals, with a serene, enjoyable feel.</p>
-  <p>The first milestone is fixed price: the design system and three core screens. Work then continues hourly.</p>
-  <div class="grid3">
-    <div class="card sky"><h3>The promise</h3><p>Tell us how you are; get the right practice for right now, not a library to browse.</p></div>
-    <div class="card sage"><h3>The hard part</h3><p>Herbal guidance carries real safety risk: interactions, pregnancy, allergies. It must be governed, sourced and explained.</p></div>
-    <div class="card clay"><h3>The feel</h3><p>Serene and enjoyable, but not monotone. Calm without being a beige wall of meditation stock imagery.</p></div>
-  </div>
-</section>
-
-<section>
-  <h2>2. Who it is for</h2>
-  <div class="grid3">
-    <div class="card"><h3>The wound-up worker</h3><p>30s, desk job, checks in before the laptop opens. Has five minutes, wants to feel less tight by 9:00. Bounced off Headspace because the catalogue felt like homework.</p></div>
-    <div class="card"><h3>The light sleeper</h3><p>Wants a wind-down routine that ends with a cup of something. Already drinks chamomile; does not know whether it clashes with her medicine.</p></div>
-    <div class="card"><h3>The herbal-curious</h3><p>Interested in plants, sceptical of wellness claims. Will only trust guidance that says where it came from and what it cannot promise.</p></div>
-  </div>
-  <p class="meta">Proto-personas built from the brief and competitor reviews. To be validated in the interviews proposed in section 8.</p>
-</section>
-
-<section class="page">
-  <h2>3. Competitor landscape</h2>
+  <h2>At a glance</h2>
+  <p class="meta" style="margin:4pt 0 8pt">“Tailors to you” records what reviewers say each app adapts to. Blank means no source said.</p>
   <table>
-    <thead><tr><th>App</th><th>What it is</th><th>Price (U.S.)</th><th>Does well</th><th>Leaves open</th></tr></thead>
+    <thead><tr><th>App</th><th>Core of the product</th><th>Price (U.S.)</th><th>Rating</th><th>Tailors to you</th></tr></thead>
     <tbody>
-      <tr><td>Headspace</td><td>Guided meditation with a structured path</td><td>$12.99 / month, $69.99 / year</td><td>Easiest to recommend for people who do not want to browse a large catalogue; clear beginner path</td><td>Plans are course-shaped, not shaped by how you feel today</td></tr>
-      <tr><td>Calm</td><td>Meditation, sleep stories, breathing</td><td>Free tier; Premium varies</td><td>Strongest for sleep; includes guided breathing for stress relief</td><td>Large catalogue; personalisation is light; no herbal layer</td></tr>
-      <tr><td>Balance</td><td>Personalised meditation programme</td><td>$11.99 / month, $69.99 / year, $399.99 lifetime</td><td>Guides beginners through a clear path; asks questions to tailor</td><td>Meditation only; tailoring is set at onboarding, less day to day</td></tr>
-      <tr><td>Insight Timer</td><td>Huge free library and timer</td><td>Free, optional paid</td><td>Enormous catalogue and a flexible timer</td><td>Choice overload; no guidance on what to pick today</td></tr>
-      <tr><td>Othership</td><td>Music-led breathwork classes</td><td>$17.99 / month, $129.99 / year</td><td>500+ classes; daily styles (UP, DOWN, All Around); music matched to the session; 4.9 average from about 2,100 U.S. reviews</td><td>Music can drown the instructions (T3); price is the most common complaint</td></tr>
-      <tr><td>Breathwrk</td><td>Guided breathwork</td><td>Free tier; Pro from $9 / month</td><td>Breathwork focus rather than conventional meditation</td><td>Single modality; no reflection or herbal context</td></tr>
-      <tr><td>HealisticMD</td><td>AI wellness companions for natural remedies</td><td>Free with in-app purchases</td><td>Always-on companions; tracking what helps over time</td><td>States it does not provide medical advice; trust and sourcing are the open question</td></tr>
-      <tr><td>Herbal Natural Care</td><td>Ayurveda herb reference</td><td>App store listing</td><td>A database of herbs, uses and preparation</td><td>A reference, not a routine; no personal safety checks</td></tr>
+      <tr class="group"><td colspan="5">Meditation</td></tr>
+      <tr><td>Headspace</td><td>Guided meditation with a beginner path</td><td>$12.99 / mo, $69.99 / yr, $399.99 lifetime</td><td>4.8, about 1M App Store reviews</td><td>Goals and usage; “better than average but not deep”</td></tr>
+      <tr><td>Calm</td><td>Sleep Stories, meditation, breathing, music</td><td>Free tier; Premium varies</td><td></td><td>Customisable, with a large catalogue</td></tr>
+      <tr><td>Balance</td><td>Personalised meditation plans</td><td>$11.99 / mo, $69.99 / yr, $399.99 lifetime; one-year free trials in promotions</td><td>4.9 (95.4K App Store), 4.7 (35.8K Google Play)</td><td>Level, how often you sit, skills mastered</td></tr>
+      <tr><td>Insight Timer</td><td>Huge free library and a timer</td><td>Free; MemberPlus $9.99 / mo, $59.99 / yr</td><td>4.5 / 5 (Choosing Therapy)</td><td>You choose; little guidance</td></tr>
+      <tr class="group"><td colspan="5">Breathwork</td></tr>
+      <tr><td>Othership</td><td>Music-led breathwork classes</td><td>$17.99 / mo, $129.99 / yr</td><td>4.9, about 2,100 U.S. reviews</td><td>Daily styles by the state you want (up, down)</td></tr>
+      <tr><td>Breathwrk</td><td>Short guided breathing exercises</td><td>Free tier; Pro $9 / mo, $49 / yr</td><td>4.8 (16.6K App Store), 3.7 (692 Google Play)</td><td>Voice, sound and duration settings</td></tr>
+      <tr><td>Open</td><td>Breathwork, meditation, movement, plus a studio</td><td>Free download; paid tiers not stated in listings</td><td>4.9 (397 reviews in one store)</td><td></td></tr>
+      <tr class="group"><td colspan="5">Journal</td></tr>
+      <tr><td>Stoic</td><td>Morning and evening journal with mood tracking</td><td>Free with in-app purchases</td><td>4.8, about 35K App Store reviews</td><td>Prompts by time of day</td></tr>
+      <tr class="group"><td colspan="5">Herbal</td></tr>
+      <tr><td>HealisticMD</td><td>AI companions for natural remedies</td><td>Free with in-app purchases</td><td></td><td>Tracks what seems to help you</td></tr>
+      <tr><td>Herbal Natural Care</td><td>Ayurvedic herb reference</td><td>App store listing</td><td></td><td>None; a reference</td></tr>
     </tbody>
   </table>
+</section>
 
-  <h3>What the market tells us</h3>
-  <div class="grid2">
-    <div class="card"><p><span class="tag">Gap 1</span> Every leader is a <strong>library first</strong>. Personalisation, where it exists, is set at onboarding. Nobody turns <em>today's</em> state into <em>today's</em> plan in under a minute.</p></div>
-    <div class="card"><p><span class="tag">Gap 2</span> Breath, meditation and herbs live in <strong>separate apps</strong>. A single ritual that sequences them, with the tea steeping while you sit, does not exist in this set.</p></div>
-    <div class="card"><p><span class="tag">Gap 3</span> Herbal apps are either references or AI companions. None we found <strong>checks a herb against your profile</strong> and shows its evidence level and source on the same screen.</p></div>
-    <div class="card"><p><span class="tag">Gap 4</span> Reviews keep naming <strong>price and noise</strong>: subscriptions feel heavy, and music-led sessions can drown instructions. Calm needs clear voice and quiet defaults.</p></div>
+<section class="page">
+  <div class="comp">
+    <div class="comp-head"><h2>Headspace</h2><span class="meta">Meditation · market leader</span></div>
+    <p class="one">The easiest meditation app to recommend to a beginner: a guided path, a friendly voice and a distinctive illustrated look.</p>
+    <div class="facts"><div><b>Price</b>$12.99 / mo, $69.99 / yr, $399.99 lifetime, 7-day trial</div><div><b>Rating</b>4.8 from about 1M App Store reviews (July 2025)</div><div><b>Best for</b>Complete beginners who do not want to browse</div></div>
+    <div class="sw">
+      <div class="s"><h3>Strengths</h3><ul>
+        <li>Visual design reviewers call distinctive and genuinely good; easy to navigate.</li>
+        <li>Clear, professional narration, much of it by co-founder Andy Puddicombe, gives the app one trusted voice.</li>
+        <li>A structured path removes the “what should I do” problem for beginners.</li>
+        <li>Personalisation has improved, using stated goals and usage.</li>
+      </ul></div>
+      <div class="w"><h3>Weaknesses</h3><ul>
+        <li>Personalisation is “better than average but not deep”; it follows your history, not how you feel today.</li>
+        <li>Engagement with mindfulness apps drops sharply after week one; streaks and badges only partly help.</li>
+        <li>Not built for clinical needs such as anxiety disorders or depression.</li>
+        <li>Built around meditation; no herbal guidance.</li>
+      </ul></div>
+    </div>
+    <div class="lesson"><div class="take"><b>Tend takes:</b> one obvious next step and one consistent voice.</div><div class="avoid"><b>Tend avoids:</b> streaks and badges as the answer to week-two drop-off.</div></div>
+  </div>
+
+  <div class="comp">
+    <div class="comp-head"><h2>Calm</h2><span class="meta">Meditation and sleep</span></div>
+    <p class="one">The sleep app of the category: Sleep Stories read by well-known actors, plus meditation, breathing, music and movement.</p>
+    <div class="facts"><div><b>Price</b>Free tier; Premium price varies by offer</div><div><b>Best for</b>Falling asleep</div><div><b>Content</b>Sleep Stories, box and belly breathing, soundscapes, kids’ content</div></div>
+    <div class="sw">
+      <div class="s"><h3>Strengths</h3><ul>
+        <li>Sleep Stories are the standout, with narrators such as Matthew McConaughey and Cillian Murphy.</li>
+        <li>Easy-to-use interface and regular updates (Healthline); highly customisable, varied content (TechRadar).</li>
+        <li>Includes guided breathing techniques such as box breathing and deep exhales.</li>
+        <li>Family-friendly content for children.</li>
+      </ul></div>
+      <div class="w"><h3>Weaknesses</h3><ul>
+        <li>Somewhat expensive with a short trial; the free version has far fewer features.</li>
+        <li>No sleep monitoring, despite being the sleep app.</li>
+        <li>Stories can run too long and nature sounds can distract.</li>
+        <li>Some options are hidden; no social features.</li>
+      </ul></div>
+    </div>
+    <div class="lesson"><div class="take"><b>Tend takes:</b> an evening mode that ends the day softly.</div><div class="avoid"><b>Tend avoids:</b> a catalogue so big the best options hide; sound on by default.</div></div>
   </div>
 </section>
 
 <section class="page">
-  <h2>4. Patterns to borrow, and to avoid</h2>
-  <div class="grid2">
-    <div class="card sage">
-      <h3>Borrow</h3>
-      <ul>
-        <li>Headspace and Balance: one obvious next step instead of a catalogue.</li>
-        <li>Othership: sessions named by the state they serve (up, down), not by technique.</li>
-        <li>Insight Timer: a plain timer for people who know what they want.</li>
-        <li>Calm: an evening mode that ends the day softly.</li>
-      </ul>
+  <div class="comp">
+    <div class="comp-head"><h2>Balance</h2><span class="meta">Personalised meditation</span></div>
+    <p class="one">The closest to Tend’s promise in meditation: plans that adapt as you progress, with a very long free trial.</p>
+    <div class="facts"><div><b>Price</b>$11.99 / mo, $69.99 / yr, $399.99 lifetime; one-year free trial in promotions</div><div><b>Rating</b>4.9 (95.4K App Store), 4.7 (35.8K Google Play)</div><div><b>Best for</b>Beginners who want to be guided</div></div>
+    <div class="sw">
+      <div class="s"><h3>Strengths</h3><ul>
+        <li>Personalises by meditation level, how often you sit and which skills you have mastered.</li>
+        <li>Audio adapts as you progress.</li>
+        <li>A small library that does not overwhelm beginners; praised for calm, simple guidance.</li>
+        <li>The long free trial lowers the barrier to start.</li>
+      </ul></div>
+      <div class="w"><h3>Weaknesses</h3><ul>
+        <li>About 60 meditations and 20 plans: small next to Headspace and Calm.</li>
+        <li>Billing complaints: charged after cancelling on the last trial day; “Free year is a lie”.</li>
+        <li>Unsubscribing is hard for some; streak tracking bugs.</li>
+        <li>Tailoring follows your skill, not your state today. Meditation only.</li>
+      </ul></div>
     </div>
-    <div class="card clay">
-      <h3>Avoid</h3>
-      <ul>
-        <li>Streak counters that turn a missed day into failure.</li>
-        <li>Music over instructions in guided sessions.</li>
-        <li>Herb tips without dose, timing, cautions or a source.</li>
-        <li>Stock landscape photos and purple gradients: they make every wellness app look the same.</li>
-      </ul>
-    </div>
+    <div class="lesson"><div class="take"><b>Tend takes:</b> a small, curated library that adapts.</div><div class="avoid"><b>Tend avoids:</b> any trial or billing flow that feels like a trap.</div></div>
   </div>
 
-  <h2 style="margin-top:14pt">5. Herbal guidance: safety by design</h2>
-  <p>Herbs are the differentiator and the liability. NIH NCCIH rates chamomile in tea-level amounts as likely safe, notes that people allergic to ragweed or daisies are more likely to react, and reports preliminary evidence that it might reduce the effect of birth control pills. Secondary sources mention interactions with warfarin and cyclosporine. Ashwagandha studies are small (one 8-week trial with 58 participants). The design treats this as a rule set, not a disclaimer:</p>
-  <ol>
-    <li><strong>Ask once, gently, at onboarding:</strong> pregnancy, blood thinners, sleep or anxiety medicine, thyroid medicine, ragweed allergy, reflux. Stored on device. "None of these" is an explicit answer.</li>
-    <li><strong>Check before showing.</strong> A herb whose cautions match the profile is swapped before the person sees it, and the ritual says why ("Swapped from chamomile because of your ragweed allergy").</li>
-    <li><strong>Label like an apothecary.</strong> Every protocol shows the Latin name, part used, preparation, amount, steep time, when, how often, cautions, an evidence level in words, and the source.</li>
-    <li><strong>Claims stay modest.</strong> "Traditionally used for" and "small studies suggest", never "treats" or "cures". This fits the client's governed knowledge base: each herb record carries cautions, evidence level and source as fields, reviewed by a qualified herbalist and clinician.</li>
+  <div class="comp">
+    <div class="comp-head"><h2>Insight Timer</h2><span class="meta">Free library</span></div>
+    <p class="one">The biggest free library in the category, a flexible timer, and a community of teachers.</p>
+    <div class="facts"><div><b>Price</b>Free; MemberPlus $9.99 / mo, $59.99 / yr</div><div><b>Rating</b>4.5 / 5 (Choosing Therapy, July 2026)</div><div><b>Scale</b>170,000+ free meditations, plus yoga, mood tracking, workshops</div></div>
+    <div class="sw">
+      <div class="s"><h3>Strengths</h3><ul>
+        <li>One of the largest free libraries anywhere; most people never need to pay.</li>
+        <li>A plain timer for people who already know what they want.</li>
+        <li>A reviewer praised its calm interface, free of manipulative streaks and gamification.</li>
+        <li>Mood tracking, mentoring and workshops beyond meditation.</li>
+      </ul></div>
+      <div class="w"><h3>Weaknesses</h3><ul>
+        <li>Content overload; the interface feels cluttered and discovery filters clunky.</li>
+        <li>Offline listening, the advanced player and most courses sit behind MemberPlus.</li>
+        <li>Uneven quality across tracks (reported in review summaries).</li>
+        <li>No guidance on what to do today; the choice is all yours.</li>
+      </ul></div>
+    </div>
+    <div class="lesson"><div class="take"><b>Tend takes:</b> no streaks, and a plain timer option.</div><div class="avoid"><b>Tend avoids:</b> choice overload; we choose for you, and say why.</div></div>
+  </div>
+</section>
+
+<section class="page">
+  <div class="comp">
+    <div class="comp-head"><h2>Othership</h2><span class="meta">Breathwork · premium</span></div>
+    <p class="one">Music-driven breathwork classes, sorted by the state you want to reach.</p>
+    <div class="facts"><div><b>Price</b>$17.99 / mo, $129.99 / yr; 7 and 14-day trials</div><div><b>Rating</b>4.9 from about 2,100 U.S. App Store reviews</div><div><b>Library</b>500+ classes; styles UP, DOWN, All Around, Body, Brain</div></div>
+    <div class="sw">
+      <div class="s"><h3>Strengths</h3><ul>
+        <li>Sessions are named by the state they serve (up, down), not by technique, which matches how people think.</li>
+        <li>Music is matched to each session’s tone; T3 calls it a great introduction to breathwork.</li>
+        <li>Streaks, progress and a global community.</li>
+        <li>Very high rating from a sizeable base.</li>
+      </ul></div>
+      <div class="w"><h3>Weaknesses</h3><ul>
+        <li>Music can drown the vocal instructions (T3).</li>
+        <li>The most expensive app here; price is the recurring complaint.</li>
+        <li>Breath only: no stillness, herbs or reflection in the same flow.</li>
+      </ul></div>
+    </div>
+    <div class="lesson"><div class="take"><b>Tend takes:</b> name practices by the state they serve.</div><div class="avoid"><b>Tend avoids:</b> sound that competes with guidance; ours is quiet ambient, off by choice.</div></div>
+  </div>
+
+  <div class="comp">
+    <div class="comp-head"><h2>Breathwrk</h2><span class="meta">Breathwork · short sessions</span></div>
+    <p class="one">More than 50 short breathing exercises for calm, sleep, energy and performance, many of them one or two minutes long.</p>
+    <div class="facts"><div><b>Price</b>Free tier; Pro $9 / mo, $49 / yr, 7-day trial</div><div><b>Rating</b>4.8 (16.6K App Store), 3.7 (692 Google Play)</div><div><b>Format</b>Timed inhales, holds and exhales with music, haptics and lessons</div></div>
+    <div class="sw">
+      <div class="s"><h3>Strengths</h3><ul>
+        <li>Very short sessions fit into any day.</li>
+        <li>Adjustable voice, sounds and duration; progress tracking.</li>
+        <li>Haptics let you breathe with eyes closed; “Breathe With Friends”.</li>
+        <li>Users credit it with helping anxiety and relaxation.</li>
+      </ul></div>
+      <div class="w"><h3>Weaknesses</h3><ul>
+        <li>Limited free content and a mandatory sign-up before you can try anything.</li>
+        <li>Reports of hard cancellation and unexpected charges.</li>
+        <li>A redesign drew backlash: harder navigation, lost favourites, health-app sync issues, crashes (automated review summaries).</li>
+        <li>The 3.7 Google Play rating shows an uneven experience across platforms.</li>
+      </ul></div>
+    </div>
+    <div class="lesson"><div class="take"><b>Tend takes:</b> sessions measured in minutes, and a counted pattern on screen.</div><div class="avoid"><b>Tend avoids:</b> sign-up before value; “Look around as Lena” works without an account.</div></div>
+  </div>
+</section>
+
+<section class="page">
+  <div class="comp">
+    <div class="comp-head"><h2>Open</h2><span class="meta">Breathwork, meditation, movement</span></div>
+    <p class="one">A studio brand from Los Angeles with an app: breathwork, meditation and movement designed with experts in neurobiology.</p>
+    <div class="facts"><div><b>Price</b>Free download; paid tiers not stated in the listings we found</div><div><b>Rating</b>4.9 from 397 reviews in one store; small samples elsewhere</div><div><b>Channel</b>App plus an in-person flagship studio</div></div>
+    <div class="sw">
+      <div class="s"><h3>Strengths</h3><ul>
+        <li>Three practices in one product, close to Tend’s mix.</li>
+        <li>A credible, expert-led positioning.</li>
+        <li>An in-person studio gives the brand a physical home and community.</li>
+      </ul></div>
+      <div class="w"><h3>Weaknesses</h3><ul>
+        <li>Few independent reviews; hard to judge depth or pricing from outside.</li>
+        <li>The brand leans on the LA studio, which most users will never visit.</li>
+        <li>No herbal guidance and no visible day-by-day tailoring in its listing.</li>
+      </ul></div>
+    </div>
+    <div class="lesson"><div class="take"><b>Tend takes:</b> several practices in one ritual.</div><div class="avoid"><b>Tend avoids:</b> expert claims without showing the reasoning in the product.</div></div>
+  </div>
+
+  <div class="comp">
+    <div class="comp-head"><h2>Stoic</h2><span class="meta">Journal</span></div>
+    <p class="one">A guided journal built around a morning to prepare and an evening to reflect, with mood tracking and habits.</p>
+    <div class="facts"><div><b>Price</b>Free with in-app purchases; premium for AI and guided content</div><div><b>Rating</b>4.8 from about 35K App Store reviews; Apple Editors’ Choice</div><div><b>Platforms</b>iPhone, iPad, Mac, Apple Watch, Vision Pro</div></div>
+    <div class="sw">
+      <div class="s"><h3>Strengths</h3><ul>
+        <li>A clear daily rhythm: prepare in the morning, reflect in the evening.</li>
+        <li>Prompts, mood tracking and habits in one place.</li>
+        <li>Strong ratings and Apple’s editorial backing.</li>
+      </ul></div>
+      <div class="w"><h3>Weaknesses</h3><ul>
+        <li>Apple only, with no web app.</li>
+        <li>Limited AI depth (a competitor’s comparison, so weigh it).</li>
+        <li>Reflection only; it does not lead into a practice.</li>
+      </ul></div>
+    </div>
+    <div class="lesson"><div class="take"><b>Tend takes:</b> morning and evening as two different moods of the same app.</div><div class="avoid"><b>Tend avoids:</b> the journal as a separate chore; ours is one line at the end of the ritual.</div></div>
+  </div>
+</section>
+
+<section class="page">
+  <div class="comp">
+    <div class="comp-head"><h2>HealisticMD</h2><span class="meta">Herbal · AI companions</span></div>
+    <p class="one">AI wellness companions for natural treatments, available around the clock, that track what seems to help you.</p>
+    <div class="facts"><div><b>Price</b>Free with in-app purchases</div><div><b>Positioning</b>A team of AI wellness companions</div><div><b>Disclaimer</b>States it does not provide medical advice</div></div>
+    <div class="sw">
+      <div class="s"><h3>Strengths</h3><ul>
+        <li>Always-on conversation lowers the effort of asking.</li>
+        <li>Tracks over time what helps your body, a feedback loop most apps lack.</li>
+        <li>Free to start.</li>
+      </ul></div>
+      <div class="w"><h3>Weaknesses</h3><ul>
+        <li>The listing does not show how advice is sourced or checked against medicines.</li>
+        <li>A disclaimer stands in for safety design.</li>
+        <li>No breath, meditation or reflection around the remedy.</li>
+      </ul></div>
+    </div>
+    <div class="lesson"><div class="take"><b>Tend takes:</b> learn what helps over time.</div><div class="avoid"><b>Tend avoids:</b> unsourced herbal advice; every herb shows its cautions, evidence and source.</div></div>
+  </div>
+
+  <div class="comp">
+    <div class="comp-head"><h2>Herbal Natural Care</h2><span class="meta">Herbal · reference</span></div>
+    <p class="one">An Ayurvedic herb database: medicinal herbs, what they are used for and how to prepare them.</p>
+    <div class="facts"><div><b>Price</b>App store listing</div><div><b>Format</b>Searchable reference</div><div><b>Best for</b>Looking up a herb you already know</div></div>
+    <div class="sw">
+      <div class="s"><h3>Strengths</h3><ul>
+        <li>Breadth of herbs with uses and preparation.</li>
+        <li>Useful for people who already know what they want.</li>
+      </ul></div>
+      <div class="w"><h3>Weaknesses</h3><ul>
+        <li>A reference, not a routine; it never tells you what to do today.</li>
+        <li>No personal safety checks against pregnancy, medicines or allergies.</li>
+      </ul></div>
+    </div>
+    <div class="lesson"><div class="take"><b>Tend takes:</b> preparation shown step by step.</div><div class="avoid"><b>Tend avoids:</b> herbs without a person in mind.</div></div>
+  </div>
+</section>
+
+<section class="page">
+  <h2>Where the gap is</h2>
+  <ul class="gap" style="margin-top:10pt">
+    <li><b>Nobody plans today from how you feel today.</b> Headspace and Balance tailor to your history and skill; Othership sorts by the state you choose; none asks first and then decides.</li>
+    <li><b>Practices live in separate apps.</b> Breath (Othership, Breathwrk), stillness (Headspace, Calm), reflection (Stoic) and herbs (HealisticMD) are each someone else’s product. Only Open combines practices, without herbs.</li>
+    <li><b>Herbal apps lack safety design.</b> The two herbal apps either list herbs or talk about them; neither shows advice checked against medicines, pregnancy or allergies, with evidence and a source.</li>
+    <li><b>The category’s complaints are about trust, not features:</b> billing traps (Balance, Breathwrk), sign-up walls (Breathwrk), clutter (Insight Timer), sound over guidance (Othership, Calm).</li>
+  </ul>
+
+  <h2 style="margin-top:16pt">Sources</h2>
+  <ol class="src" style="margin-top:8pt">
+    <li>Headspace: simplypsychology.com/reviews/headspace-review-2026 · stork.ai/en/headspace · carepaths.com/headspace-review · upskillwise.com/headspace-review</li>
+    <li>Calm: healthline.com/health/mental-health/calm-app-reviews · techradar.com/reviews/calm · sleepfoundation.org/best-sleep-apps/calm-app-review · simplypsychology.com/reviews/calm-app-review-2026</li>
+    <li>Balance: choosingtherapy.com/balance-meditation-app-review · meditopia.com comparisons (competitor) · kimola.com review summary (automated)</li>
+    <li>Insight Timer: choosingtherapy.com/insight-timer-review · se.trustpilot.com/review/www.insighttimer.com · makeheadway.com/blog/insight-timer-app (promotional)</li>
+    <li>Othership: apps.apple.com/app/id1590348936 · appfollow.io listing · t3.com/features/othership-breathwork-app</li>
+    <li>Breathwrk: choosingtherapy.com/breathwrk-app-review · kimola.com App Store and Google Play summaries (automated) · justuseapp.com reviews</li>
+    <li>Open: appfollow.io listing for app 1482725254</li>
+    <li>Stoic: apple.co/stoic · makeheadway.com/blog/stoic-app-review · blog.mylifenote.ai/stoic-app-alternative (competitor)</li>
+    <li>HealisticMD: apps.apple.com/us/app/-/id1618609995 · similarweb.com app page</li>
+    <li>Herbal Natural Care: app store listing summarised in search results</li>
+    <li>Herb safety used in the prototype: nccih.nih.gov/health/chamomile/ataglance.htm</li>
   </ol>
-</section>
-
-<section class="page">
-  <h2>6. Design direction</h2>
-  <p class="quote">Colour means place. Each practice has its own calm field, and one teal marks only what to do next.</p>
-  <div class="grid3">
-    <div class="card sky"><h3>Sky</h3><p>Breath and mornings.</p></div>
-    <div class="card sage"><h3>Sage</h3><p>Herbs and the apothecary label.</p></div>
-    <div class="card clay"><h3>Clay</h3><p>Grounding and warmth.</p></div>
-    <div class="card night"><h3>Night</h3><p>Evenings and sleep. The home screen turns to night after dark.</p></div>
-    <div class="card paper"><h3>Paper</h3><p>The journal.</p></div>
-    <div class="card"><h3>Type</h3><p>Instrument Serif for greetings, ritual names and the journal; Instrument Sans for everything you read quickly.</p></div>
-  </div>
-  <h3>Signature moments</h3>
-  <ul>
-    <li><strong>Mood as weather.</strong> The check-in opens with "If today were weather, what would it be?": bright, steady, heavy, stormy, tired. It is quicker than a 1 to 10 scale and easier to answer honestly. The fortnight on the dashboard reads like a forecast.</li>
-    <li><strong>A conversation, not a form.</strong> Five questions, one at a time, each answered with a tap: weather, sleep, energy, what is on your mind, time available.</li>
-    <li><strong>The ritual explains itself.</strong> Every step has "Why this?", tied back to what the person said.</li>
-    <li><strong>The tide.</strong> In the breath player the whole screen fills as you breathe in and empties as you breathe out, over the real counts. No spinning circle.</li>
-    <li><strong>The moon.</strong> In the meditation player a moon fills from new to full as the sit goes on, with rain or a low hum made in the browser, and a soft bell at the end.</li>
-    <li><strong>The tea steeps while you sit,</strong> so a 9-minute ritual stays 9 minutes.</li>
-  </ul>
-</section>
-
-<section>
-  <h2>7. Proposed first milestone</h2>
-  <div class="grid2">
-    <div class="card"><h3>Design system</h3><p>Tokens (colour, fields, type, radius, motion), components (buttons, chips, weather picker, conversation bubbles, ritual step, players, apothecary label), accessibility rules: 4.5:1 contrast, 44 px targets, reduced motion.</p></div>
-    <div class="card"><h3>Three core screens</h3><p>1. The conversational check-in. 2. Today's ritual with explanations. 3. The breath player. These carry the product's promise; everything else builds on their components.</p></div>
-  </div>
-
-  <h2>8. Next: validate with real people</h2>
-  <ul>
-    <li>Five 45-minute interviews and a usability test of the check-in and ritual with the three proto-personas.</li>
-    <li>Measure: time to finish the check-in (target under 60 seconds), share of people who start the first step, and whether "Why this?" raises trust in a herb suggestion.</li>
-    <li>Review every herb record with a qualified herbalist and clinician before launch.</li>
-  </ul>
-
-  <h2>9. Open questions for you</h2>
-  <ul>
-    <li>Which of the twelve domains and launch gates are in scope for launch, and which are later?</li>
-    <li>Is the intake free text (a language model) or structured choices? The prototype uses structured taps for speed and safety.</li>
-    <li>Who owns herb content review, and how often is it re-reviewed?</li>
-    <li>Audio: recorded voice guidance, or text and ambient sound only?</li>
-  </ul>
-</section>
-
-<section>
-  <h2>Sources</h2>
-  <ul class="src">
-    <li>Headspace, Balance and Insight Timer comparison: breethe.com/sleep-and-meditation-app-guide/compare-evaluate/best-meditation-apps-in-2026-honest-comparisons-real-user-insights</li>
-    <li>10 best meditation apps reviewed in 2026: macmyths.com/10-best-meditation-apps-reviewed-in-2026</li>
-    <li>Breathing app comparison (vendor written, used with care): bmcks-apps.onrender.com/best-breathing-app</li>
-    <li>Othership App Store listing: apps.apple.com/app/id1590348936 and appfollow.io listing</li>
-    <li>Othership review: t3.com/features/othership-breathwork-app</li>
-    <li>HealisticMD App Store listing: apps.apple.com/us/app/-/id1618609995</li>
-    <li>NIH NCCIH, Chamomile at a glance: nccih.nih.gov/health/chamomile/ataglance.htm</li>
-    <li>Herbs for anxiety (ashwagandha studies): medicalnewstoday.com/articles/herbs-for-anxiety</li>
-  </ul>
 </section>
 </body></html>

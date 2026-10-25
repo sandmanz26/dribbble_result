@@ -1,6 +1,8 @@
 # Tend: strategy notes
 
-The full research report with competitor table, findings and sources is `docs/research.pdf`.
+The competitor report (ten apps, strengths and weaknesses of each, sources) is `docs/research.pdf`.
+Every design decision with what we saw, what we did and why is in `docs/design-decisions.md`
+and on the design system page.
 
 ## Read
 Mobile-first wellness app. A short check-in becomes a personalised ritual of breathwork,
@@ -9,8 +11,8 @@ dashboard, breath and meditation players, herbal protocol, journal. Milestone on
 system plus three core screens (check-in, ritual, breath player).
 
 ## Competitor frame
-Headspace, Calm, Balance, Insight Timer (meditation), Othership and Breathwrk (breathwork),
-HealisticMD and Herbal Natural Care (herbal). Gaps: every leader is a library first;
+Headspace, Calm, Balance, Insight Timer (meditation), Othership, Breathwrk and Open (breathwork),
+Stoic (journal), HealisticMD and Herbal Natural Care (herbal). Gaps: every leader is a library first;
 personalisation is set at onboarding, not per day; modalities live in separate apps; herbal apps
 do not check a herb against the person's profile or show evidence and source together.
 

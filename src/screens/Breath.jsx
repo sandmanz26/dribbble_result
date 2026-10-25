@@ -58,12 +58,12 @@ export default function Breath() {
   return (
     <div className={`player f-${b.field}`}>
       <div className="tide" style={{ '--level': level, '--dur': `${phase === 1 || phase === 3 ? 0.3 : dur}s` }} aria-hidden="true"><span /></div>
-      <header className="bar on-field"><Back label="Leave the breath" /><span className="bar-title">{b.name}</span><span className="meta num">{mmss(Math.max(total - elapsed, 0))}</span></header>
+      <header className="bar on-field"><Back label="Leave the breath" /><h1 className="bar-title">{b.name}</h1><span className="meta num">{mmss(Math.max(total - elapsed, 0))}</span></header>
 
       <div className="player-center" aria-live="polite">
         {finished ? (
           <>
-            <h1 className="serif">Well breathed.</h1>
+            <h2 className="serif">Well breathed.</h2>
             <p className="num">{breaths} breaths in {step.minutes} minutes</p>
           </>
         ) : running ? (
@@ -73,7 +73,7 @@ export default function Breath() {
           </>
         ) : (
           <>
-            <h1 className="serif">{b.name}</h1>
+            <h2 className="serif">{b.name}</h2>
             <p>{b.why}</p>
             <p className="num counts">{b.counts.map((c, i) => (c ? `${PHASES[i].replace('Breathe ', '')} ${c}` : null)).filter(Boolean).join('  ·  ')}</p>
           </>
@@ -87,7 +87,7 @@ export default function Breath() {
           </div>
         )}
         {finished ? (
-          <button className="btn primary block" onClick={() => { nav('/ritual'); notify({ text: 'Breath done. Next, put the kettle on.' }) }}>Back to the ritual</button>
+          <button className="btn primary wide" onClick={() => { nav('/ritual'); notify({ text: 'Breath done. Next, put the kettle on.' }) }}>Back to the ritual</button>
         ) : running ? (
           <button className="roundbtn" onClick={() => setRunning(false)} aria-label="Pause"><Icon name="pause" size={28} /></button>
         ) : (

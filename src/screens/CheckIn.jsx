@@ -52,7 +52,8 @@ export default function CheckIn() {
 
   return (
     <div className="chat">
-      <header className="bar"><Back to="/" label="Close check-in" /><span className="bar-title">Check-in</span><span className="meta num">{Math.min(at === -1 ? Q.length : at + 1, Q.length)} of {Q.length}</span></header>
+      <header className="bar"><Back to="/" label="Close check-in" /><h1 className="bar-title">Check-in</h1><span className="meta num">{Math.min(at === -1 ? Q.length : at + 1, Q.length)} of {Q.length}</span></header>
+      <p className="note chat-why"><Icon name="shield" size={18} /> Five quick questions. Your answers shape today’s ritual and stay on this phone.</p>
       <ol className="thread" aria-live="polite">
         {Q.slice(0, finished ? Q.length : at + 1).map((q) => (
           <li key={q.id} className="turn">

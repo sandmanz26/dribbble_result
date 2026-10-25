@@ -87,7 +87,7 @@ export default function Sit() {
   const p = Math.min(elapsed / total, 1)
   return (
     <div className={`player f-${m.field}`}>
-      <header className="bar on-field"><Back label="Leave the sit" /><span className="bar-title">{m.kind}</span><span className="meta num">{mmss(Math.max(total - elapsed, 0))}</span></header>
+      <header className="bar on-field"><Back label="Leave the sit" /><h1 className="bar-title">{m.kind}</h1><span className="meta num">{mmss(Math.max(total - elapsed, 0))}</span></header>
       <div className="player-center">
         {/* The moon fills as the sit goes on: new moon at the start, full at the bell. */}
         <svg className="moon" viewBox="0 0 200 200" role="img" aria-label={`${Math.round(p * 100)} percent through`}>
@@ -96,8 +96,8 @@ export default function Sit() {
           <circle cx={100 + p * 160} cy="100" r="80" className="moon-dark" clipPath="url(#moonclip)" />
           <circle cx="100" cy="100" r="78" className="moon-edge" />
         </svg>
-        {finished ? <><h1 className="serif">Rest here a moment.</h1><p>{step.minutes} minutes of {m.name.toLowerCase()}.</p></> : (
-          <><h1 className="serif">{m.name}</h1><p>{m.line}</p></>
+        {finished ? <><h2 className="serif">Rest here a moment.</h2><p>{step.minutes} minutes of {m.name.toLowerCase()}.</p></> : (
+          <><h2 className="serif">{m.name}</h2><p>{m.line}</p></>
         )}
       </div>
       <div className="player-foot">
@@ -107,7 +107,7 @@ export default function Sit() {
           </div>
         )}
         {finished ? (
-          <button className="btn primary block" onClick={() => { nav('/ritual'); notify({ text: 'Lovely. One line in the journal to close.' }) }}>Back to the ritual</button>
+          <button className="btn primary wide" onClick={() => { nav('/ritual'); notify({ text: 'Lovely. One line in the journal to close.' }) }}>Back to the ritual</button>
         ) : (
           <button className="roundbtn" onClick={() => setRunning(!running)} aria-label={running ? 'Pause' : elapsed ? 'Resume' : 'Begin'}><Icon name={running ? 'pause' : 'play'} size={28} /></button>
         )}

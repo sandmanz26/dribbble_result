@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import { useStore } from '../store.jsx'
 import Icon from '../ui/Icon.jsx'
@@ -12,7 +11,6 @@ const LABEL = { breath: 'Breathe', herb: 'Brew', sit: 'Sit', journal: 'Write' }
 // Today's ritual as a path of coloured steps. Each step can say why it was chosen.
 export default function Ritual() {
   const { s } = useStore()
-  const [why, setWhy] = useState(null)
   if (!s.checkin) return <Navigate to="/check-in" replace />
   const r = buildRitual(s.checkin, s.flags)
   const next = r.steps.find((st) => !s.done.includes(st.kind))
@@ -34,26 +32,39 @@ export default function Ritual() {
       <ol className="path">
         {r.steps.map((st, i) => {
           const done = s.done.includes(st.kind)
+          const isNext = next?.kind === st.kind
+          // Only the step to do now is shown in full; the others are one line each, tap to open.
+          if (!isNext) {
+            return (
+              <li key={st.kind} className={`step compact f-${st.field} ${done ? 'done' : ''}`}>
+                <span className="step-n num" aria-hidden="true">{done ? <Icon name="check" size={16} /> : i + 1}</span>
+                <Link to={PATH[st.kind]} className="step-body">
+                  <span className="step-kind">{LABEL[st.kind]} · <span className="num">{st.minutes} min</span>{st.parallel ? ' · while you sit' : ''}{done ? ' · done' : ''}</span>
+                  <strong className="serif">{st.title}</strong>
+                </Link>
+                <Icon name="next" size={18} className="chev" />
+              </li>
+            )
+          }
           return (
-            <li key={st.kind} className={`step f-${st.field} ${done ? 'done' : ''} ${next?.kind === st.kind ? 'next' : ''}`}>
-              <span className="step-n num" aria-hidden="true">{done ? <Icon name="check" size={16} /> : i + 1}</span>
+            <li key={st.kind} className={`step next f-${st.field}`}>
+              <span className="step-n num" aria-hidden="true">{i + 1}</span>
               <div className="step-body">
-                <span className="step-kind">{LABEL[st.kind]} · <span className="num">{st.minutes} min</span>{st.parallel ? ' · while you sit' : ''}</span>
+                <span className="step-kind">Now · {LABEL[st.kind]} · <span className="num">{st.minutes} min</span>{st.parallel ? ' · while you sit' : ''}</span>
                 <strong className="serif">{st.title}</strong>
                 <span className="step-detail">{detail(st)}</span>
                 {st.swapped && <span className="swap"><Icon name="shield" size={16} /> Swapped for your profile</span>}
+                <p className="why">{st.why}{st.swapped ? ` ${st.swapped.reason}` : ''}</p>
                 <div className="step-actions">
-                  <Link to={PATH[st.kind]} className={`btn small ${next?.kind === st.kind ? 'primary' : 'soft'}`}>{done ? 'Again' : next?.kind === st.kind ? 'Start' : 'Open'}</Link>
-                  <button className="btn small text" aria-expanded={why === st.kind} onClick={() => setWhy(why === st.kind ? null : st.kind)}>Why this?</button>
+                  <Link to={PATH[st.kind]} className="btn primary">Start</Link>
                 </div>
-                {why === st.kind && <p className="why">{st.why}{st.swapped ? ` ${st.swapped.reason}` : ''}</p>}
               </div>
             </li>
           )
         })}
       </ol>
       {!next && <p className="note ok"><Icon name="sparkle" /> Ritual complete. Same time tomorrow?</p>}
-      <Link to="/check-in" className="btn quiet block"><Icon name="refresh" size={18} /> Check in again</Link>
+      <Link to="/check-in" className="btn quiet wide"><Icon name="refresh" size={18} /> Check in again</Link>
     </div>
   )
 }

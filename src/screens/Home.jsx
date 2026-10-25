@@ -12,13 +12,14 @@ export default function Home() {
   const nav = useNavigate()
   const evening = s.time === 'evening'
   const days = [...HISTORY, { date: TODAY, mood: s.checkin?.mood || null, minutes: s.minutesToday }]
-  const shown = days.filter((d) => d.mood).length
+  const fortnight = days.slice(-14)
+  const shown = fortnight.filter((d) => d.mood).length
   const ritual = s.checkin ? buildRitual(s.checkin, s.flags) : null
   const doneCount = ritual ? ritual.steps.filter((st) => s.done.includes(st.kind)).length : 0
   const week = days.slice(-7)
   const weekMin = week.reduce((a, d) => a + d.minutes, 0)
   const maxMin = Math.max(20, ...week.map((d) => d.minutes))
-  const counts = MOODS.map((m) => ({ ...m, n: days.filter((d) => d.mood === m.id).length })).filter((m) => m.n).sort((a, b) => b.n - a.n)
+  const counts = MOODS.map((m) => ({ ...m, n: fortnight.filter((d) => d.mood === m.id).length })).filter((m) => m.n).sort((a, b) => b.n - a.n)
   const latest = [...s.journal, ...JOURNAL][0]
 
   return (
@@ -26,7 +27,7 @@ export default function Home() {
       <section className={`hello ${evening ? 'f-night' : 'f-sky'}`}>
         <div className="hello-top"><Mark size={32} /><span className="meta">{fmtDay(TODAY)}</span></div>
         <h1 className="serif">{evening ? 'Good evening' : 'Good morning'}, {s.name}.</h1>
-        <p className="hello-fact">You have shown up {shown} of the last {days.length} days. {evening ? 'Time to set the day down.' : 'One minute to begin.'}</p>
+        <p className="hello-fact">You have checked in {shown} of the last 14 days. {evening ? 'Time to set the day down.' : 'One minute to begin.'}</p>
 
         {!ritual ? (
           <div className="hello-ask">
@@ -54,11 +55,12 @@ export default function Home() {
 
       <section className="block" aria-labelledby="wx-h">
         <div className="block-head"><h2 id="wx-h">Your fortnight, as weather</h2><span className="meta small">{counts[0] ? `Mostly ${counts[0].label.toLowerCase()}` : ''}</span></div>
+        <div className="fortnight-days meta small" aria-hidden="true">{['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((d, i) => <span key={i}>{d}</span>)}</div>
         <ol className="fortnight">
-          {days.map((d) => (
-            <li key={d.date} className={d.date === TODAY ? 'today' : ''} title={`${fmtDay(d.date)}: ${d.mood ? MOODS.find((m) => m.id === d.mood).label : 'no check-in'}`}>
-              <MoodIcon mood={d.mood} size={18} />
-              <span className="meta tiny">{weekday(d.date)[0]}</span>
+          {days.slice(-14).map((d) => (
+            <li key={d.date} className={`${d.date === TODAY ? 'today' : ''} ${d.mood ? '' : 'empty'}`} aria-label={`${fmtDay(d.date)}: ${d.mood ? MOODS.find((m) => m.id === d.mood).label : 'no check-in'}`}>
+              <MoodIcon mood={d.mood} size={20} />
+              <span className="d num">{Number(d.date.slice(8))}</span>
             </li>
           ))}
         </ol>
@@ -69,8 +71,8 @@ export default function Home() {
         <div className="block-head"><h2 id="min-h">Time you gave yourself</h2><span className="num big-figure">{weekMin}<small> min this week</small></span></div>
         <div className="bars" role="img" aria-label={`Minutes per day this week: ${week.map((d) => `${weekday(d.date)} ${d.minutes}`).join(', ')}`}>
           {week.map((d) => (
-            <div key={d.date} className={`mbar ${d.date === TODAY ? 'today' : ''}`}>
-              <span style={{ height: `${(d.minutes / maxMin) * 100}%` }} />
+            <div key={d.date} className={`mbar ${d.date === TODAY ? 'today' : ''} ${d.minutes ? '' : 'zero'}`}>
+              <div className="mcol"><b className="num">{d.minutes}</b><span style={{ height: `${(d.minutes / maxMin) * 100}%` }} /></div>
               <small className="meta tiny">{weekday(d.date)}</small>
             </div>
           ))}

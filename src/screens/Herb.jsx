@@ -99,7 +99,7 @@ export default function Herb() {
         <p className="meta small">Summarised from NIH NCCIH “Herbs at a Glance”. Not medical advice. Stop if you feel unwell, and ask a clinician before using herbs with medicine.</p>
       </section>
 
-      <button className="btn primary block" onClick={markBrewed}>{brewed ? 'Brewed, back to the ritual' : 'I’ve made my cup'}</button>
+      <button className="btn primary wide" onClick={markBrewed}>{brewed ? 'Brewed, back to the ritual' : 'I’ve made my cup'}</button>
     </div>
   )
 }
