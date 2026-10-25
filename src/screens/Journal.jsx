@@ -1,18 +1,19 @@
 import { Link } from 'react-router-dom'
 import { useStore } from '../store.jsx'
 import Icon from '../ui/Icon.jsx'
-import { MoodIcon } from '../ui/kit.jsx'
-import { JOURNAL, fmtDay } from '../data/history.js'
+import { Print } from '../ui/Print.jsx'
+import { HISTORY, JOURNAL, daySeed, fmtDay } from '../data/history.js'
 import { MOODS } from '../data/library.js'
 
-// The journal keeps one line a day, each with the weather it was written in.
+// The journal is the herbarium: one line a day, filed beside that day's print.
 export default function Journal() {
   const { s } = useStore()
   const all = [...s.journal, ...JOURNAL]
+  const herbOn = (date) => HISTORY.find((d) => d.date === date)?.herb
   return (
     <div className="page">
       <header className="pagehead">
-        <div><h1 className="serif">Journal</h1><p className="meta">{all.length} entries since September</p></div>
+        <div><h1>Journal</h1><p className="meta num">{all.length} lines since September</p></div>
         <Link to="/journal/new" className="iconbtn filled" aria-label="Write an entry"><Icon name="pen" /></Link>
       </header>
       {all.length === 0 ? (
@@ -20,10 +21,15 @@ export default function Journal() {
       ) : (
         <ol className="entries">
           {all.map((e) => (
-            <li key={e.id} className={`entry m-${e.mood}`}>
-              <div className="entry-top"><MoodIcon mood={e.mood} size={18} /><span className="meta small">{fmtDay(e.date)} · {MOODS.find((m) => m.id === e.mood)?.label}</span></div>
-              <p className="entry-prompt meta small">{e.prompt}</p>
-              <p className="entry-text serif">{e.text}</p>
+            <li key={e.id}>
+              <article className="entry">
+                <Print mood={e.mood} herb={herbOn(e.date)} seed={daySeed(e.date)} size="chip" />
+                <div className="entry-body">
+                  <span className="entry-top">{fmtDay(e.date)} · {MOODS.find((m) => m.id === e.mood)?.label}</span>
+                  <p className="entry-prompt">{e.prompt}</p>
+                  <p className="entry-text">{e.text}</p>
+                </div>
+              </article>
             </li>
           ))}
         </ol>

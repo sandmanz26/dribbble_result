@@ -23,11 +23,11 @@ export function Toast() {
   )
 }
 
-// The leaf mark: one leaf, one breath line through it.
+// The mark: a small square sun print of one leaf.
 export function Mark({ size = 30 }) {
   return (
     <svg className="mark" width={size} height={size} viewBox="0 0 32 32" aria-hidden="true">
-      <circle cx="16" cy="16" r="16" className="mark-bg" />
+      <rect width="32" height="32" rx="3" className="mark-bg" />
       <path d="M9 22c0-7.5 5-12.5 14-13-0.5 9-5.5 14-13 14" className="mark-leaf" />
       <path d="M10 22c3-3 6-6 9.5-9" className="mark-vein" />
     </svg>

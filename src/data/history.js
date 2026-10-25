@@ -3,20 +3,20 @@ export const TODAY = '2026-10-25'
 export const ME = { name: 'Lena', since: '2026-09-02' }
 
 export const HISTORY = [
-  { date: '2026-10-11', mood: 'steady', minutes: 12 },
-  { date: '2026-10-12', mood: 'bright', minutes: 10 },
-  { date: '2026-10-13', mood: 'stormy', minutes: 15 },
-  { date: '2026-10-14', mood: 'stormy', minutes: 8 },
-  { date: '2026-10-15', mood: null, minutes: 0 },
-  { date: '2026-10-16', mood: 'heavy', minutes: 10 },
-  { date: '2026-10-17', mood: 'steady', minutes: 20 },
-  { date: '2026-10-18', mood: 'bright', minutes: 12 },
-  { date: '2026-10-19', mood: 'steady', minutes: 10 },
-  { date: '2026-10-20', mood: 'tired', minutes: 6 },
-  { date: '2026-10-21', mood: null, minutes: 0 },
-  { date: '2026-10-22', mood: 'stormy', minutes: 12 },
-  { date: '2026-10-23', mood: 'steady', minutes: 10 },
-  { date: '2026-10-24', mood: 'heavy', minutes: 9 },
+  { date: '2026-10-11', mood: 'steady', minutes: 12, herb: 'peppermint' },
+  { date: '2026-10-12', mood: 'bright', minutes: 10, herb: 'peppermint' },
+  { date: '2026-10-13', mood: 'stormy', minutes: 15, herb: 'lemonbalm' },
+  { date: '2026-10-14', mood: 'stormy', minutes: 8, herb: 'lemonbalm' },
+  { date: '2026-10-15', mood: null, minutes: 0, herb: null },
+  { date: '2026-10-16', mood: 'heavy', minutes: 10, herb: 'ginger' },
+  { date: '2026-10-17', mood: 'steady', minutes: 20, herb: 'peppermint' },
+  { date: '2026-10-18', mood: 'bright', minutes: 12, herb: 'peppermint' },
+  { date: '2026-10-19', mood: 'steady', minutes: 10, herb: 'peppermint' },
+  { date: '2026-10-20', mood: 'tired', minutes: 6, herb: 'chamomile' },
+  { date: '2026-10-21', mood: null, minutes: 0, herb: null },
+  { date: '2026-10-22', mood: 'stormy', minutes: 12, herb: 'lemonbalm' },
+  { date: '2026-10-23', mood: 'steady', minutes: 10, herb: 'peppermint' },
+  { date: '2026-10-24', mood: 'heavy', minutes: 9, herb: 'ginger' },
 ]
 
 export const JOURNAL = [
@@ -31,3 +31,6 @@ const W = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 export const fmtDay = (iso) => { const d = new Date(iso + 'T00:00:00Z'); return `${W[d.getUTCDay()]} ${d.getUTCDate()} ${M[d.getUTCMonth()]}` }
 export const weekday = (iso) => W[new Date(iso + 'T00:00:00Z').getUTCDay()]
 export const mmss = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`
+
+// The same day always prints the same sheet.
+export const daySeed = (iso) => Number(iso.replaceAll('-', '')) % 9973

@@ -17,21 +17,23 @@ personalisation is set at onboarding, not per day; modalities live in separate a
 do not check a herb against the person's profile or show evidence and source together.
 
 ## Decisions
+- Each day is a cyanotype: the weather from the check-in sets the depth of one Prussian blue,
+  and the day's herb is printed on it as a white silhouette. Two weeks become a row of prints;
+  the journal files each line beside its print.
 - Mood as weather (bright, steady, heavy, stormy, tired): quicker and more honest than a scale.
-- Check-in as a conversation, one tap per question, five questions.
-- The ritual explains each step ("Why this?") from the check-in answers.
+- Check-in: one question per screen under today's print, which develops as you answer.
+- The ritual is a dated label; each step explains itself ("Why this?") from the check-in answers.
 - Herbs are checked against health flags before they are shown; clashes are swapped and explained.
-- Apothecary label for the herbal protocol: Latin name, part, preparation, amount, steep, when,
+- Herbal protocol: the plant's own print and Latin name, then a label with amount, steep, when,
   how often, cautions, evidence in words, source.
-- Breath player as a tide; meditation player as a filling moon with rain or hum made in the browser.
+- Breath player as a tide of light on today's print; the sit on the night print with a filling moon.
 - The tea steeps while you sit, so it adds no time.
-- No streaks or red: missed days are blank.
-- Colour means place: sky, sage, clay, night, paper fields; one teal accent for the next action.
+- No streaks or red: missed days are empty frames.
 
 ## Design system
-taste-skill app style "editorial greeting" (serif greeting as h1, regular-weight figures on tonal
-panels), with its face from the brief: one calm field per practice, and the home turning to night
-after dark. Instrument Serif and Sans. Heroicons.
+Paper, ink and one Prussian blue in five exposures. Besley (a Clarendon, the face of old chemists'
+labels) for what Tend says, Hanken Grotesk for what you read and tap, a single 6 px corner.
+Heroicons outline. The full log is in `docs/design-decisions.md` and on `#/system`.
 
 ## States
 Empty journal, unanswered check-in, ritual not started, in progress and complete, players idle,

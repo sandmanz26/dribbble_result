@@ -25,9 +25,12 @@ export default function App() {
   useEffect(() => { scroller.current?.scrollTo(0, 0) }, [loc.pathname])
   if (loc.pathname === '/system') return <System />
   const tabs = s.onboarded && ['/', '/journal', '/you'].includes(loc.pathname)
+  // The players fill the whole phone, status bar included, with their print's exposure.
+  const player = s.onboarded && ['/ritual/breath', '/ritual/sit'].includes(loc.pathname)
+  const ex = loc.pathname === '/ritual/sit' ? 'tired' : s.checkin?.mood || 'steady'
   return (
     <Frame>
-      <div className="app">
+      <div className={`app ${player ? `on-player ex-${ex}` : ''}`}>
         <div className="screen" ref={scroller}>
           {!s.onboarded ? (
             <Routes>

@@ -3,17 +3,21 @@ import { useNavigate } from 'react-router-dom'
 import { useStore } from '../store.jsx'
 import Icon from '../ui/Icon.jsx'
 import { Back } from '../ui/kit.jsx'
+import { Plant } from '../ui/Print.jsx'
 import { BREATHS } from '../data/library.js'
 import { buildRitual } from '../data/ritual.js'
-import { mmss } from '../data/history.js'
+import { TODAY, daySeed, mmss } from '../data/history.js'
 
 const PHASES = ['Breathe in', 'Hold', 'Breathe out', 'Hold']
 
-// The breath is a tide: the screen fills as you breathe in and empties as you breathe out.
+// The breath is a tide on today's print: the light rises as you breathe in and drains as you breathe out.
 export default function Breath() {
   const { s, set, notify } = useStore()
   const nav = useNavigate()
-  const step = s.checkin ? buildRitual(s.checkin, s.flags).steps[0] : { id: 'long', minutes: 3 }
+  const r = s.checkin ? buildRitual(s.checkin, s.flags) : null
+  const step = r ? r.steps[0] : { id: 'long', minutes: 3 }
+  const herb = r ? r.steps[1].id : 'chamomile'
+  const mood = s.checkin?.mood || 'steady'
   const [pattern, setPattern] = useState(step.id)
   const b = BREATHS[pattern]
   const total = step.minutes * 60
@@ -56,14 +60,15 @@ export default function Breath() {
   const dur = running ? b.counts[phase] : 0.6
 
   return (
-    <div className={`player f-${b.field}`}>
+    <div className={`player ex-${mood}`}>
+      <Plant herb={herb} seed={daySeed(TODAY)} />
       <div className="tide" style={{ '--level': level, '--dur': `${phase === 1 || phase === 3 ? 0.3 : dur}s` }} aria-hidden="true"><span /></div>
-      <header className="bar on-field"><Back label="Leave the breath" /><h1 className="bar-title">{b.name}</h1><span className="meta num">{mmss(Math.max(total - elapsed, 0))}</span></header>
+      <header className="bar clear"><Back label="Leave the breath" /><h1 className="bar-title">{b.name}</h1><span className="meta num" style={{ color: 'inherit' }}>{mmss(Math.max(total - elapsed, 0))}</span></header>
 
       <div className="player-center" aria-live="polite">
         {finished ? (
           <>
-            <h2 className="serif">Well breathed.</h2>
+            <h2>Well breathed.</h2>
             <p className="num">{breaths} breaths in {step.minutes} minutes</p>
           </>
         ) : running ? (
@@ -73,9 +78,9 @@ export default function Breath() {
           </>
         ) : (
           <>
-            <h2 className="serif">{b.name}</h2>
+            <h2>{b.name}</h2>
             <p>{b.why}</p>
-            <p className="num counts">{b.counts.map((c, i) => (c ? `${PHASES[i].replace('Breathe ', '')} ${c}` : null)).filter(Boolean).join('  ·  ')}</p>
+            <p className="num counts">{b.counts.map((c, i) => (c ? `${PHASES[i].replace('Breathe ', '')} ${c}` : null)).filter(Boolean).join(', ')}</p>
           </>
         )}
       </div>
@@ -87,7 +92,7 @@ export default function Breath() {
           </div>
         )}
         {finished ? (
-          <button className="btn primary wide" onClick={() => { nav('/ritual'); notify({ text: 'Breath done. Next, put the kettle on.' }) }}>Back to the ritual</button>
+          <button className="btn on-print wide" onClick={() => { nav('/ritual'); notify({ text: 'Breath done. Next, put the kettle on.' }) }}>Back to the ritual</button>
         ) : running ? (
           <button className="roundbtn" onClick={() => setRunning(false)} aria-label="Pause"><Icon name="pause" size={28} /></button>
         ) : (

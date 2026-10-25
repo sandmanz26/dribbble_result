@@ -1,8 +1,12 @@
 # Tend: a ritual from a one-minute check-in (project8)
 
-Mobile wellness app prototype: a conversational check-in shapes a short ritual of breathwork,
-meditation and a herbal cup, with a journal and a dashboard. React 18, Vite 5, react-router
-(HashRouter), Heroicons, Instrument Sans + Instrument Serif, Web Audio for ambient sound.
+Mobile wellness app prototype: a one-minute check-in shapes a short ritual of breathwork,
+meditation and a herbal cup, with a journal and a history. React 18, Vite 5, react-router
+(HashRouter), Heroicons, Besley + Hanken Grotesk, Web Audio for ambient sound.
+
+The idea: each day is a cyanotype (a sun print). The check-in's weather sets how deep the
+Prussian blue goes, and the day's herb is printed on it as a white silhouette, drawn in code
+from how the plant grows (`src/ui/Print.jsx`).
 No backend; sample content in `src/data/`.
 
 - On a computer: phone frame plus a reviewer panel (walkthrough, morning or evening, theme,

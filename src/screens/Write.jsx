@@ -19,9 +19,9 @@ export default function Write() {
     nav(s.checkin ? '/ritual' : '/journal')
   }
   return (
-    <form className="write f-paper" onSubmit={save}>
+    <form className="write" onSubmit={save}>
       <header className="bar"><Back label="Close without saving" /><h1 className="bar-title">One line</h1><button className="btn small primary" disabled={!text.trim()}>Save</button></header>
-      <label htmlFor="jt" className="write-prompt serif">{q}</label>
+      <label htmlFor="jt" className="write-prompt">{q}</label>
       <textarea id="jt" autoFocus rows={8} placeholder="Write as much or as little as you like" value={text} onChange={(e) => setText(e.target.value)} />
       <p className="meta small num">{text.trim() ? `${text.trim().split(/\s+/).length} words` : 'Private to this phone'}</p>
     </form>
