@@ -56,9 +56,9 @@ export const DECISIONS = [
     why: 'Following a whole screen works with soft eyes. Reduced motion keeps the counts and drops the movement.',
   },
   {
-    area: 'Type and shape', title: 'A chemist’s label face, cut paper corners',
-    saw: 'Instrument Serif and pill shapes are the default look of the category.',
-    did: 'Besley, a Clarendon like the type on old pharmacy labels, for what Tend says; Hanken Grotesk for what you read and tap. Every block, field and button has the same 6 px corner.',
-    why: 'The face comes from the herb world the product is built on, and one corner size makes the app feel cut from one sheet.',
+    area: 'Type and shape', title: 'A botanical book face, cut paper corners',
+    saw: 'Instrument Serif and pill shapes are the default look of the category. The next try, Besley, read heavy and old-fashioned on a phone; the owner asked for another face.',
+    did: 'Four pairings were set on the real check-in, ritual and herb screens. Newsreader won for what Tend says, its italic for Latin names; Onest for what you read and tap. Every block, field and button has the same 6 px corner.',
+    why: 'Newsreader has the calm of an old botanical magazine without looking antique, and stays clear at phone sizes; Onest keeps labels and figures plain, with true tabular digits. One corner size makes the app feel cut from one sheet.',
   },
 ]

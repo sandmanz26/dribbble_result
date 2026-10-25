@@ -2,7 +2,7 @@
 
 Mobile wellness app prototype: a one-minute check-in shapes a short ritual of breathwork,
 meditation and a herbal cup, with a journal and a history. React 18, Vite 5, react-router
-(HashRouter), Heroicons, Besley + Hanken Grotesk, Web Audio for ambient sound.
+(HashRouter), Heroicons, Newsreader + Onest, Web Audio for ambient sound.
 
 The idea: each day is a cyanotype (a sun print). The check-in's weather sets how deep the
 Prussian blue goes, and the day's herb is printed on it as a white silhouette, drawn in code

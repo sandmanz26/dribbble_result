@@ -56,9 +56,9 @@ Each decision with what we saw, what we did and why. Also shown on the design sy
 - **Did:** The breath player fills the screen with today’s exposure; light rises as you breathe in and drains as you breathe out, over the real counts. The sit always uses the deepest exposure, with a moon that fills.
 - **Why:** Following a whole screen works with soft eyes. Reduced motion keeps the counts and drops the movement.
 
-## Type and shape: A chemist’s label face, cut paper corners
+## Type and shape: A botanical book face, cut paper corners
 
-- **Saw:** Instrument Serif and pill shapes are the default look of the category.
-- **Did:** Besley, a Clarendon like the type on old pharmacy labels, for what Tend says; Hanken Grotesk for what you read and tap. Every block, field and button has the same 6 px corner.
-- **Why:** The face comes from the herb world the product is built on, and one corner size makes the app feel cut from one sheet.
+- **Saw:** Instrument Serif and pill shapes are the default look of the category. The next try, Besley, read heavy and old-fashioned on a phone; the owner asked for another face.
+- **Did:** Four pairings were set on the real check-in, ritual and herb screens. Newsreader won for what Tend says, its italic for Latin names; Onest for what you read and tap. Every block, field and button has the same 6 px corner.
+- **Why:** Newsreader has the calm of an old botanical magazine without looking antique, and stays clear at phone sizes; Onest keeps labels and figures plain, with true tabular digits. One corner size makes the app feel cut from one sheet.
 

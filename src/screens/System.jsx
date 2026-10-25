@@ -69,10 +69,10 @@ export default function System() {
       <section className="sys-sec">
         <h2>Type</h2>
         <div className="sys-type">
-          <p className="display" style={{ fontSize: 34, lineHeight: '38px' }}>Settle the storm</p><small>Besley 500, 34/38 · ritual names and what Tend says to you</small>
-          <p className="display" style={{ fontSize: 26, lineHeight: '32px' }}>How long did you sleep last night?</p><small>Besley 500, 26/32 · questions</small>
-          <p style={{ fontSize: 16, lineHeight: '24px' }}>Breathing out for longer than you breathe in is a simple way to slow down.</p><small>Hanken Grotesk 400, 16/24 · body</small>
-          <p className="num" style={{ fontSize: 13, lineHeight: '18px', fontWeight: 600 }}>4 in, 6 out · 3 min</p><small>Hanken Grotesk 600, 13/18 · labels, tabular figures</small>
+          <p className="display" style={{ fontSize: 32, lineHeight: '36px' }}>Settle the storm</p><small>Newsreader 500, 32/36 · ritual names and what Tend says to you</small>
+          <p className="display" style={{ fontSize: 26, lineHeight: '32px' }}>How long did you sleep last night?</p><small>Newsreader 500, 26/32 · questions</small>
+          <p style={{ fontSize: 16, lineHeight: '24px' }}>Breathing out for longer than you breathe in is a simple way to slow down.</p><small>Onest 400, 16/24 · body</small>
+          <p className="num" style={{ fontSize: 13, lineHeight: '18px', fontWeight: 600 }}>4 in, 6 out · 3 min</p><small>Onest 600, 13/18 · labels, tabular figures</small>
         </div>
       </section>
 

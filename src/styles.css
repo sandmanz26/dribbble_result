@@ -1,8 +1,9 @@
 /* Tend. The idea: each day is a cyanotype. A sun print is exposed by the day's light, so the
    weather someone gives in the check-in sets how deep today's blue goes (five exposures of one
    Prussian blue), and the herb in today's cup is printed on it as a white silhouette. Around the
-   prints everything is paper and ink: Besley (a Clarendon, the face of old chemists' labels) for
-   what is said to you, Hanken Grotesk for what you read and tap, square-cut 6px corners. */
+   prints everything is paper and ink: Newsreader (a book serif with the feel of an old botanical
+   magazine, its italic kept for Latin names) for what is said to you, Onest for what you read
+   and tap, square-cut 6px corners. */
 :root {
   --paper: #eeeeeb;
   --sheet: #f9f9f8;
@@ -17,8 +18,8 @@
   /* Five exposures, deepest in full sun; "none" is paper that has not seen light yet */
   --ex-bright: #1b4a8f; --ex-steady: #3b6597; --ex-heavy: #8fa7c6; --ex-stormy: #2a3a57; --ex-tired: #101c34; --ex-none: #dfe5ec;
   --print-ink: #ffffff; --print-ink-dark: #0e1d3a;
-  --display: 'Besley Variable', 'Besley', Georgia, serif;
-  --text: 'Hanken Grotesk Variable', 'Hanken Grotesk', system-ui, sans-serif;
+  --display: 'Newsreader Variable', 'Newsreader', Georgia, serif;
+  --text: 'Onest Variable', 'Onest', system-ui, sans-serif;
   --r: 6px;
   color-scheme: light;
 }
@@ -65,7 +66,7 @@ a { color: inherit; text-decoration: none; }
 .ex-heavy .plant { opacity: 0.9; }
 .ex-none .plant { opacity: 0.6; }
 .print-copy { position: relative; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; gap: 12px; padding: 18px 18px 16px; }
-.print-title { font: 500 30px/34px var(--display); letter-spacing: -0.02em; }
+.print-title { font: 500 32px/36px var(--display); letter-spacing: -0.015em; }
 .print-line { font-size: 14px; line-height: 20px; max-width: 26em; }
 /* Sizes: on the hero and mid prints the plant owns the right half and runs off the bottom edge,
    and the words keep to the left 58%, so nothing is ever printed over a headline. */

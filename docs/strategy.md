@@ -31,8 +31,9 @@ do not check a herb against the person's profile or show evidence and source tog
 - No streaks or red: missed days are empty frames.
 
 ## Design system
-Paper, ink and one Prussian blue in five exposures. Besley (a Clarendon, the face of old chemists'
-labels) for what Tend says, Hanken Grotesk for what you read and tap, a single 6 px corner.
+Paper, ink and one Prussian blue in five exposures. Newsreader (a book serif with the feel of an
+old botanical magazine, italic for Latin names) for what Tend says, Onest for what you read and
+tap, a single 6 px corner.
 Heroicons outline. The full log is in `docs/design-decisions.md` and on `#/system`.
 
 ## States
