@@ -33,6 +33,10 @@ itself are in `AGENTS.md`; each project branch keeps its own `README.md` and `do
 - **Private**: every project has its own unrelated password, and nothing may be indexed by search
   engines (noindex header, meta and robots.txt, see AGENTS.md section 4).
 - **Recaps in markdown**: keep decisions in the repository, because the owner may switch tools.
+- **Fonts the owner dislikes**: Gloock and decorative or display serifs in general ("tolong ingat
+  saya tidak suka font itu"). For corporate and service work use a modern, minimal sans.
+- **Premium means real pictures**: real photographs (credited, self-hosted) beat food or objects
+  drawn in code, which the owner read as lo-fi. Premium quality, not wireframe-level polish.
 
 ## 3. Dribbble client communication
 
@@ -69,7 +73,8 @@ Live site: `https://proposal-virid-eight.vercel.app/<slug>/` (root and unknown p
 | project10 | fu-p6pu-f2la | Faceup, restock walk from planogram and stock count | Mobile app |
 | project11 | ck-7rmz-q4hp | Flock & Flame, chicken and grill menu app with offline ordering | Mobile app |
 | project12 | gs-k2vx-9dnb | Golden Stone Logistics, China and Ghana freight website (English and Chinese) | Website |
-| flowdirector | fd-w8tq-3jxc | Flow Director, clinic operations with an AI employee (Upwork) | Web app + handoff |
+| rawat | fd-w8tq-3jxc | Rawat, clinic operations for an Indonesian primary clinic (owner's portfolio piece) | Web app |
+| flowdirector | fd-w8tq-3jxc | Old link, serves the same Rawat build | Web app |
 
 Upwork briefs get their own slug instead of `projectN` (owner's request), letters only.
 
@@ -125,6 +130,31 @@ image credits for project11 were used. Each branch's `docs/recap.md` has the pho
   that triggered them, recovery paths, activity log with undo, autonomy rules and a handoff page
   with the async API spec. Research in the branch's `docs/research.md`.
 
+### Round after that: Rawat, Flock & Flame v2, Golden Stone v2, project9 warning
+Owner: "the design review is very poor, not premium, still looks like AI slop" for all three.
+- **Rawat** (was Flow Director): renamed and repositioned as the owner's own portfolio work, so the
+  slug is `rawat` (password unchanged, `/flowdirector/` still works). Full module set for an
+  Indonesian FKTP (Klinik Pratama Kenanga Medika, Bandung): registration with NIK and BPJS
+  eligibility, queue board and TV display, vitals, SOAP consult with ICD-10 (144 FKTP diagnoses
+  flagged), lab, pharmacy with FEFO batches, cashier (capitation vs. paid), patients, schedule,
+  inventory, PCare / Mobile JKN / SATUSEHAT sync with failure and retry, KBK capitation scorecard,
+  reports, an assistant (Asa) with approvals, activity log, settings, role-based access. All people
+  have Indonesian names. A fixed bottom banner says it is a design prototype with synthetic data,
+  not connected to BPJS. Research with sources in the branch's `docs/research.md`. Plus Jakarta Sans.
+- **Flock & Flame v2**: code-drawn food replaced by 32 real food photos (Open Images, CC BY 2.0,
+  credited on `#/credits`); warm cream, ink and one tomato red; Funnel Display + Funnel Sans;
+  store key `ff-state-v2`.
+- **Golden Stone v2**: Gloock dropped for Host Grotesk (+ Noto Sans SC); moon gate, eyebrows and
+  numbering removed; 12 real port, ship and warehouse photos (Open Images, CC BY 2.0, credited in
+  the footer); globe kept as a route band.
+- **project9 Chrome "Dangerous" warning**: Google Safe Browsing flagged the page as possible
+  phishing (a broker brand, a password form and an ID upload on a shared vercel.app domain). Removed
+  every password field and the file upload (demo-account picker, "fill in demo code", sample ID
+  only) and added a fixed prototype bar. A custom domain and a review request in Google Search
+  Console are the owner's next step if the flag stays.
+- Photo source for both: Open Images (Google), downloaded once, converted to WebP; Higgsfield still
+  had no generation tool.
+
 ## 6. Open items
 
 - project9: generate the hero tiles, metal card and panel renders in Higgsfield once the generation
@@ -136,7 +166,9 @@ image credits for project11 were used. Each branch's `docs/recap.md` has the pho
 - project11 and project12: generate food and logistics photos once Higgsfield generation is
   enabled (allow the generation tool in the connector settings on claude.ai); slots and prompts are
   in each branch's `docs/recap.md`. project12's Chinese copy needs a native speaker's review.
-- flowdirector: proposal text for Upwork answering the screening questions (pending work, errors,
+- rawat: a Bahasa Indonesia UI version if the owner wants it (UI copy is English with Indonesian
+  context).
+- rawat (old Upwork brief): proposal text for Upwork answering the screening questions (pending work, errors,
   approvals, recovery; walkthrough to design; API and async constraints) can be drawn from the
   branch's `docs/research.md` and the handoff screen.
 

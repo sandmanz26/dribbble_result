@@ -20,6 +20,7 @@ const PASSWORDS = {
   project10: 'fu-p6pu-f2la', // Faceup planogram restock app
   project11: 'ck-7rmz-q4hp', // Flock & Flame chicken and grill menu app
   project12: 'gs-k2vx-9dnb', // Golden Stone Logistics, China and Ghana freight website
+  rawat: 'fd-w8tq-3jxc', // Rawat clinic operations, the owner's portfolio piece (same build as flowdirector)
   flowdirector: 'fd-w8tq-3jxc', // Flow Director clinic operations prototype (Upwork, not a projectN slug)
 }
 
