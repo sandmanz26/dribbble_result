@@ -19,7 +19,7 @@ questions: what will it cost, when does it leave, how long, where is it now, who
   Taken: floating status cards and the route as the hero. Not taken: generic container-ship
   photography, blue corporate palettes, icon-card grids.
 
-## Idea
+## Idea (round 1, replaced in round 2)
 One shape, the circle, carries both cultures: the round moon gate of a Chinese garden frames the
 globe, the logo is a gold disc with a square window (an old Chinese cash coin and a gold weight in
 one), and the same circle returns as service discs, tracking markers, office dials and form notches.
@@ -36,3 +36,8 @@ beside it. Red is kept for China's end of the route.
 ## Placeholders for the client
 Company registration, licences and addresses; real rates, sailing and flight days; WhatsApp number;
 insurance terms; team languages. Photographs of the warehouse, team and cargo (see recap).
+
+## Round 2 direction
+Modern and minimal: one sans (Host Grotesk), large type with tight tracking, generous space, real
+photographs as the main material, gold used only on key numbers and small marks, one deep green band
+for the route. Kente appears only as a thin edge on that band and the footer.

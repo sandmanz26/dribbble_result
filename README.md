@@ -7,10 +7,11 @@ no backend.
 Live on the portfolio hub at `/project12/` (password protected, never indexed).
 
 ## What is on the page
-- **Hero**: a moon gate (the round garden doorway) holding a turning globe that moves between Ghana
-  and southern China; floating cards with the next sea consolidation cut-off (always the coming
-  Friday), air departure days, live clocks for Accra and Guangzhou, and a sample shipment. Hovering
-  the route under the headline turns the globe to that end. Kente weave and key-fret band below.
+- **Hero**: the headline and three facts (sea, air, weekly consolidation) beside a large aerial photo
+  of a loaded container ship, with floating cards: next consolidation cut-off (always the coming
+  Friday), a sample shipment on the water, live clocks for Accra and Guangzhou.
+- **Route**: a deep green band with the turning WebGL globe and the stops from the Guangzhou
+  warehouse to Accra and Kumasi; pointing at a stop turns the globe to that end. Kente weave edge.
 - **Services** (interactive): sea freight, air freight, warehouse, cargo collection, shipment
   enquiries, freight quotations, each in plain words with who it suits, typical time and a next step.
 - **How it works**: many suppliers into one shipment, drawn as loose parcels, one container line,
@@ -21,14 +22,16 @@ Live on the portfolio hub at `/project12/` (password protected, never indexed).
 - **Tracking**: sample number `GSL-24817` with loading, not-found and found states; full timeline
   and position on the route.
 - **Offices**: Accra and Guangzhou with live dials, open or closed now, hours, overlap.
-- **FAQ** as filed index cards; **contact** as a coupon form with validation and success state.
+- **Gallery** of real port and ship photographs; **FAQ** as an accordion by topic; **contact** form
+  with validation and success state.
 - **Future features shown honestly**: language switch works now (Chinese copy is a draft for
   review); sign in and WhatsApp are marked "Coming soon"; tracking says live tracking arrives with
   accounts.
 
 ## Stack
-React 18, Vite 5 (`base: './'`), akar-icons, cobe (WebGL globe), Gloock + Instrument Sans +
-Noto Serif SC (Fontsource, self-hosted). Language choice in localStorage under `gs-lang-v1`.
+React 18, Vite 5 (`base: './'`), akar-icons, cobe (WebGL globe), Host Grotesk + Noto Sans SC
+(Fontsource, self-hosted). Photographs in `public/photos/` are real (Open Images, Flickr, CC BY 2.0),
+credited in the footer (`src/data/credits.json`). Language choice in localStorage under `gs-lang-v1`.
 Single page, no router (section buttons scroll).
 
 ```bash

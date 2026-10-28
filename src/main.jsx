@@ -1,9 +1,7 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
-import '@fontsource/gloock'
-import '@fontsource-variable/instrument-sans'
-import '@fontsource/noto-serif-sc/400.css'
-import '@fontsource/noto-serif-sc/600.css'
+import '@fontsource-variable/host-grotesk'
+import '@fontsource-variable/noto-sans-sc'
 import './styles.css'
 import App from './App.jsx'
 

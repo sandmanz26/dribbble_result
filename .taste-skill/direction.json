@@ -100,10 +100,10 @@
  },
  "type": {
   "id": "roundo-soft",
-  "name": "Gloock + Instrument Sans",
+  "name": "Host Grotesk",
   "class": "rounded-friendly",
   "display": {
-   "family": "Gloock",
+   "family": "Host Grotesk Variable",
    "source": "fontshare",
    "slug": "roundo",
    "weights": [
@@ -114,7 +114,7 @@
    "css": "<link rel=\"preconnect\" href=\"https://api.fontshare.com\">\n<link rel=\"preconnect\" href=\"https://cdn.fontshare.com\" crossorigin>\n<link href=\"https://api.fontshare.com/v2/css?f[]=roundo@400,500,600&display=swap\" rel=\"stylesheet\">"
   },
   "text": {
-   "family": "Instrument Sans Variable",
+   "family": "Host Grotesk Variable",
    "source": "fontshare",
    "slug": "roundo",
    "weights": [

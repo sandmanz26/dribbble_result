@@ -16,3 +16,12 @@
   Yiwu market aisle. Higgsfield prompt style: "Documentary photo, natural light, [scene], warm
   neutral tones, no logos, no text".
 - Password on the hub: `gs-k2vx-9dnb`.
+
+## Round 2 (owner feedback)
+- Owner strongly disliked the font (Gloock, a high-contrast serif): it must be modern and minimal.
+  Remember this for future projects too: no decorative display serifs for corporate work.
+- Owner: design review looked poor, not premium, still AI-looking.
+- Fix: Host Grotesk throughout (Noto Sans SC for Chinese); real photographs of ports, ships and
+  warehouses (Open Images, CC BY 2.0, credited); new hero with an aerial container ship; the globe
+  moved to its own route band with the stops listed; numbered lists, the moon gate, the coupon notches
+  and the filed FAQ cards removed for a calmer, more editorial layout; one deep green band only.

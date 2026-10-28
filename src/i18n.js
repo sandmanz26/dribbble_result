@@ -15,6 +15,16 @@ export const T = {
     ship: ['Sample shipment', '示例货运'], shipWhere: ['On the water, off the coast of Namibia', '海上运输中，纳米比亚海岸附近'],
     now: ['Right now', '此刻'],
   },
+  facts: { sea: ['Sea freight', '海运'], seaV: ['45 to 60 days', '45 至 60 天'], air: ['Air freight', '空运'], airV: ['7 to 12 days', '7 至 12 天'], cons: ['Consolidation', '拼柜'], consV: ['Every Friday', '每周五'] },
+  route: {
+    h: ['One route, both ends covered', '一条航线，两端都有我们'],
+    p: ['Goods leave Nansha or Yiwu, round the Cape of Good Hope and berth at Tema. Our people meet them on both sides.', '货物从南沙或义乌出发，绕过好望角，停靠特马港。航线两端都有我们的团队接应。'],
+    stops: [['Guangzhou warehouse', '广州仓库'], ['Nansha port', '南沙港'], ['Cape of Good Hope', '好望角'], ['Tema port', '特马港'], ['Accra and Kumasi', '阿克拉与库马西']],
+    stopNotes: [['Collected, checked, photographed', '提货、检查、拍照'], ['Loaded, sails weekly', '装柜，每周开船'], ['About 3 weeks at sea', '海上约 3 周'], ['Cleared by our team', '由我们的团队清关'], ['Delivered to your door', '送货上门']],
+    miles: ['Nautical miles', '海里'], milesV: ['About 10,000', '约 10,000'], days: ['Door to door by sea', '海运门到门'], ships: ['Sailings a week', '每周船期'],
+  },
+  gallery: { h: ['Where your cargo goes', '您的货物会经过这里'], a: ['Container terminal', '集装箱码头'], b: ['Cranes at the berth', '泊位起重机'], c: ['Loaded and sailing', '装船起航'] },
+  credits: ['Photographs: Open Images (Flickr), CC BY 2.0. Authors', '图片：Open Images（Flickr），CC BY 2.0。作者'],
   intro: {
     a: ['Buyers and a warehouse in', '采购团队和仓库在'], b: ['Guangzhou, customs and delivery in', '广州，清关和派送团队在'],
     c: ['Tema and Accra. One team at both ends of your', '特马和阿克拉。航线两端，同一个团队，从'], d: ['route.', '头到尾。'],

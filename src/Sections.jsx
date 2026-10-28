@@ -2,32 +2,23 @@ import { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import * as A from 'akar-icons'
 import { T, FAQ, useT, LangCtx } from './i18n.js'
 import { SERVICES, RATES, ORIGINS, DESTS, GOODS, SHIPMENT, OFFICES } from './data/content.js'
-import { Mark, Kente, Fret, Lattice } from './ui/Ornament.jsx'
+import { Mark, Kente } from './ui/Ornament.jsx'
+import Globe from './ui/Globe.jsx'
+import credits from './data/credits.json'
 import { useNow, timeIn, partsIn, dateFmt, scrollToId } from './ui/util.js'
 
 const usd = (n) => `$${Math.round(n).toLocaleString('en-US')}`
 
-export function Intro() {
-  const t = useT()
-  return (
-    <section className="intro" data-reveal>
-      <p className="statement">
-        {t(T.intro.a)} <span className="frame is-lattice"><Lattice /></span> {t(T.intro.b)} <span className="frame is-kente"><Kente height={60} /></span> {t(T.intro.c)} <span className="frame is-route"><A.Boat size="0.55em" /></span> {t(T.intro.d)}
-      </p>
-    </section>
-  )
-}
-
+const SVC_PHOTO = { sea: 'ship-sea', warehouse: 'warehouse', collection: 'yard', enquiry: 'port-night', quote: 'racks' }
 export function Services() {
   const t = useT()
   const [sel, setSel] = useState('sea')
   const s = T.services[sel]
   const svc = SERVICES.find((x) => x.id === sel)
-  const Icon = A[svc.icon]
   const go = () => scrollToId(sel === 'enquiry' || sel === 'warehouse' || sel === 'collection' ? 'contact' : 'quote')
   return (
-    <section className="services" id="services" data-reveal>
-      <h2 className="h2">{t(T.services.h)}</h2>
+    <section className="services wrap" id="services" data-reveal>
+      <div className="sec-head"><h2 className="h2">{t(T.services.h)}</h2></div>
       <div className="svc">
         <ul className="svc-list" role="tablist" aria-label={t(T.services.h)}>
           {SERVICES.map((x) => {
@@ -35,23 +26,58 @@ export function Services() {
             return (
               <li key={x.id}>
                 <button role="tab" id={`tab-${x.id}`} aria-selected={sel === x.id} aria-controls="svc-panel" onClick={() => setSel(x.id)} className="svc-tab">
-                  <span className="svc-ico"><I size={20} /></span>
-                  <span><b>{t(T.services[x.id].name)}</b><span>{t(T.services[x.id].line)}</span></span>
-                  <A.ChevronRight size={18} className="svc-chev" />
+                  <I size={22} className="svc-ico" />
+                  <span className="svc-name"><b>{t(T.services[x.id].name)}</b><span>{t(T.services[x.id].line)}</span></span>
+                  <A.ArrowRight size={18} className="svc-go" />
                 </button>
               </li>
             )
           })}
         </ul>
         <div className="svc-panel" id="svc-panel" role="tabpanel" aria-labelledby={`tab-${sel}`} key={sel}>
-          <div className="svc-disc"><Lattice /><span className="svc-disc-ico"><Icon size={64} /></span></div>
-          <h3>{t(s.name)}</h3>
-          <p className="svc-body">{t(s.body)}</p>
-          <dl className="svc-facts">
-            <div><dt>{t(T.services.good)}</dt><dd>{t(s.fit)}</dd></div>
-            <div><dt>{t(T.services.time)}</dt><dd>{t(svc.time)}</dd></div>
+          {SVC_PHOTO[sel] ? <figure className="svc-photo"><img src={`photos/${SVC_PHOTO[sel]}.webp`} alt="" /></figure> : (
+            <div className="svc-air"><A.Plane size={28} /><p><b>CAN</b><span>Guangzhou Baiyun</span></p><span className="air-line" aria-hidden="true" /><p><b>ACC</b><span>Kotoka, Accra</span></p></div>
+          )}
+          <div className="svc-body">
+            <h3>{t(s.name)}</h3>
+            <p>{t(s.body)}</p>
+            <dl className="svc-facts">
+              <div><dt>{t(T.services.good)}</dt><dd>{t(s.fit)}</dd></div>
+              <div><dt>{t(T.services.time)}</dt><dd>{t(svc.time)}</dd></div>
+            </dl>
+            <button className="btn" onClick={go}>{t(s.cta)}<A.ArrowRight size={18} /></button>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// The route band: the globe turning between the two ends, and the stops in between.
+export function Route() {
+  const t = useT()
+  const [focus, setFocus] = useState(null)
+  return (
+    <section className="route" id="route" data-reveal>
+      <Kente height={10} />
+      <div className="route-in wrap">
+        <div className="route-globe" onMouseLeave={() => setFocus(null)}><Globe focus={focus} /></div>
+        <div className="route-copy">
+          <h2 className="h2 is-light">{t(T.route.h)}</h2>
+          <p className="route-p">{t(T.route.p)}</p>
+          <ol className="stops">
+            {T.route.stops.map((st, i) => (
+              <li key={i} onMouseEnter={() => setFocus(i < 2 ? 'cn' : i > 2 ? 'gh' : null)} onFocus={() => setFocus(i < 2 ? 'cn' : i > 2 ? 'gh' : null)} tabIndex={0}>
+                <i className={`dot ${i < 2 ? 'is-red' : i === 2 ? 'is-mid' : ''}`} />
+                <span><b>{t(st)}</b><span>{t(T.route.stopNotes[i])}</span></span>
+              </li>
+            ))}
+          </ol>
+          <dl className="route-stats">
+            <div><dt>{t(T.route.miles)}</dt><dd>{t(T.route.milesV)}</dd></div>
+            <div><dt>{t(T.route.days)}</dt><dd>{t(T.facts.seaV)}</dd></div>
+            <div><dt>{t(T.route.ships)}</dt><dd>1</dd></div>
           </dl>
-          <button className="btn" onClick={go}>{t(s.cta)}<A.ArrowRight size={18} /></button>
         </div>
       </div>
     </section>
@@ -71,10 +97,10 @@ export function Flow() {
     return out
   }, [])
   return (
-    <section className="flow" id="how" data-reveal>
+    <section className="flow wrap" id="how" data-reveal>
       <div className="flow-head">
-        <h2 className="h2">{t(T.flow.h)}</h2>
-        <p>{t(T.flow.p)}</p>
+        <div><h2 className="h2">{t(T.flow.h)}</h2><p>{t(T.flow.p)}</p></div>
+        <figure className="flow-photo"><img src="photos/warehouse.webp" alt="" loading="lazy" /></figure>
       </div>
       <svg className="flow-svg" viewBox="0 0 1000 240" role="img" aria-label={`${t(T.flow.s1)}, ${t(T.flow.s2)}, ${t(T.flow.s3)}`}>
         {dots.map((d, i) => <circle key={i} cx={d.x} cy={d.y} r={d.k === 'c' ? 7 : 6.5} className={`fd fd-${d.k}`} style={{ transitionDelay: `${(d.x / 1000) * 1.2}s` }} />)}
@@ -132,7 +158,7 @@ export function Quote() {
   const plus = to === 'kumasi' ? 2 : 0
 
   return (
-    <section className="quote" id="quote" data-reveal>
+    <section className="quote wrap" id="quote" data-reveal>
       <div className="quote-head"><h2 className="h2">{t(T.q.h)}</h2><p>{t(T.q.p)}</p></div>
       <div className="quote-grid">
         <form className="quote-form" onSubmit={(e) => e.preventDefault()}>
@@ -158,7 +184,7 @@ export function Quote() {
         </form>
 
         <div className="quote-out" aria-live="polite">
-          <Lattice className="quote-lattice" />
+
           {blocked ? (
             <div className="quote-blocked"><A.Info size={22} /><p>{t(T.q.liquidAir)}</p><button className="btn is-gold" onClick={() => setMode('sea')}>{t(T.q.sea)}</button></div>
           ) : (
@@ -198,7 +224,7 @@ export function Track() {
   const at = (d) => { const x = new Date(today); x.setDate(x.getDate() + d); return x }
   const nowIdx = SHIPMENT.steps.findIndex((s) => s.now)
   return (
-    <section className="track" id="track" data-reveal>
+    <section className="track" id="track" data-reveal><div className="track-in wrap">
       <div className="track-head">
         <h2 className="h2">{t(T.t.h)}</h2>
         <p>{t(T.t.p)} <button className="link" onClick={() => setVal(SHIPMENT.id)}>{SHIPMENT.id}</button>.</p>
@@ -241,6 +267,17 @@ export function Track() {
           </div>
         )}
       </div>
+    </div></section>
+  )
+}
+
+export function Gallery() {
+  const t = useT()
+  const items = [['harbour-aerial', T.gallery.a], ['cranes-dusk', T.gallery.b], ['ship-bow', T.gallery.c]]
+  return (
+    <section className="gallery wrap" data-reveal aria-labelledby="gal-h">
+      <h2 className="h2" id="gal-h">{t(T.gallery.h)}</h2>
+      <div className="gal-grid">{items.map(([f, cap], i) => <figure key={f} className={`gal g${i}`}><img src={`photos/${f}.webp`} alt="" loading="lazy" /><figcaption>{t(cap)}</figcaption></figure>)}</div>
     </section>
   )
 }
@@ -264,7 +301,7 @@ export function Offices() {
   const t = useT()
   const now = useNow(30000)
   return (
-    <section className="offices" id="offices" data-reveal>
+    <section className="offices wrap" id="offices" data-reveal>
       <h2 className="h2">{t(T.o.h)}</h2>
       <div className="off-grid">
         {OFFICES.map((o) => {
@@ -292,17 +329,16 @@ export function Faq() {
   const t = useT()
   const [open, setOpen] = useState(0)
   return (
-    <section className="faq" id="faq" data-reveal>
-      <h2 className="h2">{t(T.faq.h)}</h2>
-      <div className="drawer-cards">
+    <section className="faq wrap" id="faq" data-reveal>
+      <div className="faq-side"><h2 className="h2">{t(T.faq.h)}</h2><p>{t(T.c.p)}</p><button className="btn is-line" onClick={() => scrollToId('contact')}>{t(T.nav.contact)}<A.ArrowRight size={18} /></button></div>
+      <ul className="faq-list">
         {FAQ.map((f, i) => (
-          <div key={i} className={`card c${i % 3} ${open === i ? 'is-open' : ''}`} style={{ '--i': i, zIndex: i }}>
-            <span className="card-tab" style={{ '--step': i }}>{t(f.tab)}</span>
-            <button className="card-q" aria-expanded={open === i} aria-controls={`faq-${i}`} onClick={() => setOpen(i)}>{t(f.q)}<A.ChevronDown size={18} /></button>
-            <div className="card-a" id={`faq-${i}`} hidden={open !== i}><p>{t(f.a)}</p></div>
-          </div>
+          <li key={i} className={open === i ? 'is-open' : ''}>
+            <button aria-expanded={open === i} aria-controls={`faq-${i}`} onClick={() => setOpen(open === i ? -1 : i)}><span className="faq-tab">{t(f.tab)}</span><span className="faq-q">{t(f.q)}</span><A.Plus size={18} className="faq-ico" /></button>
+            <div className="faq-a" id={`faq-${i}`} hidden={open !== i}><p>{t(f.a)}</p></div>
+          </li>
         ))}
-      </div>
+      </ul>
     </section>
   )
 }
@@ -331,7 +367,7 @@ export function Contact() {
     </div>
   )
   return (
-    <section className="contact" id="contact" data-reveal>
+    <section className="contact wrap" id="contact" data-reveal>
       <div className="coupon">
         <div className="coupon-l">
           <h2>{t(T.c.h)}</h2>
@@ -339,8 +375,7 @@ export function Contact() {
           <button className="btn is-wa" type="button" onClick={() => setWa(!wa)} aria-expanded={wa}><A.WhatsappFill size={18} />{t(T.c.wa)}<em>{t(T.soon)}</em></button>
           {wa && <p className="wa-note">{t(T.c.waSoon)}</p>}
         </div>
-        <span className="perf" aria-hidden="true" />
-        {done ? (
+                {done ? (
           <div className="coupon-r is-done" role="status"><A.CircleCheck size={36} /><p><b>{t(T.c.ok)}, {f.name.split(' ')[0]}.</b> {t(T.c.okP)}</p></div>
         ) : (
           <form className="coupon-r" onSubmit={submit} noValidate>
@@ -359,17 +394,17 @@ export function Footer() {
   const t = useT()
   return (
     <footer className="foot">
-      <Kente height={14} />
-      <div className="foot-in">
-        <div className="foot-mark"><Mark size={120} /><div><p>Golden Stone<br />Logistics</p><span lang="zh-Hans">金石物流</span></div></div>
+      <div className="foot-in wrap">
+        <div className="foot-mark"><Mark size={56} /><p>Golden Stone Logistics<span>金石物流</span></p></div>
         <div className="foot-cols">
           <p>{t(T.f.line)}</p>
-          <ul>{['services', 'quote', 'track', 'how', 'offices', 'faq', 'contact'].map((id) => <li key={id}><button onClick={() => scrollToId(id)}>{t(T.nav[id])}</button></li>)}</ul>
+          <ul>{['services', 'quote', 'track', 'offices', 'faq', 'contact'].map((id) => <li key={id}><button onClick={() => scrollToId(id)}>{t(T.nav[id])}</button></li>)}</ul>
           <p className="foot-small">[{t(T.f.reg)}]</p>
+          <p className="foot-small">{t(T.credits)}: {[...new Set(credits.map((c) => c.author))].join(', ')}.</p>
           <p className="foot-small">{t(T.f.proto)}</p>
         </div>
       </div>
-      <Fret className="foot-fret" />
+      <Kente height={8} />
     </footer>
   )
 }
