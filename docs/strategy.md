@@ -50,9 +50,9 @@ and a slider through the four steps of opening an account.
   available is worked out from equity minus margin and money already held.
 - Staff see why a payment is held, in words, next to the payment; identity checks show their age
   against a 24-hour target; support shows the client's status and payments beside the thread.
-- taste-skill: page direction "the sentence is the layout" (seed 1756251117). Type redrawn: the
-  dealt Newsreader is used by project8, so Imbue (display, capitals) and Albert Sans (text, data)
-  from the library. Hero redrawn in spirit: the dealt "controls on the sentence" demonstrates a
+- taste-skill: page direction "the sentence is the layout" (seed 1756251117). Type redrawn twice:
+  the dealt Newsreader is used by project8, and Imbue capitals read as classic and stiff, so
+  Stack Sans Headline (light, tight tracking, sentence case) with Stack Sans Text from the library. Hero redrawn in spirit: the dealt "controls on the sentence" demonstrates a
   variable font, so the live price chip takes its place. Sections: market screen, typed cost line,
   rows with proof fragments on one axis, slider through the stages, the offer as one sentence with
   the price on a gold block, about with the dial as a drop capital, indented FAQ, contact, email
