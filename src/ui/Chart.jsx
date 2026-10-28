@@ -32,7 +32,7 @@ function useWidth() {
 // `height` is a number of pixels, or 'fill' to take the height of its container.
 export default function Chart({ id, data, height = 360, axes = true, area = true, lane = 76, label, className = '' }) {
   const [ref, w, boxH] = useWidth()
-  const h = height === 'fill' ? Math.max(120, boxH) : height
+  const h = height === "fill" ? Math.max(40, boxH) : height
   const m = useMemo(() => {
     const ps = data.map((d) => d.p)
     let min = Math.min(...ps)

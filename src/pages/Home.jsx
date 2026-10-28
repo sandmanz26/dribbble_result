@@ -1,222 +1,394 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight } from '@carbon/icons-react'
+import { ArrowRight, ArrowUp, CheckmarkFilled, ChevronDown, Time } from '@carbon/icons-react'
 import { usePrices } from '../store.jsx'
+import Chart from '../ui/Chart.jsx'
 import Dial from '../ui/Dial.jsx'
 import { useNow } from '../ui/Sessions.jsx'
-import { INSTRUMENTS, byId, fmt, spreadLabel, usd, signedUsd } from '../data/market.js'
-import { CLIENT, CLOSED, FUNDS, OPEN, balances } from '../data/account.js'
+import { INSTRUMENTS, byId, fmt, spreadLabel, usd } from '../data/market.js'
+import { CLIENT, FUNDS, OPEN } from '../data/account.js'
 import { sessionNow } from '../data/sessions.js'
 
-// GlobalTrade, dressed as a watchmaker. The borrowed category is the watch counter: one object
-// on a dark field, a wide low wordmark, few words, long pauses. The object is the market itself:
-// the four trading sessions drawn as a world-time dial, set to the visitor's real minute. Below
-// it the broker shows its paperwork as a private bank would, on paper, with sums that add up.
+// GlobalTrade. Direction "the sentence is the layout": one short sentence at poster scale, and
+// inside it, where the word "gold" would be, the live gold price itself. The brand's colour is
+// also its flagship market. Every section after it repeats the grammar at a smaller scale: a
+// short statement with its proof beside it, and the proof is always a working piece of the platform.
 
-// Sections reveal their parts once, as they enter. Content stays visible without script.
+// Parts of each section rise once as they enter, staggered. Content stays visible without script.
 function useReveal() {
   useEffect(() => {
     if (!('IntersectionObserver' in window)) return
     document.documentElement.classList.add('rv-on')
-    const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target) } }), { rootMargin: '0px 0px -6% 0px' })
+    const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target) } }), { rootMargin: '0px 0px -8% 0px' })
     document.querySelectorAll('.rv').forEach((el) => io.observe(el))
     return () => io.disconnect()
   }, [])
 }
-const jump = (id) => (e) => { e.preventDefault(); document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }) }
+const jump = (id) => (e) => { e.preventDefault(); document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' }) }
 const tbc = (t) => <mark className="tbc" title="To be confirmed by GlobalTrade before launch">{t}</mark>
+const pct = (n) => `${n >= 0 ? '+' : '−'}${Math.abs(n * 100).toFixed(2)}%`
+const utc = (d) => `${String(d.getUTCHours()).padStart(2, '0')}:${String(d.getUTCMinutes()).padStart(2, '0')}`
+
+// A price that briefly lights when it changes, in the direction it moved.
+function Px({ id, className = '' }) {
+  const { price } = usePrices()
+  const p = price(id)
+  const last = useRef(p)
+  const [dir, setDir] = useState('')
+  useEffect(() => {
+    if (p === last.current) return
+    setDir(p > last.current ? 'up' : 'down')
+    last.current = p
+    const t = setTimeout(() => setDir(''), 700)
+    return () => clearTimeout(t)
+  }, [p])
+  return <span className={`px num ${dir} ${className}`}>{fmt(id, p)}</span>
+}
+
+function Nav() {
+  return (
+    <nav className="top" aria-label="Main">
+      <Link to="/" className="wordmark">GlobalTrade</Link>
+      <span className="top-links">
+        <a href="#/" onClick={jump('markets')}>Markets</a>
+        <a href="#/" onClick={jump('costs')}>Costs</a>
+        <a href="#/" onClick={jump('platform')}>Platform</a>
+        <a href="#/" onClick={jump('account')}>Account</a>
+        <a href="#/" onClick={jump('faq')}>Questions</a>
+      </span>
+      <span className="top-end">
+        <Link to="/login" className="top-login">Log in</Link>
+        <Link to="/register" className="btn gold small">Open an account</Link>
+      </span>
+    </nav>
+  )
+}
+
+// The word in the sentence: gold, shown instead of said.
+function GoldChip() {
+  const { series, change } = usePrices()
+  const data = series.XAUUSD.slice(-96)
+  const ch = change('XAUUSD')
+  return (
+    <span className="chip" data-ui aria-hidden="true">
+      <span className="chip-chart"><Chart id="XAUUSD" data={data} height="fill" axes={false} area={false} /></span>
+      <span className="chip-read"><b>Gold</b><Px id="XAUUSD" /><small className={ch >= 0 ? 'pos' : 'neg'}>{pct(ch)}</small></span>
+    </span>
+  )
+}
 
 function Hero() {
-  const { price } = usePrices()
-  const now = useNow(20000)
-  const info = sessionNow(now)
+  const { change } = usePrices()
   return (
     <header className="hero">
-      <nav className="top" aria-label="Main">
-        <span className="mark-small">GlobalTrade</span>
-        <span className="top-links">
-          <a href="#/" onClick={jump('markets')}>Markets</a>
-          <a href="#/" onClick={jump('papers')}>Statements</a>
-          <Link to="/login">Log in</Link>
-        </span>
-      </nav>
-      <div className="counter">
-        <Dial />
-        <h1 className="wordmark">GlobalTrade</h1>
-        <p className="tagline">Forex, gold and crypto in one account.</p>
-        <div className="spec-row">
-          <span className="spec num">Gold {fmt('XAUUSD', price('XAUUSD'))}<small>demo price</small></span>
-          <Link to="/register" className="buy">Open an account <span>from $100</span></Link>
-          <span className="spec">{info.open.length ? `${info.open.map((s) => s.city).join(' and ')} open` : info.fx ? 'Between sessions' : 'Weekend, crypto open'}<small>{`${String(now.getUTCHours()).padStart(2, '0')}:${String(now.getUTCMinutes()).padStart(2, '0')} UTC`}</small></span>
+      <Nav />
+      <div className="hero-main">
+        <h1 className="sentence">
+          <span className="sr-only">Trade gold on world time</span>
+          <span className="mask" aria-hidden="true"><span className="line l1">Trade <GoldChip /></span></span>
+          <span className="mask" aria-hidden="true"><span className="line l2">on world time</span></span>
+        </h1>
+        <p className="lede">GlobalTrade is a forex, gold and crypto broker. Live prices around the clock, every cost in writing, from $100.</p>
+        <div className="hero-actions">
+          <Link to="/register" className="btn gold">Open an account</Link>
+          <a href="#/" className="link" onClick={jump('markets')}>See the markets <ArrowRight size={18} /></a>
         </div>
       </div>
+      <ul className="ticker" aria-label="Demo prices">
+        {INSTRUMENTS.map((i) => {
+          const ch = change(i.id)
+          return (
+            <li key={i.id}>
+              <a href="#/" onClick={jump('markets')}>
+                <span className="tk-name">{i.name}</span>
+                <Px id={i.id} />
+                <small className={`num ${ch >= 0 ? 'pos' : 'neg'}`}>{pct(ch)}</small>
+              </a>
+            </li>
+          )
+        })}
+      </ul>
     </header>
   )
 }
 
-// The broker's paperwork, as a private bank would show it: on paper, with sums that add up.
-const dt = (s) => new Date(s.replace(' ', 'T') + 'Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })
-function statement() {
-  const sep = CLOSED.filter((t) => t.closed < '2026-10-01')
-  const oct = CLOSED.filter((t) => t.closed >= '2026-10-01')
-  const dIn = FUNDS.filter((f) => f.kind === 'Deposit' && f.status === 'Completed' && f.date < '2026-10-01').reduce((a, f) => a + f.amount, 0)
-  const opening = Math.round((dIn + sep.reduce((a, t) => a + t.pnl, 0)) * 100) / 100
-  const out = FUNDS.filter((f) => f.kind === 'Withdrawal' && f.status === 'Completed' && f.date >= '2026-10-01').reduce((a, f) => a + f.amount, 0)
-  const pl = Math.round(oct.reduce((a, t) => a + t.pnl, 0) * 100) / 100
-  const closing = Math.round((opening - out + pl) * 100) / 100
-  console.assert(Math.abs(closing - balances(FUNDS).balance) < 0.005, 'statement closes on the account balance')
-  return { oct, opening, out, pl, closing }
-}
-function Paper({ which }) {
-  const g = OPEN[0]
-  if (which === 'confirm') {
-    const oz = g.lots * byId.XAUUSD.lot
-    const notional = oz * g.open
-    return (
-      <article className="sheet" data-ui>
-        <header><b>GlobalTrade</b><span>Trade confirmation</span></header>
-        <p className="sheet-to">{CLIENT.name} · account {CLIENT.id}<br />{dt(g.opened)}, 08:12 UTC</p>
-        <h3>Bought {g.lots.toFixed(2)} lot of gold</h3>
-        <dl>
-          <div><dt>Market</dt><dd>XAU/USD, gold against the US dollar</dd></div>
-          <div><dt>Size</dt><dd className="num">{oz} troy ounces</dd></div>
-          <div><dt>Price</dt><dd className="num">{fmt('XAUUSD', g.open)}</dd></div>
-          <div><dt>Value</dt><dd className="num">{usd(notional)}</dd></div>
-          <div><dt>Margin at {CLIENT.leverage}</dt><dd className="num">{usd(notional / 30)}</dd></div>
-          <div><dt>Stop, target</dt><dd className="num">{fmt('XAUUSD', g.stop)}, {fmt('XAUUSD', g.target)}</dd></div>
-          <div><dt>Spread paid</dt><dd className="num">{usd(byId.XAUUSD.spread * byId.XAUUSD.pip * oz)}</dd></div>
-          <div><dt>Commission</dt><dd className="num">$0.00</dd></div>
-        </dl>
-        <footer>Reference {g.id}. Keep this for your records.</footer>
-      </article>
-    )
+// The platform's market screen, working: pick a market, a range, and read any minute of it.
+const RANGES = [['1H', 12, 'last hour'], ['8H', 96, 'last 8 hours'], ['24H', 288, 'last 24 hours']]
+function Terminal() {
+  const { series, price, change } = usePrices()
+  const [sel, setSel] = useState('XAUUSD')
+  const [range, setRange] = useState(1)
+  const [hover, setHover] = useState(null)
+  const box = useRef(null)
+  const ins = byId[sel]
+  const data = series[sel].slice(-RANGES[range][1])
+  const p = price(sel)
+  const half = (ins.spread * ins.pip) / 2
+  const ch = change(sel)
+  const now = useNow(30000)
+  const lane = 76
+  const onMove = (e) => {
+    const r = box.current.getBoundingClientRect()
+    const x = e.clientX - r.left
+    const w = r.width - lane
+    if (x < 0 || x > w) { setHover(null); return }
+    const i = Math.round((x / w) * (data.length - 1))
+    setHover({ i, left: (i / (data.length - 1)) * w })
   }
-  if (which === 'statement') {
-    const st = statement()
-    return (
-      <article className="sheet" data-ui>
-        <header><b>GlobalTrade</b><span>Statement, October 2026</span></header>
-        <p className="sheet-to">{CLIENT.name} · account {CLIENT.id}<br />1 to 28 October 2026, in US dollars</p>
-        <h3>Closing balance {usd(st.closing)}</h3>
-        <table>
-          <tbody>
-            <tr><td>Opening balance, 1 October</td><td className="num">{usd(st.opening)}</td></tr>
-            <tr><td>Withdrawn, 6 October</td><td className="num">−{usd(st.out)}</td></tr>
-            {st.oct.map((t) => <tr key={t.id}><td>{t.side === 'Buy' ? 'Bought' : 'Sold'} {byId[t.ins].name}, closed {t.closed.slice(8, 10)} Oct</td><td className="num">{signedUsd(t.pnl)}</td></tr>)}
-            <tr className="total"><td>Closing balance</td><td className="num">{usd(st.closing)}</td></tr>
-          </tbody>
-        </table>
-        <footer>A $400.00 withdrawal requested on 27 October is in review and not yet deducted.</footer>
-      </article>
-    )
-  }
-  if (which === 'receipt') {
-    const w = FUNDS.find((x) => x.id === 'W-0712')
-    return (
-      <article className="sheet narrow" data-ui>
-        <header><b>GlobalTrade</b><span>Withdrawal receipt</span></header>
-        <h3>{usd(w.amount)} sent</h3>
-        <dl>
-          <div><dt>To</dt><dd>{w.method}</dd></div>
-          <div><dt>Requested</dt><dd>{dt(w.date + ' 09:00')}</dd></div>
-          <div><dt>Checked by</dt><dd>A person on our payments team</dd></div>
-          <div><dt>Fee</dt><dd>{tbc('to confirm')}</dd></div>
-        </dl>
-        <footer>Reference {w.id}</footer>
-      </article>
-    )
-  }
-  const t = CLOSED.find((x) => x.id === 'T-50688')
-  const spread = byId.EURUSD.spread * 10 * t.lots
+  const hp = hover && data[hover.i]
   return (
-    <article className="sheet" data-ui>
-      <header><b>GlobalTrade</b><span>What this trade cost</span></header>
-      <p className="sheet-to">{CLIENT.name} · {t.id}<br />Sold {t.lots.toFixed(2)} lot of EUR/USD, 15 October, closed the same day</p>
-      <h3>Total cost {usd(spread)}</h3>
+    <div className="term rv" data-ui>
+      <aside className="term-list" aria-label="Markets">
+        {['Metals', 'Forex', 'Crypto'].map((g) => (
+          <div key={g} role="group" aria-label={g}>
+            <span className="term-group">{g}</span>
+            {INSTRUMENTS.filter((i) => i.kind === g).map((i) => {
+              const c = change(i.id)
+              return (
+                <button key={i.id} className="term-row" aria-pressed={sel === i.id} onClick={() => { setSel(i.id); setHover(null) }}>
+                  <span>{i.name}</span>
+                  <Px id={i.id} />
+                  <small className={`num ${c >= 0 ? 'pos' : 'neg'}`}>{pct(c)}</small>
+                </button>
+              )
+            })}
+          </div>
+        ))}
+      </aside>
+      <div className="term-main">
+        <div className="term-head">
+          <div>
+            <h3>{ins.name}<span>{ins.long}</span></h3>
+            <p className="term-price"><Px id={sel} /><small className={`num ${ch >= 0 ? 'pos' : 'neg'}`}>{pct(ch)} since 00:00 UTC</small></p>
+          </div>
+          <div className="term-tabs" role="group" aria-label="Range">
+            {RANGES.map(([l], k) => <button key={l} aria-pressed={range === k} onClick={() => { setRange(k); setHover(null) }}>{l}</button>)}
+          </div>
+        </div>
+        <div className="term-chart" ref={box} onMouseMove={onMove} onMouseLeave={() => setHover(null)}>
+          <Chart id={sel} data={data} height="fill" lane={lane} label={`${ins.name}, ${RANGES[range][2]}, demo data`} />
+          {hp && (
+            <>
+              <span className="xhair" style={{ left: hover.left }} />
+              <span className="xread num" style={{ left: Math.max(0, Math.min(hover.left + 12, (box.current?.clientWidth || 600) - lane - 150)) }}>{fmt(sel, hp.p)}<small>{utc(new Date(hp.t))} UTC</small></span>
+            </>
+          )}
+        </div>
+        <div className="term-foot">
+          <span><small>Sell</small><b className="num">{fmt(sel, p - half)}</b></span>
+          <span><small>Buy</small><b className="num">{fmt(sel, p + half)}</b></span>
+          <span><small>Typical spread</small><b className="num">{spreadLabel(ins)}</b></span>
+          <span><small>Hours</small><b>{ins.kind === 'Crypto' ? 'Every day' : 'Sun 22:00 to Fri 22:00'}</b></span>
+          <span className="term-now"><Time size={16} /> {sessionNow(now).line}</span>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function Markets() {
+  return (
+    <section className="sec markets" id="markets" aria-labelledby="mk-h">
+      <div className="sec-head rv">
+        <h2 id="mk-h">Eight markets, one screen</h2>
+        <p>Gold, silver, four currency pairs, bitcoin and ether, on the same screen you will trade from. Pick a market, change the range, and read any minute of the day.</p>
+      </div>
+      <Terminal />
+      <p className="fine rv">Simulated demo prices, updating every 1.5 seconds. Typical spreads are samples for GlobalTrade to confirm. Times are UTC.</p>
+    </section>
+  )
+}
+
+// The live thing: type what you would put in, and on what, and read what it really means.
+const LEV = { XAUUSD: 20, EURUSD: 30, GBPUSD: 30, USDJPY: 30, AUDUSD: 20, XAGUSD: 10, BTCUSD: 2, ETHUSD: 2 }
+const WORDS = [[/gold|xau/, 'XAUUSD'], [/silver|xag/, 'XAGUSD'], [/bitcoin|btc/, 'BTCUSD'], [/ether|eth/, 'ETHUSD'], [/yen|jpy/, 'USDJPY'], [/pound|sterling|gbp|cable/, 'GBPUSD'], [/aussie|aud/, 'AUDUSD'], [/euro|eur/, 'EURUSD']]
+function parse(text) {
+  const t = text.toLowerCase()
+  const m = t.replace(/,/g, '').match(/(\d+(?:\.\d+)?)\s*(k)?/)
+  const amount = m ? Number(m[1]) * (m[2] ? 1000 : 1) : 0
+  const hit = WORDS.find(([re]) => re.test(t))
+  return { amount, id: hit ? hit[1] : null }
+}
+function Costs() {
+  const [text, setText] = useState('$2,500 on gold')
+  const { price } = usePrices()
+  const { amount, id } = parse(text)
+  const ins = id && byId[id]
+  let out = null
+  if (ins && amount > 0) {
+    const p = price(id)
+    const perLot = id === 'USDJPY' ? ins.lot : ins.lot * p
+    const pipLot = id === 'USDJPY' ? (ins.pip * ins.lot) / p : ins.pip * ins.lot
+    const lev = LEV[id]
+    const lots = Math.floor(((amount * lev) / perLot) * 100) / 100
+    out = { lev, lots, value: lots * perLot, units: lots * ins.lot, unit: ins.unit, spread: lots * ins.spread * pipLot, move: lots * perLot * 0.01, minMargin: (0.01 * perLot) / lev }
+  }
+  const examples = ['$500 on the euro', '$10,000 on bitcoin', '$300 on silver']
+  return (
+    <section className="sec costs" id="costs" aria-labelledby="co-h">
+      <h2 id="co-h" className="rv">Know the cost before you trade</h2>
+      <label className="ask rv" data-ui>
+        <span className="sr-only">An amount and a market, for example $2,500 on gold</span>
+        <input value={text} onChange={(e) => setText(e.target.value)} spellCheck={false} autoComplete="off" />
+      </label>
+      <div className="costs-body">
+        <div className="answer rv" data-ui aria-live="polite">
+          {!ins ? <p className="ans-note">Name a market: gold, silver, euro, pound, yen, aussie, bitcoin or ether.</p>
+            : !(amount > 0) ? <p className="ans-note">Add an amount, for example $1,000.</p>
+            : out.lots < 0.01 ? <p className="ans-note">The smallest trade on {ins.name} is 0.01 lot, which needs {usd(out.minMargin)} of margin at 1:{out.lev}.</p>
+            : (
+              <dl>
+                <div><dt>Largest position at 1:{out.lev}</dt><dd className="num">{out.lots.toFixed(2)} lot<small>{out.units.toLocaleString('en-US', { maximumFractionDigits: 2 })} {out.unit}, worth {usd(out.value, 0)}</small></dd></div>
+                <div><dt>Cost to open it, the spread</dt><dd className="num">{usd(out.spread)}<small>{spreadLabel(ins)} on {ins.name}, no commission</small></dd></div>
+                <div className="warn"><dt>If the price moves 1% against you</dt><dd className="num">−{usd(out.move, 0)}<small>{Math.round((out.move / amount) * 100)}% of your {usd(amount, 0)}</small></dd></div>
+              </dl>
+            )}
+          <p className="ans-fine">Leverage shown is the EU and UK retail limit for each market, {tbc('limits under GlobalTrade’s licence to confirm')}. Most traders use far less.</p>
+        </div>
+        <div className="examples rv">
+          <span>Try</span>
+          {examples.map((e) => <button key={e} onClick={() => setText(e)}>{e}</button>)}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// Proof for each promise: a working fragment of the platform beside it.
+function QuoteBoard() {
+  const { price } = usePrices()
+  return (
+    <div className="frag quotes" data-ui>
+      <div className="frag-h"><b>Prices</b><span>Demo feed</span></div>
       <table>
-        <tbody>
-          <tr><td>Spread, {byId.EURUSD.spread} pips at $10 a pip</td><td className="num">{usd(spread)}</td></tr>
-          <tr><td>Commission</td><td className="num">$0.00</td></tr>
-          <tr><td>Overnight financing, closed the same day</td><td className="num">$0.00</td></tr>
-          <tr className="total"><td>Total cost</td><td className="num">{usd(spread)}</td></tr>
-        </tbody>
+        <thead><tr><th>Market</th><th>Sell</th><th>Buy</th><th>Spread</th></tr></thead>
+        <tbody>{['XAUUSD', 'EURUSD', 'GBPUSD', 'BTCUSD'].map((id) => {
+          const i = byId[id]
+          const h = (i.spread * i.pip) / 2
+          return <tr key={id}><td>{i.name}</td><td className="num">{fmt(id, price(id) - h)}</td><td className="num">{fmt(id, price(id) + h)}</td><td className="num">{spreadLabel(i)}</td></tr>
+        })}</tbody>
       </table>
-      <footer>The result of the trade, {signedUsd(t.pnl)}, already includes the spread.</footer>
+    </div>
+  )
+}
+function Confirmation() {
+  const g = OPEN[0]
+  const oz = g.lots * byId.XAUUSD.lot
+  return (
+    <article className="frag paper" data-ui>
+      <header><b>GlobalTrade</b><span>Trade confirmation</span></header>
+      <h4>Bought {g.lots.toFixed(2)} lot of gold</h4>
+      <dl>
+        <div><dt>Size</dt><dd className="num">{oz} troy ounces</dd></div>
+        <div><dt>Price</dt><dd className="num">{fmt('XAUUSD', g.open)}</dd></div>
+        <div><dt>Value</dt><dd className="num">{usd(oz * g.open)}</dd></div>
+        <div><dt>Spread paid</dt><dd className="num">{usd(byId.XAUUSD.spread * byId.XAUUSD.pip * oz)}</dd></div>
+        <div><dt>Commission</dt><dd className="num">$0.00</dd></div>
+      </dl>
+      <footer>{CLIENT.name} · {CLIENT.id} · {g.id}</footer>
     </article>
   )
 }
-const PAPERS = [['confirm', 'Trade confirmation'], ['statement', 'Monthly statement'], ['cost', 'Cost of a trade'], ['receipt', 'Withdrawal receipt']]
-function Papers() {
-  const [sel, setSel] = useState('confirm')
+function Withdrawal() {
+  const w = FUNDS.find((x) => x.id === 'W-0788')
+  const steps = [['Requested', '27 Oct, 09:14'], ['Checked by a person', 'In review now'], ['Sent to your bank', 'Usually the next working day']]
   return (
-    <section className="papers" id="papers" aria-label="Statements and receipts">
-      <div className="papers-index rv" role="tablist" aria-label="Documents">
-        {PAPERS.map(([id, label]) => <button key={id} role="tab" aria-selected={sel === id} onClick={() => setSel(id)}>{label}</button>)}
-        <p className="papers-note">Every trade, payment and cost comes back to you in writing. These are samples from a demo account.</p>
-      </div>
-      <div className="papers-stage rv"><div key={sel} className="fadein"><Paper which={sel} /></div></div>
-    </section>
+    <div className="frag track" data-ui>
+      <div className="frag-h"><b>Withdrawal {w.id}</b><span className="num">{usd(w.amount)}</span></div>
+      <ol>{steps.map(([t, s], k) => <li key={t} className={k === 0 ? 'done' : k === 1 ? 'now' : ''}><i>{k === 0 && <CheckmarkFilled size={16} />}</i><b>{t}</b><span>{s}</span></li>)}</ol>
+      <p>To {w.method}, the account it came from.</p>
+    </div>
   )
 }
-
-const GROUPS = ['Metals', 'Forex', 'Crypto']
-function Markets() {
-  const { price } = usePrices()
+const ROWS = [
+  ['Prices you can see', 'Sell, buy and the spread between them for every market, side by side. The spread is what a trade costs, so we never hide it.', <QuoteBoard key="q" />, 'w1'],
+  ['Four centres, one clock', 'The trading day follows Sydney, Tokyo, London and New York. The dial reads your own clock and lights what is open now.', <div key="d" className="frag dialfrag"><Dial /></div>, 'w2'],
+  ['Every trade in writing', 'Each trade, deposit and withdrawal comes back as a confirmation with the price, the size and what it cost you.', <Confirmation key="c" />, 'w3'],
+  ['Withdrawals a person checks', 'Money goes back to the account it came from, after someone on our payments team has looked at it. You can follow every step.', <Withdrawal key="w" />, 'w4'],
+]
+function Platform() {
   return (
-    <section className="markets" id="markets" aria-labelledby="mk-h">
-      <h2 id="mk-h" className="sr-only">Markets</h2>
-      {GROUPS.map((g) => (
-        <div key={g} className="mk-group rv">
-          <h3 className="mk-day">{g}</h3>
-          {INSTRUMENTS.filter((i) => i.kind === g).map((i) => (
-            <div key={i.id} className="mk-row">
-              <span>{i.name}</span>
-              <span className="num">{fmt(i.id, price(i.id))}</span>
-              <span>{g === 'Crypto' ? 'Every day' : 'Sun 22:00 to Fri 22:00'}</span>
-              <span className="num">{spreadLabel(i)}</span>
-            </div>
-          ))}
-        </div>
-      ))}
-      <p className="mk-note rv">Live demo prices. Typical spreads shown are samples for GlobalTrade to confirm. Times are UTC.</p>
-    </section>
-  )
-}
-
-function Steps() {
-  const steps = [
-    ['First, you apply.', <><b>Sofia Brandt</b><span>sofia.brandt@example.com</span><span>Germany</span><em>Application received</em></>],
-    ['Then we check it is you.', <><b>Sofia Brandt</b><span>Passport, utility bill</span><span>Checked by a person</span><em>Verified</em></>],
-    ['Then you add money.', <><b>Sofia Brandt</b><span className="num">Card ending 4417</span><span className="num">$500.00 added</span><em>Funded</em></>],
-    ['Finally, you trade.', <><b>Bought 0.05 lot of gold</b><span className="num">at 3,961.20</span><span className="num">margin $660.20</span><em>Position open</em></>],
-  ]
-  return (
-    <section className="steps" aria-labelledby="st-h">
-      {steps.map(([say, card], i) => (
-        <div key={say} className={`field f${i + 1}`}>
-          {i === 0 && <h2 id="st-h">Opening an account</h2>}
-          <div className="acard" data-ui>{card}</div>
-          <p className="field-say">{say}</p>
+    <section className="sec platform" id="platform" aria-labelledby="pl-h">
+      <h2 id="pl-h" className="axis rv">A broker you can check</h2>
+      {ROWS.map(([t, p, frag, w]) => (
+        <div key={t} className={`prow ${w}`}>
+          <div className="axis rv"><h3>{t}</h3><p>{p}</p></div>
+          <div className="pfrag rv">{frag}</div>
         </div>
       ))}
     </section>
   )
 }
 
-function Plans() {
+// How an account opens, driven by one slider.
+const STAGES = [
+  ['Apply', 'First, tell us who you are.'],
+  ['Verify', 'Then we check it is you.'],
+  ['Fund', 'Then add money your way.'],
+  ['Trade', 'Finally, place your first trade.'],
+]
+function StageCard({ k }) {
+  if (k === 0) return (
+    <div className="frag stage" data-ui>
+      <div className="frag-h"><b>Your details</b><span>Application</span></div>
+      <dl><div><dt>Name</dt><dd>Sofia Brandt</dd></div><div><dt>Email</dt><dd>sofia.brandt@example.com</dd></div><div><dt>Country</dt><dd>Germany</dd></div><div><dt>Experience</dt><dd>Traded forex before</dd></div></dl>
+      <span className="stage-state">Application received</span>
+    </div>
+  )
+  if (k === 1) return (
+    <div className="frag stage" data-ui>
+      <div className="frag-h"><b>Identity check</b><span>Verification</span></div>
+      <dl><div><dt>Passport</dt><dd><CheckmarkFilled size={16} /> Clear and readable</dd></div><div><dt>Proof of address</dt><dd><CheckmarkFilled size={16} /> Utility bill, September</dd></div><div><dt>Checked by</dt><dd>A person on our team</dd></div><div><dt>Time taken</dt><dd className="num">4 hours</dd></div></dl>
+      <span className="stage-state">Verified</span>
+    </div>
+  )
+  if (k === 2) return (
+    <div className="frag stage" data-ui>
+      <div className="frag-h"><b>Add money</b><span>Deposit</span></div>
+      <p className="stage-big num">$500.00</p>
+      <dl><div><dt>From</dt><dd>Card ending 4417</dd></div><div><dt>GlobalTrade fee</dt><dd className="num">$0.00</dd></div><div><dt>Arrives</dt><dd>Straight away</dd></div></dl>
+      <span className="stage-state">Funded</span>
+    </div>
+  )
   return (
-    <section className="plans" aria-label="Accounts">
-      <div className="plan practice rv">
-        <h2>Practice</h2>
-        <p className="plan-for">For learning the platform with play money.</p>
-        <p className="plan-in">$10,000 of play money, every market, live demo prices, no time limit. Nothing you do here touches real money.</p>
-        <div className="plan-foot"><p className="price num">$0<small>always</small></p><Link to="/register" className="btn line">Try the practice account</Link></div>
+    <div className="frag stage" data-ui>
+      <div className="frag-h"><b>Buy gold</b><span>XAU/USD</span></div>
+      <p className="stage-big num">0.05 lot<small>at 3,961.20</small></p>
+      <dl><div><dt>Margin at 1:20</dt><dd className="num">{usd((0.05 * 100 * 3961.2) / 20)}</dd></div><div><dt>Stop</dt><dd className="num">3,930.00</dd></div><div><dt>Target</dt><dd className="num">4,020.00</dd></div></dl>
+      <span className="stage-state gold">Position open</span>
+    </div>
+  )
+}
+function Stages() {
+  const [k, setK] = useState(0)
+  return (
+    <section className="stages" id="account" aria-labelledby="sg-h">
+      <div className="stg-left">
+        <h2 id="sg-h" key={k} className="fadein">{STAGES[k][1]}</h2>
+        <p>Opening an account takes four steps and usually less than a day. Drag through them.</p>
       </div>
-      <div className="plan live rv">
-        <h2>Live account</h2>
-        <p className="plan-for">For trading with your own money.</p>
-        <p className="plan-in">Every market on this page, leverage up to the limit your country allows, no GlobalTrade fee on deposits, statements for every trade and payment.</p>
-        <div className="plan-foot"><p className="price num">$100<small>first deposit</small></p><Link to="/register" className="btn ink">Open an account</Link></div>
+      <div className="stg-right"><div key={k} className="fadein"><StageCard k={k} /></div></div>
+      <div className="stg-slide">
+        <div className="rail" style={{ '--p': `${(k / 3) * 100}%` }}>
+          <i aria-hidden="true" />
+          <input type="range" min="0" max="3" step="1" value={k} onChange={(e) => setK(Number(e.target.value))} aria-label="Step" aria-valuetext={STAGES[k][0]} />
+        </div>
+        <div className="stg-names">{STAGES.map(([n], i) => <button key={n} className={i <= k ? 'on' : ''} aria-current={i === k ? 'step' : undefined} onClick={() => setK(i)}>{n}</button>)}</div>
+      </div>
+    </section>
+  )
+}
+
+function Plan() {
+  return (
+    <section className="sec plan" aria-labelledby="pr-h">
+      <h2 id="pr-h" className="plan-line rv">Open an account <span className="nowrap">from <span className="price">$100</span></span></h2>
+      <div className="plan-foot rv">
+        <p>One live account for everyone: every market on this page, the same prices and support at $100 or $100,000, and no GlobalTrade fee on deposits.</p>
+        <div className="plan-act">
+          <Link to="/register" className="btn gold">Open an account</Link>
+          <Link to="/register" className="link">Or practise with $10,000 of play money <ArrowRight size={16} /></Link>
+        </div>
       </div>
     </section>
   )
@@ -224,37 +396,41 @@ function Plans() {
 
 function About() {
   return (
-    <section className="about rv" aria-labelledby="ab-h">
-      <h2 id="ab-h" className="sr-only">About GlobalTrade</h2>
-      <p>
-        <b>GlobalTrade</b> is a broker for people who trade <span className="hl a">currencies, gold and crypto</span> alongside their working lives. We keep one account for everyone, so the person with $100 sees the same prices and the same support as the person with $100,000. Every trade, deposit and withdrawal comes back to you as a <span className="hl b">written confirmation</span>, with what it cost spelled out. We publish only what we can back with a licence or a document: our company is {tbc('registered company name')}, authorised by {tbc('regulator and licence number')}, and client money is held {tbc('in segregated accounts at named banks')}. Trading on margin is high risk, and we would rather you understood that before you start than after. <a href="#/" onClick={jump('contact')} className="hl c">Ask us anything before you open an account.</a>
-      </p>
+    <section className="sec about" aria-labelledby="ab-h">
+      <aside className="ab-facts rv">
+        <h2 id="ab-h">About us</h2>
+        <dl>
+          <div><dt>Company</dt><dd>{tbc('Registered name')}</dd></div>
+          <div><dt>Licence</dt><dd>{tbc('Regulator and number')}</dd></div>
+          <div><dt>Client money</dt><dd>{tbc('Segregated, named banks')}</dd></div>
+        </dl>
+      </aside>
+      <div className="ab-text rv">
+        <p><span className="ab-dial" aria-hidden="true"><Dial /></span><b>GlobalTrade</b> is a broker for people who trade currencies, gold and crypto alongside their working lives. We keep one account for everyone, so the person with $100 sees the same prices and the same support as the person with $100,000. Every trade, deposit and withdrawal comes back to you in writing, with what it cost spelled out.</p>
+        <p>We publish only what we can back with a licence or a document. Trading on margin is high risk, and we would rather you understood that before you start than after.</p>
+      </div>
     </section>
   )
 }
 
 const FAQ = [
-  ['Licence', 'Is GlobalTrade regulated?', <>Our licence is {tbc('regulator, licence number and a link to the public register')}. Check it on the regulator’s own site before you deposit. That is good practice with any broker.</>],
-  ['Your money', 'Where is my money kept?', <>Client money is held {tbc('in segregated accounts at named banks')}, apart from the company’s own money.</>],
-  ['Checks', 'How long does verification take?', 'Most checks are done within one business day. If a document is unclear we ask for another one by email, and your account stays as it is in the meantime.'],
-  ['Withdrawals', 'How do withdrawals work?', 'You withdraw to the card or bank account you paid in from. Each request is checked by a person, and you can follow its status in the client area.'],
-  ['Risk', 'What can I lose?', 'Trading on margin is high risk. Prices can move against you quickly and you can lose all the money in your account. Only trade with money you can afford to lose.'],
-  ['Hours', 'When can I trade?', 'Forex and metals trade from Sunday 22:00 to Friday 22:00 UTC. Crypto trades every day. The dial at the top of this page shows what is open right now.'],
+  ['Is GlobalTrade regulated?', <>Our licence is {tbc('regulator, licence number and a link to the public register')}. Check it on the regulator’s own site before you deposit. That is good practice with any broker.</>],
+  ['Where is my money kept?', <>Client money is held {tbc('in segregated accounts at named banks')}, apart from the company’s own money.</>],
+  ['How long does verification take?', 'Most checks are done within one working day. If a document is unclear we ask for another one by email, and your account stays as it is in the meantime.'],
+  ['How do withdrawals work?', 'You withdraw to the card or bank account you paid in from. Each request is checked by a person, and you can follow its status in the client area.'],
+  ['What can I lose?', 'Trading on margin is high risk. Prices can move against you quickly and you can lose all the money in your account. Only trade with money you can afford to lose.'],
+  ['When can I trade?', 'Forex and metals trade from Sunday 22:00 to Friday 22:00 UTC. Crypto trades every day. The dial on this page shows what is open right now.'],
 ]
 function Faq() {
-  const [open, setOpen] = useState(0)
   return (
-    <section className="faq" aria-labelledby="fq-h">
-      <h2 id="fq-h" className="rv">Before you ask</h2>
-      <div className="drawer">
-        {FAQ.map(([tab, q, a], i) => (
-          <div key={tab} className={`fcard c${(i % 3) + 1} ${open === i ? 'open' : ''}`} style={{ '--i': i }}>
-            <button className="fcard-head" aria-expanded={open === i} onClick={() => setOpen(i)}>
-              <span className="ftab">{tab}</span>
-              <span className="fq">{q}</span>
-            </button>
-            {open === i && <p className="fa">{a}</p>}
-          </div>
+    <section className="sec faq" id="faq" aria-labelledby="fq-h">
+      <h2 id="fq-h" className="rv">Questions before you start</h2>
+      <div className="fq-list">
+        {FAQ.map(([q, a], i) => (
+          <details key={q} className="rv" open={i === 0}>
+            <summary>{q}<ChevronDown size={22} aria-hidden="true" /></summary>
+            <p>{a}</p>
+          </details>
         ))}
       </div>
     </section>
@@ -262,14 +438,18 @@ function Faq() {
 }
 
 function Contact() {
+  const now = useNow(20000)
   return (
-    <section className="contact" id="contact" aria-labelledby="ct-h">
+    <section className="sec contact" id="contact" aria-labelledby="ct-h">
       <h2 id="ct-h" className="sr-only">Contact</h2>
-      <a className="crow" href="mailto:support@globaltrade.example?subject=Question%20before%20opening%20an%20account">support@globaltrade.example</a>
-      <span className="crow">Live chat in the client area</span>
-      <span className="crow">{tbc('Registered address')}</span>
-      <span className="crow">{tbc('Support hours')}</span>
-      <span className="crow greet">Write to us<a className="round" href="mailto:support@globaltrade.example?subject=Question%20before%20opening%20an%20account" aria-label="Email GlobalTrade support"><ArrowRight size={28} /></a></span>
+      <p className="ct-say rv">Questions about an account or a payment? Write to us, and a person answers.</p>
+      <div className="ct-clock rv" data-ui role="img" aria-label={`Support desk, ${utc(now)} UTC`}><span>Support desk</span><b className="num">{utc(now)}</b><small>UTC, now</small></div>
+      <div className="ct-links rv">
+        <b>Prefer to talk it through?</b>
+        <a href="mailto:support@globaltrade.example?subject=Question%20before%20opening%20an%20account">support@globaltrade.example</a>
+        <Link to="/login">Live chat in the client area</Link>
+        <small>{tbc('Registered address')} · {tbc('Support hours')}</small>
+      </div>
     </section>
   )
 }
@@ -281,23 +461,28 @@ export default function Home() {
       <p className="risk-top">Trading on margin is high risk. You can lose all the money you deposit. {tbc('Regulator-required risk figure')}</p>
       <Hero />
       <main>
-        <Papers />
         <Markets />
-        <Steps />
-        <Plans />
+        <Costs />
+        <Platform />
+        <Stages />
+        <Plan />
         <About />
         <Faq />
         <Contact />
       </main>
       <footer className="foot">
-        <div className="foot-cols">
-          <div><b>GlobalTrade</b><span>{tbc('Registered company name')}</span><span>{tbc('Registered address')}</span></div>
-          <div><b>Site</b><a href="#/" onClick={jump('markets')}>Markets</a><a href="#/" onClick={jump('papers')}>Statements</a><Link to="/register">Open an account</Link><Link to="/login">Log in</Link></div>
-          <div><b>Contact</b><a href="mailto:support@globaltrade.example">support@globaltrade.example</a><span>Live chat in the client area</span></div>
-          <div><b>Risk</b><span>Trading on margin is high risk. Only trade with money you can afford to lose.</span></div>
+        <div className="foot-top">
+          <span className="wordmark">GlobalTrade</span>
+          <span>Forex, gold and crypto broker</span>
+          <span>{tbc('Registered company name and address')}</span>
+          <a href="#/" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }) }} className="link">Back to top <ArrowUp size={16} /></a>
         </div>
-        <p className="foot-word" aria-hidden="true"><span>Global</span><span>Trade</span></p>
-        <p className="legal">© 2026 GlobalTrade. Prices on this prototype are a simulated demo feed, not market data. Nothing here is investment advice.</p>
+        <a className="foot-mail" href="mailto:support@globaltrade.example"><span>support</span><span>@globaltrade.example</span></a>
+        <div className="foot-meta">
+          <span><Link to="/register">Open an account</Link><Link to="/login">Log in</Link></span>
+          <span>Prices on this prototype are a simulated demo feed. Nothing here is investment advice.</span>
+          <span>© 2026 GlobalTrade</span>
+        </div>
       </footer>
     </div>
   )

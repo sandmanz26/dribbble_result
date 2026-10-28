@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { Locked, Warning } from '@carbon/icons-react'
 import { useStore } from '../store.jsx'
-import Dial from '../ui/Dial.jsx'
+import Sessions from '../ui/Sessions.jsx'
 
 // Demo accounts. Nothing is sent anywhere: the check runs in the browser.
 export const DEMO = {
@@ -16,8 +16,8 @@ export function AuthSide({ line }) {
   return (
     <aside className="auth-side">
       <Link to="/" className="brand">GlobalTrade</Link>
-      <Dial />
       <p className="auth-line">{line}</p>
+      <Sessions compact />
     </aside>
   )
 }

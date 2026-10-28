@@ -22,13 +22,24 @@ risk warning sits at the top of every page, and prices are labelled as a demo fe
   checks in plain numbers is easier to trust.
 
 ## Idea
-The first version (a live gold chart in a "dark room") read as cheap: it looked like every other
-trading site. The brief asks for premium, so the site now borrows the manners of a watchmaker's
-counter. The object at the counter is the market itself: the four trading sessions drawn as a
-world-time dial, set to the visitor's real minute, with the open centres lit in gold. Under it the
-name as a wide, low wordmark, one serif sentence, the price of entry inside the only gold button.
-Below, the broker shows its paperwork the way a private bank would: a confirmation, a statement, a
-cost breakdown and a receipt on paper, with sums that add up to the demo account.
+Second redesign. The watch-counter version read as rough: Bodoni hairlines at large sizes, blunt
+full-height colour blocks and a mobile-like stack. Research for the look and feel (the broker sites
+themselves could not be opened from the build environment, so this is from search results):
+- Large brokers (IG, Saxo, Swissquote, Pepperstone) lead with live prices, the platform itself and
+  regulation; costs are the main claim.
+- Private banks that read as luxury (Citi Private Bank, Goldman Sachs' dark pages) use a black
+  ground, one refined serif with a quiet sans and gold only as a material, never as a gradient.
+- The black-and-gold trading templates use bright yellow gradients and glows, which is what makes
+  them look cheap. This site uses flat champagne gold on the action and the price, nothing else.
+
+Direction "the sentence is the layout": one sentence at poster scale, "Trade gold on world time",
+with the live gold price and its chart set inside the sentence where the word "gold" would be.
+Gold is both the brand's colour and its flagship market. Every section after it is a short
+statement with its proof beside it, and the proof is always a working piece of the platform:
+a market screen (pick a market, change the range, hover for any minute), a cost line you type into
+("$2,500 on gold" gives the largest position at the retail leverage limit, the spread cost and what
+a 1% move against you does), price board, world-time dial, trade confirmation, withdrawal tracker,
+and a slider through the four steps of opening an account.
 
 ## Decisions
 - Gold only on the one action per screen and on price lines; everything else black and stone.
@@ -39,12 +50,15 @@ cost breakdown and a receipt on paper, with sums that add up to the demo account
   available is worked out from equity minus margin and money already held.
 - Staff see why a payment is held, in words, next to the payment; identity checks show their age
   against a 24-hour target; support shows the client's status and payments beside the thread.
-- taste-skill: page direction "dressed as something else" (seed 1278926845), borrowed category the
-  watch counter: counter-object hero, output index with live sheet, markets as a line-up at one size,
-  one card in four fields, two plan fields (the live plan in gold), highlighted about text, tabbed
-  index-card FAQ, contact in display rows, wordmark footer. Type: Bodoni Moda (display) and Jost
-  (wordmark and text). Palette: black and charcoal fields, ivory ink, one champagne gold. App style
-  "data terminal" (seed 1273256742) kept, in the new type and neutral blacks.
+- taste-skill: page direction "the sentence is the layout" (seed 1756251117). Type redrawn: the
+  dealt Newsreader is used by project8, so Imbue (display, capitals) and Albert Sans (text, data)
+  from the library. Hero redrawn in spirit: the dealt "controls on the sentence" demonstrates a
+  variable font, so the live price chip takes its place. Sections: market screen, typed cost line,
+  rows with proof fragments on one axis, slider through the stages, the offer as one sentence with
+  the price on a gold block, about with the dial as a drop capital, indented FAQ, contact, email
+  as the footer's display line. App style "data terminal" (seed 1273256742) kept.
+- Leverage in the cost line uses the EU and UK retail limits (1:30 major pairs, 1:20 gold and
+  minor pairs, 1:10 silver, 1:2 crypto), marked for GlobalTrade to confirm against its licence.
 - No photographs: the open image collections were unreachable, and the subject's real pictures are
   its documents and interface, so every picture is a working fragment built in HTML or SVG.
 
