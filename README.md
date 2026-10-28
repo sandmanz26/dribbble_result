@@ -6,11 +6,11 @@ Mobile App Design"). UI design and front-end only: sample menu data, no backend,
 Live on the portfolio hub at `/project11/` (password protected, never indexed).
 
 ## What it does
-- **Menu** with four boards in the colours of the four sauces on the counter (ketchup red for fried,
-  mustard for grilled, mayo cream for mayo dishes, green herb for grill specials). Sticky tabs jump
-  between boards and follow the scroll. Today's special on top. Quick add from the list.
+- **Menu** in four sections (fried, grilled, wraps and mayo, grill specials), 24 dishes, each a real
+  photograph. Today's picks rotate at the top; sticky photo tabs jump between sections and follow
+  the scroll; quick add on every card.
 - **Dish**: heat level (Mild, Medium, Hot, Inferno) that changes the steam and the note, dips (one
-  free), a side, quantity, then the dish drops into the bag.
+  free), a side, quantity, then the photo flies into the bag.
 - **Bag**: pickup or delivery, time slot in a bottom sheet, pay at the counter or to the rider.
 - **Order ticket**: the order as a printed kitchen ticket moving along the rail (Received, On the
   line, Cooking, Packed, Ready / On the way) with a ready time.
@@ -23,13 +23,14 @@ Live on the portfolio hub at `/project11/` (password protected, never indexed).
   to send, published.
 
 Review links: `#/` · `#/item/wings-8` · `#/bag` · `#/manage` · `#/?demo=offline` · `#/?demo=reset` ·
-`#/art` (every drawn dish on one sheet). On desktop the reviewer panel has a "Simulate no signal"
+`#/credits` (photo credits). On desktop the reviewer panel has a "Simulate no signal"
 switch.
 
 ## Stack
 React 18, Vite 5 (`base: './'`), react-router HashRouter, MingCute icons (`@mingcute/react`),
-Unbounded + Hanken Grotesk (Fontsource, self-hosted), no animation library. State in localStorage
-under `ff-state-v1`. Food is drawn in code (`src/ui/Food.jsx`) until the shop's own photos exist.
+Funnel Display + Funnel Sans (Fontsource, self-hosted), no animation library. State in localStorage
+under `ff-state-v2`. Food photos in `public/food/` are real photographs from Open Images (Flickr,
+CC BY 2.0), credited in the app (`src/data/credits.json`), standing in for the shop's own.
 
 ```bash
 npm ci && npm run dev    # local

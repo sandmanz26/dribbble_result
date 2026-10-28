@@ -2,7 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useReducer,
 import { ITEMS, DIPS, SIDES, FREE_DIPS, DIP_PRICE, SHOP, STATIONS } from './data/menu.js'
 
 // One store for the whole prototype, saved on this phone under its own key (the hub shares an origin).
-const KEY = 'ff-state-v1'
+const KEY = 'ff-state-v2'
 // The kitchen moves an order one station every STEP ms in the demo, so a reviewer sees it finish.
 export const STEP = 25000
 

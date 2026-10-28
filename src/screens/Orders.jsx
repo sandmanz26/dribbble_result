@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useStore } from '../store.jsx'
 import { money, STATIONS } from '../data/menu.js'
-import Food from '../ui/Food.jsx'
 import { clock, day } from '../ui/kit.jsx'
 import * as I from '../ui/icons.js'
 
@@ -10,7 +9,7 @@ export default function Orders() {
   if (!s.orders.length) {
     return (
       <div className="empty">
-        <Food art="wings" className="empty-art" />
+        <img src="food/wings.webp" alt="" className="empty-art" />
         <h1>No orders yet</h1>
         <p>When you send an order its ticket shows up here, and you can watch it move through the kitchen.</p>
         <Link to="/" className="btn">See the menu</Link>

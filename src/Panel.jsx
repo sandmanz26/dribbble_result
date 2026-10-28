@@ -10,9 +10,9 @@ export default function Panel() {
   const go = (to) => nav(to)
   return (
     <aside className="panel" aria-label="Prototype notes">
-      <p className="panel-brand"><span className="brand-mark" aria-hidden="true"><i /><i /><i /><i /></span>Flock &amp; Flame</p>
+      <p className="panel-brand">Flock <span>&amp;</span> Flame</p>
       <h2 className="panel-title">A menu app for a chicken and grill shop that keeps working with no signal.</h2>
-      <p>Four boards, each in the colour of one of the sauces on the counter: ketchup for fried, mustard for grilled, mayo for the mayo dishes and green herb for the grill specials. Pick a dish, set the heat, add dips and a side, then pick up or get it delivered. The order becomes a kitchen ticket you can watch move along the rail.</p>
+      <p>A menu in four sections, fried, grilled, wraps and mayo, and grill specials, each dish shown as a real photo. Pick a dish, set the heat, add dips and a side, then pick up or get it delivered. The order becomes a kitchen ticket you can watch move along the rail.</p>
       <p>The owner changes prices, sold-out dishes and the special in Manage and publishes one new menu version to every phone. The app and menu are stored on the phone, so browsing and ordering work offline; orders wait on the phone and send themselves when the signal is back.</p>
 
       <div className="panel-group">
@@ -31,7 +31,7 @@ export default function Panel() {
         </div>
         <button className="panel-reset" onClick={() => { dispatch({ type: 'reset' }); try { sessionStorage.removeItem('ff-checked') } catch { /* ignore */ } go('/') }}><I.Refresh size={15} /> Reset the demo</button>
       </div>
-      <p className="panel-foot">Prototype with sample dishes and prices. Food is drawn in code until the shop&apos;s own photos are taken. Nothing is charged or sent anywhere.</p>
+      <p className="panel-foot">Prototype with sample dishes and prices. Food photos are real photographs (Open Images, CC BY 2.0) standing in for the shop&apos;s own; credits are linked under the menu. Nothing is charged or sent anywhere.</p>
     </aside>
   )
 }

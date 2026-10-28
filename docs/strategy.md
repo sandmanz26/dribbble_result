@@ -14,11 +14,11 @@ Budget under $100, so the prototype focuses on the screens that carry the brief.
 - The reference pages could not be opened from the build environment, so the shot titles guided the
   direction.
 
-## Idea
-The four boards take the colours of the four sauces on the counter: ketchup, mustard, mayo, green
-herb. That is the wayfinding (you always know which board you are on), the brand mark (four little
-bottles) and the reason the food stands out (golden fried chicken on red, grilled meat on mustard).
-The order is a printed kitchen ticket, the thing the shop already prints.
+## Idea (v2)
+Round 1 used drawn food on sauce-coloured boards; the owner found it low fidelity and the colours
+unappealing. v2 sells with the food itself: real photographs, large and cropped tight, on a warm
+cream counter, near-black type and one chili red reserved for adding to the bag and sending the
+order. The order is still the printed kitchen ticket the shop already uses.
 
 ## UX decisions
 - One long menu with sticky tabs, not four separate pages: people compare across boards.
@@ -30,9 +30,10 @@ The order is a printed kitchen ticket, the thing the shop already prints.
   customers, and the version number tells staff which menu a customer is looking at.
 
 ## Design system
-taste-skill app style "true-black flat", warm: ground #0e0d0c, surfaces one lightness step up, white
-inverted pill for every primary action. Colour lives only in the food fields. Unbounded for titles,
-Hanken Grotesk for text, MingCute icons. Radius 24 for cards, 18 for tiles, pills for controls.
+Warm cream ground #f7f1e8, white cards with a hairline edge, ink #1d1612, chili red #d32a1f only on
+add, send and the current kitchen station. Funnel Display (names, prices) and Funnel Sans (text),
+MingCute icons. Radius 22 for cards, 18 for photos, pills for controls. Motion: rotating picks,
+photo that flies into the bag, staggered cards, heat flames that rise when chosen.
 
 ## What a real build adds
 Shop photos in place of the drawings, a small content API or headless CMS behind Manage, push

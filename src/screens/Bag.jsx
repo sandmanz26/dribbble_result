@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useStore, linePrice, dipName, sideOf } from '../store.jsx'
 import { money, HEAT, SHOP, itemOf } from '../data/menu.js'
-import Food from '../ui/Food.jsx'
 import { Tile, Stepper, Sheet, clock } from '../ui/kit.jsx'
 import * as I from '../ui/icons.js'
 
@@ -26,7 +25,7 @@ export default function Bag() {
   if (!s.bag.length) {
     return (
       <div className="empty">
-        <Food art="bucket" className="empty-art" />
+        <img src="food/bucket.webp" alt="" className="empty-art" />
         <h1>Your bag is empty</h1>
         <p>Pick something from the menu. Your bag stays on this phone, even with no signal.</p>
         <Link to="/" className="btn">See the menu</Link>
@@ -85,7 +84,7 @@ export default function Bag() {
       {!online && <p className="note is-warn"><I.Offline size={18} /> No signal right now. Your order is saved on this phone and goes to the kitchen by itself as soon as you are back online. The ready time starts from then.</p>}
 
       <div className="placebar">
-        <button className="btn is-wide" onClick={place} disabled={s.bag.some((l) => itemById(l.id)?.soldOut)}>
+        <button className="btn is-wide is-accent" onClick={place} disabled={s.bag.some((l) => itemById(l.id)?.soldOut)}>
           {online ? <>Send order <span className="btn-sum">{money(total)}</span></> : <>Save order, send when online</>}
         </button>
       </div>

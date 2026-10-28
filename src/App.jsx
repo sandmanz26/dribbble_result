@@ -9,7 +9,7 @@ import Orders from './screens/Orders.jsx'
 import Order from './screens/Order.jsx'
 import Manage from './screens/Manage.jsx'
 import Panel from './Panel.jsx'
-import Art from './screens/Art.jsx'
+import Credits from './screens/Credits.jsx'
 
 function Tabs() {
   const { count, s, stageOf } = useStore()
@@ -59,7 +59,7 @@ export default function App() {
               <Route path="/orders" element={<Orders />} />
               <Route path="/order/:id" element={<Order />} />
               <Route path="/manage" element={<Manage />} />
-              <Route path="/art" element={<Art />} />
+              <Route path="/credits" element={<Credits />} />
               <Route path="*" element={<Menu scroller={scroller} />} />
             </Routes>
           </main>

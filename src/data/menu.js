@@ -5,67 +5,48 @@
 export const CURRENCY = '$'
 export const money = (n) => `${CURRENCY}${n.toFixed(2)}`
 
-// Each board takes the colour of one of the four sauces on the counter: ketchup, mustard, mayo and
-// green herb. It is the menu's wayfinding, and it puts the food on a colour it stands out against.
+// Four boards. Each has a cover photo used on its tab and its section header.
 export const CATS = [
-  { id: 'fried', name: 'Fried', long: 'Fried chicken', field: '#DA2A36', ink: '#1C0500', sauce: 'Ketchup red', icon: 'Chicken',
-    line: 'Brined for twelve hours, double dredged, fried to order.' },
-  { id: 'grilled', name: 'Grilled', long: 'Grilled chicken', field: '#F2B035', ink: '#1E1300', sauce: 'Mustard', icon: 'Fire',
-    line: 'Marinated overnight, finished over charcoal.' },
-  { id: 'mayo', name: 'Mayo', long: 'Mayo dishes', field: '#F4E7C8', ink: '#2A1D08', sauce: 'Mayonnaise', icon: 'Bowl',
-    line: 'House mayonnaise, made every morning: garlic, chili or plain.' },
-  { id: 'grill', name: 'Grill specials', long: 'Grill specials', field: '#5FA463', ink: '#0B2210', sauce: 'Green herb', icon: 'Flame',
-    line: 'From the big grill, Friday to Sunday and every evening after six.' },
+  { id: 'fried', name: 'Fried', long: 'Fried chicken', cover: 'fried-hero', line: 'Brined for twelve hours, double dredged, fried to order.' },
+  { id: 'grilled', name: 'Grilled', long: 'Grilled chicken', cover: 'grill-hero', line: 'Marinated overnight, finished over charcoal.' },
+  { id: 'mayo', name: 'Mayo', long: 'Wraps and mayo', cover: 'wrap-open', line: 'House mayonnaise, made every morning: garlic, chili or plain.' },
+  { id: 'grill', name: 'Grill specials', long: 'Grill specials', cover: 'satay-grill', line: 'Skewers and platters from the big grill, every evening after six.' },
 ]
 export const catOf = (id) => CATS.find((c) => c.id === id)
 
+// photo: file in public/food (real photographs, credits in src/data/credits.json).
 // heat: whether the dish takes a heat level. mins: minutes on the line, used for the ready time.
 export const ITEMS = [
-  { id: 'crunch-2', cat: 'fried', name: 'Crunch Box, 2 pieces', art: 'drumstick', price: 6.5, heat: true, mins: 12,
-    desc: 'Two pieces of bone-in fried chicken, a soft roll and one dip.' },
-  { id: 'bucket-4', cat: 'fried', name: 'Four-piece bucket', art: 'bucket', price: 11.9, heat: true, mins: 14,
-    desc: 'Four mixed pieces, thigh, drum and wing, with two dips. Feeds two.' },
-  { id: 'wings-8', cat: 'fried', name: 'Hot wings, 8', art: 'wings', price: 7.8, heat: true, mins: 10,
-    desc: 'Eight wings tossed in the heat you pick. Celery and a garlic mayo on the side.' },
-  { id: 'tenders-5', cat: 'fried', name: 'Tender strips, 5', art: 'tenders', price: 7.2, heat: true, mins: 9,
-    desc: 'Breast strips in a cornflake crumb. The one children ask for.' },
-  { id: 'burger', cat: 'fried', name: 'Crispy chicken burger', art: 'burger', price: 6.9, heat: true, mins: 10,
-    desc: 'A whole fried thigh, slaw, pickles and chili mayo in a toasted bun.' },
+  { id: 'drums-2', cat: 'fried', name: 'Crunch drumsticks, 2', photo: 'drumstick', price: 5.9, heat: true, mins: 12, desc: 'Two bone-in drumsticks, a soft roll and one dip.' },
+  { id: 'bucket-8', cat: 'fried', name: 'Family bucket, 8 pieces', photo: 'bucket', price: 19.9, heat: true, mins: 15, desc: 'Thighs, drums and wings, mixed. Three dips and a large slaw. Feeds three or four.' },
+  { id: 'wings-8', cat: 'fried', name: 'Hot wings, 8', photo: 'wings', price: 7.8, heat: true, mins: 10, desc: 'Eight wings tossed in the heat you pick, with celery and a garlic mayo.' },
+  { id: 'bites', cat: 'fried', name: 'Crispy bites', photo: 'bites', price: 6.4, heat: true, mins: 8, desc: 'Boneless thigh pieces in a cornflake crumb with spring onion. The one children ask for.' },
+  { id: 'glazed', cat: 'fried', name: 'Sweet chili glazed', photo: 'glazed', price: 8.2, heat: true, mins: 11, desc: 'Fried thigh pieces in a sticky chili glaze with sesame, on a slaw of green papaya.' },
+  { id: 'crunch-box', cat: 'fried', name: 'Crunch box, 5 pieces', photo: 'box', price: 11.5, heat: true, mins: 13, desc: 'Five mixed pieces in a paper-lined box with two dips. The lunch order.' },
 
-  { id: 'quarter', cat: 'grilled', name: 'Quarter grilled chicken', art: 'quarter', price: 6.4, heat: true, mins: 8,
-    desc: 'Leg and thigh off the charcoal, with one side and one dip.' },
-  { id: 'half', cat: 'grilled', name: 'Half grilled chicken', art: 'half', price: 10.5, heat: true, mins: 10,
-    desc: 'Half a bird, butterflied and charred, with two sides.' },
-  { id: 'whole', cat: 'grilled', name: 'Whole flame chicken', art: 'whole', price: 18.9, heat: true, mins: 16,
-    desc: 'A whole bird for three or four, cut at the counter, three sides and three dips.' },
-  { id: 'thigh-wrap', cat: 'grilled', name: 'Grilled thigh wrap', art: 'wrap', price: 7.4, heat: true, mins: 8,
-    desc: 'Charred thigh, pickled onion, herbs and garlic mayo in a flatbread.' },
-  { id: 'peri-skewers', cat: 'grilled', name: 'Peri skewers, 3', art: 'skewer', price: 7.9, heat: true, mins: 9,
-    desc: 'Three skewers of thigh with peppers and onion, glazed as they come off.' },
+  { id: 'quarter', cat: 'grilled', name: 'Flame-grilled quarter', photo: 'quarter', price: 6.4, heat: true, mins: 8, desc: 'Leg and thigh off the charcoal, with one side and one dip.' },
+  { id: 'half', cat: 'grilled', name: 'Half bird', photo: 'half', price: 10.5, heat: true, mins: 10, desc: 'Half a chicken, butterflied, glazed and charred, with two sides.' },
+  { id: 'whole', cat: 'grilled', name: 'Whole roast chicken', photo: 'whole', price: 18.9, heat: true, mins: 16, desc: 'A whole bird for three or four, carved at the counter, three sides and three dips.' },
+  { id: 'thighs', cat: 'grilled', name: 'Charcoal thighs, 4', photo: 'thighs', price: 8.9, heat: true, mins: 10, desc: 'Four boneless thighs, smoky and blackened at the edges.' },
+  { id: 'satay', cat: 'grilled', name: 'Chicken satay, 10 sticks', photo: 'satay', price: 7.5, heat: true, mins: 9, desc: 'Ten thigh skewers with peanut sauce, rice cake and pickled cucumber.' },
+  { id: 'strips', cat: 'grilled', name: 'Grill strips', photo: 'grill-strips', price: 7.2, heat: true, mins: 8, desc: 'Breast strips straight off the grate, sliced, with a herb dip.' },
 
-  { id: 'mayo-salad', cat: 'mayo', name: 'Chicken mayo salad', art: 'salad', price: 6.2, heat: false, mins: 5,
-    desc: 'Pulled grilled chicken folded through house mayo, herbs and crisp leaves.' },
-  { id: 'mayo-rice', cat: 'mayo', name: 'Garlic mayo rice bowl', art: 'ricebowl', price: 7.6, heat: true, mins: 7,
-    desc: 'Spiced rice, sliced grilled chicken, pickles and a pour of garlic mayo.' },
-  { id: 'mayo-roll', cat: 'mayo', name: 'Mayo shawarma roll', art: 'roll', price: 6.8, heat: true, mins: 7,
-    desc: 'Thin-sliced chicken, garlic mayo, pickles and fries rolled tight and toasted.' },
-  { id: 'slaw', cat: 'mayo', name: 'Creamy coleslaw', art: 'slaw', price: 2.4, heat: false, mins: 2,
-    desc: 'Cabbage, carrot and a light mayo dressing. Made twice a day.' },
-  { id: 'mayo-fries', cat: 'mayo', name: 'Mayo fries', art: 'fries', price: 3.9, heat: false, mins: 5,
-    desc: 'Skin-on fries under garlic mayo and chili flakes.' },
+  { id: 'shawarma', cat: 'mayo', name: 'Garlic mayo shawarma', photo: 'wrap-open', price: 6.8, heat: true, mins: 7, desc: 'Thin-sliced grilled chicken, garlic mayo, pickles and lettuce rolled tight and toasted.' },
+  { id: 'wrap', cat: 'mayo', name: 'Grilled thigh wrap', photo: 'wrap', price: 7.4, heat: true, mins: 8, desc: 'Charred thigh, pickled onion, herbs and chili mayo in a flatbread.' },
+  { id: 'loaded-roll', cat: 'mayo', name: 'Loaded roll', photo: 'roll', price: 7.9, heat: true, mins: 8, desc: 'Pulled chicken, chickpeas and mayo in a soft roll. A two-hand meal.' },
+  { id: 'mayo-fries', cat: 'mayo', name: 'Mayo fries', photo: 'mayo-fries', price: 3.9, heat: false, mins: 5, desc: 'Skin-on fries with a pot of garlic mayo for dipping.' },
+  { id: 'slaw', cat: 'mayo', name: 'Creamy coleslaw', photo: 'slaw', price: 2.4, heat: false, mins: 2, desc: 'Red and white cabbage, carrot and parsley in a light mayo dressing.' },
+  { id: 'green-slaw', cat: 'mayo', name: 'Green slaw', photo: 'slaw-green', price: 2.4, heat: false, mins: 2, desc: 'Fine cabbage, lime and coriander, no mayo. Cuts through the fried.' },
 
-  { id: 'platter', cat: 'grill', name: 'Mixed grill platter for two', art: 'platter', price: 22.5, heat: true, mins: 18,
-    desc: 'Half chicken, two suya skewers, two lamb chops, corn, rice and three dips.' },
-  { id: 'suya', cat: 'grill', name: 'Beef suya skewers', art: 'suya', price: 9.2, heat: true, mins: 11,
-    desc: 'Thin beef in a peanut and pepper rub, onion and tomato on the side.' },
-  { id: 'chops', cat: 'grill', name: 'Lamb chops, 3', art: 'chops', price: 14.8, heat: false, mins: 14,
-    desc: 'Three chops with rosemary and garlic, cooked medium unless you say.' },
-  { id: 'corn', cat: 'grill', name: 'Grilled corn', art: 'corn', price: 2.8, heat: false, mins: 6,
-    desc: 'Charred corn brushed with chili butter.' },
+  { id: 'beef-skewers', cat: 'grill', name: 'Beef skewers, 4', photo: 'beef-skewers', price: 9.2, heat: true, mins: 11, desc: 'Sweet soy glazed beef, charred over coals.' },
+  { id: 'chicken-skewers', cat: 'grill', name: 'Chicken skewers, 4', photo: 'chicken-skewers', price: 7.9, heat: true, mins: 9, desc: 'Thigh and onion, grilled and brushed with lemon butter.' },
+  { id: 'satay-platter', cat: 'grill', name: 'Satay grill platter', photo: 'satay-grill', price: 21.5, heat: true, mins: 18, desc: 'Twenty mixed skewers for the table with rice, peanut sauce and pickles.' },
+  { id: 'glazed-wings', cat: 'grill', name: 'Glazed wings platter', photo: 'glazed-wings', price: 14.8, heat: true, mins: 14, desc: 'Sixteen wings, sticky BBQ glaze, charred on the big grill.' },
+  { id: 'corn', cat: 'grill', name: 'Grilled corn', photo: 'corn-grill', price: 2.8, heat: false, mins: 6, desc: 'Charred corn brushed with chili butter.' },
+  { id: 'corn-plate', cat: 'grill', name: 'Corn and rice plate', photo: 'corn-plate', price: 6.2, heat: false, mins: 7, desc: 'Grilled corn, lime, rice and beans with a grilled chicken patty.' },
 ]
 export const itemOf = (id) => ITEMS.find((i) => i.id === id)
 
-// Four heat levels. `flames` drives the drawing and the steam on the dish.
 export const HEAT = [
   { id: 'mild', name: 'Mild', flames: 1, note: 'Garlic, salt and lemon. No chili.' },
   { id: 'medium', name: 'Medium', flames: 2, note: 'Black pepper and smoked paprika.' },

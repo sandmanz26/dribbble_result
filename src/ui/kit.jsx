@@ -1,15 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import Food from './Food.jsx'
-import { catOf } from '../data/menu.js'
 import { Add, Minus, Close } from './icons.js'
 
-// The dish on its category's colour field.
-export function Tile({ item, size = 'md', heat = 0, className = '' }) {
-  const c = catOf(item.cat)
+// A dish photo, square, cropped to the food. Photos are real (see Credits) and lazy-loaded.
+export const photoSrc = (name) => `food/${name}.webp`
+export function Tile({ item, size = 'md', className = '' }) {
   return (
-    <span className={`tile tile-${size} ${item.soldOut ? 'is-out' : ''} ${className}`} style={{ '--field': c.field, '--ink': c.ink }}>
-      <Food art={item.art} heat={heat} />
+    <span className={`tile tile-${size} ${item.soldOut ? 'is-out' : ''} ${className}`}>
+      <img src={photoSrc(item.photo)} alt="" loading="lazy" decoding="async" />
     </span>
   )
 }

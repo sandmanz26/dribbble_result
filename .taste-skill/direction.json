@@ -18,7 +18,7 @@
  "style": {
   "id": "true-black-flat",
   "name": "True-black flat",
-  "theme": "dark",
+  "theme": "light",
   "basis": "5 screens: an events back office, an event analytics tab, a community overview, an artist studio home, an artist insights page",
   "suits": [
    "community",
@@ -69,8 +69,8 @@
     "control": 999
    },
    "font": {
-    "family": "Hanken Grotesk Variable",
-    "second": "Unbounded Variable",
+    "family": "Funnel Sans Variable",
+    "second": "Funnel Display Variable",
     "fallback": "system-ui, sans-serif",
     "sizes": {
      "title": 20,

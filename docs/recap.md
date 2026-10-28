@@ -19,3 +19,12 @@
   icons in coloured circles read as generic (replaced by little sauce bottles); the reviewer panel
   showed on phones (fixed); a terracotta red was swapped for a ketchup red.
 - Password on the hub: `ck-7rmz-q4hp`.
+
+## Round 2 (owner feedback)
+- Owner: the tone looked low fidelity and the colours were ugly.
+- Fix: replaced every drawn dish with a real photograph (Open Images, Flickr, CC BY 2.0, credited at
+  `#/credits`); new light warm theme with one chili red; new type (Funnel Display + Funnel Sans,
+  replacing Unbounded + Hanken Grotesk); hero carousel of today's picks; photo tabs; two-column photo
+  grid; photo fly-to-bag animation. Menu reorganised to 24 dishes that match the photos.
+- Higgsfield generation is still unavailable in this environment; the photo slots can be swapped for
+  the shop's own shots one file at a time (`public/food/<name>.webp`).
