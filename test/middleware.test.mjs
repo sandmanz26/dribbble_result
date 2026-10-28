@@ -10,7 +10,7 @@ const cookieOf = (res) => res.headers.get('set-cookie').split(';')[0]
 
 const cases = [
   ['root shows nothing', async () => { const r = await get('/'); assert.equal(r.status, 404); assert.match(await r.text(), /Nothing to see here/) }],
-  ['unknown path shows nothing', async () => assert.equal((await get('/project9/')).status, 404)],
+  ['unknown path shows nothing', async () => assert.equal((await get('/project99/')).status, 404)],
   ['project without cookie asks for password', async () => { const r = await get('/project1/'); assert.equal(r.status, 401); assert.match(await r.text(), /type="password"/) }],
   ['assets are gated too', async () => assert.equal((await get('/project2/assets/index.js')).status, 401)],
   ['no trailing slash redirects', async () => { const r = await get('/project1'); assert.equal(r.status, 308); assert.equal(r.headers.get('location'), BASE + '/project1/') }],
@@ -30,6 +30,7 @@ const cases = [
     assert.ok(passed(await get('/project6/', cookieOf(r))))
   }],
   ['project7 accepts its own password', async () => { const r = await post('/project7/', { password: 'cv-cqkr-rhyg', hash: '#/trip/kyoto/budget' }); assert.equal(r.headers.get('location'), '/project7/#/trip/kyoto/budget'); assert.ok(passed(await get('/project7/', cookieOf(r)))) }],
+  ['project9 and project10 take their own passwords only', async () => { assert.equal((await post('/project9/', { password: 'gt-m3bk-20lf' })).status, 303); const r = await post('/project10/', { password: 'fu-p6pu-f2la', hash: '#/?demo=walk' }); assert.equal(r.status, 303); assert.ok(passed(await get('/project10/samples/inventory-store-214.xlsx', cookieOf(r)))); assert.equal((await post('/project10/', { password: 'gt-m3bk-20lf' })).status, 401) }],
   ['project8 accepts its own password and serves the report', async () => { const r = await post('/project8/', { password: 'td-9ymu-nhd4' }); assert.ok(passed(await get('/project8/research.pdf', cookieOf(r)))); assert.equal((await get('/project8/research.pdf')).status, 401) }],
   ['robots.txt turns every crawler away', async () => { const r = await get('/robots.txt'); assert.equal(r.status, 200); assert.match(await r.text(), /Disallow: \//) }],
   ['every gate page says noindex', async () => {

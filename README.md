@@ -15,6 +15,8 @@ puts each project behind its own password:
 | `/project6/` | Westpoint case study (private, NDA) | `claude/westpoint-case-study` | `wp-3xsf-qcya` |
 | `/project7/` | Caravan (group travel mobile app) | `claude/caravan-group-travel` | `cv-cqkr-rhyg` |
 | `/project8/` | Tend (wellness ritual mobile app, research PDF) | `claude/tend-wellness-ritual` | `td-9ymu-nhd4` |
+| `/project9/` | GlobalTrade (broker website, client and staff dashboards) | `claude/globaltrade-broker` | `gt-m3bk-20lf` |
+| `/project10/` | Faceup (planogram restock mobile app) | `claude/planogram-restock-app` | `fu-p6pu-f2la` |
 | `/` and anything else | "Nothing to see here." | | |
 
 - `build.mjs` clones each branch in `projects.json`, runs `npm ci && npm run build` and copies its

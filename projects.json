@@ -6,5 +6,7 @@
   { "slug": "project5", "branch": "claude/student-portal-bilingual", "title": "Nelum Vidyalaya SMS" },
   { "slug": "project6", "branch": "claude/westpoint-case-study", "title": "Westpoint case study" },
   { "slug": "project7", "branch": "claude/caravan-group-travel", "title": "Caravan group travel" },
-  { "slug": "project8", "branch": "claude/tend-wellness-ritual", "title": "Tend wellness ritual" }
+  { "slug": "project8", "branch": "claude/tend-wellness-ritual", "title": "Tend wellness ritual" },
+  { "slug": "project9", "branch": "claude/globaltrade-broker", "title": "GlobalTrade broker" },
+  { "slug": "project10", "branch": "claude/planogram-restock-app", "title": "Faceup planogram restock" }
 ]
