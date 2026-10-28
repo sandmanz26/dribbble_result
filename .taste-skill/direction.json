@@ -75,7 +75,7 @@
    },
    "sheetInset": 8,
    "font": {
-    "family": "Mona Sans Variable",
+    "family": "Plus Jakarta Sans Variable",
     "second": "Commit Mono, for IDs and keys only",
     "fallback": "Inter, system-ui, sans-serif",
     "sizes": {

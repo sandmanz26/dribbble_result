@@ -109,7 +109,7 @@ function RoleWork() {
                 <span className="font-mono text-[13px] font-medium">{v.no}</span>
                 <PatientLine p={p} sub={<>{v.complaint}</>} />
                 <span className="flex items-center gap-2">
-                  {role === 'cashier' ? <span className="tnum text-[13px] font-medium">{rp(bill(v).due)}</span> : <PayerPill payer={v.payer} check={v.bpjsCheck} />}
+                  {role === 'cashier' ? <span className="tnum text-[13px] font-medium">{rp(bill(v).due)}</span> : <span className="hidden sm:inline-flex"><PayerPill payer={v.payer} check={v.bpjsCheck} /></span>}
                   <span className={cn('tnum w-14 text-right text-[12.5px]', v.arrivedMin >= 60 ? 'font-medium text-negative' : 'text-muted')}>{v.stage === 'booked' ? `in ${-v.arrivedMin}m` : `${v.arrivedMin} min`}</span>
                 </span>
               </Link>
