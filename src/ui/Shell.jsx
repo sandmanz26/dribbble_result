@@ -31,7 +31,7 @@ export default function Shell({ items, children, label, area, user }) {
   const out = () => { set({ session: null }); nav('/login') }
   return (
     <TooltipProvider>
-      <div className="dash relative min-h-screen">
+      <div className="dash relative min-h-screen overflow-x-clip">
         <div className="dash-grid" aria-hidden="true" />
         <div className="dash-glow" aria-hidden="true" />
         <aside aria-label={label} className="fixed inset-y-0 left-0 z-30 hidden w-16 flex-col border-r border-border bg-[#0a0b0e]/90 backdrop-blur md:flex lg:w-64">

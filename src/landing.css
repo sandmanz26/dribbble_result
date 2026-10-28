@@ -1,0 +1,69 @@
+/* Landing page effects that utilities cannot express: the hero light, floating tiles, the scroll
+   tilt of the product preview, the marquee, the cursor spotlight on bento tiles, the metal card
+   and the staggered reveal. Every move has a reduced-motion fallback. */
+@layer components {
+  .lp { position: relative; overflow-x: clip; background: #060709; }
+  .lp-hero-light { position: absolute; left: 50%; top: -340px; width: 1400px; height: 900px; transform: translateX(-50%); pointer-events: none;
+    background: radial-gradient(closest-side, rgb(212 174 98 / 0.20), rgb(212 174 98 / 0.05) 55%, transparent); }
+  .lp-grid { position: absolute; inset: 0; pointer-events: none; background-image: linear-gradient(rgb(255 255 255 / 0.04) 1px, transparent 1px), linear-gradient(90deg, rgb(255 255 255 / 0.04) 1px, transparent 1px); background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse 70% 55% at 50% 30%, #000 20%, transparent 75%); }
+  .lp-beam { position: absolute; left: 50%; top: 0; width: 1px; height: 100%; background: linear-gradient(180deg, transparent, rgb(212 174 98 / 0.5), transparent); opacity: 0.4; }
+
+  /* Hero entrance: each part rises out of a soft blur, one after the other. */
+  .lp-in { animation: lp-rise 900ms cubic-bezier(.2,.8,.2,1) both; }
+  .lp-in.d1 { animation-delay: 80ms; } .lp-in.d2 { animation-delay: 180ms; } .lp-in.d3 { animation-delay: 300ms; } .lp-in.d4 { animation-delay: 420ms; } .lp-in.d5 { animation-delay: 560ms; }
+  @keyframes lp-rise { from { opacity: 0; transform: translateY(24px); filter: blur(10px); } }
+
+  /* Floating currency tiles: glossy, lit from above, drifting slowly. */
+  .tile3d { position: absolute; display: grid; place-items: center; width: 64px; height: 64px; border-radius: 18px; color: #fff; font-weight: 600; font-size: 26px;
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.45), inset 0 -10px 18px rgb(0 0 0 / 0.35), 0 20px 40px -12px rgb(0 0 0 / 0.8), 0 0 40px -8px var(--tile-glow);
+    animation: lp-float 7s ease-in-out infinite; transition: translate 400ms cubic-bezier(.2,.8,.2,1); }
+  .tile3d::after { content: ''; position: absolute; inset: 1px 1px 50% 1px; border-radius: 17px 17px 40% 40%; background: linear-gradient(180deg, rgb(255 255 255 / 0.28), transparent); }
+  @keyframes lp-float { 0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); } 50% { transform: translateY(-14px) rotate(calc(var(--r, 0deg) * -1)); } }
+
+  /* The product preview leans back and straightens as it scrolls into view. */
+  .tilt-stage { perspective: 1800px; }
+  .tilt-card { transform-origin: 50% 0%; transform: rotateX(var(--tilt, 0deg)) scale(var(--scale, 1)); transition: transform 120ms linear; will-change: transform; }
+  .tilt-glow { position: absolute; inset: -10% 10% auto; height: 60%; background: radial-gradient(closest-side, rgb(212 174 98 / 0.22), transparent); filter: blur(30px); pointer-events: none; }
+
+  /* Marquee of live markets. */
+  .marquee { mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
+  .marquee-track { display: flex; width: max-content; animation: lp-marquee 40s linear infinite; }
+  .marquee:hover .marquee-track { animation-play-state: paused; }
+  @keyframes lp-marquee { to { transform: translateX(-50%); } }
+
+  /* Bento tiles: a soft light follows the cursor across the tile. */
+  .spot { position: relative; overflow: hidden; isolation: isolate; }
+  .spot::before { content: ''; position: absolute; inset: 0; z-index: -1; opacity: 0; transition: opacity 300ms; background: radial-gradient(360px circle at var(--mx, 50%) var(--my, 50%), rgb(212 174 98 / 0.10), transparent 60%); }
+  .spot:hover::before { opacity: 1; }
+  .edge { position: relative; }
+  .edge::after { content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1px; pointer-events: none;
+    background: linear-gradient(180deg, rgb(255 255 255 / 0.14), rgb(255 255 255 / 0.04) 35%, rgb(255 255 255 / 0.02));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; }
+
+  /* Stacked instrument cards fan out on hover. */
+  .fan > * { transition: transform 600ms cubic-bezier(.2,.8,.2,1); }
+  .fan > :nth-child(1) { transform: translate(-70px, 40px) rotate(-14deg); }
+  .fan > :nth-child(2) { transform: translate(-30px, 14px) rotate(-6deg); }
+  .fan > :nth-child(3) { transform: translate(24px, -10px) rotate(4deg); }
+  .fan:hover > :nth-child(1) { transform: translate(-120px, 54px) rotate(-20deg); }
+  .fan:hover > :nth-child(2) { transform: translate(-50px, 18px) rotate(-9deg); }
+  .fan:hover > :nth-child(3) { transform: translate(40px, -18px) rotate(6deg); }
+
+  /* The GlobalTrade card: brushed black metal with a gold edge, tilting toward the cursor. */
+  .metal { background: linear-gradient(135deg, #2a2b2f 0%, #121316 38%, #1d1e22 62%, #0c0d0f 100%); box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.18), inset 0 0 0 1px rgb(212 174 98 / 0.25), 0 40px 80px -30px rgb(0 0 0 / 0.9), 0 0 80px -30px rgb(212 174 98 / 0.4); }
+  .metal::before { content: ''; position: absolute; inset: 0; border-radius: inherit; background: repeating-linear-gradient(90deg, rgb(255 255 255 / 0.018) 0 1px, transparent 1px 3px); }
+  .metal-sheen { position: absolute; inset: 0; border-radius: inherit; background: radial-gradient(400px circle at var(--mx, 30%) var(--my, 20%), rgb(255 255 255 / 0.12), transparent 50%); pointer-events: none; }
+
+  /* Scroll reveal: parts rise and sharpen as their section enters; visible without script. */
+  .rv-on .lp-rv { opacity: 0; transform: translateY(28px); filter: blur(6px); transition: opacity 800ms ease, transform 900ms cubic-bezier(.2,.8,.2,1), filter 800ms ease; transition-delay: var(--d, 0ms); }
+  .rv-on .lp-rv.in { opacity: 1; transform: none; filter: none; }
+
+  .live-px.up { color: #4fd1a1; } .live-px.down { color: #f0716b; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lp-in, .tile3d, .marquee-track { animation: none !important; }
+    .tilt-card { transform: none !important; }
+    .rv-on .lp-rv { opacity: 1; transform: none; filter: none; }
+  }
+}

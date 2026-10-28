@@ -66,3 +66,9 @@ and a slider through the four steps of opening an account.
 Empty client account (new sign-up), identity in review, wrong password with attempts left and
 lockout, wrong code, deposit and withdrawal validation, withdrawal cancel, trade close with undo,
 staff queues empty, decisions with undo, solved tickets, phone layouts.
+
+## Round 4 (current)
+Landing rebuilt after the owner's reference (a Starlight-style dark fintech page) and the client
+and staff areas rebuilt on Tailwind with shadcn/ui patterns. Full detail, including where the
+owner's direction overrides the house rules and the Higgsfield image prompts, in `docs/recap.md`.
+

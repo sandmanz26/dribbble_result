@@ -50,20 +50,20 @@ export function Kpi({ label, value, sub, spark, tone = 'gold', icon: Icon, class
 }
 
 // A live price chart: gold line over a soft fill, price scale on the right, a crosshair readout.
-export function PriceArea({ id, data, height = 300 }) {
+export function PriceArea({ id, data, height = 300, bare = false }) {
   const gid = useId().replace(/:/g, '')
   const rows = data.map((d) => ({ t: d.t, p: d.p }))
   return (
     <div style={{ height }} className="w-full">
       <ResponsiveContainer width="100%" height="100%">
-        <AreaChart data={rows} margin={{ top: 10, right: 4, bottom: 0, left: 0 }}>
+        <AreaChart data={rows} margin={bare ? { top: 2, right: 2, bottom: 2, left: 2 } : { top: 10, right: 4, bottom: 0, left: 0 }}>
           <defs><linearGradient id={gid} x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#d4ae62" stopOpacity={0.28} /><stop offset="100%" stopColor="#d4ae62" stopOpacity={0} /></linearGradient></defs>
-          <CartesianGrid stroke="rgba(255,255,255,0.05)" vertical={false} />
-          <XAxis dataKey="t" tickFormatter={hm} tick={{ fill: '#8b909a', fontSize: 11 }} axisLine={false} tickLine={false} minTickGap={60} />
-          <YAxis orientation="right" domain={['auto', 'auto']} tickFormatter={(v) => fmt(id, v)} tick={{ fill: '#8b909a', fontSize: 11 }} axisLine={false} tickLine={false} width={72} />
-          <Tooltip cursor={{ stroke: 'rgba(255,255,255,0.25)', strokeDasharray: '3 3' }} content={({ active, payload }) => active && payload?.length ? (
+          {!bare && <CartesianGrid stroke="rgba(255,255,255,0.05)" vertical={false} />}
+          <XAxis dataKey="t" hide={bare} tickFormatter={hm} tick={{ fill: '#8b909a', fontSize: 11 }} axisLine={false} tickLine={false} minTickGap={60} />
+          <YAxis orientation="right" hide={bare} domain={['dataMin', 'dataMax']} tickFormatter={(v) => fmt(id, v)} tick={{ fill: '#8b909a', fontSize: 11 }} axisLine={false} tickLine={false} width={72} />
+          {!bare && <Tooltip cursor={{ stroke: 'rgba(255,255,255,0.25)', strokeDasharray: '3 3' }} content={({ active, payload }) => active && payload?.length ? (
             <div className="rounded-md border border-border bg-popover px-2.5 py-1.5 text-xs shadow-xl"><p className="font-medium tabular-nums">{fmt(id, payload[0].payload.p)}</p><p className="text-muted-foreground">{hm(payload[0].payload.t)} UTC</p></div>
-          ) : null} />
+          ) : null} />}
           <Area type="monotone" dataKey="p" stroke="#d4ae62" strokeWidth={1.75} fill={`url(#${gid})`} isAnimationActive={false} activeDot={{ r: 4, fill: '#d4ae62', stroke: '#08090b', strokeWidth: 2 }} />
         </AreaChart>
       </ResponsiveContainer>

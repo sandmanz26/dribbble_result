@@ -2,10 +2,15 @@
 
 Clickable prototype for the GlobalTrade brief: a premium black-and-gold broker website with sign-up,
 secure log-in, a client area and a staff back office. React 18, Vite 5, react-router (HashRouter),
-Carbon icons, Stack Sans Headline and Stack Sans Text. No backend: prices are a simulated demo feed and all data is in `src/data/`.
+Tailwind v4 with shadcn/ui-style components on Radix, Recharts, Carbon icons, Stack Sans Headline and
+Stack Sans Text. No backend: prices are a simulated demo feed and all data is in `src/data/`.
 
-- `#/` website: live trading-session clock, labelled demo charts, one order from placed to closed,
-  markets, sign-up steps, one account, company facts, questions, contact.
+**Read `docs/recap.md` first**: the brief, every round of feedback, the current design, the
+placeholders and the image prompts waiting for Higgsfield.
+
+- `#/` website: headline with the live gold price inside it, floating currency tiles, the client area
+  straightening on scroll, live market marquee, feature panels (market cards, cost calculator),
+  payments, bento, questions, closing card, footer. Scroll and hover transitions throughout.
 - `#/register` four steps: account, about you, experience check, identity.
 - `#/login` email and password, then a six-digit code (demo code `482913`). Demo accounts are on the page.
 - `#/client?demo=client` overview with live equity and open trades, trade history, deposits and withdrawals.
