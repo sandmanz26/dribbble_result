@@ -14,6 +14,7 @@ export default function App() {
   const loc = useLocation()
   useEffect(() => { if (!loc.hash) window.scrollTo(0, 0) }, [loc.pathname, loc.hash])
   return (
+    <>
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/register" element={<Register />} />
@@ -22,5 +23,7 @@ export default function App() {
       <Route path="/staff/*" element={s.session === 'staff' ? <Staff /> : <Navigate to="/login?as=staff" replace />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
+    <p className="proto-bar" role="note"><b>Design prototype</b> with demo data. Not a real broker or trading service. Do not enter real personal, login or payment details.</p>
+    </>
   )
 }

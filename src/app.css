@@ -187,3 +187,15 @@
 }
 
 }
+
+/* Prototype markers: no credentials are ever typed, and every page says it is a demo. */
+@layer site {
+  .proto-note { padding: 12px 14px; border-radius: 10px; background: rgba(212,174,98,.1); border: 1px solid rgba(212,174,98,.3); color: #e9dcbd; font-size: 14px; line-height: 1.5; }
+  .demo-pick { display: grid; gap: 10px; }
+  .demo-acct { display: grid; gap: 2px; width: 100%; padding: 16px 18px; border-radius: 12px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.12); color: inherit; text-align: left; cursor: pointer; transition: border-color .2s, background .2s; }
+  .demo-acct:hover { border-color: #d4ae62; background: rgba(212,174,98,.08); }
+  .demo-acct b { font-weight: 500; font-size: 16px; }
+  .demo-acct span { font-size: 13.5px; opacity: .65; }
+  .proto-bar { position: fixed; left: 50%; bottom: 12px; z-index: 90; transform: translateX(-50%); width: max-content; max-width: calc(100vw - 24px); margin: 0; padding: 8px 14px; border-radius: 999px; background: rgba(12,12,14,.92); border: 1px solid rgba(212,174,98,.35); color: #e9e2d2; font-size: 12.5px; line-height: 1.35; text-align: center; backdrop-filter: blur(8px); }
+  .proto-bar b { color: #d4ae62; font-weight: 600; }
+}

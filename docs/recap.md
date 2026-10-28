@@ -171,3 +171,15 @@ npm run build      # outputs dist/, used by the hub's build.mjs
 Stack: React 18, Vite 5 (`base: './'`), react-router HashRouter, Tailwind v4 (`@tailwindcss/vite`),
 Radix UI primitives, class-variance-authority, tailwind-merge, Recharts, Carbon icons, Stack Sans
 Headline and Stack Sans Text (Fontsource, self-hosted).
+
+## 11. Chrome "Dangerous" warning (round 6)
+The owner saw Chrome mark the hub as deceptive ("Check your passwords") only on project9; other
+projects open normally. A broker look-alike with email and password fields, ID upload and deposits on
+a free `vercel.app` domain is exactly the pattern Google Safe Browsing treats as phishing. Changes:
+- No password field anywhere: log in is a choice of demo accounts, then the demo code step (with a
+  "fill in the demo code" button). Registration explains the password step instead of asking for one.
+- No real file upload: the identity step only accepts a sample document.
+- Every page shows a fixed bar: design prototype with demo data, not a real broker, do not enter real
+  personal, login or payment details.
+- The owner could not file the false-positive report; a custom domain for the hub would also separate
+  its reputation from `vercel.app`.

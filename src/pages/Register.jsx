@@ -33,7 +33,6 @@ export default function Register() {
     const e = {}
     if (step === 0) {
       if (!/^\S+@\S+\.\S+$/.test(f.email)) e.email = 'Enter an email address like name@example.com.'
-      if (!RULES.every(([t]) => t(f.password))) e.password = 'The password needs all three items below.'
       if (!f.terms) e.terms = 'Please accept the client agreement to continue.'
     }
     if (step === 1) {
@@ -59,7 +58,7 @@ export default function Register() {
     e.preventDefault()
     if (!check()) return
     if (step < 3) { setStep(step + 1); window.scrollTo(0, 0); return }
-    set({ signup: { email: f.email.trim(), password: f.password, name: `${f.first.trim()} ${f.last.trim()}`, country: f.country, extraRisk: f.lev !== 'lose' }, who: 'new' })
+    set({ signup: { email: f.email.trim(), name: `${f.first.trim()} ${f.last.trim()}`, country: f.country, extraRisk: f.lev !== 'lose' }, who: 'new' })
     setStep(4)
   }
   const field = (k, label, props = {}, hint) => (
@@ -89,7 +88,7 @@ export default function Register() {
               <button className="btn gold" onClick={() => nav('/login')}>Log in</button>
               <Link to="/" className="abtn quiet">Back to the website</Link>
             </div>
-            <p className="muted" style={{ fontSize: 13 }}>Prototype: log in with the email and password you just chose. The second step asks for the code {CODE}.</p>
+            <p className="muted" style={{ fontSize: 13 }}>Prototype: continue as the account you just created. The second step asks for the code {CODE}.</p>
           </div>
         </main>
       </div>
@@ -105,11 +104,8 @@ export default function Register() {
           {step === 0 && (
             <>
               <h1>Create your account</h1>
-              {field('email', 'Email', { type: 'email', autoComplete: 'email' })}
-              <label className={`afield ${errs.password ? 'bad' : ''}`}>Password<input type="password" autoComplete="new-password" value={f.password} onChange={up('password')} aria-describedby="pwrules" />
-                {errs.password && <span className="err">{errs.password}</span>}
-              </label>
-              <ul className="checks" id="pwrules">{RULES.map(([t, l]) => <li key={l} className={t(f.password) ? 'ok' : ''}><Checkmark size={14} />{l}</li>)}</ul>
+              {field('email', 'Email (any made-up address)', { type: 'email', autoComplete: 'off' })}
+              <p className="proto-note">Design prototype: no password is asked here. In the live product this step sets a password ({RULES.map(([, l]) => l.toLowerCase()).join(', ')}) and an authenticator app.</p>
               <label className="afield">Country you live in<select value={f.country} onChange={up('country')}>{COUNTRIES.map((c) => <option key={c}>{c}</option>)}</select><span className="hint">Leverage limits and some products depend on your country.</span></label>
               <label className="choice-list"><span style={{ display: 'flex', gap: 10, alignItems: 'flex-start', fontSize: 15 }}><input type="checkbox" checked={f.terms} onChange={up('terms')} /> I have read the client agreement and the risk disclosure.</span></label>
               {errs.terms && <span className="err" style={{ color: 'var(--neg)', fontSize: 13 }}>{errs.terms}</span>}
@@ -138,12 +134,10 @@ export default function Register() {
             <>
               <h1>Show us it is you</h1>
               <p>We match your document and a selfie. Photos are used only for this check.</p>
-              <label className="filedrop" style={{ position: 'relative' }}>
-                <input type="file" accept="image/*,.pdf" onChange={(e) => setF({ ...f, doc: e.target.files[0]?.name || null })} />
+              <button type="button" className="filedrop" onClick={() => setF({ ...f, doc: 'passport-sample.jpg' })}>
                 {f.doc ? <Document size={20} /> : <Upload size={20} />}
-                <span>{f.doc ? <><b>{f.doc}</b> added. Tap to change.</> : <><b>Passport or ID card.</b> A clear photo of the page with your picture.</>}</span>
-              </label>
-              {!f.doc && <button type="button" className="abtn quiet" style={{ justifySelf: 'start' }} onClick={() => setF({ ...f, doc: 'passport-sample.jpg' })}>Use a sample document for this demo</button>}
+                <span>{f.doc ? <><b>{f.doc}</b> added (sample).</> : <><b>Passport or ID card.</b> Prototype: tap to use a sample document. Never upload a real ID here.</>}</span>
+              </button>
               {errs.doc && <span className="err" style={{ color: 'var(--neg)', fontSize: 13 }}>{errs.doc}</span>}
               <div className="filedrop">
                 {f.selfie ? <CheckmarkFilled size={20} style={{ color: 'var(--pos)' }} /> : <Upload size={20} />}
