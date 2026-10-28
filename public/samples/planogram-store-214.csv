@@ -1,0 +1,45 @@
+Store,Aisle,Bay,Shelf,Pos,SKU,Item Description,Facings,Depth,Fixture
+214,1,1,1,1,100231,Brookline Sparkling Water Lemon 500 ml,4,6,Cooler
+214,1,1,1,2,100232,Brookline Sparkling Water Lime 500 ml,4,6,Cooler
+214,1,1,2,1,100410,Orchard Row Apple Juice 1 L,3,5,Cooler
+214,1,1,2,2,100411,Orchard Row Orange Juice 1 L,3,5,Cooler
+214,1,1,3,1,100520,Daybreak Cold Brew Coffee 300 ml,2,8,Cooler
+214,1,2,1,1,100610,Kettle & Leaf Iced Tea Peach 1.5 L,3,4,Gondola
+214,1,2,1,2,100611,Kettle & Leaf Iced Tea Lemon 1.5 L,3,4,Gondola
+214,1,2,2,1,100700,Summit Spring Water 6 x 500 ml,2,3,Gondola
+214,1,2,3,1,100810,Ridgeback Energy Drink Original 250 ml,4,8,Gondola
+214,1,2,3,2,100811,Ridgeback Energy Drink Sugar Free 250 ml,3,8,Gondola
+214,1,3,1,1,100902,Fizzwell Cola 2 L,3,4,Gondola
+214,1,3,1,2,100903,Fizzwell Cola Zero 2 L,3,4,Gondola
+214,1,3,2,1,100940,Fizzwell Ginger Ale 6 x 330 ml,2,3,Gondola
+214,E1,1,1,1,100810,Ridgeback Energy Drink Original 250 ml,6,6,Endcap
+214,E1,1,2,1,200150,Crunchworks Sea Salt Chips 150 g,5,4,Endcap
+214,2,1,1,1,200150,Crunchworks Sea Salt Chips 150 g,4,5,Gondola
+214,2,1,1,2,200151,Crunchworks Salt & Vinegar Chips 150 g,3,5,Gondola
+214,2,1,2,1,200160,Crunchworks Sour Cream & Onion 150 g,3,5,Gondola
+214,2,1,3,1,200300,Hollow Oak Pretzel Twists 250 g,2,6,Gondola
+214,2,2,1,1,200410,Little Field Popcorn Butter 3 pack,3,4,Gondola
+214,2,2,2,1,200520,Northbound Trail Mix 300 g,2,6,Gondola
+214,2,2,2,2,200521,Northbound Roasted Almonds 200 g,2,6,Gondola
+214,2,2,3,1,200610,Cocoa Cove Milk Chocolate Bar 100 g,5,10,Gondola
+214,2,2,3,2,200611,Cocoa Cove Dark Chocolate 70% 100 g,4,10,Gondola
+214,2,3,1,1,200700,Gummy Garden Fruit Bears 200 g,3,8,Gondola
+214,2,3,2,1,200810,Oatfield Granola Bars Honey 6 pack,3,6,Gondola
+214,2,3,2,2,200811,Oatfield Granola Bars Choc Chip 6 pack,3,6,Gondola
+214,E2,1,1,1,300120,Sunrise Mill Oat Flakes 750 g,4,4,Endcap
+214,3,1,1,1,300120,Sunrise Mill Oat Flakes 750 g,3,5,Gondola
+214,3,1,1,2,300121,Sunrise Mill Corn Flakes 500 g,3,5,Gondola
+214,3,1,2,1,300200,Hearth & Grain Muesli Berry 600 g,2,5,Gondola
+214,3,1,3,1,300310,Golden Comb Clover Honey 400 g,2,6,Gondola
+214,3,2,1,1,300410,Riverbend Peanut Butter Smooth 340 g,3,6,Gondola
+214,3,2,1,2,300411,Riverbend Peanut Butter Crunchy 340 g,2,6,Gondola
+214,3,2,2,1,300520,Villa Rosa Strawberry Jam 370 g,3,5,Gondola
+214,3,2,3,1,300610,Daybreak Ground Coffee Medium 250 g,3,6,Gondola
+214,3,2,3,2,300611,Daybreak Coffee Beans Dark 500 g,2,5,Gondola
+214,3,3,1,1,300700,Teaberry English Breakfast 80 bags,3,4,Gondola
+214,4,1,1,1,400110,Clearwave Dish Soap Lemon 750 ml,3,5,Gondola
+214,4,1,2,1,400210,Clearwave Laundry Liquid 2 L,2,4,Gondola
+214,4,1,3,1,400310,Softfold Paper Towels 6 rolls,2,3,Gondola
+214,4,2,1,1,400410,Softfold Toilet Tissue 9 rolls,3,3,Gondola
+214,4,2,2,1,400510,Greenhouse All-Purpose Spray 500 ml,3,5,Gondola
+214,4,2,3,1,400610,Tidyline Bin Bags 30 L 20 pack,2,6,Gondola
