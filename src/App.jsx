@@ -34,10 +34,11 @@ export default function App() {
         </main>
         <nav className="tabbar" aria-label="Main">
           {tabs.map(([to, label, Icon]) => (
-            <NavLink key={to} to={to} end className="tab"><Icon size={22} aria-hidden="true" /><span>{label}</span>{to === '/check' && problems > 0 && <span className="badge num" aria-label={`${problems} problems`}>{problems}</span>}</NavLink>
+            <NavLink key={to} to={to} end className="tab"><span className="ico"><Icon size={22} aria-hidden="true" /></span><span>{label}</span>{to === '/check' && problems > 0 && <span className="badge num" aria-label={`${problems} problems`}>{problems}</span>}</NavLink>
           ))}
         </nav>
         <Toast />
+        <div id="overlay" />
       </div>
     </Frame>
   )

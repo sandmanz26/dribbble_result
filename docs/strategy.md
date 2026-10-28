@@ -30,10 +30,17 @@ the two files a store already has and turns them into a walk, honest about what 
 - Status in words first: Fill from back, Fill part, Low with none in back, Empty, Not in the count,
   Full. The number to bring out is the biggest thing on each row.
 - Colour: the brief asks for bold and colourful. The colour is the store's own wayfinding, one sign
-  colour per aisle, on the aisle map, the row edge and the number to bring; status stays in ink so
-  colour never has two meanings. Endcaps are ink.
-- taste-skill app style "framed sheet" (seed in `.taste-skill/app/direction.json`): tinted frame,
-  white sheet, no shadow at rest. IBM Plex from the sheet was replaced because project3 uses it.
+  colour per aisle, as a pale tile with that colour's dark as ink: on the aisle map, on each stop's
+  shelf slot, on the number to bring and in the stop sheet. Status is a word in a small pill, so
+  colour never has two meanings. Endcaps are grey and ink.
+- A phone app, not a web form: large screen titles, white cards on a grey ground, 52px rows with the
+  shelf slot as a tile, and every choice in a bottom sheet. Column matching uses a custom picker
+  sheet that lists the file's columns with a sample of what is in each, marks the one in use, and
+  moves a column that another field was using (one column feeds one field). Keyboard: arrows,
+  Home, End, Escape; focus returns to the row that opened it; the handle drags the sheet closed.
+- taste-skill app style "pastel consumer" (seed 954516883, `.taste-skill/app2/direction.json`),
+  replacing the first "framed sheet", which read as a desktop admin squeezed into a phone. Manrope
+  from the sheet was not used because project7 uses it; Rethink Sans stays.
 
 ## States
 No files, one file, unmatched columns, unreadable file, join problems, walk in progress, filters

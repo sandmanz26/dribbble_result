@@ -37,30 +37,29 @@ export default function Summary() {
         <h1>Summary</h1>
         <p>{done.length === work.length ? 'Walk complete.' : `${work.length - done.length} places left to fill.`} {reorder.length} items need ordering.</p>
       </div>
-      <section className="kpis" aria-label="Walk totals">
-        <div><small>Places done</small><b className="num">{done.length} / {work.length}</b></div>
-        <div><small>Units on the shelf</small><b className="num">{moved} / {units}</b></div>
-        <div><small>To order</small><b className="num">{reorder.length}</b></div>
-        <div><small>Could not fill</small><b className="num">{skipped.length}</b></div>
-      </section>
-      <section aria-labelledby="ab-h">
-        <div className="sec-h"><h2 id="ab-h">By aisle</h2><small>Places that need stock</small></div>
-        <ul className="aislebars">{aisles.filter((a) => a.total).map((a) => (
+      <section className="card sumcard" aria-labelledby="pd-h">
+        <h2 id="pd-h" className="sr-only">Progress</h2>
+        <p className="sum num">{done.length}<small> of {work.length} places done</small></p>
+        <div className="progress-bar" role="progressbar" aria-valuenow={work.length ? Math.round((done.length / work.length) * 100) : 0} aria-valuemin={0} aria-valuemax={100} aria-label="Places done"><i style={{ width: `${work.length ? (done.length / work.length) * 100 : 0}%` }} /></div>
+        <small className="num">{moved} of {units} units on the shelf{skipped.length ? ` · ${skipped.length} could not be filled` : ''}</small>
+        <ul className="aislebars" aria-label="By aisle">{aisles.filter((a) => a.total).map((a) => (
           <li key={a.code} className={aisleClass(a.aisle)}>
-            <span className="aisle-tag" style={{ height: 24, minWidth: 30, fontSize: 13 }}>{aisleTag(a.aisle)}</span>
+            <span className="aisle-tag">{aisleTag(a.aisle)}</span>
             <span className="track"><i style={{ width: `${(a.done / a.total) * 100}%` }} /></span>
             <span className="r num">{a.done} of {a.total}</span>
           </li>
         ))}</ul>
       </section>
-      <section aria-labelledby="ro-h">
-        <div className="sec-h"><h2 id="ro-h">To order</h2><small>Short after the backroom is used</small></div>
+      <section className="card" aria-labelledby="ro-h">
+        <p className="sum num">{reorder.length}<small> items to order</small></p>
+        <h2 id="ro-h" className="sr-only">To order</h2>
+        <p className="muted">Still short after everything in the backroom is used.</p>
         {reorder.length === 0 ? <p className="muted">Nothing to order.</p> : (
-          <ul className="alist">{reorder.map((i) => <li key={i.sku}><span>{i.name}</span><small className="num">short {i.need - i.move}</small><small className="mono">{i.sku} · {i.floor} of {i.capacity} on shelf, {i.back} in back</small></li>)}</ul>
+          <ul className="alist">{reorder.map((i) => <li key={i.sku}><span>{i.name}</span><b className="num">{i.need - i.move}</b><small><span className="mono">{i.sku}</span> · <span className="num">{i.floor} of {i.capacity} on shelf, {i.back} in back</span></small></li>)}</ul>
         )}
       </section>
       {skipped.length > 0 && (
-        <section aria-labelledby="sk-h">
+        <section className="card" aria-labelledby="sk-h">
           <div className="sec-h"><h2 id="sk-h">Could not fill</h2></div>
           <ul className="alist">{skipped.map((l) => <li key={l.key}><span>{l.name}</span><small>{s.skipped[l.key]}</small></li>)}</ul>
         </section>

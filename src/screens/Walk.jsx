@@ -1,9 +1,9 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Check2, Dash, ExclamationTriangleFill, InfoCircle, Plus, X } from 'react-bootstrap-icons'
+import { Check2, CheckCircleFill, Dash, ExclamationTriangleFill, InfoCircle, Plus } from 'react-bootstrap-icons'
 import { useStore } from '../store.jsx'
 import { STATUS } from '../data/engine.js'
-import { Pill, aisleClass, aisleTag } from '../ui/kit.jsx'
+import { Pill, Sheet, aisleClass, aisleTag } from '../ui/kit.jsx'
 
 // Screen question: what do I carry out from the back, and where, in the order I walk?
 const FILTERS = [
@@ -70,14 +70,11 @@ function StopSheet({ row, onClose }) {
   }
   const reopen = () => set((c) => { const d = { ...c.done }; const k = { ...c.skipped }; keys.forEach((x) => { delete d[x]; delete k[x] }); return { done: d, skipped: k } })
   return (
-    <>
-      <div className="scrim" onClick={onClose} />
-      <section className="panelsheet" role="dialog" aria-modal="true" aria-labelledby="ps-h">
-        <span className="grab" />
+    <Sheet labelledBy="ps-h" onClose={onClose} className={cls}>
         <div className="ps-top">
-          <span className="stop-where"><span className={`aisle-tag ${cls}`} style={{ height: 22, minWidth: 28, fontSize: 13, marginRight: 8 }}>{aisleTag(row.aisle)}</span>{row.places > 1 ? `${row.places} places` : where(row)}</span>
+          <span className="ps-where"><span className="aisle-tag">{aisleTag(row.aisle)}</span>{row.places > 1 ? `${row.places} places` : `${row.aisle.kind === 'end' ? '' : `${row.aisle.label} · `}${where(row)}`}</span>
           <h2 id="ps-h">{row.name}</h2>
-          <span className="stop-meta"><span className="mono">SKU {row.sku}</span>{row.fixture && <span>{row.fixture}</span>}<Pill status={row.status} done={doneQty} /></span>
+          <span className="ps-meta"><span className="mono">SKU {row.sku}</span>{row.fixture && <span>{row.fixture}</span>}<Pill status={row.status} done={doneQty} /></span>
         </div>
 
         {row.status === 'missing' ? (
@@ -88,7 +85,7 @@ function StopSheet({ row, onClose }) {
         ) : (
           <>
             <div className="facts">
-              <div><small>Room</small><b className="num">{row.capacity}</b><small>{row.facings} facings{row.places > 1 ? '' : ` × ${row.depth}`}</small></div>
+              <div><small>Room</small><b className="num">{row.capacity}</b><small>{row.places > 1 ? `${row.facings} facings` : `${row.facings} × ${row.depth}`}</small></div>
               <div><small>Floor</small><b className="num">{row.floor}</b></div>
               <div><small>Back</small><b className="num">{row.back}</b></div>
               <div><small>Bring</small><b className="num">{row.move}</b></div>
@@ -98,7 +95,7 @@ function StopSheet({ row, onClose }) {
               <div>
                 <div className="sec-h"><h2>Where it goes</h2><small>Floor count split by room, home shelf first</small></div>
                 <ul className="places">{row.locs.map((l) => (
-                  <li key={l.key} className={aisleClass(l.aisle)}><span className="aisle-tag" style={{ height: 22, minWidth: 28, fontSize: 13 }}>{aisleTag(l.aisle)}</span>{where(l)}<span className="num muted" style={{ marginLeft: 'auto' }}>{l.floor} of {l.capacity}, bring {l.move}</span></li>
+                  <li key={l.key} className={aisleClass(l.aisle)}><span className="aisle-tag">{aisleTag(l.aisle)}</span><span>{where(l)}<small className="num">{l.floor} of {l.capacity} on the shelf</small></span><b className="num">+{l.move}</b></li>
                 ))}</ul>
               </div>
             )}
@@ -123,9 +120,7 @@ function StopSheet({ row, onClose }) {
           </>
         )}
         {(doneQty != null || skipOf(s, row)) && <button className="btn ghost wide" onClick={reopen}>Open it again</button>}
-        <button className="btn ghost wide" onClick={onClose}><X size={18} /> Close</button>
-      </section>
-    </>
+    </Sheet>
   )
 }
 
@@ -161,23 +156,24 @@ export default function Walk() {
     if (r.move > 0 && !isDone(r)) t.left += 1
   }
   return (
-    <div>
-      <div className="walk-head">
-        <div className="title">
-          <h1>Restock walk</h1>
-          <p>{work.length - workDone.length} places to fill from the back, {units - moved} units. {outs ? `${outs} empty with none in the back.` : ''}</p>
-        </div>
-        <div className="progress">
-          <div className="progress-bar" role="progressbar" aria-valuenow={Math.round(pct)} aria-valuemin={0} aria-valuemax={100} aria-label="Walk progress"><i style={{ width: `${pct}%`, background: 'var(--text)' }} /></div>
-          <small className="num">{workDone.length} of {work.length} places done · {moved} of {units} units on the shelf</small>
-        </div>
-        <nav className="aislemap" aria-label="Aisles, in walking order">
-          {aisleTiles.map((t) => (
-            <button key={t.code} className={`tile ${aisleClass(t.aisle)} ${t.left === 0 ? 'clear' : ''}`} onClick={() => document.getElementById(`aisle-${t.code}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })} aria-label={`${t.aisle.label}: ${t.left ? `${t.left} places left` : 'done'}`}>
-              <b>{aisleTag(t.aisle)}</b><small className="num">{t.left ? `${t.left} left` : 'Done'}</small>
-            </button>
-          ))}
-        </nav>
+    <div className="page walk">
+      <div className="title">
+        <h1>Restock walk</h1>
+      </div>
+      <section className="card sumcard" aria-label="What is left">
+        <p className="sum num">{units - moved}<small> units to bring out</small></p>
+        <p>{work.length - workDone.length} places left{outs ? `, ${outs} empty with none in the back` : ''}.</p>
+        <div className="progress-bar" role="progressbar" aria-valuenow={Math.round(pct)} aria-valuemin={0} aria-valuemax={100} aria-label="Walk progress"><i style={{ width: `${pct}%` }} /></div>
+        <small className="num">{workDone.length} of {work.length} places done · {moved} of {units} units on the shelf</small>
+      </section>
+      <nav className="aislemap" aria-label="Aisles, in walking order">
+        {aisleTiles.map((t) => (
+          <button key={t.code} className={`tile ${aisleClass(t.aisle)} ${t.left === 0 ? 'clear' : ''}`} onClick={() => document.getElementById(`aisle-${t.code}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })} aria-label={`${t.aisle.label}: ${t.left ? `${t.left} places left` : 'done'}`}>
+            <b>{aisleTag(t.aisle)}</b><small className="num">{t.left ? `${t.left} left` : <CheckCircleFill size={14} />}</small>
+          </button>
+        ))}
+      </nav>
+      <div className="controls">
         <div className="seg" role="group" aria-label="How to list items in more than one place">
           <button aria-pressed={s.view === 'place'} onClick={() => set({ view: 'place' })}>Every place</button>
           <button aria-pressed={s.view === 'item'} onClick={() => set({ view: 'item' })}>One row per item</button>
@@ -187,20 +183,24 @@ export default function Walk() {
         </div>
       </div>
       {groups.length === 0 ? (
-        <div className="empty"><b>{f[0] === 'todo' ? 'Walk finished' : 'Nothing here'}</b><span>{f[0] === 'todo' ? 'Every place that needed stock has been done or noted.' : 'No places match this filter.'}</span>{f[0] === 'todo' && <Link className="btn" to="/summary">See the summary</Link>}</div>
+        <div className="card empty"><b>{f[0] === 'todo' ? 'Walk finished' : 'Nothing here'}</b><span>{f[0] === 'todo' ? 'Every place that needed stock has been done or noted.' : 'No places match this filter.'}</span>{f[0] === 'todo' && <Link className="btn" to="/summary">See the summary</Link>}</div>
       ) : groups.map((g) => (
-        <section key={g.code + g.rows[0].step} id={`aisle-${g.code}`} className={`aisle ${aisleClass(g.aisle)}`} aria-label={g.aisle.label}>
-          <div className="aisle-h"><span className="aisle-tag">{aisleTag(g.aisle)}</span><b>{g.aisle.label}</b><small>{g.aisle.kind === 'aisle' ? (g.aisle.n % 2 ? 'walk front to back' : 'walk back to front') : 'front of store'}</small></div>
+        <section key={g.code + g.rows[0].step} id={`aisle-${g.code}`} className={`card aisle ${aisleClass(g.aisle)}`} aria-label={g.aisle.label}>
+          <div className="aisle-h"><span className="aisle-tag">{aisleTag(g.aisle)}</span><b>{g.aisle.label}</b><small>{g.aisle.kind === 'aisle' ? (g.aisle.n % 2 ? 'Front to back' : 'Back to front') : 'Front of store'}</small></div>
           {g.rows.map((r) => {
             const d = doneOf(s, r)
+            const sk = skipOf(s, r)
             return (
               <button key={r.key} className={`stop ${isDone(r) ? 'is-done' : ''}`} onClick={() => setOpen(r.key)}>
-                <span className="stop-where">{r.places > 1 ? `${where(r)} · +${r.places - 1} more place` : where(r)}</span>
-                <span className="stop-name">{r.name}</span>
-                <span className="stop-meta"><span className="mono">{r.sku}</span><span className="num">{r.facings} facings</span>{r.status === 'missing' ? <span>no count</span> : <span className="num">floor {r.floor}/{r.capacity} · back {r.back}</span>}</span>
+                <span className="slot" aria-hidden="true">{isDone(r) && !sk ? <Check2 size={24} /> : <><small>{r.aisle.kind === 'end' ? 'shelf' : `bay ${r.bay}`}</small><b>{r.aisle.kind === 'end' ? r.shelf : `S${r.shelf}`}</b></>}</span>
+                <span className="stop-text">
+                  <span className="stop-name">{r.name}</span>
+                  <span className="stop-meta"><span className="mono">{r.sku}</span>{r.status === 'missing' ? ' · no count' : <span className="num"> · {r.floor} of {r.capacity} on shelf{r.places > 1 ? ` · ${r.places} places` : ''}</span>}</span>
+                  {sk ? <span className="pill partial">{sk}</span> : <Pill status={r.status} done={d} />}
+                </span>
                 <span className="stop-side">
-                  {r.status === 'missing' ? <span className="move zero">?</span> : r.move > 0 ? <span className="move num" style={{ color: 'var(--cink)' }}>+{r.move}<small> bring</small></span> : <span className="move zero num">0</span>}
-                  {skipOf(s, r) ? <span className="pill partial">{skipOf(s, r)}</span> : <Pill status={r.status} done={d} />}
+                  {r.status === 'missing' ? <span className="move zero">?</span> : r.move > 0 ? <span className="move num">+{r.move}</span> : <span className="move zero num">0</span>}
+                  <small>{r.status === 'missing' ? 'count it' : 'bring'}</small>
                 </span>
               </button>
             )
@@ -208,7 +208,7 @@ export default function Walk() {
         </section>
       ))}
       {open && <StopSheet row={rows.find((r) => r.key === open)} onClose={() => setOpen(null)} />}
-      <p className="muted" style={{ padding: '16px', fontSize: 13 }}>{STATUS.fill.label}: the backroom covers the gap. {STATUS.partial.label}: it covers some of it.</p>
+      <p className="muted foot-note">{STATUS.fill.label}: the backroom covers the gap. {STATUS.partial.label}: it covers some of it.</p>
     </div>
   )
 }

@@ -1,12 +1,72 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ArrowRepeat, Download, ExclamationTriangleFill, FileEarmarkSpreadsheet, Upload } from 'react-bootstrap-icons'
+import { ArrowRepeat, Check2, ChevronRight, Download, ExclamationTriangleFill, FileEarmarkSpreadsheet, Upload } from 'react-bootstrap-icons'
 import { SAMPLE, useStore } from '../store.jsx'
 import { FIELDS, readFile } from '../data/engine.js'
+import { Sheet } from '../ui/kit.jsx'
 
 const KIND = {
   plano: { title: 'Planogram', what: 'Where each item lives: aisle, bay, shelf, facings.' },
   inv: { title: 'Inventory count', what: 'How many are on the floor and in the backroom, per SKU.' },
+}
+// What each field should hold, said the way the associate would look for it in the file.
+const HINT = {
+  sku: 'The item number both files share',
+  name: 'The product name, for reading on the walk',
+  aisle: 'Aisle numbers, E1 and E2 for endcaps',
+  bay: 'The bay or section along the aisle',
+  shelf: 'Shelf number, 1 at the top',
+  pos: 'Left-to-right slot on the shelf',
+  facings: 'How many fronts the item gets',
+  depth: 'How many units stand behind each front',
+  fixture: 'Shelf, peg, cooler and so on',
+  floor: 'Units counted on the sales floor',
+  back: 'Units counted in the backroom',
+  counted: 'When the count was taken',
+}
+
+// Field names in running text: lower case, except the SKU.
+const low = (l) => (l === 'SKU' ? l : l.toLowerCase())
+
+// A few values from a column, so the associate can tell the columns apart by what they hold.
+const samples = (f, i) => [...new Set(f.rows.map((r) => String(r[i] ?? '').trim()).filter(Boolean))].slice(0, 3)
+
+// The column picker: a bottom sheet listing the file's columns with what is in them.
+function ColumnSheet({ kind, field, f, map, onPick, onClose }) {
+  const usedBy = (i) => FIELDS[kind].find((x) => x.id !== field.id && map[x.id] === i)
+  const opts = [...(field.need ? [] : [{ i: null, name: 'Not in this file', vals: 'Leave this out' }]), ...f.headers.map((h, i) => ({ i, name: h || `Column ${i + 1}`, vals: samples(f, i).join(', ') || 'Empty column' }))]
+  const keys = (e) => {
+    if (!['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(e.key)) return
+    e.preventDefault()
+    const els = [...e.currentTarget.querySelectorAll('[role="option"]')]
+    const k = els.indexOf(document.activeElement)
+    const to = e.key === 'Home' ? 0 : e.key === 'End' ? els.length - 1 : Math.min(els.length - 1, Math.max(0, k + (e.key === 'ArrowDown' ? 1 : -1)))
+    els[to]?.focus()
+  }
+  return (
+    <Sheet labelledBy="cs-h" onClose={onClose} className="picker">
+      <div className="bs-head">
+        <h2 id="cs-h">Column for {low(field.label)}</h2>
+        <p>{HINT[field.id]}. From {f.fileName}.</p>
+      </div>
+      <div className="optlist" data-scroll role="listbox" aria-labelledby="cs-h" onKeyDown={keys}>
+        {opts.map((o, k) => {
+          const on = (map[field.id] ?? null) === o.i
+          const first = k === 0 && !opts.some((x) => (map[field.id] ?? null) === x.i)
+          const other = o.i != null && usedBy(o.i)
+          return (
+            <button key={o.i ?? 'none'} role="option" aria-selected={on} className="opt" tabIndex={on || first ? 0 : -1} onClick={() => onPick(o.i)}>
+              <span className="opt-text">
+                <b>{o.name}</b>
+                <small>{other ? `Now used for ${low(other.label)} · ` : ''}{o.i == null ? o.vals : <>e.g. <span className="num">{o.vals}</span></>}</small>
+              </span>
+              <span className="opt-mark" aria-hidden="true">{on && <Check2 size={22} />}</span>
+            </button>
+          )
+        })}
+      </div>
+    </Sheet>
+  )
 }
 
 // One file: drop or pick it, see what was read, and fix any column the app could not match.
@@ -15,6 +75,7 @@ function FileCard({ kind }) {
   const [over, setOver] = useState(false)
   const [err, setErr] = useState('')
   const [busy, setBusy] = useState(false)
+  const [pick, setPick] = useState(null)
   const f = s.files[kind]
   const map = s.maps[kind]
   const take = async (file) => {
@@ -24,47 +85,71 @@ function FileCard({ kind }) {
     catch (e) { setErr(e.message || 'That file could not be read.') }
     setBusy(false)
   }
-  const setCol = (id, v) => set((c) => ({ maps: { ...c.maps, [kind]: { ...c.maps[kind], [id]: v === '' ? undefined : Number(v) } }, done: {}, skipped: {} }))
+  // Picking a column another field was using moves it: one column feeds one field.
+  const setCol = (id, i) => {
+    set((c) => {
+      const m = { ...c.maps[kind] }
+      for (const k of Object.keys(m)) if (i != null && m[k] === i) delete m[k]
+      if (i == null) delete m[id]; else m[id] = i
+      return { maps: { ...c.maps, [kind]: m }, done: {}, skipped: {} }
+    })
+    const field = FIELDS[kind].find((x) => x.id === id)
+    notify({ text: i == null ? `${field.label}: not in this file.` : `${field.label} reads from “${f.headers[i]}”.` })
+    setPick(null)
+  }
   const missingNeed = f ? FIELDS[kind].filter((x) => x.need && map[x.id] == null) : []
+  const field = pick && FIELDS[kind].find((x) => x.id === pick)
   return (
-    <section className={`dropzone ${over ? 'over' : ''} ${f ? 'has' : ''}`} aria-labelledby={`h-${kind}`}
+    <section className={`card filecard ${over ? 'over' : ''} ${f ? 'has' : 'none'}`} aria-labelledby={`h-${kind}`}
       onDragOver={(e) => { e.preventDefault(); setOver(true) }} onDragLeave={() => setOver(false)}
       onDrop={(e) => { e.preventDefault(); setOver(false); take(e.dataTransfer.files[0]) }}>
-      <div className="dz-top">
-        <span className="dz-icon">{f ? <FileEarmarkSpreadsheet size={20} /> : <Upload size={20} />}</span>
+      <div className="fc-top">
+        <span className="fc-icon" aria-hidden="true">{f ? <FileEarmarkSpreadsheet size={22} /> : <Upload size={22} />}</span>
         <div style={{ minWidth: 0 }}>
-          <b id={`h-${kind}`}>{KIND[kind].title}</b>
-          <small>{f ? <>{f.fileName} · {f.rows.length} rows · {f.headers.length} columns</> : KIND[kind].what}</small>
+          <h2 id={`h-${kind}`}>{KIND[kind].title}</h2>
+          <small>{f ? <>{f.fileName}<br /><span className="num">{f.rows.length} rows · {f.headers.length} columns</span></> : KIND[kind].what}</small>
         </div>
       </div>
-      <label className="btn ghost small" style={{ justifySelf: 'start' }}>
+      <label className="btn ghost wide">
         <input type="file" accept=".csv,.xlsx,text/csv" onChange={(e) => { take(e.target.files[0]); e.target.value = '' }} />
-        {busy ? 'Reading…' : f ? <><ArrowRepeat size={16} /> Replace file</> : <><Upload size={16} /> Choose CSV or Excel</>}
+        {busy ? 'Reading…' : f ? <><ArrowRepeat size={18} /> Replace file</> : <><Upload size={18} /> Choose CSV or Excel</>}
       </label>
       {err && <p className="note bad" role="alert"><ExclamationTriangleFill size={16} />{err}</p>}
       {f && (
         <>
-          {missingNeed.length > 0 && <p className="note bad" role="alert"><ExclamationTriangleFill size={16} />Pick a column for {missingNeed.map((x) => x.label.toLowerCase()).join(', ')} to continue.</p>}
-          <div className="maprows" role="group" aria-label={`Columns in ${f.fileName}`}>
-            {FIELDS[kind].map((x) => (
-              <label key={x.id} className="maprow">
-                <span>{x.label}{x.need && <em> *</em>}</span>
-                <select className={x.need && map[x.id] == null ? 'unset' : ''} value={map[x.id] ?? ''} onChange={(e) => setCol(x.id, e.target.value)}>
-                  <option value="">{x.need ? 'Choose a column' : 'Not in this file'}</option>
-                  {f.headers.map((h, i) => <option key={i} value={i}>{h || `Column ${i + 1}`}</option>)}
-                </select>
-              </label>
-            ))}
+          <div className="fc-sub">
+            <h3>Columns</h3>
+            <small>{missingNeed.length ? <span className="neg">{missingNeed.length} to choose</span> : 'All matched'}</small>
           </div>
-          <div className="scrollx">
-            <table className="preview">
-              <caption className="sr-only">First rows of {f.fileName}</caption>
-              <thead><tr>{f.headers.map((h, i) => <th key={i}>{h}</th>)}</tr></thead>
-              <tbody>{f.rows.slice(0, 3).map((r, k) => <tr key={k}>{f.headers.map((_, i) => <td key={i}>{String(r[i] ?? '')}</td>)}</tr>)}</tbody>
-            </table>
-          </div>
+          <ul className="maplist" aria-label={`Columns in ${f.fileName}`}>
+            {FIELDS[kind].map((x) => {
+              const i = map[x.id]
+              const unset = x.need && i == null
+              return (
+                <li key={x.id}>
+                  <button className={`maprow ${unset ? 'unset' : ''}`} onClick={() => setPick(x.id)} aria-haspopup="listbox">
+                    <span className="mr-label">{x.label}{x.need && <span className="sr-only"> (needed)</span>}</span>
+                    <span className="mr-value">
+                      {i != null ? <><b>{f.headers[i] || `Column ${i + 1}`}</b><small className="num">e.g. {samples(f, i)[0] ?? 'empty'}</small></> : unset ? <b>Choose a column</b> : <small>Not in this file</small>}
+                    </span>
+                    <ChevronRight size={16} aria-hidden="true" />
+                  </button>
+                </li>
+              )
+            })}
+          </ul>
+          <details className="peek">
+            <summary>First rows of the file</summary>
+            <div className="scrollx">
+              <table className="preview">
+                <thead><tr>{f.headers.map((h, i) => <th key={i}>{h}</th>)}</tr></thead>
+                <tbody>{f.rows.slice(0, 3).map((r, k) => <tr key={k}>{f.headers.map((_, i) => <td key={i}>{String(r[i] ?? '')}</td>)}</tr>)}</tbody>
+              </table>
+            </div>
+          </details>
         </>
       )}
+      {field && <ColumnSheet kind={kind} field={field} f={f} map={map} onPick={(i) => setCol(field.id, i)} onClose={() => setPick(null)} />}
     </section>
   )
 }
@@ -78,22 +163,23 @@ export default function Files() {
     <div className="page">
       <div className="title">
         <h1>Files</h1>
-        <p className="muted">Add today’s planogram and stock count. They are joined on SKU here on the phone; nothing is uploaded.</p>
+        <p>Add today’s planogram and stock count. They are joined on SKU here on the phone; nothing is uploaded.</p>
       </div>
       <FileCard kind="plano" />
       <FileCard kind="inv" />
       {both && ok ? (
         <button className="btn wide" onClick={() => nav('/check')}>Check the join</button>
       ) : !both ? (
-        <div style={{ display: 'grid', gap: 10 }}>
+        <section className="card">
+          <div className="fc-sub"><h3>No files to hand?</h3></div>
+          <p className="muted">Store 214’s files from this morning are messy the way real exports are.</p>
           <button className="btn wide" onClick={async () => { await loadSamples(); notify({ text: 'Sample files for store 214 loaded.' }); nav('/check') }}>Use the sample files</button>
           <div className="samples">
-            <span className="muted">Or download them, edit, and add them back:</span>
-            <a href={SAMPLE.plano} download><Download size={14} /> planogram-store-214.csv</a>
-            <a href="samples/inventory-store-214.xlsx" download><Download size={14} /> inventory-store-214.xlsx</a>
-            <a href={SAMPLE.inv} download><Download size={14} /> inventory-store-214.csv</a>
+            <a href={SAMPLE.plano} download><Download size={16} /> planogram-store-214.csv</a>
+            <a href="samples/inventory-store-214.xlsx" download><Download size={16} /> inventory-store-214.xlsx</a>
+            <a href={SAMPLE.inv} download><Download size={16} /> inventory-store-214.csv</a>
           </div>
-        </div>
+        </section>
       ) : null}
     </div>
   )
