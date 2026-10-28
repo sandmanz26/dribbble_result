@@ -43,6 +43,7 @@ itself are in `AGENTS.md`; each project branch keeps its own `README.md` and `do
 - Proposals and messages must not contain contact details or payment brand names (emails, phone
   numbers, social handles, "DM me", PayPal, Stripe, bank transfer and so on). Never obfuscate links;
   if a link is flagged, show the work as a Dribbble shot instead.
+- Ready-to-paste proposals for project11 and project12 are in `docs/proposals.md`.
 - Tone the owner wants: natural, casual but professional, straightforward and polite. No forced or
   cute lines.
 - For projects 8, 9 and 10 the proposals say plainly that the prototype is an early exploration made
