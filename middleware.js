@@ -18,6 +18,9 @@ const PASSWORDS = {
   project8: 'td-9ymu-nhd4', // Tend wellness ritual app
   project9: 'gt-m3bk-20lf', // GlobalTrade broker website and dashboards
   project10: 'fu-p6pu-f2la', // Faceup planogram restock app
+  project11: 'ck-7rmz-q4hp', // Flock & Flame chicken and grill menu app
+  project12: 'gs-k2vx-9dnb', // Golden Stone Logistics, China and Ghana freight website
+  flowdirector: 'fd-w8tq-3jxc', // Flow Director clinic operations prototype (Upwork, not a projectN slug)
 }
 
 // Nothing on this site may be indexed: every response says so, and robots.txt turns crawlers away.

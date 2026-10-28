@@ -67,6 +67,11 @@ Live site: `https://proposal-virid-eight.vercel.app/<slug>/` (root and unknown p
 | project8 | td-9ymu-nhd4 | Tend, wellness check-in to ritual | Mobile app + research PDF |
 | project9 | gt-m3bk-20lf | GlobalTrade, premium broker site + client and staff areas | Website + dashboards |
 | project10 | fu-p6pu-f2la | Faceup, restock walk from planogram and stock count | Mobile app |
+| project11 | ck-7rmz-q4hp | Flock & Flame, chicken and grill menu app with offline ordering | Mobile app |
+| project12 | gs-k2vx-9dnb | Golden Stone Logistics, China and Ghana freight website (English and Chinese) | Website |
+| flowdirector | fd-w8tq-3jxc | Flow Director, clinic operations with an AI employee (Upwork) | Web app + handoff |
+
+Upwork briefs get their own slug instead of `projectN` (owner's request), letters only.
 
 Stack and design notes for each are in the AGENTS.md table.
 
@@ -101,6 +106,25 @@ Five rounds; full detail in `docs/recap.md` on the `claude/globaltrade-broker` b
   as pale tiles, every choice in a bottom sheet, and a custom column picker (keyboard support, drag to
   close, moves a column already in use). No native selects remain.
 
+### projects 11, 12 and Flow Director (one request, three briefs)
+The owner asked for all three at once, as senior UI/UX designer and head of creative, with
+`/design-taste-frontend`, references treated only as direction ("jangan tangkap mentah mentah"),
+and real impact. Reference pages (Dribbble, Behance) and every photo host were blocked from the
+build environment, and the Higgsfield connector only exposed read tools again, so none of the 15
+image credits for project11 were used. Each branch's `docs/recap.md` has the photo slots and prompts.
+- **project11, Flock & Flame** (Dribbble, under $100): four menu boards in the colours of the four
+  sauces on the counter; food drawn in code; heat, dips, sides; kitchen-ticket tracking; real
+  offline (service worker, outbox that sends when back online, "Simulate no signal" switch); Menu
+  manager that publishes numbered menu versions for "easy content updates".
+- **project12, Golden Stone Logistics**: one motif, the circle: moon gate with a turning WebGL
+  globe, coin-shaped mark, kente and key fret as edges; quote calculator, tracking demo, offices
+  with live dials; full English and Chinese switch; future features marked Coming soon.
+- **flowdirector** (Upwork, Nick Murphy): owner asked for shadcn as a base but improved, deep
+  research first, only critical pages built and the rest shown as Upcoming. Built on their stack
+  (React, TypeScript, Tailwind, Radix) with a job-state system, approvals with evidence and the rule
+  that triggered them, recovery paths, activity log with undo, autonomy rules and a handoff page
+  with the async API spec. Research in the branch's `docs/research.md`.
+
 ## 6. Open items
 
 - project9: generate the hero tiles, metal card and panel renders in Higgsfield once the generation
@@ -109,6 +133,12 @@ Five rounds; full detail in `docs/recap.md` on the `claude/globaltrade-broker` b
 - project5: an earlier partial UX-roast edit in a local working copy was never committed; ask the
   owner before finishing it.
 - project4: optional two or three visual explorations for the client's mood board conversation.
+- project11 and project12: generate food and logistics photos once Higgsfield generation is
+  enabled (allow the generation tool in the connector settings on claude.ai); slots and prompts are
+  in each branch's `docs/recap.md`. project12's Chinese copy needs a native speaker's review.
+- flowdirector: proposal text for Upwork answering the screening questions (pending work, errors,
+  approvals, recovery; walkthrough to design; API and async constraints) can be drawn from the
+  branch's `docs/research.md` and the handoff screen.
 
 ## 7. Tooling notes for whoever continues
 

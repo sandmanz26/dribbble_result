@@ -8,5 +8,8 @@
   { "slug": "project7", "branch": "claude/caravan-group-travel", "title": "Caravan group travel" },
   { "slug": "project8", "branch": "claude/tend-wellness-ritual", "title": "Tend wellness ritual" },
   { "slug": "project9", "branch": "claude/globaltrade-broker", "title": "GlobalTrade broker" },
-  { "slug": "project10", "branch": "claude/planogram-restock-app", "title": "Faceup planogram restock" }
+  { "slug": "project10", "branch": "claude/planogram-restock-app", "title": "Faceup planogram restock" },
+  { "slug": "project11", "branch": "claude/flock-flame-menu-app", "title": "Flock & Flame menu app" },
+  { "slug": "project12", "branch": "claude/golden-stone-logistics", "title": "Golden Stone Logistics" },
+  { "slug": "flowdirector", "branch": "claude/flow-director-clinic-ops", "title": "Flow Director (Upwork)" }
 ]
