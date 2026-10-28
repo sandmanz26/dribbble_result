@@ -3,41 +3,45 @@
 /* Flow Director tokens (taste-skill "framed sheet", tinted to the product's teal). The frame is a
    green-grey, the work sits on a white sheet, colour is spent on job state and the one chart. */
 @theme {
-  --color-frame: #f0f4f3;
+  --color-frame: #f3f4f1;
   --color-sheet: #ffffff;
-  --color-raised: #f4f6f6;
-  --color-active: #e6ecea;
-  --color-edge: #e3e8e7;
-  --color-rule: #eef1f0;
-  --color-control: #cbd2d0;
-  --color-ink: #121615;
-  --color-muted: #5a6261;
-  --color-faint: #5f6766;
-  --color-accent: #165e6e;
-  --color-accent-soft: #e3f0f2;
-  --color-positive: #1e7b4f;
-  --color-negative: #b4232a;
-  --color-warning: #8a3f0c;
-  --color-chart-1: #165e6e;
-  --color-chart-2: #9fb8bd;
-  --color-pos-bg: #dcf5e5; --color-pos-ink: #0b3a1f;
-  --color-neg-bg: #fdecea; --color-neg-ink: #7d1b1f;
-  --color-warn-bg: #fdf4e3; --color-warn-ink: #7a370a;
-  --color-neu-bg: #e9eeed; --color-neu-ink: #303736;
-  --color-info-bg: #e3f0f2; --color-info-ink: #0f4652;
-  --font-sans: 'Mona Sans Variable', system-ui, sans-serif;
+  --color-raised: #f6f7f5;
+  --color-active: #e8ece9;
+  --color-edge: #e2e6e3;
+  --color-rule: #edf0ee;
+  --color-control: #c9d0cc;
+  --color-ink: #111816;
+  --color-muted: #555f5b;
+  --color-faint: #5f6965;
+  --color-accent: #0f5c4d;
+  --color-accent-ink: #0b4a3e;
+  --color-accent-soft: #e3efea;
+  --color-positive: #1d7a4c;
+  --color-negative: #b3261e;
+  --color-warning: #8a4a06;
+  --color-chart-1: #0f5c4d;
+  --color-chart-2: #a9c3ba;
+  --color-chart-3: #d9c08a;
+  --color-pos-bg: #dcf3e5; --color-pos-ink: #0c3b21;
+  --color-neg-bg: #fbe9e7; --color-neg-ink: #7c1b16;
+  --color-warn-bg: #fbf0dc; --color-warn-ink: #6e3a05;
+  --color-neu-bg: #eaeeec; --color-neu-ink: #2e3633;
+  --color-info-bg: #e3efea; --color-info-ink: #0b4a3e;
+  --font-sans: 'Plus Jakarta Sans Variable', system-ui, sans-serif;
   --font-mono: 'Commit Mono', ui-monospace, monospace;
-  --radius-card: 8px;
-  --radius-control: 6px;
+  --radius-card: 10px;
+  --radius-control: 8px;
   --radius-sheet: 16px;
 }
 
 @layer base {
   html, body, #root { height: 100%; }
-  body { margin: 0; background: var(--color-frame); color: var(--color-ink); font-family: var(--font-sans); font-size: 14px; line-height: 1.45; -webkit-font-smoothing: antialiased; font-feature-settings: 'ss01'; }
+  body { margin: 0; background: var(--color-frame); color: var(--color-ink); font-family: var(--font-sans); font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; letter-spacing: -0.003em; }
   button { cursor: pointer; }
   :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
-  ::selection { background: #cfe4e8; }
+  ::selection { background: #cde4dc; }
+  input, textarea, select { font: inherit; color: inherit; }
+  main .grid > * { min-width: 0; }
 }
 
 @utility tnum { font-variant-numeric: tabular-nums; }

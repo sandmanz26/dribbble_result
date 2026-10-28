@@ -1,20 +1,13 @@
-# Flow Director (Upwork): recap
+# Rawat (formerly the Flow Director Upwork prototype): recap
 
-- Brief (Upwork, Nick Murphy, clinician and founder; founding engineer Jon): polished screens and
-  clickable prototypes for real clinic workflows, interaction specs, consistent navigation, reusable
-  components, responsive layouts, loading / empty / error / pending / approval / recovery states,
-  clear AI and human hand-offs, developer-ready handoff. Their stack: React, TypeScript, Tailwind,
-  Radix, Laravel. Synthetic data only.
-- Owner's direction: use shadcn as the base but improve on it; research the topic deeply first to
-  show maturity; build only the critical pages and keep the others in the menu as Upcoming; give the
-  Upwork project its own URL, not a projectN slug.
-- Hub: slug `flowdirector`, password `fd-w8tq-3jxc`.
-- taste-skill app style "framed sheet" (tinted frame, white sheet). IBM Plex was dealt but is used
-  in project3, so Mona Sans + Commit Mono. Inspector: 0 FAIL on every built screen.
-- Improvements over stock shadcn: one job-state vocabulary with glyphs, pending buttons that keep
-  their width, a Patrick mark distinct from people, proposal + evidence + rule on every ask,
-  recovery cards, toast with undo countdown, keyboard triage, review links for every state.
-- Roast before shipping: mobile frame left a blank band (grid rows fixed); a failed plan still read
-  "If you approve" (now struck through as "Original plan, not done"); the plan text did not update
-  after recovery (fixed); rings read as shadows (now borders); grey text under 4.5:1 (darkened);
-  counts in the sidebar card and Today disagreed (one definition).
+- Round 1: built for an Upwork brief (Flow Director, AI employee "Patrick", US clinic workflows).
+- Round 2 (owner): rename it and make it the owner's own portfolio piece; complete the modules; make
+  the software meet the operational standards of a clinic in detail, with business research; a demo
+  banner at the bottom; Indonesian names so it reads like real past work.
+- What changed: renamed **Rawat**; Indonesian klinik pratama context (BPJS, PCare, Mobile JKN,
+  SATUSEHAT, KBK, the 144 diagnoses, Prolanis, pharmacy standards); assistant renamed **Asa**; 17
+  modules (see README); role switching; Plus Jakarta Sans; demo banner always visible.
+- Hub: slug `rawat`, password `fd-w8tq-3jxc` (unchanged); `/flowdirector/` still works for links
+  already sent.
+- UI language is English with Indonesian terms kept (BPJS, NIK, Poli names translated). A Bahasa
+  Indonesia version is a possible next step.

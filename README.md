@@ -1,31 +1,45 @@
-# Flow Director: clinic operations prototype
+# Rawat: clinic operations for Indonesian primary clinics
 
-Clickable prototype for Flow Director, clinic operations software with an AI employee, Patrick, who
-does referral intake, insurance checks, scheduling and prior authorizations, and hands work to
-people when a rule or a failure requires it. Built for an Upwork brief (product designer for AI
-operations software). Synthetic data only.
+A portfolio design and front-end project: an operations platform for a klinik pratama (primary
+clinic) that serves BPJS, self-pay and insurance patients, with an AI assistant, Asa, that handles
+routine administration and asks staff where a rule says so. The clinic (Klinik Pratama Kenanga
+Medika, Bandung), its staff and patients are fictional; all data is synthetic.
 
-Hosted on the portfolio hub at `/flowdirector/` (password protected, never indexed).
+Hosted on the portfolio hub at `/rawat/` (password protected, never indexed). The earlier link
+`/flowdirector/` serves the same build.
 
-## Screens
-- **Today**: what needs a person, what Patrick is doing now, work per hour.
-- **Queue**: inbox triage with views For people / Patrick working / Closed; each item shows Patrick's
-  proposal, the effects, the rule that made it ask, the evidence with confidence, and Approve,
-  Decline (with reason), or take over. Failed items show recovery options. Approving Ana Torres's
-  booking meets a real conflict the first time, to show recovery.
-- **Run**: every step of a workflow as its own job, with attempts, outputs and state.
-- **Referrals**, **Activity** (audit log with undo), **Rules for Patrick** (Do it / Ask first / Never).
-- **Design handoff**: state vocabulary, async interaction spec, API shapes, links to every state.
-- Menu items not designed yet stay in the menu marked Upcoming.
-
-Review links: `#/queue/T-2086`, `#/queue/T-2079`, `#/runs/R-5583`, `#/queue?state=loading`,
-`#/queue?state=empty`, `#/queue?state=error`, `#/handoff`.
+## Modules
+- **Today**: the clinic floor as one line (patients at each station, longest wait), the role's own
+  work, Asa's asks, system health, contact rate.
+- **Front desk**: patient search by name, NIK, BPJS or RM; live BPJS participant check (active,
+  inactive, registered at another FKTP, with what to do); new medical record with NIK validation;
+  Mobile JKN bookings check-in; queue ticket; one open visit per patient.
+- **Queue board** and a **waiting room screen** (`#/display`).
+- **Vitals and triage**: out-of-range flags as you type, BMI, suggested triage, red jumps the queue.
+- **Consultations**: doctor's queue with call next; SOAP with an Asa draft that the doctor must sign;
+  ICD-10 search; flags for the 144 diagnoses a primary clinic treats to completion; prescriptions
+  checked against allergies, stock and the national formulary; lab orders; procedures; BPJS referral
+  with medical indication.
+- **Lab**: point-of-care results with reference ranges, back to the ordering doctor.
+- **Pharmacy**: review, pick by batch (first expiry first out), label, counsel, hand over.
+- **Cashier**: bill per visit; capitation, non-capitation claim, insurance, or self-pay by QRIS,
+  cash (with change) or debit.
+- **Patients**: records with identity, cover, allergies, Prolanis, visits; record opening is logged.
+- **Doctor schedule** (published to Mobile JKN), **Drug stock** (batches, expiry, minimums,
+  purchase orders), **BPJS and SATUSEHAT** (every sync as a job with state, error, fix and retry),
+  **Reports** (KBK indicators, income by payer, waits, LB1 top diagnoses), **Asa** (asks, done,
+  rules), **Activity log**, **Settings** (staff IHS numbers, roles, connections).
+- **Roles**: switch between manager, front desk, nurse, doctor, pharmacist and cashier from the top
+  right; the menu and access change. Screens show loading, empty, error and no-access states
+  (`?state=loading|empty|error`).
 
 ## Stack
-React 18 + TypeScript, Vite 5 (`base: './'`), HashRouter, Tailwind v4, Radix, cva. Mona Sans and
-Commit Mono (Fontsource). No backend; state lives in memory.
+React 18 + TypeScript, Vite 5 (`base: './'`), HashRouter, Tailwind v4, Radix (dialog, popover,
+select, tabs, tooltip, switch), class-variance-authority, Radix Icons. Plus Jakarta Sans and Commit
+Mono (IDs), self-hosted. In-memory state; the selected demo role is kept under `rw-role`.
 
-Docs: `docs/research.md`, `docs/handoff.md`, `docs/recap.md`.
+Docs: `docs/research.md` (regulations, business model, competitors), `docs/strategy.md`,
+`docs/handoff.md`, `docs/recap.md`.
 
 ```bash
 npm ci && npm run dev
