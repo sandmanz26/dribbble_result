@@ -2,7 +2,7 @@
 
 Clickable prototype for the GlobalTrade brief: a premium black-and-gold broker website with sign-up,
 secure log-in, a client area and a staff back office. React 18, Vite 5, react-router (HashRouter),
-Carbon icons, Work Sans. No backend: prices are a simulated demo feed and all data is in `src/data/`.
+Carbon icons, Bodoni Moda and Jost. No backend: prices are a simulated demo feed and all data is in `src/data/`.
 
 - `#/` website: live trading-session clock, labelled demo charts, one order from placed to closed,
   markets, sign-up steps, one account, company facts, questions, contact.

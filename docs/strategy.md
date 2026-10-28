@@ -22,10 +22,13 @@ risk warning sits at the top of every page, and prices are labelled as a demo fe
   checks in plain numbers is easier to trust.
 
 ## Idea
-GlobalTrade's day is the world's trading day. The hero is a live chart of gold (the brand's gold is
-also the instrument), and the first thing below it is the four trading sessions with a marker at the
-visitor's real minute: what is open now and what that means. Dark room direction: one warm black
-field and in it the lit things, which are the markets.
+The first version (a live gold chart in a "dark room") read as cheap: it looked like every other
+trading site. The brief asks for premium, so the site now borrows the manners of a watchmaker's
+counter. The object at the counter is the market itself: the four trading sessions drawn as a
+world-time dial, set to the visitor's real minute, with the open centres lit in gold. Under it the
+name as a wide, low wordmark, one serif sentence, the price of entry inside the only gold button.
+Below, the broker shows its paperwork the way a private bank would: a confirmation, a statement, a
+cost breakdown and a receipt on paper, with sums that add up to the demo account.
 
 ## Decisions
 - Gold only on the one action per screen and on price lines; everything else black and stone.
@@ -36,9 +39,14 @@ field and in it the lit things, which are the markets.
   available is worked out from equity minus margin and money already held.
 - Staff see why a payment is held, in words, next to the payment; identity checks show their age
   against a 24-hour target; support shows the client's status and payments beside the thread.
-- taste-skill: page direction "the dark room" (seed 500430564; about section redrawn to side facts
-  because there are no team portraits; type redrawn to Work Sans because the dealt fonts could not be
-  self-hosted); app style "data terminal" (seed 1273256742) with every selection a 1px gold line.
+- taste-skill: page direction "dressed as something else" (seed 1278926845), borrowed category the
+  watch counter: counter-object hero, output index with live sheet, markets as a line-up at one size,
+  one card in four fields, two plan fields (the live plan in gold), highlighted about text, tabbed
+  index-card FAQ, contact in display rows, wordmark footer. Type: Bodoni Moda (display) and Jost
+  (wordmark and text). Palette: black and charcoal fields, ivory ink, one champagne gold. App style
+  "data terminal" (seed 1273256742) kept, in the new type and neutral blacks.
+- No photographs: the open image collections were unreachable, and the subject's real pictures are
+  its documents and interface, so every picture is a working fragment built in HTML or SVG.
 
 ## States
 Empty client account (new sign-up), identity in review, wrong password with attempts left and
