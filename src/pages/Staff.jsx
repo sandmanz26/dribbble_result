@@ -1,10 +1,20 @@
 import { useMemo, useState } from 'react'
 import { Link, Route, Routes } from 'react-router-dom'
-import { Chat, Dashboard, Identification, Money, Search, UserMultiple, Warning } from '@carbon/icons-react'
+import { Bar, BarChart, Cell, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+import { ArrowRight, Chat, Checkmark, Close, Dashboard, Document, Identification, Money, Rule, Search, Send, UserMultiple } from '@carbon/icons-react'
 import { useStore } from '../store.jsx'
 import Shell from '../ui/Shell.jsx'
 import { usd } from '../data/market.js'
 import { CLIENTS, KYC, KYC_TARGET_H, MOVES, RULES, TICKETS } from '../data/staff.js'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
+import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Input, Label, Textarea } from '@/components/ui/input'
+import { Avatar } from '@/components/ui/misc'
+import { Empty, Kpi, Notice, PageHeader } from '@/components/dash'
+import { cn } from '@/lib/utils'
 
 // The back office on the demo morning: Wednesday 28 October 2026, 11:00 UTC. Every count on
 // the overview is computed from the queues below it, after the decisions made in this demo.
@@ -18,8 +28,8 @@ const ITEMS = [
   ['/staff/clients', 'Clients', UserMultiple],
   ['/staff/support', 'Support', Chat],
 ]
-const PILL = { Verified: 'ok', Approved: 'ok', Completed: 'ok', Released: 'ok', Pending: 'wait', 'In review': 'wait', Held: 'wait', 'More info': 'wait', Open: 'wait', Rejected: 'bad', Returned: 'bad', Restricted: 'bad', 'Waiting on client': '', Solved: '' }
-const Pill = ({ v }) => <span className={`st ${PILL[v] ?? ''}`}>{v}</span>
+const TONE = { Verified: 'ok', Approved: 'ok', Completed: 'ok', Released: 'ok', Pending: 'wait', 'In review': 'wait', Held: 'wait', 'More info': 'wait', Open: 'wait', Rejected: 'bad', Returned: 'bad', Restricted: 'bad', 'Waiting on client': 'neutral', Solved: 'neutral' }
+const Pill = ({ v }) => <Badge tone={TONE[v] ?? 'neutral'} dot>{v}</Badge>
 
 function useBackOffice() {
   const { s, set, notify } = useStore()
@@ -58,49 +68,58 @@ function Overview() {
   const held = b.moves.filter((m) => m.status === 'Held' || m.status === 'In review')
   const flagged = held.filter((m) => m.flags.length)
   const open = b.tickets.filter((t) => t.status === 'Open')
+  const ages = b.waiting.map((k) => ({ name: b.byClient[k.client].name.split(' ')[0], h: Math.round(k.age * 10) / 10, late: k.age > KYC_TARGET_H }))
   return (
-    <>
-      <div className="titlerow">
-        <div>
-          <h1>Back office</h1>
-          <p className="finding">{late.length ? `${late.length} identity ${late.length === 1 ? 'check is' : 'checks are'} past the ${KYC_TARGET_H}-hour target; the oldest has waited ${ageLabel(late[0].age)}.` : `Every identity check is inside the ${KYC_TARGET_H}-hour target.`} {flagged.length} payments are held by a rule.</p>
-        </div>
-        <span className="stamp">Wed 28 Oct, 11:00 UTC</span>
-      </div>
-      <section className="card" aria-label="Queues">
-        <div className="kpis">
-          <div><small>Identity checks waiting</small><b className="num">{b.waiting.length}</b><span>{late.length} past {KYC_TARGET_H} h</span></div>
-          <div><small>Payments to review</small><b className="num">{held.length}</b><span className="num">{usd(held.reduce((a, m) => a + m.amount, 0), 0)} in total</span></div>
-          <div><small>Held by a rule</small><b className="num">{flagged.length}</b><span>Need a decision</span></div>
-          <div><small>Tickets waiting on us</small><b className="num">{open.length}</b><span>{b.tickets.filter((t) => t.status === 'Waiting on client').length} waiting on clients</span></div>
-        </div>
+    <div className="dash-in grid gap-5">
+      <PageHeader title="Back office" finding={<>{late.length ? `${late.length} identity ${late.length === 1 ? 'check is' : 'checks are'} past the ${KYC_TARGET_H}-hour target; the oldest has waited ${ageLabel(late[0].age)}.` : `Every identity check is inside the ${KYC_TARGET_H}-hour target.`} {flagged.length} payments are held by a rule.</>}>
+        <Badge tone="neutral">Wed 28 Oct, 11:00 UTC</Badge>
+      </PageHeader>
+      <section aria-label="Queues" className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <Kpi label="Identity checks waiting" icon={Identification} value={b.waiting.length} sub={<span className={late.length ? 'text-destructive' : ''}>{late.length} past {KYC_TARGET_H} h</span>} />
+        <Kpi label="Payments to review" icon={Money} value={held.length} sub={`${usd(held.reduce((a, m) => a + m.amount, 0), 0)} in total`} />
+        <Kpi label="Held by a rule" icon={Rule} value={flagged.length} sub="Need a decision" />
+        <Kpi label="Tickets waiting on us" icon={Chat} value={open.length} sub={`${b.tickets.filter((t) => t.status === 'Waiting on client').length} waiting on clients`} />
       </section>
-      <div className="grid2">
-        <section className="card" aria-labelledby="kq-h">
-          <div className="card-h"><h2 id="kq-h">Identity checks, oldest first</h2><Link to="/staff/kyc">Open queue</Link></div>
-          {b.waiting.length === 0 ? <p className="empty">No checks waiting.</p> : (
-<div className="wrap"><table className="tbl"><thead><tr><th>Client</th><th>What the check found</th><th className="r">Waiting</th></tr></thead>
-              <tbody>{b.waiting.slice(0, 5).map((k) => (
-                <tr key={k.id}><td>{b.byClient[k.client].name}<span className="sub">{k.id} · {b.byClient[k.client].country}</span></td><td>{k.check}</td><td className={`r ${k.age > KYC_TARGET_H ? 'neg' : ''}`}>{ageLabel(k.age)}</td></tr>
-              ))}</tbody></table></div>
-          )}
-        </section>
-        <section className="card" aria-labelledby="tq-h">
-          <div className="card-h"><h2 id="tq-h">Support tickets, open first</h2><Link to="/staff/support">Open inbox</Link></div>
-          {b.tickets.length === 0 ? <p className="empty">Inbox clear.</p> : (
-            <ul className="ilist">{[...b.tickets].sort((x, y) => (y.status === 'Open') - (x.status === 'Open')).map((t) => <li key={t.id}><Link to={`/staff/support?t=${t.id}`} style={{ display: 'grid', gap: 2, padding: '10px 0', borderBottom: '1px solid #1d1a15', textDecoration: 'none' }}><span>{t.subject}</span><small>{b.byClient[t.client].name} · {t.status} · {ageLabel(hoursSince(t.opened))} ago</small></Link></li>)}</ul>
-          )}
-        </section>
+      <div className="grid gap-5 xl:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]">
+        <Card>
+          <CardHeader><div><CardTitle>Identity checks, oldest first</CardTitle><CardDescription>Hours waiting against the {KYC_TARGET_H}-hour target</CardDescription></div><Button variant="ghost" size="sm" asChild><Link to="/staff/kyc">Open queue<ArrowRight size={14} /></Link></Button></CardHeader>
+          <CardContent>
+            {ages.length === 0 ? <Empty>No checks waiting.</Empty> : (
+              <div className="h-[240px]">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={ages} layout="vertical" margin={{ top: 4, right: 24, bottom: 0, left: 0 }}>
+                    <XAxis type="number" tick={{ fill: '#8b909a', fontSize: 11 }} axisLine={false} tickLine={false} unit=" h" />
+                    <YAxis type="category" dataKey="name" tick={{ fill: '#eceae4', fontSize: 12 }} axisLine={false} tickLine={false} width={64} />
+                    <Tooltip cursor={{ fill: 'rgba(255,255,255,0.03)' }} content={({ active, payload }) => active && payload?.length ? <div className="rounded-md border border-border bg-popover px-2.5 py-1.5 text-xs">{payload[0].payload.name}: {ageLabel(payload[0].payload.h)}</div> : null} />
+                    <ReferenceLine x={KYC_TARGET_H} stroke="#d4ae62" strokeDasharray="4 4" label={{ value: 'Target', fill: '#d4ae62', fontSize: 11, position: 'top' }} />
+                    <Bar dataKey="h" radius={[0, 4, 4, 0]} barSize={14}>{ages.map((a, i) => <Cell key={i} fill={a.late ? '#f0716b' : 'rgba(236,234,228,0.35)'} />)}</Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader><div><CardTitle>Support tickets</CardTitle><CardDescription>Open first</CardDescription></div><Button variant="ghost" size="sm" asChild><Link to="/staff/support">Open inbox<ArrowRight size={14} /></Link></Button></CardHeader>
+          <ul className="grid grid-cols-1 p-2 pt-3">{[...b.tickets].sort((x, y) => (y.status === 'Open') - (x.status === 'Open')).slice(0, 5).map((t) => (
+            <li key={t.id}><Link to={`/staff/support?t=${t.id}`} className="flex items-center gap-3 rounded-md px-3 py-2.5 hover:bg-white/[0.04]">
+              <Avatar name={b.byClient[t.client].name} />
+              <span className="min-w-0 flex-1"><span className="block truncate text-[13.5px]">{t.subject}</span><span className="block truncate text-[11.5px] text-muted-foreground">{b.byClient[t.client].name} · {ageLabel(hoursSince(t.opened))} ago</span></span>
+              <Pill v={t.status} />
+            </Link></li>
+          ))}</ul>
+        </Card>
       </div>
-      <section className="card" aria-labelledby="mq-h">
-        <div className="card-h"><h2 id="mq-h">Payments held by a rule</h2><Link to="/staff/money">All payments</Link></div>
-        {flagged.length === 0 ? <p className="empty">Nothing held. New flags appear here as payments arrive.</p> : (
-          <div className="wrap"><table className="tbl"><thead><tr><th>Payment</th><th>Client</th><th>Why it is held</th><th className="r">Amount</th></tr></thead>
-            <tbody>{flagged.map((m) => <tr key={m.id}><td>{m.kind}<span className="sub">{m.id} · {m.at.slice(11)}</span></td><td>{b.byClient[m.client].name}</td><td>{m.flags.map((f) => RULES[f]).join('; ')}</td><td className="r">{usd(m.amount)}</td></tr>)}</tbody>
-          </table></div>
-        )}
-      </section>
-    </>
+      <Card>
+        <CardHeader><div><CardTitle>Payments held by a rule</CardTitle><CardDescription>The rule that held each payment, in words</CardDescription></div><Button variant="ghost" size="sm" asChild><Link to="/staff/money">All payments<ArrowRight size={14} /></Link></Button></CardHeader>
+        <div className="pt-4">{flagged.length === 0 ? <Empty>Nothing held. New flags appear here as payments arrive.</Empty> : (
+          <Table>
+            <TableHeader><TableRow><TableHead>Payment</TableHead><TableHead>Client</TableHead><TableHead>Why it is held</TableHead><TableHead className="text-right">Amount</TableHead></TableRow></TableHeader>
+            <TableBody>{flagged.map((m) => <TableRow key={m.id}><TableCell>{m.kind}<span className="mt-0.5 block text-[11.5px] text-muted-foreground">{m.id} · {m.at.slice(11)}</span></TableCell><TableCell>{b.byClient[m.client].name}</TableCell><TableCell className="whitespace-normal text-muted-foreground">{m.flags.map((f) => RULES[f]).join('; ')}</TableCell><TableCell className="text-right font-medium">{usd(m.amount)}</TableCell></TableRow>)}</TableBody>
+          </Table>
+        )}</div>
+      </Card>
+    </div>
   )
 }
 
@@ -118,42 +137,49 @@ function Kyc() {
     if (nextUp) setSel(nextUp.id)
   }
   return (
-    <>
-      <div className="titlerow"><div><h1>Identity checks</h1><p>Target: a decision within {KYC_TARGET_H} hours of the documents arriving.</p></div></div>
-      <div className="tabs" role="tablist">{Object.keys(lists).map((t) => <button key={t} role="tab" aria-selected={tab === t} onClick={() => setTab(t)}>{t}<span className="count">{lists[t].length}</span></button>)}</div>
-      <div className="inbox">
-        <section className="card" style={{ padding: 0 }} aria-label="Checks">
-          {list.length === 0 ? <p className="empty" style={{ padding: 16 }}>{tab === 'Waiting' ? 'No checks waiting.' : 'Nothing decided yet today.'}</p> : (
-            <ul className="ilist">{list.map((x) => (
-              <li key={x.id} className={k?.id === x.id ? 'on' : ''}><button onClick={() => setSel(x.id)}>
-                <span className="row1"><span>{b.byClient[x.client].name}</span><span className={x.age > KYC_TARGET_H && !x.decision ? 'neg' : 'dash'}>{ageLabel(x.age)}</span></span>
-                <small>{x.check}{x.decision ? ` · ${x.decision}` : ''}</small>
+    <div className="dash-in grid gap-5">
+      <PageHeader title="Identity checks" finding={`Target: a decision within ${KYC_TARGET_H} hours of the documents arriving.`}>
+        <Tabs value={tab} onValueChange={setTab}><TabsList>{Object.keys(lists).map((t) => <TabsTrigger key={t} value={t}>{t}<span className="text-muted-foreground tabular-nums">{lists[t].length}</span></TabsTrigger>)}</TabsList></Tabs>
+      </PageHeader>
+      <div className="grid items-start gap-5 lg:grid-cols-[340px_minmax(0,1fr)]">
+        <Card className="overflow-hidden">
+          {list.length === 0 ? <Empty>{tab === 'Waiting' ? 'No checks waiting.' : 'Nothing decided yet today.'}</Empty> : (
+            <ul className="grid grid-cols-1 p-2">{list.map((x) => (
+              <li key={x.id}><button onClick={() => setSel(x.id)} className={cn('flex w-full items-center gap-3 rounded-md px-3 py-2.5 text-left hover:bg-white/[0.04]', k?.id === x.id && 'bg-white/[0.06] ring-1 ring-inset ring-primary/30')}>
+                <Avatar name={b.byClient[x.client].name} />
+                <span className="min-w-0 flex-1"><span className="flex justify-between gap-2 text-[13.5px]"><span className="truncate">{b.byClient[x.client].name}</span><span className={cn('shrink-0 tabular-nums text-[12px]', x.age > KYC_TARGET_H && !x.decision ? 'text-destructive' : 'text-muted-foreground')}>{ageLabel(x.age)}</span></span><span className="block truncate text-[11.5px] text-muted-foreground">{x.check}{x.decision ? ` · ${x.decision}` : ''}</span></span>
               </button></li>
             ))}</ul>
           )}
-        </section>
+        </Card>
         {k && (
-          <section className="card" aria-labelledby="kd-h">
-            <div className="card-h"><h2 id="kd-h">{b.byClient[k.client].name}, {b.byClient[k.client].country}</h2><span className="stamp">{k.id} · sent {k.submitted} UTC</span></div>
-            <div style={{ display: 'grid', gap: 14 }}>
-              <div className="grid2 even">{k.docs.map((d) => <div key={d} className="doc"><b>{d}</b>Image opens in the secure viewer</div>)}</div>
-              <p className={k.risk === 'Clear' ? '' : 'notice'}>{k.risk === 'Clear' ? '' : <Warning size={16} />}Automatic check: {k.check}.</p>
-              <table className="tbl"><tbody>
-                <tr><td className="dash">Client number</td><td>{k.client}</td></tr>
-                <tr><td className="dash">Joined</td><td>{b.byClient[k.client].joined}</td></tr>
-                <tr><td className="dash">Waiting</td><td className={k.age > KYC_TARGET_H ? 'neg' : ''}>{ageLabel(k.age)} (target {KYC_TARGET_H} h)</td></tr>
-                <tr><td className="dash">Decision</td><td>{k.decision ? <Pill v={k.decision} /> : <span className="dash">None yet</span>}</td></tr>
-              </tbody></table>
-              <div className="row-btns">
-                <button className="abtn primary" onClick={() => decide('Approved')} disabled={k.decision === 'Approved'}>Approve</button>
-                <button className="abtn" onClick={() => decide('More info')} disabled={k.decision === 'More info'}>Ask for another document</button>
-                <button className="abtn quiet" onClick={() => decide('Rejected')} disabled={k.decision === 'Rejected'}>Reject</button>
+          <Card>
+            <CardHeader>
+              <div className="flex items-center gap-3"><Avatar name={b.byClient[k.client].name} className="size-10" /><div><CardTitle>{b.byClient[k.client].name}, {b.byClient[k.client].country}</CardTitle><CardDescription>{k.id} · sent {k.submitted} UTC</CardDescription></div></div>
+              {k.decision ? <Pill v={k.decision} /> : <Badge tone={k.age > KYC_TARGET_H ? 'bad' : 'wait'} dot>{ageLabel(k.age)} waiting</Badge>}
+            </CardHeader>
+            <CardContent className="grid gap-4">
+              <div className="grid gap-3 sm:grid-cols-2">{k.docs.map((d) => (
+                <div key={d} className="grid h-36 place-content-center gap-2 rounded-lg border border-dashed border-white/15 bg-[repeating-linear-gradient(135deg,rgba(255,255,255,0.02)_0_10px,transparent_10px_20px)] text-center">
+                  <Document size={22} className="mx-auto text-muted-foreground" /><b className="text-[13px] font-medium">{d}</b><span className="text-[11.5px] text-muted-foreground">Opens in the secure viewer</span>
+                </div>
+              ))}</div>
+              {k.risk === 'Clear' ? <Notice tone="info">Automatic check: {k.check}.</Notice> : <Notice>Automatic check: {k.check}.</Notice>}
+              <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                {[['Client number', k.client], ['Joined', b.byClient[k.client].joined], ['Waiting', `${ageLabel(k.age)} (target ${KYC_TARGET_H} h)`], ['Decision', k.decision || 'None yet']].map(([t, v]) => (
+                  <div key={t} className="rounded-lg bg-white/[0.03] px-3 py-2.5 ring-1 ring-inset ring-white/5"><dt className="text-[11.5px] text-muted-foreground">{t}</dt><dd className="mt-0.5 text-[13px] tabular-nums">{v}</dd></div>
+                ))}
+              </dl>
+              <div className="flex flex-wrap gap-2">
+                <Button onClick={() => decide('Approved')} disabled={k.decision === 'Approved'}><Checkmark size={16} />Approve</Button>
+                <Button variant="secondary" onClick={() => decide('More info')} disabled={k.decision === 'More info'}>Ask for another document</Button>
+                <Button variant="destructive" onClick={() => decide('Rejected')} disabled={k.decision === 'Rejected'}><Close size={16} />Reject</Button>
               </div>
-            </div>
-          </section>
+            </CardContent>
+          </Card>
         )}
       </div>
-    </>
+    </div>
   )
 }
 
@@ -164,32 +190,33 @@ function MoneyPage() {
   const pick = (t) => b.moves.filter((m) => t === 'All' || (t === 'To review' ? ['Held', 'In review'].includes(m.status) : m.status === t))
   const list = pick(tab)
   return (
-    <>
-      <div className="titlerow"><div><h1>Money movements</h1><p>Payments wait here until a person releases them. A rule can hold one; the reason is written next to it.</p></div></div>
-      <div className="tabs" role="tablist">{MTABS.map((t) => <button key={t} role="tab" aria-selected={tab === t} onClick={() => setTab(t)}>{t}<span className="count">{pick(t).length}</span></button>)}</div>
-      <section className="card">
-        {list.length === 0 ? <p className="empty">Nothing in this view.</p> : (
-          <div className="wrap"><table className="tbl">
-            <thead><tr><th>Payment</th><th>Client</th><th>Method</th><th>Why it is here</th><th>Status</th><th className="r">Amount</th><th /></tr></thead>
-            <tbody>{list.map((m) => (
-              <tr key={m.id}>
-                <td>{m.kind}<span className="sub">{m.id} · {m.at} UTC</span></td>
-                <td>{b.byClient[m.client].name}<span className="sub">{m.client}</span></td>
-                <td>{m.method}</td>
-                <td style={{ whiteSpace: 'normal', minWidth: 220 }}>{m.flags.length ? m.flags.map((f) => RULES[f]).join('; ') : <span className="dash">Routine check</span>}</td>
-                <td><Pill v={m.status} /></td>
-                <td className="r">{m.kind === 'Deposit' ? '+' : '−'}{usd(m.amount)}</td>
-                <td className="r">{['Held', 'In review'].includes(m.status) ? <span className="row-btns" style={{ justifyContent: 'flex-end', flexWrap: 'nowrap' }}><button className="abtn" onClick={() => b.decideMove(m, 'Released')}>Release</button><button className="abtn quiet" onClick={() => b.decideMove(m, 'Returned')}>Return</button></span> : null}</td>
-              </tr>
-            ))}</tbody>
-          </table></div>
-        )}
-      </section>
-      <section className="card" aria-labelledby="ru-h">
-        <div className="card-h"><h2 id="ru-h">Rules that hold a payment</h2><span className="stamp">Sample rules for the prototype</span></div>
-        <ul style={{ display: 'grid', gap: 6 }}>{Object.values(RULES).map((r) => <li key={r}>{r}</li>)}</ul>
-      </section>
-    </>
+    <div className="dash-in grid gap-5">
+      <PageHeader title="Money movements" finding="Payments wait here until a person releases them. A rule can hold one; the reason is written next to it.">
+        <Tabs value={tab} onValueChange={setTab}><TabsList>{MTABS.map((t) => <TabsTrigger key={t} value={t}>{t}<span className="text-muted-foreground tabular-nums">{pick(t).length}</span></TabsTrigger>)}</TabsList></Tabs>
+      </PageHeader>
+      <Card>
+        <div className="pt-1">{list.length === 0 ? <Empty>Nothing in this view.</Empty> : (
+          <Table>
+            <TableHeader><TableRow><TableHead>Payment</TableHead><TableHead>Client</TableHead><TableHead>Method</TableHead><TableHead>Why it is here</TableHead><TableHead>Status</TableHead><TableHead className="text-right">Amount</TableHead><TableHead /></TableRow></TableHeader>
+            <TableBody>{list.map((m) => (
+              <TableRow key={m.id}>
+                <TableCell>{m.kind}<span className="mt-0.5 block text-[11.5px] text-muted-foreground">{m.id} · {m.at} UTC</span></TableCell>
+                <TableCell><span className="flex items-center gap-2.5"><Avatar name={b.byClient[m.client].name} className="size-7" /><span>{b.byClient[m.client].name}<span className="block text-[11.5px] text-muted-foreground">{m.client}</span></span></span></TableCell>
+                <TableCell className="text-muted-foreground">{m.method}</TableCell>
+                <TableCell className="min-w-[220px] whitespace-normal text-muted-foreground">{m.flags.length ? m.flags.map((f) => RULES[f]).join('; ') : 'Routine check'}</TableCell>
+                <TableCell><Pill v={m.status} /></TableCell>
+                <TableCell className={cn('text-right font-medium', m.kind === 'Deposit' && 'text-positive')}>{m.kind === 'Deposit' ? '+' : '−'}{usd(m.amount)}</TableCell>
+                <TableCell className="text-right">{['Held', 'In review'].includes(m.status) ? <span className="flex justify-end gap-1.5"><Button size="sm" onClick={() => b.decideMove(m, 'Released')}>Release</Button><Button size="sm" variant="ghost" onClick={() => b.decideMove(m, 'Returned')}>Return</Button></span> : null}</TableCell>
+              </TableRow>
+            ))}</TableBody>
+          </Table>
+        )}</div>
+      </Card>
+      <Card>
+        <CardHeader><div><CardTitle>Rules that hold a payment</CardTitle><CardDescription>Sample rules for the prototype</CardDescription></div></CardHeader>
+        <CardContent><ul className="grid gap-2 sm:grid-cols-2">{Object.values(RULES).map((r) => <li key={r} className="flex items-start gap-2.5 rounded-lg bg-white/[0.03] px-3 py-2.5 text-[13px] ring-1 ring-inset ring-white/5"><Rule size={16} className="mt-0.5 shrink-0 text-primary" />{r}</li>)}</ul></CardContent>
+      </Card>
+    </div>
   )
 }
 
@@ -209,25 +236,30 @@ function Clients() {
     b.notify({ text: v === 'Restricted' ? `${c.name} can no longer open trades. Withdrawals stay open.` : `${c.name} can trade again.`, undo: () => b.set((x) => ({ access: { ...x.access, [c.id]: before } })) })
   }
   return (
-    <>
-      <div className="titlerow">
-        <div><h1>Clients</h1><p className="num">{list.length} {list.length === 1 ? 'client' : 'clients'} in this view, {usd(total)} in balances.</p></div>
-        <label className="search"><Search size={16} /><input placeholder="Name, number or country" value={q} onChange={(e) => setQ(e.target.value)} aria-label="Search clients" /></label>
-      </div>
-      <div className="tabs" role="tablist">{CTABS.map((t) => <button key={t} role="tab" aria-selected={tab === t} onClick={() => setTab(t)}>{t}<span className="count">{pick(t).length}</span></button>)}</div>
-      <section className="card">
-        {list.length === 0 ? <p className="empty">No clients match “{q}”.</p> : (
-          <div className="wrap"><table className="tbl">
-            <thead><tr><th>Client</th><th>Country</th><th>Joined</th><th>Status</th><th className="r">Balance</th><th /></tr></thead>
-            <tbody>{list.map((c) => (
-              <tr key={c.id}><td>{c.name}<span className="sub">{c.id}</span></td><td>{c.country}</td><td>{c.joined}</td><td><Pill v={c.status} /></td><td className="r">{c.balance ? usd(c.balance) : <span className="dash">$0.00</span>}</td>
-                <td className="r">{c.status === 'Verified' ? <button className="abtn quiet" onClick={() => access(c, 'Restricted')}>Restrict</button> : c.status === 'Restricted' ? <button className="abtn quiet" onClick={() => access(c, 'Verified')}>Lift restriction</button> : null}</td></tr>
-            ))}</tbody>
-            <tfoot><tr><td colSpan={4} className="dash">Total</td><td className="r">{usd(total)}</td><td /></tr></tfoot>
-          </table></div>
-        )}
-      </section>
-    </>
+    <div className="dash-in grid gap-5">
+      <PageHeader title="Clients" finding={`${list.length} ${list.length === 1 ? 'client' : 'clients'} in this view, ${usd(total)} in balances.`}>
+        <span className="relative"><Search size={16} className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground" /><Input className="w-64 pl-8" placeholder="Name, number or country" value={q} onChange={(e) => setQ(e.target.value)} aria-label="Search clients" /></span>
+      </PageHeader>
+      <Tabs value={tab} onValueChange={setTab}><TabsList>{CTABS.map((t) => <TabsTrigger key={t} value={t}>{t}<span className="text-muted-foreground tabular-nums">{pick(t).length}</span></TabsTrigger>)}</TabsList></Tabs>
+      <Card>
+        <div className="pt-1">{list.length === 0 ? <Empty>No clients match “{q}”.</Empty> : (
+          <Table>
+            <TableHeader><TableRow><TableHead>Client</TableHead><TableHead>Country</TableHead><TableHead>Joined</TableHead><TableHead>Status</TableHead><TableHead className="text-right">Balance</TableHead><TableHead /></TableRow></TableHeader>
+            <TableBody>{list.map((c) => (
+              <TableRow key={c.id}>
+                <TableCell><span className="flex items-center gap-2.5"><Avatar name={c.name} className="size-7" /><span>{c.name}<span className="block text-[11.5px] text-muted-foreground">{c.id}</span></span></span></TableCell>
+                <TableCell className="text-muted-foreground">{c.country}</TableCell>
+                <TableCell className="text-muted-foreground">{c.joined}</TableCell>
+                <TableCell><Pill v={c.status} /></TableCell>
+                <TableCell className={cn('text-right', !c.balance && 'text-muted-foreground')}>{usd(c.balance)}</TableCell>
+                <TableCell className="text-right">{c.status === 'Verified' ? <Button variant="ghost" size="sm" onClick={() => access(c, 'Restricted')}>Restrict</Button> : c.status === 'Restricted' ? <Button variant="ghost" size="sm" onClick={() => access(c, 'Verified')}>Lift restriction</Button> : null}</TableCell>
+              </TableRow>
+            ))}</TableBody>
+            <TableFooter><TableRow><TableCell colSpan={4} className="text-muted-foreground">Total</TableCell><TableCell className="text-right">{usd(total)}</TableCell><TableCell /></TableRow></TableFooter>
+          </Table>
+        )}</div>
+      </Card>
+    </div>
   )
 }
 
@@ -237,57 +269,67 @@ function Support() {
   const [sel, setSel] = useState(initial || b.tickets[0].id)
   const [text, setText] = useState('')
   const t = b.tickets.find((x) => x.id === sel)
+  const who = b.byClient[t.client]
   const send = (e) => {
     e.preventDefault()
     if (!text.trim()) return
     const msg = { from: 'staff', at: '2026-10-28 11:00', text: text.trim() }
     b.set((c) => ({ replies: { ...c.replies, [t.id]: [...(c.replies[t.id] || []), msg] } }))
     setText('')
-    b.notify({ text: `Reply sent to ${b.byClient[t.client].name}.` })
+    b.notify({ text: `Reply sent to ${who.name}.` })
   }
+  const sorted = [...b.tickets].sort((x, y) => (x.status === 'Open') === (y.status === 'Open') ? x.opened.localeCompare(y.opened) : x.status === 'Open' ? -1 : 1)
   return (
-    <>
-      <div className="titlerow"><div><h1>Support</h1><p>{b.tickets.filter((x) => x.status === 'Open').length} tickets waiting on us. Oldest first.</p></div></div>
-      <div className="inbox">
-        <section className="card" style={{ padding: 0 }} aria-label="Tickets">
-          <ul className="ilist">{[...b.tickets].sort((x, y) => (x.status === 'Open') === (y.status === 'Open') ? x.opened.localeCompare(y.opened) : x.status === 'Open' ? -1 : 1).map((x) => (
-            <li key={x.id} className={x.id === sel ? 'on' : ''}><button onClick={() => setSel(x.id)}>
-              <span className="row1"><span>{x.subject}</span></span>
-              <small>{b.byClient[x.client].name} · {x.status} · {ageLabel(hoursSince(x.opened))}</small>
+    <div className="dash-in grid gap-5">
+      <PageHeader title="Support" finding={`${b.tickets.filter((x) => x.status === 'Open').length} tickets waiting on us. Oldest first.`} />
+      <div className="grid items-start gap-5 lg:grid-cols-[320px_minmax(0,1fr)] xl:grid-cols-[300px_minmax(0,1fr)_280px]">
+        <Card className="overflow-hidden">
+          <ul className="grid grid-cols-1 p-2">{sorted.map((x) => (
+            <li key={x.id}><button onClick={() => setSel(x.id)} className={cn('flex w-full items-start gap-3 rounded-md px-3 py-2.5 text-left hover:bg-white/[0.04]', x.id === sel && 'bg-white/[0.06] ring-1 ring-inset ring-primary/30')}>
+              <Avatar name={b.byClient[x.client].name} />
+              <span className="min-w-0 flex-1"><span className="block truncate text-[13.5px]">{x.subject}</span><span className="block truncate text-[11.5px] text-muted-foreground">{b.byClient[x.client].name} · {ageLabel(hoursSince(x.opened))}</span></span>
+              {x.status === 'Open' && <span className="mt-1.5 size-2 shrink-0 rounded-full bg-primary shadow-[0_0_8px_rgb(212_174_98/0.8)]" />}
             </button></li>
           ))}</ul>
-        </section>
-        <section className="card" aria-labelledby="tk-h">
-          <div className="card-h"><h2 id="tk-h">{t.subject}</h2><Pill v={t.status} /></div>
-          <p className="stamp" style={{ marginBottom: 14 }}>{b.byClient[t.client].name} · {t.client} · <Pill v={b.byClient[t.client].status} /></p>
-          <div className="thread">{t.thread.map((m, i) => <div key={i} className={`msg ${m.from}`}><small>{m.from === 'staff' ? 'GlobalTrade support' : b.byClient[t.client].name} · {m.at} UTC</small>{m.text}</div>)}</div>
-          {t.status !== 'Solved' ? (
-            <form onSubmit={send} style={{ display: 'grid', gap: 10, marginTop: 16 }}>
-              <label className="afield">Reply<textarea value={text} onChange={(e) => setText(e.target.value)} placeholder={`Write to ${b.byClient[t.client].name.split(' ')[0]}`} /></label>
-              <div className="row-btns">
-                <button className="abtn primary" disabled={!text.trim()}>Send reply</button>
-                <button type="button" className="abtn quiet" onClick={() => b.set((c) => ({ solved: { ...c.solved, [t.id]: true } }))}>Mark as solved</button>
+        </Card>
+        <Card>
+          <CardHeader><div><CardTitle>{t.subject}</CardTitle><CardDescription>{who.name} · {t.client}</CardDescription></div><Pill v={t.status} /></CardHeader>
+          <CardContent className="grid gap-4">
+            <div className="grid gap-3">{t.thread.map((m, i) => (
+              <div key={i} className={cn('max-w-[62ch] rounded-xl px-4 py-3 text-[13.5px]', m.from === 'staff' ? 'justify-self-end bg-primary/[0.09] ring-1 ring-inset ring-primary/20' : 'bg-white/[0.04] ring-1 ring-inset ring-white/5')}>
+                <p className="mb-1 text-[11.5px] text-muted-foreground">{m.from === 'staff' ? 'GlobalTrade support' : who.name} · {m.at} UTC</p>{m.text}
               </div>
-            </form>
-          ) : <p className="empty">Solved. The client can reopen it by replying to the email.</p>}
-          <div className="ctx">
-            <h3>About this client</h3>
-            <dl>
-              <div><dt>Status</dt><dd><Pill v={b.byClient[t.client].status} /></dd></div>
-              <div><dt>Balance</dt><dd>{usd(b.byClient[t.client].balance)}</dd></div>
-              <div><dt>Joined</dt><dd>{b.byClient[t.client].joined}</dd></div>
-              <div><dt>Payments in review</dt><dd>{b.moves.filter((m) => m.client === t.client && ['Held', 'In review'].includes(m.status)).map((m) => `${m.id} ${usd(m.amount, 0)}`).join(', ') || 'None'}</dd></div>
+            ))}</div>
+            {t.status !== 'Solved' ? (
+              <form onSubmit={send} className="grid gap-3">
+                <Label>Reply<Textarea value={text} onChange={(e) => setText(e.target.value)} placeholder={`Write to ${who.name.split(' ')[0]}`} /></Label>
+                <div className="flex flex-wrap gap-2">
+                  <Button disabled={!text.trim()}><Send size={14} />Send reply</Button>
+                  <Button type="button" variant="ghost" onClick={() => b.set((c) => ({ solved: { ...c.solved, [t.id]: true } }))}>Mark as solved</Button>
+                </div>
+              </form>
+            ) : <Empty>Solved. The client can reopen it by replying to the email.</Empty>}
+          </CardContent>
+        </Card>
+        <Card className="lg:col-span-2 xl:col-span-1">
+          <CardHeader><CardTitle>About this client</CardTitle></CardHeader>
+          <CardContent>
+            <div className="mb-4 flex items-center gap-3"><Avatar name={who.name} className="size-10" /><div><p className="text-[13.5px]">{who.name}</p><p className="text-[11.5px] text-muted-foreground">{who.country} · joined {who.joined}</p></div></div>
+            <dl className="grid gap-2">
+              {[['Status', <Pill key="s" v={who.status} />], ['Balance', usd(who.balance)], ['Payments in review', b.moves.filter((m) => m.client === t.client && ['Held', 'In review'].includes(m.status)).map((m) => `${m.id} ${usd(m.amount, 0)}`).join(', ') || 'None']].map(([k, v]) => (
+                <div key={k} className="flex items-center justify-between gap-3 rounded-lg bg-white/[0.03] px-3 py-2.5 text-[13px] ring-1 ring-inset ring-white/5"><dt className="text-muted-foreground">{k}</dt><dd className="text-right tabular-nums">{v}</dd></div>
+              ))}
             </dl>
-          </div>
-        </section>
+          </CardContent>
+        </Card>
       </div>
-    </>
+    </div>
   )
 }
 
 export default function Staff() {
   return (
-    <Shell items={ITEMS} label="Staff area">
+    <Shell items={ITEMS} label="Staff area" area="Back office" user={{ name: 'Kwame Asante', sub: 'Operations, back office' }}>
       <Routes>
         <Route index element={<Overview />} />
         <Route path="kyc" element={<Kyc />} />

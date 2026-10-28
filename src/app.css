@@ -1,3 +1,4 @@
+@layer site {
 /* Client and staff areas. taste-skill app style "data terminal" (seed 1273256742) with the brand's
    black and gold kept: cards darker than the ground, tabular figures that stack, signs instead of
    colour, and every selection marked by the same 1px gold line. Icon rail shell. */
@@ -183,4 +184,6 @@
   .auth-main { padding: 28px 20px 40px; }
   .code-inputs { grid-template-columns: repeat(6, minmax(0, 1fr)); }
   .search input { width: 120px; }
+}
+
 }

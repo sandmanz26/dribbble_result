@@ -1,3 +1,4 @@
+@layer site {
 /* GlobalTrade. Direction "the sentence is the layout" (taste-skill seed 1756251117): one short
    sentence at poster scale with the live gold price set inside it where the word would be, then a
    series of short statements, each with its proof beside it, and the proof is always a working
@@ -435,4 +436,6 @@ h2 { font: 300 var(--s-head)/1.06 var(--display); letter-spacing: -0.028em; text
   .foot-mail { font-size: 9.4vw; }
   .foot-meta { grid-template-columns: 1fr; gap: 10px; }
   .foot-meta span:last-child { justify-self: start; }
+}
+
 }
