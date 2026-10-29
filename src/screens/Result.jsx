@@ -56,7 +56,7 @@ export default function Result({ area, photo, cam, exercise, variant, setVariant
         </section>
       ) : (
         <>
-          <section className="block">
+          <section className="block is-green">
             <h2>{exercise.name}</h2>
             <p className="goal">{exercise.goal}</p>
             <ol className="legend">{legend.map((l) => <li key={l.n}><span className="num-badge">{l.n}</span><span><b>{l.label}</b><small>{l.note}</small></span></li>)}</ol>

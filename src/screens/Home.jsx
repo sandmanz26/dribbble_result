@@ -1,44 +1,58 @@
 import { Link } from 'react-router-dom'
 import { useStore } from '../store.jsx'
 import { AREAS, areaOf, TYPE_NAME } from '../data/areas.js'
-import { exerciseOf } from '../data/exercises.js'
+import { exerciseOf, packList } from '../data/exercises.js'
 import Overlay from '../ui/Overlay.jsx'
 import * as I from '../ui/icons.js'
 
 export default function Home() {
   const { s } = useStore()
+  const ready = AREAS.filter((a) => a.photo).length
   return (
-    <div className="home">
-      <header className="top">
-        <p className="club"><span className="mark" aria-hidden="true" />Oslo Golf Club</p>
-        <h1>Setups</h1>
+    <div className="home has-hero">
+      <header className="hero">
+        <img src="img/range-bay.webp" alt="" className="hero-bg" />
+        <div className="hero-in">
+          <p className="club"><span className="mark" aria-hidden="true" />Oslo Golf Club · Bogstad</p>
+          <h1>Set up the next drill in a minute</h1>
+          <p className="hero-sub">Photograph the area, pick the exercise, and the setup is drawn on the real photo.</p>
+          <Link to="/new" className="btn is-primary is-wide"><I.CameraFill aria-hidden="true" /> New setup</Link>
+          <p className="hero-meta"><span><b className="mono">{ready}</b> of {AREAS.length} areas photographed</span><span><b className="mono">{s.setups.length}</b> saved setups</span></p>
+        </div>
       </header>
-      <Link to="/new" className="cta"><I.Camera aria-hidden="true" /><span><b>New setup</b><small>Photo, exercise, done</small></span><I.Right aria-hidden="true" /></Link>
 
-      <h2 className="sec">Your areas</h2>
-      <ul className="areas">
+      <div className="sec-row"><h2 className="sec">Your areas</h2><Link to="/club" className="sec-link">Manage</Link></div>
+      <ul className="areas" aria-label="Areas">
         {AREAS.map((a) => (
           <li key={a.id}>
-            <Link to={`/new?area=${a.id}`} className="area">
+            <Link to={`/new?area=${a.id}`} className={`area ${a.photo ? '' : 'is-empty'}`}>
               {a.photo ? <img src={`img/${a.photo}.webp`} alt="" /> : <span className="area-none"><I.Camera aria-hidden="true" /></span>}
-              <span className="area-name">{a.name}</span>
-              <span className="area-meta">{a.photo ? `Photo ${a.taken.toLowerCase()}` : 'No photo yet'}</span>
+              <span className="area-label"><b>{a.name}</b><small>{a.photo ? a.taken : 'Take the first photo'}</small></span>
             </Link>
           </li>
         ))}
       </ul>
 
-      <h2 className="sec">Saved setups <span className="count">{s.setups.length}</span></h2>
+      <div className="sec-row"><h2 className="sec">Saved setups <span className="count">{s.setups.length}</span></h2></div>
       {s.setups.length ? (
         <ul className="saved">
           {s.setups.map((x) => {
             const a = areaOf(x.area); const e = exerciseOf(x.exercise)
+            const markers = e.layout(a, x.variant).markers
+            const pack = packList(markers)
             return (
               <li key={x.id}>
-                <Link to={`/setup/${x.id}`} className="saved-row">
-                  <span className="thumb"><Overlay area={a.id} photo={a.photo} cam={a.cam} markers={e.layout(a, x.variant).markers} overrides={x.overrides} numbers={false} /></span>
-                  <span className="saved-text"><b>{e.name}</b><small>{a.name} · {TYPE_NAME[a.type]}</small><small>{x.group ? `${x.group} · ` : ''}{x.created}</small></span>
-                  <I.Right aria-hidden="true" />
+                <Link to={`/setup/${x.id}`} className="saved-card">
+                  <span className="saved-photo"><Overlay area={a.id} photo={a.photo} cam={a.cam} markers={markers} overrides={x.overrides} numbers={false} /></span>
+                  <span className="saved-body">
+                    <span className="saved-head"><b>{e.name}</b><I.Right aria-hidden="true" /></span>
+                    <small>{a.name} · {x.group || 'No group'} · {x.created}</small>
+                    <span className="tags">
+                      <span className="tag"><I.Flag aria-hidden="true" />{TYPE_NAME[a.type]}</span>
+                      <span className="tag"><I.Time aria-hidden="true" />{e.minutes} min</span>
+                      {pack.slice(0, 1).map(([k, n]) => <span key={k} className="tag"><I.Bag aria-hidden="true" />{n} {k.toLowerCase()}</span>)}
+                    </span>
+                  </span>
                 </Link>
               </li>
             )

@@ -74,7 +74,8 @@ export default function NewSetup() {
           <ul className="ex-list">
             {EXERCISES.filter((e) => e.type === area.type).map((e) => (
               <li key={e.id}><button className="ex-row" disabled={!e.layout} onClick={() => { setExId(e.id); setVariant(0); setOverrides({}); go(4) }}>
-                <span><b>{e.name}</b><small>{e.minutes} min · {e.players} players · {e.id}</small>{!e.layout && <em>{e.needs || 'Needs another area'}</em>}</span>
+                <span className={`ex-type t-${e.type}`} aria-hidden="true"><I.Flag /></span>
+                <span><b>{e.name}</b><small>{e.minutes} min · {e.players} {e.players === '1' ? 'player' : 'players'} · {e.id}</small>{!e.layout && <em>{e.needs || 'Needs another area'}</em>}</span>
                 {e.layout ? <I.Right aria-hidden="true" /> : <I.Warn aria-hidden="true" />}
               </button></li>
             ))}

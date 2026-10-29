@@ -7,4 +7,5 @@ export {
   IoInformationCircleOutline as Info, IoTrashOutline as Trash, IoListOutline as List, IoLinkOutline as Link, IoCloseOutline as Close,
   IoFlagOutline as Flag, IoHandLeftOutline as Hand, IoCheckmark as Check, IoArrowUndoOutline as Undo, IoDownloadOutline as Download,
   IoConstructOutline as Build, IoLockClosedOutline as Lock,
+  IoCamera as CameraFill, IoBagHandleOutline as Bag, IoHome as HomeFill, IoAddCircle as NewFill, IoLibrary as BankFill, IoGolf as ClubFill,
 } from 'react-icons/io5'

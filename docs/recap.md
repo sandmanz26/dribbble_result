@@ -15,3 +15,14 @@
 - **Open:**
   - A real vision model call (see `#/plan`).
   - The Øvelsesbanken CSV import.
+
+
+## UI refresh: livelier colour (v2)
+
+Owner feedback: the first version felt only white, with a golf app reference that uses deep green cards, a photo hero, pale green chips with icons and a floating tab bar. Changes:
+
+- Palette: deep fairway green surfaces, pale green ground, grass-tint chips, pin-flag yellow stays the one accent.
+- Home: photo hero with the main action, area tiles as photos with labels, saved setups as green photo cards with tags.
+- Exercises and Club: green band header, photo thumbnails per row.
+- New setup: green header with the step bar; the result photo tucks under it; the setup legend is a green card.
+- Tabs: floating rounded green bar, active tab filled with its label.

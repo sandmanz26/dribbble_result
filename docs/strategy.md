@@ -47,7 +47,8 @@ The hard part is not drawing markers. It is that a single photo has no scale, so
 - **Name:** Oppsett, Norwegian for setup.
 - **Type:** Schibsted Grotesk (a Norwegian publisher's face) with DM Mono for figures.
 - **Icons:** Ionicons 5.
-- **Colour:** field ink on a cool off-white. The one colour is the yellow of a pin flag, which the putting-green photo shows. It is used for the equipment on the photo and for the main action, and it stays readable on grass.
+- **Colour:** the club's own field colours. Deep fairway green (#12402d) carries the big surfaces: the photo hero, the band headers, the flow header, saved setup cards, the setup legend and the floating tab bar. The ground is a pale green (#edf0e4) and chips are a light grass tint (#dbe9c3). The one accent is still the yellow of a pin flag (#f2d50c), which the putting-green photo shows. It is used for the equipment on the photo and for the main action, and it stays readable on grass.
+- **v2, livelier (owner feedback: the first version felt only white):** photo hero with a green scrim, area tiles as full photos with the name on them, saved setups as green photo cards with tagged facts (area, minutes, what to bring), photo thumbnails in the exercise bank and club, filled tab icons for the active tab, a floating rounded tab bar.
 - **Photos:** real ones from Open Images (CC BY 2.0). The range bay is a Swedish club in November.
 
 ## Prototype limits

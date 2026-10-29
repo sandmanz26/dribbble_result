@@ -5,10 +5,10 @@ import * as I from '../ui/icons.js'
 export default function Club() {
   return (
     <div className="home">
-      <header className="top"><p className="club"><span className="mark" aria-hidden="true" />Bogstad, Oslo</p><h1>Oslo Golf Club</h1></header>
+      <header className="top is-band"><p className="club"><span className="mark" aria-hidden="true" />Bogstad, Oslo</p><h1>Oslo Golf Club</h1><p className="band-sub">One coach this season, built for more.</p></header>
       <h2 className="sec">Areas <span className="count">{AREAS.length}</span></h2>
       <ul className="ex-list">
-        {AREAS.map((a) => <li key={a.id}><Link className="ex-row" to={`/new?area=${a.id}`}><span><b>{a.name}</b><small>{TYPE_NAME[a.type]} · {a.photo ? `photo ${a.taken.toLowerCase()}` : 'no photo yet'}</small></span><I.Camera aria-hidden="true" /></Link></li>)}
+        {AREAS.map((a) => <li key={a.id}><Link className="ex-row" to={`/new?area=${a.id}`}>{a.photo ? <img className="ex-ph" src={`img/${a.photo}.webp`} alt="" /> : <span className="ex-ph is-none"><I.Camera aria-hidden="true" /></span>}<span><b>{a.name}</b><small>{TYPE_NAME[a.type]} · {a.photo ? `photo ${a.taken.toLowerCase()}` : 'no photo yet'}</small></span><I.Right aria-hidden="true" /></Link></li>)}
       </ul>
       <h2 className="sec">Your preferences</h2>
       <dl className="prefs">

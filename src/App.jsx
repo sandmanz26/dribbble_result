@@ -11,10 +11,10 @@ import Credits from './screens/Credits.jsx'
 import * as I from './ui/icons.js'
 
 function Tabs() {
-  const tab = (to, Icon, label) => (
-    <NavLink to={to} end={to === '/'} className="tab"><Icon aria-hidden="true" /><span>{label}</span></NavLink>
+  const tab = (to, Icon, Fill, label) => (
+    <NavLink to={to} end={to === '/'} className="tab">{({ isActive }) => <>{isActive ? <Fill aria-hidden="true" /> : <Icon aria-hidden="true" />}<span>{label}</span></>}</NavLink>
   )
-  return <nav className="tabs" aria-label="Main">{tab('/', I.Home, 'Setups')}{tab('/new', I.New, 'New')}{tab('/bank', I.Bank, 'Exercises')}{tab('/club', I.Club, 'Club')}</nav>
+  return <nav className="tabs" aria-label="Main">{tab('/', I.Home, I.HomeFill, 'Setups')}{tab('/new', I.New, I.NewFill, 'New')}{tab('/bank', I.Bank, I.BankFill, 'Exercises')}{tab('/club', I.Club, I.ClubFill, 'Club')}</nav>
 }
 
 export default function App() {
