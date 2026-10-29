@@ -21,6 +21,8 @@ const PASSWORDS = {
   project11: 'ck-7rmz-q4hp', // Flock & Flame chicken and grill menu app
   project12: 'gs-k2vx-9dnb', // Golden Stone Logistics, China and Ghana freight website
   project13: 'og-7q0a-vvo8', // Oppsett, golf exercise setups on the real photo
+  project14: 'db-2mmw-55ap', // Darb, bilingual Arabic and English Saudi logistics website
+  project15: 'br-5zo1-i3nv', // Skill-to-Research Bridge, student and lab dashboards with a passport
   rawat: 'fd-w8tq-3jxc', // Rawat clinic operations, the owner's portfolio piece (same build as flowdirector)
   flowdirector: 'fd-w8tq-3jxc',
   selvedge: 'sv-4rkx-msbd', // Selvedge retail OS, portfolio case for the Dribbble retail ERP brief // Flow Director clinic operations prototype (Upwork, not a projectN slug)

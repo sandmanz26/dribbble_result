@@ -98,3 +98,47 @@ Password: og-7q0a-vvo8
 My portfolio: createdybdaniel.com
 
 The sample photos are licensed stand-ins until we use photos of Oslo Golf Club. If this direction fits, the next step is your exercise list and one photo of each area.
+
+## project14, Darb (Premium Arabic UI/UX for Saudi Logistics)
+
+Hi! Here is how I would approach your website, with a working bilingual prototype so you can judge the Arabic and the right-to-left experience directly, not from screenshots.
+
+**1. Arabic first, English as a true mirror.** The site is designed in Arabic and mirrored, not translated afterwards. One type family drawn for both scripts, so weights and heights match; taller Arabic line height; no letter-spacing on Arabic; arrows that flip with the reading direction while objects like trucks and clocks do not; Arabic numerals in Arabic text and Latin numerals in tracking and container numbers; Hijri dates beside Gregorian ones.
+
+**2. Premium through restraint.** Your name set large as the opening image, real photography of ports, roads and the Kingdom's cities, one accent colour, square corners. In my prototype the brand is a placeholder; with your guidelines, logo and photos it becomes yours.
+
+**3. Answer the questions importers actually ask.** Through which port, how many days, which documents. A route planner compares Jeddah, Dammam and Rabigh for any destination city; each service page lists what is included, the stages and their durations, and the documents needed (including SABER certificates and FASAH declarations).
+
+**4. Every customer-facing page.** Home, services and six service pages, shipment tracking (on the road, held for a document, delivered, not found), a four-step quote request with validation, branch network, about, careers, guides, contact. Desktop and mobile layouts throughout.
+
+**5. Ready for developers.** A handoff page in the prototype lists colours, type sizes, RTL rules, components and a direct link to every state. After award I deliver the Figma file built from the same tokens, with the interactive prototype and the handoff notes.
+
+Prototype: https://proposal-virid-eight.vercel.app/project14/
+Password: db-2mmw-55ap
+(Switch between العربية and English at the top right. Try tracking numbers DRB-240117 and DRB-240233.)
+
+My portfolio: createdybdaniel.com
+
+To be upfront: this is an early exploration made in limited time. The company name, copy, addresses and photos are placeholders until I have your brand guidelines, content drafts and media.
+
+## project15, Skill-to-Research Bridge
+
+Hi! I designed and built a clickable version of the site so you can try the flows yourself.
+
+**1. Readiness you can check.** Each project lists the skills it needs and how much each matters. A student's score is worked out from their evidence, and every point is shown next to the evidence that earned it. Verified records count in full, linked work less, a claim least. No black box for the student or the lab.
+
+**2. Missing skills with a way to close them.** For each gap the student sees the shortest honest route (a reviewed task, a workshop, a record to upload) and how many points it adds on which projects.
+
+**3. A Contribution Passport.** When a project ends, the researcher signs what the student did using the contributor roles journals already use. The student shares it by link with an expiry, chooses which sections show, sees who opened it, and can export it as PDF or JSON.
+
+**4. A researcher dashboard built for fair decisions.** Applicants ranked by evidence with names hidden until shortlisting, the skill the pool is short on named, and contributions waiting for a signature.
+
+**5. Accessible and keyboard friendly.** A typeface designed for low-vision readers, visible focus everywhere, shortcuts to move between screens, and dialogs that keep and return focus. Your palette as asked: warm off-white, deep navy, a bright lime used only for verified evidence and the main action.
+
+Prototype: https://proposal-virid-eight.vercel.app/project15/
+Password: br-5zo1-i3nv
+(Landing page first; "Open the demo" goes to the student dashboard, and the sidebar switches to the researcher view.)
+
+My portfolio: createdybdaniel.com
+
+To be upfront: the university, labs, people and numbers are sample content made for the prototype. If the direction fits, I will adapt it to your content and prepare the final screens.

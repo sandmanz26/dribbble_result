@@ -78,6 +78,8 @@ Live site: `https://proposal-virid-eight.vercel.app/<slug>/` (root and unknown p
 | project11 | ck-7rmz-q4hp | Flock & Flame, chicken and grill menu app with offline ordering | Mobile app |
 | project12 | gs-k2vx-9dnb | Golden Stone Logistics, China and Ghana freight website (English and Chinese) | Website |
 | project13 | og-7q0a-vvo8 | Oppsett, golf exercise setups drawn on the real photo | Mobile app |
+| project14 | db-2mmw-55ap | Darb, premium Arabic and English website for a Saudi logistics company | Website, RTL |
+| project15 | br-5zo1-i3nv | Skill-to-Research Bridge, student and lab dashboards with a Contribution Passport | Website + web app |
 | rawat | fd-w8tq-3jxc | Rawat, clinic operations for an Indonesian primary clinic (owner's portfolio piece) | Web app |
 | flowdirector | fd-w8tq-3jxc | Old link, serves the same Rawat build | Web app |
 | selvedge | sv-4rkx-msbd | Selvedge, AI retail operating system for a luxury fashion group (portfolio case under NDA) | Web app + case notes |
@@ -175,6 +177,12 @@ Owner asked for a named URL like the Upwork ones, a senior product designer and 
 A coach photographs an area at Oslo Golf Club, picks an exercise, and sees the equipment drawn on the photo in perspective and in metres. The scale comes from known objects (cup, ball, mat), or from two taps when none is in the photo. Every position has a reason, estimates are labelled, markers can be dragged, and exercises that cannot fit say why. A plain-language build plan at `#/plan` answers the brief's "explain each step simply". Research and IA are in the branch's `docs/strategy.md`.
 
 UI refresh (owner: "make it livelier, it feels only white", with a golf app reference): deep fairway green surfaces (photo hero, band headers, saved setup cards, setup legend, floating tab bar), pale green ground, grass-tint chips with icons, photo tiles and thumbnails, filled active tab icons. Pin-flag yellow stays the one accent.
+
+### project14, Darb (Premium Arabic UI/UX for Saudi Logistics, $350)
+Arabic-first, English mirror, one font family for both scripts (Readex Pro). The Arabic name درب ("a path walked until it is known") is pinned as a monument while the route a container takes scrolls under it. Route planner by port of entry, tracking with a SABER hold state, four-step quote, network with live Riyadh office hours, guides with sourced facts (SABER and FASAH, the Jeddah to Riyadh corridor), and a developer handoff page with tokens and RTL rules. Brief asks for Figma: the proposal offers the code prototype now and Figma files built from the same tokens after award. Research and taste-skill notes in the branch's `docs/strategy.md`.
+
+### project15, Skill-to-Research Bridge (under $100)
+Landing with a live readiness matcher, student home, project page with the score worked out, evidence, applications, Contribution Passport (CRediT roles, share link with expiry, view log, PDF and JSON), privacy settings, and a researcher side (blind applicant review, pool coverage, contribution signing). Client palette kept (warm off-white, navy, lime). Accessibility led: Atkinson Hyperlegible Next, keyboard shortcuts, focus management. Notes in the branch's `docs/strategy.md`.
 
 ## 6. Open items
 
