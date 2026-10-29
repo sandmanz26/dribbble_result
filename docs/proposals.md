@@ -76,3 +76,25 @@ Start with the case notes, then switch between the owner, the store manager and 
 My portfolio: createdybdaniel.com
 
 I would love to see your existing design vision and help take it to a cohesive, world-class product.
+
+## project13, Oppsett (Golf Exercise Gen)
+
+Hi! I like this brief a lot: the setup is the part of coaching nobody sees, and you are right that it can be done from one photo. Here is how I would approach it, and a working prototype.
+
+**The hard part is scale, not drawing.** A photo does not know how far 1.8 m is. So the app measures from things whose size is fixed: the cup is 108 mm, a ball 42.7 mm, a mat 1.5 m. If none of them is in the photo, it asks you to tap two points and say how far apart they are, instead of guessing quietly.
+
+**The equipment is placed in metres, then drawn in perspective.** Each exercise keeps its own rules from your bank (for example: gate 30 cm in front of the ball, 2 cm wider than your putter). The AI applies those rules to the ground it found. Sticks lie flat on the grass, cones far away are smaller, and when you drag a marker it stays on the ground.
+
+**It explains itself.** Every setup shows why each piece is where it is, marks what is only an estimate (like the slope) so you check it before the players arrive, and says when an exercise does not fit the area instead of bending the rule.
+
+**Built for one coach now, more later.** Your data is stored under a club and a coach from day one, so more coaches or a subscription can be added without moving anything. Your exercises come from Øvelsesbanken, imported once in version 1 and kept in sync in version 2.
+
+**Step by step, in plain words.** The prototype includes the build plan: eleven steps, each marked "You" or "Me", with exactly what to click, and a stop wherever you need to create an account or a key.
+
+Prototype: https://proposal-virid-eight.vercel.app/project13/
+Password: og-7q0a-vvo8
+(Best on a phone. Try the putting green, then "What it saw", "Move" and "Other option". The AI step is simulated in the prototype; you can also upload your own photo and calibrate it with two taps.)
+
+My portfolio: createdybdaniel.com
+
+The sample photos are licensed stand-ins until we use photos of Oslo Golf Club. If this direction fits, the next step is your exercise list and one photo of each area.
