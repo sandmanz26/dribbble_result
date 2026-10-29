@@ -174,6 +174,8 @@ Owner asked for a named URL like the Upwork ones, a senior product designer and 
 ### project13, Oppsett (Golf Exercise Gen)
 A coach photographs an area at Oslo Golf Club, picks an exercise, and sees the equipment drawn on the photo in perspective and in metres. The scale comes from known objects (cup, ball, mat), or from two taps when none is in the photo. Every position has a reason, estimates are labelled, markers can be dragged, and exercises that cannot fit say why. A plain-language build plan at `#/plan` answers the brief's "explain each step simply". Research and IA are in the branch's `docs/strategy.md`.
 
+UI refresh (owner: "make it livelier, it feels only white", with a golf app reference): deep fairway green surfaces (photo hero, band headers, saved setup cards, setup legend, floating tab bar), pale green ground, grass-tint chips with icons, photo tiles and thumbnails, filled active tab icons. Pin-flag yellow stays the one accent.
+
 ## 6. Open items
 
 - project9: generate the hero tiles, metal card and panel renders in Higgsfield once the generation
