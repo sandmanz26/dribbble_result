@@ -43,7 +43,7 @@ itself are in `AGENTS.md`; each project branch keeps its own `README.md` and `do
 - Proposals and messages must not contain contact details or payment brand names (emails, phone
   numbers, social handles, "DM me", PayPal, Stripe, bank transfer and so on). Never obfuscate links;
   if a link is flagged, show the work as a Dribbble shot instead.
-- Ready-to-paste proposals for project11 and project12 are in `docs/proposals.md`.
+- Ready-to-paste proposals for project11, project12 and selvedge are in `docs/proposals.md`.
 - Proposals explain the approach in words (the owner sees describing as proof of seriousness), then
   give the prototype link and password, and always include the owner's portfolio:
   createdybdaniel.com.
@@ -79,6 +79,7 @@ Live site: `https://proposal-virid-eight.vercel.app/<slug>/` (root and unknown p
 | project12 | gs-k2vx-9dnb | Golden Stone Logistics, China and Ghana freight website (English and Chinese) | Website |
 | rawat | fd-w8tq-3jxc | Rawat, clinic operations for an Indonesian primary clinic (owner's portfolio piece) | Web app |
 | flowdirector | fd-w8tq-3jxc | Old link, serves the same Rawat build | Web app |
+| selvedge | sv-4rkx-msbd | Selvedge, AI retail operating system for a luxury fashion group (portfolio case under NDA) | Web app + case notes |
 
 Upwork briefs get their own slug instead of `projectN` (owner's request), letters only.
 
@@ -165,6 +166,9 @@ from McDonald's, Chick-fil-A, Domino's, Uber Eats and the Starbucks offline-firs
 first with a zone check, curbside and cook on arrival, a real checkout, a full order lifecycle with
 failures, and an honest offline outbox that rechecks the menu and sends once. Sources in the
 branch's `docs/strategy.md`.
+
+### Selvedge (Dribbble retail ERP brief, ORVUM)
+Owner asked for a named URL like the Upwork ones, a senior product designer and PM approach with deep research first, English with Indonesian names, about 70% built so the rest reads as under NDA, the AI experience shown in full, and a roast before finishing. Built as a portfolio case: research with sources (branch `docs/research.md`), three role homes (owner, store manager, advisor on day 4), an assistant that starts from where you are and shows its sources, AI proposals with evidence and undo, autonomy limits per decision, and "Show me" lessons. Buying, Finance, Cash flow, Analytics and Settings are shown as redacted; the client name is a black bar. Two roast rounds are recorded in the branch's `docs/recap.md`.
 
 ## 6. Open items
 

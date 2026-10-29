@@ -12,5 +12,6 @@
   { "slug": "project11", "branch": "claude/flock-flame-menu-app", "title": "Flock & Flame menu app" },
   { "slug": "project12", "branch": "claude/golden-stone-logistics", "title": "Golden Stone Logistics" },
   { "slug": "rawat", "branch": "claude/flow-director-clinic-ops", "title": "Rawat clinic operations" },
-  { "slug": "flowdirector", "branch": "claude/flow-director-clinic-ops", "title": "Rawat (old Flow Director link)" }
+  { "slug": "flowdirector", "branch": "claude/flow-director-clinic-ops", "title": "Rawat (old Flow Director link)" },
+  { "slug": "selvedge", "branch": "claude/selvedge-retail-os", "title": "Selvedge retail operating system" }
 ]

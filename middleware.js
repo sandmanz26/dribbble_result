@@ -21,7 +21,8 @@ const PASSWORDS = {
   project11: 'ck-7rmz-q4hp', // Flock & Flame chicken and grill menu app
   project12: 'gs-k2vx-9dnb', // Golden Stone Logistics, China and Ghana freight website
   rawat: 'fd-w8tq-3jxc', // Rawat clinic operations, the owner's portfolio piece (same build as flowdirector)
-  flowdirector: 'fd-w8tq-3jxc', // Flow Director clinic operations prototype (Upwork, not a projectN slug)
+  flowdirector: 'fd-w8tq-3jxc',
+  selvedge: 'sv-4rkx-msbd', // Selvedge retail OS, portfolio case for the Dribbble retail ERP brief // Flow Director clinic operations prototype (Upwork, not a projectN slug)
 }
 
 // Nothing on this site may be indexed: every response says so, and robots.txt turns crawlers away.

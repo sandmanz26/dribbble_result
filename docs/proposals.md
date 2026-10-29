@@ -51,3 +51,28 @@ On the visual side I used your palette of deep green, gold and warm neutral with
 To be upfront: this is an early exploration made in limited time, so some parts are not fully polished. Rates, company details and photos are placeholders for your real information, and the Chinese copy should be checked by a native speaker. I made it to show I'm serious about the project and to give us a concrete starting point.
 
 If you like the direction, I can refine it with your real details and photos and prepare it for development. Let me know what you'd like to change.
+
+## selvedge, Retail Management ERP (ORVUM brief)
+
+Hi! Your brief describes the hardest kind of product to get right: an AI operating system that should feel like the best consumer apps, for people who use it at three very different altitudes. Here is how I approach it, and a case you can click through.
+
+**1. Start from the three tests in your brief.** A new employee learns it with minimal training, a store manager sees what matters immediately, and an owner understands the whole company from one interface. I design one home per person, built on the same data at different altitudes, so the owner, the manager and the advisor never see different truths.
+
+**2. Make the AI earn trust, not just answer.** The patterns I rely on, drawn from Microsoft's human-AI guidelines, Google PAIR and how retail AI tools handle evidence and approval:
+- Every AI statement shows where its numbers come from
+- Confidence in plain words, only where it changes a decision
+- Every proposal has the same shape: what, why, expected effect with a range, what could go wrong, then approve, edit or decline with a reason
+- Autonomy set per type of decision (suggest, ask first, or act within a limit and tell), owned by people, logged, with undo
+- The assistant starts from where you are, teaches with "show me" on the real screen, and never contacts a client on its own
+
+**3. Respect luxury retail.** Clienteling, holds, transfers between boutiques, allocation of scarce pieces, protecting full-price sell-through. The AI ranks and explains; people decide what touches a client or the brand.
+
+**4. A design system that scales to data-heavy screens.** Quiet chrome, one accent reserved for what the AI contributed, tabular figures, honest empty and error states, and components built for dense tables and decision queues.
+
+Case: https://proposal-virid-eight.vercel.app/selvedge/
+Password: sv-4rkx-msbd
+Start with the case notes, then switch between the owner, the store manager and a new advisor. Parts of the case are redacted, and all data is synthetic.
+
+My portfolio: createdybdaniel.com
+
+I would love to see your existing design vision and help take it to a cohesive, world-class product.
