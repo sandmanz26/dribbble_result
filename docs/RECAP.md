@@ -44,6 +44,9 @@ itself are in `AGENTS.md`; each project branch keeps its own `README.md` and `do
   numbers, social handles, "DM me", PayPal, Stripe, bank transfer and so on). Never obfuscate links;
   if a link is flagged, show the work as a Dribbble shot instead.
 - Ready-to-paste proposals for project11 and project12 are in `docs/proposals.md`.
+- Proposals explain the approach in words (the owner sees describing as proof of seriousness), then
+  give the prototype link and password, and always include the owner's portfolio:
+  createdybdaniel.com.
 - Tone the owner wants: natural, casual but professional, straightforward and polite. No forced or
   cute lines.
 - For projects 8, 9 and 10 the proposals say plainly that the prototype is an early exploration made
@@ -155,6 +158,13 @@ Owner: "the design review is very poor, not premium, still looks like AI slop" f
   Console are the owner's next step if the flag stays.
 - Photo source for both: Open Images (Google), downloaded once, converted to WebP; Higgsfield still
   had no generation tool.
+
+### project11 round 3: ordering made real
+Owner: offline ordering and delivery were too simple and unreal; study how big brands do it. Rebuilt
+from McDonald's, Chick-fil-A, Domino's, Uber Eats and the Starbucks offline-first web app: order setup
+first with a zone check, curbside and cook on arrival, a real checkout, a full order lifecycle with
+failures, and an honest offline outbox that rechecks the menu and sends once. Sources in the
+branch's `docs/strategy.md`.
 
 ## 6. Open items
 
