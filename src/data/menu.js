@@ -66,14 +66,3 @@ export const SIDES = [
   { id: 'slaw', name: 'Coleslaw', price: 1.4 }, { id: 'corn', name: 'Grilled corn', price: 1.6 },
   { id: 'rice', name: 'Spiced rice', price: 1.8 },
 ]
-
-export const SHOP = { name: 'Flock & Flame', branch: 'Ring Road', opens: '11:00', closes: '23:00', delivery: 2.5, deliveryMins: 20 }
-
-// What the kitchen does to an order, in order. Grilled dishes go to the coals instead of the fryer.
-export const STATIONS = [
-  { id: 'received', name: 'Received', note: 'Your ticket is on the rail.' },
-  { id: 'prep', name: 'On the line', note: 'Breading and marinade.' },
-  { id: 'cook', name: 'Cooking', note: 'In the fryer and on the coals.' },
-  { id: 'packed', name: 'Packed', note: 'Boxed, dips counted, sealed.' },
-  { id: 'ready', name: 'Ready', note: 'At the counter under your number.' },
-]

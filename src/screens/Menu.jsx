@@ -1,14 +1,17 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useStore } from '../store.jsx'
-import { CATS, money, SHOP, itemOf } from '../data/menu.js'
+import { CATS, money, itemOf } from '../data/menu.js'
+import SetupSheet, { summary } from './Setup.jsx'
 import { Toast, useToast, day, photoSrc } from '../ui/kit.jsx'
 import * as I from '../ui/icons.js'
 
 // The menu is one long page in four sections. The tabs jump between them and follow the scroll.
 // Today's picks rotate at the top; every dish is a real photo.
 export default function Menu({ scroller }) {
-  const { menu, s, online, dispatch, count } = useStore()
+  const { menu, s, online, dispatch, count, address } = useStore()
+  const [setupOpen, setSetupOpen] = useState(false)
+  const where = summary(s, address)
   const loc = useLocation()
   const nav = useNavigate()
   const [cat, setCat] = useState(CATS[0].id)
@@ -65,9 +68,9 @@ export default function Menu({ scroller }) {
   return (
     <div className="menu">
       <header className="menu-top">
-        <button className="where" onClick={() => nav('/bag')}>
-          <span className="where-k">{s.mode === 'pickup' ? 'Pickup from' : 'Deliver to'}</span>
-          <span className="where-v">{s.mode === 'pickup' ? `${SHOP.name}, ${SHOP.branch}` : '14 Palm Avenue'} <I.Right size={14} /></span>
+        <button className="where" onClick={() => setSetupOpen(true)} aria-label={`${where.k}, ${where.v}. Change`}>
+          <span className="where-k">{where.k} · {where.sub}</span>
+          <span className="where-v">{where.v} <I.Down size={14} /></span>
         </button>
         <Link to="/bag" className="bag-btn" aria-label={`Bag, ${count} items`}><I.Bag size={22} />{count > 0 && <b key={bump}>{count}</b>}</Link>
       </header>
@@ -75,8 +78,8 @@ export default function Menu({ scroller }) {
       <h1 className="menu-title">{hour >= 17 ? 'Tonight' : hour >= 11 ? 'Lunch' : 'Today'} at Flock &amp; Flame</h1>
       <p className={`sync ${online ? '' : 'is-off'}`} role="status">
         {checking ? <><I.Refresh size={14} className="spin" /> Checking for a newer menu</>
-          : online ? <><span className="live-dot" /> Open until {SHOP.closes} · menu v{s.live.v}</>
-            : <><I.Offline size={14} /> Offline · menu v{s.live.v} saved {day(s.live.at)}</>}
+          : online ? <><span className="live-dot" /> Live menu, version {s.live.v}</>
+            : <><I.Offline size={14} /> Saved menu, version {s.live.v} from {day(s.live.at)}. Prices are checked again before an order is sent.</>}
       </p>
 
       {checking ? <div className="hero skel" aria-hidden="true" /> : <Picks picks={picks} onAdd={quickAdd} />}
@@ -116,6 +119,7 @@ export default function Menu({ scroller }) {
       })}
       <p className="menu-foot">Prices include tax. Every dish is made in one kitchen with nuts, sesame, egg and gluten; ask the counter about allergens. <Link to="/credits">Photo credits</Link></p>
       <Toast toast={toast} />
+      <SetupSheet open={setupOpen} onClose={() => setSetupOpen(false)} />
     </div>
   )
 }

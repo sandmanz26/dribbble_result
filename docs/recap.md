@@ -28,3 +28,14 @@
   grid; photo fly-to-bag animation. Menu reorganised to 24 dishes that match the photos.
 - Higgsfield generation is still unavailable in this environment; the photo slots can be swapped for
   the shop's own shots one file at a time (`public/food/<name>.webp`).
+
+## Round 3 (owner feedback)
+- Owner: offline ordering and delivery were too simple and not real; look at how big brands do it.
+- Research (sources in `docs/strategy.md`): Starbucks offline-first web app, McDonald's and
+  Chick-fil-A mobile order and curbside check-in, Domino's Tracker stages, Uber Eats accept then
+  courier.
+- Built: order setup sheet (addresses with zone check, branches with hours, curbside), separate
+  checkout (card or cash, tip, cutlery, kitchen note, scheduled or cook on arrival), full order
+  lifecycle with exceptions, honest outbox with recheck and one order key. Reviewer panel can switch
+  the network to weak or none and trigger failures.
+- Store key is now `ff-state-v3`. Branch Ring Road is open until 02:00 so the demo works late.

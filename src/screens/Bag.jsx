@@ -1,26 +1,19 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useStore, linePrice, dipName, sideOf } from '../store.jsx'
-import { money, HEAT, SHOP, itemOf } from '../data/menu.js'
-import { Tile, Stepper, Sheet, clock } from '../ui/kit.jsx'
+import { money, HEAT, itemOf } from '../data/menu.js'
+import { DELIVERY } from '../data/service.js'
+import { Tile, Stepper } from '../ui/kit.jsx'
+import SetupSheet, { summary } from './Setup.jsx'
 import * as I from '../ui/icons.js'
 
-// Time slots every 15 minutes from the next quarter hour, inside opening hours.
-function slots(now, lead) {
-  const d = new Date(now + lead * 60000); d.setSeconds(0, 0)
-  d.setMinutes(Math.ceil(d.getMinutes() / 15) * 15)
-  const out = []
-  for (let i = 0; i < 8; i++) { const t = new Date(d.getTime() + i * 15 * 60000); if (t.getHours() < 23 && t.getHours() >= 11) out.push(t.getTime()) }
-  return out
-}
+const EXTRAS = ['mayo-fries', 'slaw', 'corn']
 
 export default function Bag() {
-  const { s, dispatch, itemById, subtotal, fee, total, online, now } = useStore()
+  const { s, dispatch, itemById, subtotal, short, address, online } = useStore()
   const nav = useNavigate()
-  const [sheet, setSheet] = useState(false)
-  const lead = Math.max(0, ...s.bag.map((l) => itemById(l.id)?.mins || 0)) + 5 + (s.mode === 'delivery' ? SHOP.deliveryMins : 0)
-  const times = slots(now, lead)
-  const slotLabel = s.slot === 'asap' ? `As soon as it's ready, about ${clock(now + lead * 60000)}` : clock(s.slot)
+  const [setup, setSetup] = useState(false)
+  const sum = summary(s, address)
 
   if (!s.bag.length) {
     return (
@@ -33,14 +26,18 @@ export default function Bag() {
     )
   }
 
-  const place = () => {
-    dispatch({ type: 'place', total, online, now: new Date().toISOString(), mins: lead })
-    nav(`/order/A-${s.seq + 1}`)
-  }
+  const extras = EXTRAS.map((id) => itemById(id)).filter((it) => it && !it.soldOut && !s.bag.some((l) => l.id === it.id))
+  const sold = s.bag.some((l) => itemById(l.id)?.soldOut)
 
   return (
     <div className="bag">
       <h1 className="page-title">Your bag</h1>
+      <button className="where-card" onClick={() => setSetup(true)}>
+        {s.setup.mode === 'delivery' ? <I.Scooter size={22} /> : s.setup.style === 'curbside' ? <I.Car size={22} /> : <I.Store size={22} />}
+        <span><small>{sum.k}</small><b>{sum.v}</b><small>{sum.sub}</small></span>
+        <em>Change</em>
+      </button>
+
       <ul className="bag-lines">
         {s.bag.map((l) => {
           const it = itemById(l.id) || itemOf(l.id)
@@ -48,7 +45,7 @@ export default function Bag() {
           return (
             <li key={l.key} className="bag-line">
               <Tile item={it} size="sm" />
-              <span className="bag-text"><b>{it.name}</b><span>{bits.join(', ')}</span>{it.soldOut && <em>Sold out since you added it</em>}</span>
+              <span className="bag-text"><b>{it.name}</b><span>{bits.join(', ')}</span>{it.soldOut && <em>Sold out since you added it. Remove it to continue.</em>}</span>
               <span className="bag-end">
                 <span className="bag-price">{money(linePrice(l, it))}</span>
                 <Stepper small value={l.qty} onChange={(v) => dispatch({ type: 'qty', key: l.key, d: v - l.qty })} label={`${it.name} quantity`} />
@@ -58,49 +55,38 @@ export default function Bag() {
         })}
       </ul>
 
-      <section className="card">
-        <div className="seg" role="radiogroup" aria-label="How you get it">
-          {[['pickup', I.Store, 'Pickup'], ['delivery', I.Bike, 'Delivery']].map(([id, Icon, label]) => (
-            <button key={id} role="radio" aria-checked={s.mode === id} onClick={() => dispatch({ type: 'set', patch: { mode: id, slot: 'asap' } })}><Icon size={18} />{label}</button>
-          ))}
+      {extras.length > 0 && (
+        <section className="extras" aria-labelledby="h-extras">
+          <h2 id="h-extras">Goes well with it</h2>
+          <ul>
+            {extras.map((it) => (
+              <li key={it.id}>
+                <Tile item={it} size="sm" />
+                <span><b>{it.name}</b><small>{money(it.price)}</small></span>
+                <button className="quick is-inline" aria-label={`Add ${it.name}`} onClick={() => dispatch({ type: 'add', line: { id: it.id, qty: 1, heat: null, dips: [], side: 'none' } })}><I.Add size={18} /></button>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {short > 0 && (
+        <div className="minbar" role="status">
+          <span>Add {money(short)} more for delivery. The minimum is {money(DELIVERY.minOrder)}.</span>
+          <i style={{ '--p': `${Math.min(100, (subtotal / DELIVERY.minOrder) * 100)}%` }} />
         </div>
-        <button className="setting" onClick={() => setSheet(true)}>
-          <I.Time size={20} /><span><small>{s.mode === 'pickup' ? 'Pickup time' : 'Delivery time'}</small>{slotLabel}</span><I.Right size={18} />
-        </button>
-        <div className="setting is-static">
-          <I.Pin size={20} /><span><small>{s.mode === 'pickup' ? 'Collect from' : 'Deliver to'}</small>{s.mode === 'pickup' ? `${SHOP.name}, ${SHOP.branch}` : '14 Palm Avenue, flat 3 (saved address)'}</span>
-        </div>
-        <div className="setting is-static">
-          <I.Cash size={20} /><span><small>Payment</small>{s.mode === 'pickup' ? 'Pay at the counter, cash or card' : 'Pay the rider, cash or card'}</span>
-        </div>
-      </section>
+      )}
 
       <dl className="sums">
-        <div><dt>Food</dt><dd>{money(subtotal)}</dd></div>
-        {s.mode === 'delivery' && <div><dt>Delivery</dt><dd>{money(fee)}</dd></div>}
-        <div className="is-total"><dt>To pay</dt><dd>{money(total)}</dd></div>
+        <div className="is-total"><dt>Food</dt><dd>{money(subtotal)}</dd></div>
       </dl>
-
-      {!online && <p className="note is-warn"><I.Offline size={18} /> No signal right now. Your order is saved on this phone and goes to the kitchen by itself as soon as you are back online. The ready time starts from then.</p>}
+      <p className="fine bag-fine">{s.setup.mode === 'delivery' ? 'Delivery fee and an optional rider tip are added at checkout.' : 'No fees for pickup.'}</p>
+      {!online && <p className="note is-warn"><I.Offline size={18} /> No signal. You can still finish checkout. The order waits on this phone and nothing is charged until the shop has it.</p>}
 
       <div className="placebar">
-        <button className="btn is-wide is-accent" onClick={place} disabled={s.bag.some((l) => itemById(l.id)?.soldOut)}>
-          {online ? <>Send order <span className="btn-sum">{money(total)}</span></> : <>Save order, send when online</>}
-        </button>
+        <button className="btn is-wide is-accent" onClick={() => nav('/checkout')} disabled={sold || short > 0}>Checkout <span className="btn-sum">{money(subtotal)}</span></button>
       </div>
-
-      <Sheet open={sheet} onClose={() => setSheet(false)} title={s.mode === 'pickup' ? 'Pickup time' : 'Delivery time'}>
-        <div className="options" role="radiogroup" aria-label="Time">
-          <button role="radio" aria-checked={s.slot === 'asap'} className="option" onClick={() => { dispatch({ type: 'set', patch: { slot: 'asap' } }); setSheet(false) }}>
-            <span className="radio" aria-hidden="true" />As soon as it&apos;s ready<span className="option-price">about {clock(now + lead * 60000)}</span>
-          </button>
-          {times.map((t) => (
-            <button key={t} role="radio" aria-checked={s.slot === t} className="option" onClick={() => { dispatch({ type: 'set', patch: { slot: t } }); setSheet(false) }}>
-              <span className="radio" aria-hidden="true" />{clock(t)}
-            </button>
-          ))}
-        </div>
-      </Sheet>
+      <SetupSheet open={setup} onClose={() => setSetup(false)} />
     </div>
   )
 }
