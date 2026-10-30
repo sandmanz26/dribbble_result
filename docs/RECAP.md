@@ -188,6 +188,9 @@ Landing with a live readiness matcher, student home, project page with the score
 ### project16, Myelin (AI Brain UI/UX for Web/Desktop/Mobile, $10,000)
 Owner asked for deep research, a roast, a PRD and a design plan before the build (all in the branch's `docs/`). The concept turns the brief's "emulates the human brain, up to 80% cheaper" into something a user can see and check: every request takes one of three paths (Reflex habit, Recall memory, Reason large model), shows its confidence, cost and the saving against one stated baseline, and escalates on its own when unsure. Repeated work becomes a habit only after a person approves it; a nightly Sleep report merges, fades and flags memory conflicts. Surfaces: overview page, web app (Today, tasks, task detail, memory, habits, spend, settings, sleep), desktop quick ask over a mail app, mobile (today, voice ask, approve, report). shadcn-style components on Radix with Tailwind v4, as the brief asked. Placeholders: the name Myelin and the sample workspace Fernwood Studio.
 
+### Working with two Claude sessions (from 30 Oct 2026)
+The owner now runs a second Claude on their own computer next to the web session. Rules for sharing the repository without collisions are in `docs/COLLABORATION.md`: one owner per branch recorded in `docs/CLAIMS.md` on `main`, project numbers reserved before scaffolding, small pulled-first commits on `main`, a Status hand-over section in each branch README, and a `Session: cloud|desktop` line in commit bodies.
+
 ## 6. Open items
 
 - project9: generate the hero tiles, metal card and panel renders in Higgsfield once the generation

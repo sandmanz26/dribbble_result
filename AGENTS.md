@@ -15,6 +15,10 @@ always: **UI design + front-end code (React). No backend, no database, no real p
 Everything discussed with the owner (preferences, history, open items) is recapped in
 `docs/RECAP.md`. Read it after this file.
 
+**Two Claude sessions work on this repository at the same time** (`cloud` on the web and `desktop` on
+the owner's computer). Before changing anything, read `docs/COLLABORATION.md` and check
+`docs/CLAIMS.md` on a freshly pulled `main`. Never push to a branch the other session has claimed.
+
 ## 2. The core rule: one project = one branch = one codebase
 
 ```
