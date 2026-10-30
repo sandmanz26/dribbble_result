@@ -21,8 +21,8 @@ export default function Today() {
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <h1 className="text-[26px] font-semibold leading-tight">Today</h1>
-          <p className="mt-1 max-w-[70ch] text-[14px] text-muted">
-            <span className="num text-ink">{T.n}</span> tasks since yesterday {fmt.clock(from)}. <span className="num text-ink">{fmt.pct(T.fast)}</span> took a fast path; {escal} fast {escal === 1 ? 'answer was' : 'answers were'} not sure enough and thought it through.
+          <p className="mt-1 max-w-[86ch] text-[14px] text-muted">
+            <span className="num text-ink">{T.n}</span> tasks since yesterday {fmt.clock(from)}. <span className="num text-ink">{fmt.pct(T.fast)}</span> took a fast path; {escal} fast {escal === 1 ? 'answer was' : 'answers were'} not sure enough, so Reason took over.
           </p>
         </div>
         <Button variant="outline" asChild><Link to="/app/sleep"><Moon />Last night’s report</Link></Button>
@@ -36,7 +36,7 @@ export default function Today() {
         <Kpi label="Median answer" value={fmt.time(T.medianTime)} note="from send to answer" />
         <Kpi label="Spent" value={fmt.usd(T.cost)} note="actual" />
         <Kpi label="Reasoning everything" value={fmt.usd(T.base)} note="same tasks, large model only" />
-        <Kpi label="Saved" value={`−${fmt.pct(T.pct)}`} note={<span className="num">{fmt.usd(T.saved)} less</span>} />
+        <Kpi label="Saved" value={fmt.pct(T.pct)} note={<span className="num">{fmt.usd(T.saved)} less</span>} />
       </dl>
 
       <Card aria-labelledby="trace-h">

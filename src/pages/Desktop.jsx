@@ -49,11 +49,11 @@ export default function Desktop() {
       {/* Menu bar with the tray item */}
       <div className="flex h-8 items-center gap-4 border-b border-line bg-[#18181b] px-4 text-[12.5px]">
         <Link to="/app" className="inline-flex items-center gap-1 text-muted hover:text-ink"><ArrowLeft width={12} height={12} />Workspace</Link>
-        <span className="font-semibold">Mail</span><span className="text-muted">File</span><span className="text-muted">Edit</span><span className="text-muted">View</span>
+        <span className="font-semibold">Mail</span><span className="hidden gap-4 text-muted sm:flex"><span>File</span><span>Edit</span><span>View</span></span>
         <button onClick={() => setTray((v) => !v)} aria-expanded={tray} aria-label="Myelin tray" className="ml-auto flex items-center gap-2 rounded px-2 py-0.5 hover:bg-raised">
-          <Mark size={16} /><span className="num">{fmt.pct(T.pct)} saved today</span>
+          <Mark size={16} /><span className="num whitespace-nowrap">{fmt.pct(T.pct)} saved today</span>
         </button>
-        <span className="num text-muted">Fri 09:12</span>
+        <span className="num hidden whitespace-nowrap text-muted sm:inline">Fri 09:12</span>
       </div>
 
       {tray && (

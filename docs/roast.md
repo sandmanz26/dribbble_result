@@ -51,3 +51,16 @@
 - Tables scroll inside their own box on phones; the task list shows only the time on phones.
 - Rail keeps its one amber selection line through the tooltip wrapper.
 - Inspector (app mode, mono allowed as the style's face): 0 fails on every screen. Defended warnings: light ink on dark ground, one Red Hat superfamily in three cuts, no footage (no honest clip reachable).
+
+## Second UI roast (small details)
+- Bug: the escalated task T-2177 read "Recall, then Recall"; it now ends on Reason, and its steps no longer repeat the same text.
+- Bug: opening one task after another kept a stale "Recall" step (duplicate list keys); keys are unique now.
+- "Saved −77%" read as a loss; it shows 77% with "$7.25 less".
+- Disabled Send no longer looks like a muddy primary button; the keyboard hint hides on phones where it was cut off.
+- Dead buttons wired up: mobile "Think it through", attach and camera say plainly they are outside the prototype.
+- Mobile report lets you settle the memory conflict; the habit count on mobile Today follows approvals.
+- Table headers no longer run together ("Last usedSource", "SavedState"); pinned memories show a filled amber pin.
+- Habit proposals say "Saves a month" instead of a minus sign; "Keep thinking" became "Not now".
+- Settings forecast for Balanced now matches what the month really cost; month names are fixed three-letter forms.
+- Header budget links to Settings; the Spend chart scrolls on phones instead of shrinking to unreadable.
+- Overview calculator gained team presets; the "Measured, not imagined" text column stays in view beside its photos.

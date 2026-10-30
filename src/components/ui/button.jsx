@@ -5,7 +5,7 @@ import { cn } from '../../lib/utils.js'
 
 // shadcn/ui Button, restyled: pill controls, 34px tall, the amber fill kept for the one primary action.
 const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-[13px] font-semibold transition-colors disabled:pointer-events-none disabled:opacity-40 [&_svg]:size-4 [&_svg]:shrink-0',
+  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-[13px] font-semibold transition-colors disabled:pointer-events-none disabled:bg-raised disabled:text-faint disabled:border-transparent [&_svg]:size-4 [&_svg]:shrink-0',
   {
     variants: {
       variant: {

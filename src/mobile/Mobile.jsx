@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, NavLink, Route, Routes, useNavigate, useParams } from 'react-router-dom'
 import { Home, Mic, Camera, Repeat, Moon, ArrowLeft, Lightbulb } from 'pixelarticons/react'
 import { useStore } from '../store.jsx'
-import { NOW, PROPOSALS, SLEEP, fmt, totals } from '../data/myelin.js'
+import { NOW, PROPOSALS, SLEEP, MEMORY, fmt, totals } from '../data/myelin.js'
 import { Trace, PathChip, Avatar } from '../ui/kit.jsx'
 import Composer from '../ui/Composer.jsx'
 import { Button } from '../components/ui/button.jsx'
@@ -27,6 +27,7 @@ export default function MobileFrame() {
 }
 
 export function MobileApp() {
+  const { s } = useStore()
   return (
     <div className="flex min-h-screen flex-col bg-ground">
       <div className="flex-1 overflow-y-auto px-4 pb-24 pt-12">
@@ -43,12 +44,14 @@ export function MobileApp() {
           <NavLink key={to} to={to} end={to === '/m'} className={({ isActive }) => `sel-under flex flex-col items-center gap-0.5 pt-2.5 text-[11px] ${isActive ? 'active text-ink' : 'text-muted'}`}><I width={20} height={20} />{l}</NavLink>
         ))}
       </nav>
+      {s.toast && <p role="status" className="rise fixed inset-x-4 bottom-24 z-50 rounded-[6px] border border-line bg-raised px-4 py-2.5 text-center text-[13px]">{s.toast}</p>}
     </div>
   )
 }
 
 function MToday() {
-  const { tasks } = useStore()
+  const { s, tasks } = useStore()
+  const waiting = PROPOSALS.filter((p) => !s.approved.includes(p.id) && !s.declined.includes(p.id)).length
   const from = new Date(NOW.getTime() - 24 * 3600 * 1000)
   const day = tasks.filter((t) => t.at >= from)
   const T = totals(day)
@@ -60,9 +63,9 @@ function MToday() {
         <div><dt className="text-[12.5px] text-muted">Tasks</dt><dd className="num text-[22px]">{T.n}</dd></div>
         <div><dt className="text-[12.5px] text-muted">Spent</dt><dd className="num text-[22px]">{fmt.usd(T.cost)}</dd></div>
         <div><dt className="text-[12.5px] text-muted">If all reasoned</dt><dd className="num text-[22px]">{fmt.usd(T.base)}</dd></div>
-        <div><dt className="text-[12.5px] text-muted">Saved</dt><dd className="num text-[22px]">−{fmt.pct(T.pct)}</dd></div>
+        <div><dt className="text-[12.5px] text-muted">Saved</dt><dd className="num text-[22px]">{fmt.pct(T.pct)}</dd></div>
       </dl>
-      <Link to="/m/approve" className="flex items-center justify-between rounded-card bg-surface p-4"><span><b className="block text-[15px]">2 habits to approve</b><span className="text-[13px] text-muted">Proposed overnight from repeated work</span></span><Repeat width={20} height={20} className="text-reflex" /></Link>
+      <Link to="/m/approve" className="flex items-center justify-between rounded-card bg-surface p-4"><span><b className="block text-[15px]">{waiting ? `${waiting} ${waiting === 1 ? 'habit' : 'habits'} to approve` : 'No habits waiting'}</b><span className="text-[13px] text-muted">{waiting ? 'Proposed overnight from repeated work' : 'New ones arrive after tonight’s consolidation'}</span></span><Repeat width={20} height={20} className="text-reflex" /></Link>
       <section aria-labelledby="mr-h">
         <h2 id="mr-h" className="mb-2 text-[15px] text-muted">Latest</h2>
         <ul className="grid">{day.filter((t) => t.ask).slice(-4).reverse().map((t) => <li key={t.id} className="border-t border-rule py-3"><Link to={`/m/t/${t.id}`} className="grid gap-1"><span className="text-[14px]">{t.ask}</span><PathChip t={t} /></Link></li>)}</ul>
@@ -73,6 +76,7 @@ function MToday() {
 
 function MAsk() {
   const nav = useNavigate()
+  const { dispatch } = useStore()
   const [rec, setRec] = useState(false)
   const [heard, setHeard] = useState('')
   const line = 'Weekly sales summary for Monday'
@@ -84,10 +88,10 @@ function MAsk() {
   return (
     <div className="grid gap-5">
       <header><h1 className="text-[24px] font-semibold">Ask</h1><p className="mt-1 text-[14px] text-muted">Say it, snap it, or type it. It goes down the cheapest path that is good enough.</p></header>
-      <button onClick={() => { setHeard(''); setRec(true) }} aria-pressed={rec} className={`mx-auto grid size-28 place-items-center rounded-full border ${rec ? 'border-amber text-amber' : 'border-control text-ink'}`} aria-label={rec ? 'Listening' : 'Hold to talk'}><Mic width={40} height={40} /></button>
+      <button onClick={() => { setHeard(''); setRec(true) }} aria-pressed={rec} className={`mx-auto grid size-28 place-items-center rounded-full border ${rec ? 'border-amber text-amber' : 'border-control text-ink'}`} aria-label={rec ? 'Listening' : 'Tap and speak'}><Mic width={40} height={40} /></button>
       <p className="min-h-6 text-center text-[15px]" aria-live="polite">{rec ? <span className="caret">{heard}</span> : heard || <span className="text-muted">Tap and speak</span>}</p>
       {heard && !rec && <Button variant="primary" size="lg" onClick={() => nav('/m/ask?q=' + encodeURIComponent(heard))}>Send “{heard}”</Button>}
-      <div className="flex justify-center gap-3"><Button variant="outline"><Camera />Photo of a document</Button></div>
+      <div className="flex justify-center gap-3"><Button variant="outline" onClick={() => dispatch({ type: 'toast', text: 'The camera is not part of this prototype. Try the microphone.' })}><Camera />Photo of a document</Button></div>
       <Composer compact base="/m/t/" placeholder="Or type a task" onSent={(id) => nav(`/m/t/${id}`)} />
       <AutoSend />
     </div>
@@ -109,7 +113,8 @@ function AutoSend() {
 
 function MTask() {
   const { id } = useParams()
-  const { tasks } = useStore()
+  const nav = useNavigate()
+  const { s, tasks, dispatch } = useStore()
   const t = tasks.find((x) => x.id === id)
   const st = useStages(t)
   if (!t) return <p className="text-muted">Not found. <Link to="/m" className="underline">Today</Link></p>
@@ -122,7 +127,7 @@ function MTask() {
       {done ? <PathChip t={t} /> : <p className="text-[13px] text-amber">{st.stage === 'writing' ? 'Writing' : `${st.stage[0].toUpperCase()}${st.stage.slice(1)}`}…</p>}
       {st.stage === 'writing' || done ? <p className={`text-[15px] leading-relaxed ${done ? '' : 'caret'}`}>{(t.answer || 'Answered in the background.').slice(0, st.typed || 999)}</p> : <div className="scan h-16 rounded-[4px] bg-raised/60" />}
       {done && t.why && <p className="rounded-card bg-surface p-3 text-[13px] text-muted">{t.why}</p>}
-      {done && t.path !== 'reason' && <Button variant="outline"><Lightbulb />Think it through · {fmt.usd(t.base)}</Button>}
+      {done && t.path !== 'reason' && <Button variant="outline" onClick={() => import('../engine.js').then(({ route }) => { const r = route(t.ask, { budget: s.budget, approved: s.approved, force: true }); const nid = `${t.id}-r`; dispatch({ type: 'add', task: { ...t, ...r, id: nid, started: Date.now(), escalatedFrom: t.id } }); nav(`/m/t/${nid}`) })}><Lightbulb />Think it through · {fmt.usd(t.base)}</Button>}
     </div>
   )
 }
@@ -138,7 +143,7 @@ function MApprove() {
           <h2 className="text-[16px] font-semibold">{p.name}</h2>
           <p className="mt-2 text-[14px]">{p.evidence}</p>
           <p className="num mt-3 text-[13px] text-muted">{fmt.usd(p.perRun.now)} → {fmt.usd(p.perRun.then)} a run</p>
-          <div className="mt-4 grid grid-cols-2 gap-2"><Button variant="ghost" onClick={() => dispatch({ type: 'decline', id: p.id })}>Keep thinking</Button><Button variant="primary" onClick={() => dispatch({ type: 'approve', id: p.id, name: p.name })}>Approve</Button></div>
+          <div className="mt-4 grid grid-cols-2 gap-2"><Button variant="ghost" onClick={() => dispatch({ type: 'decline', id: p.id })}>Not now</Button><Button variant="primary" onClick={() => dispatch({ type: 'approve', id: p.id, name: p.name })}>Approve</Button></div>
         </article>
       )) : <p className="rounded-card border border-dashed border-line p-6 text-center text-[14px] text-muted">All caught up. New proposals arrive after tonight’s consolidation.</p>}
     </div>
@@ -146,11 +151,19 @@ function MApprove() {
 }
 
 function MReport() {
+  const { s, dispatch } = useStore()
+  const a = MEMORY.find((m) => m.id === SLEEP.conflict.a); const b = MEMORY.find((m) => m.id === SLEEP.conflict.b)
   return (
     <div className="grid gap-4">
       <header><h1 className="text-[24px] font-semibold">Last night</h1><p className="mt-1 text-[14px] text-muted"><span className="num">{SLEEP.from}</span> to <span className="num">{SLEEP.to}</span></p></header>
-      <dl className="grid grid-cols-3 gap-3">{[['Merged', SLEEP.merged], ['Faded', SLEEP.faded], ['Stronger', SLEEP.strengthened]].map(([l, v]) => <div key={l}><dt className="text-[12.5px] text-muted">{l}</dt><dd className="num text-[22px]">{v}</dd></div>)}</dl>
-      <p className="border-l border-warn pl-3 text-[14px]">{SLEEP.conflict.text}</p>
+      <dl className="grid grid-cols-3 gap-3">{[['Merged', SLEEP.merged], ['Faded', SLEEP.faded], ['Strengthened', SLEEP.strengthened]].map(([l, v]) => <div key={l}><dt className="text-[12.5px] text-muted">{l}</dt><dd className="num text-[22px]">{v}</dd></div>)}</dl>
+      <section className="rounded-card bg-surface p-4" aria-labelledby="mc-h">
+        <h2 id="mc-h" className="text-[15px] font-semibold">{s.conflict ? 'Conflict settled' : 'One conflict needs you'}</h2>
+        <p className="mt-2 text-[14px] text-muted">{SLEEP.conflict.text}</p>
+        {s.conflict ? <p className="mt-3 text-[14px]">Kept <span className="num">{s.conflict}</span>: {(s.conflict === a.id ? a : b).text}</p> : (
+          <div className="mt-3 grid gap-2">{[a, b].map((m) => <Button key={m.id} variant={m.id === a.id ? 'primary' : 'outline'} className="h-auto min-h-11 justify-start whitespace-normal py-2 text-left" onClick={() => dispatch({ type: 'conflict', keep: m.id })}>Keep: {m.text}</Button>)}</div>
+        )}
+      </section>
       <ul className="grid gap-2 text-[14px]">{SLEEP.notes.map((n) => <li key={n} className="border-t border-rule pt-2">{n}</li>)}</ul>
     </div>
   )

@@ -84,7 +84,7 @@ export function Shell({ embedded = false }) {
           <Link to="/" className="md:hidden" aria-label="Myelin overview"><Mark size={24} /></Link>
           <span className="text-[13px] font-semibold">{WORKSPACE.name}</span>
           <span className="text-[13px] text-muted">· {WORKSPACE.plan} · {WORKSPACE.seats} people</span>
-          <span className="ml-auto hidden items-center gap-2 text-[12.5px] text-muted sm:flex"><Zap width={14} height={14} className="text-amber" />Budget: <span className="text-ink">{s.budget[0].toUpperCase() + s.budget.slice(1)}</span></span>
+          <Link to="/app/settings" className="ml-auto hidden items-center gap-2 rounded-full px-2 py-1 text-[12.5px] text-muted hover:bg-raised hover:text-ink sm:flex"><Zap width={14} height={14} className="text-amber" />Thinking budget <span className="text-ink">{s.budget[0].toUpperCase() + s.budget.slice(1)}</span></Link>
         </header>
         <main id="content" tabIndex={-1} className="mx-auto w-full max-w-[1240px] px-5 py-7 outline-none md:px-8">
           <Routes>

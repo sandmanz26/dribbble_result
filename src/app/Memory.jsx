@@ -34,7 +34,7 @@ export default function Memory() {
       <label className="flex h-9 w-full max-w-[320px] items-center gap-2 rounded-full border border-line px-3 focus-within:border-amber"><Search width={14} height={14} className="text-muted" /><span className="sr-only">Search memory</span><input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search what it knows" className="w-full bg-transparent text-[13px] outline-none placeholder:text-faint" /></label>
       <div className="relative min-w-0 overflow-x-auto">
         <table className="w-full min-w-[760px] text-left text-[13.5px]">
-          <thead className="text-[12px] text-muted"><tr><th className="pb-2 font-normal">Memory</th><th className="pb-2 text-right font-normal">Strength</th><th className="pb-2 text-right font-normal">Used</th><th className="pb-2 text-right font-normal">Last used</th><th className="pb-2 font-normal">Source</th><th className="pb-2"><span className="sr-only">Actions</span></th></tr></thead>
+          <thead className="text-[12px] text-muted"><tr><th className="pb-2 pr-4 font-normal">Memory</th><th className="pb-2 pr-4 text-right font-normal">Strength</th><th className="pb-2 pr-4 text-right font-normal">Used</th><th className="pb-2 pr-4 text-right font-normal">Last used</th><th className="pb-2 pr-4 font-normal">Source</th><th className="pb-2"><span className="sr-only">Actions</span></th></tr></thead>
           <tbody>
             {rows.map((m) => (
               <tr key={m.id} className={`border-t border-rule align-top ${focus === m.id ? 'bg-raised/60' : ''} ${m.fading ? 'opacity-60' : ''}`}>
@@ -52,7 +52,7 @@ export default function Memory() {
                 <td className="num py-3 pr-4 text-right text-muted">{fmt.day(m.last)}</td>
                 <td className="py-3 pr-4 text-muted">{m.source}</td>
                 <td className="whitespace-nowrap py-3 text-right">
-                  <Button size="icon" variant="ghost" aria-label={s.pinned.includes(m.id) ? `Unpin ${m.id}` : `Pin ${m.id}`} aria-pressed={s.pinned.includes(m.id)} onClick={() => dispatch({ type: 'pin', id: m.id })}><Bookmark /></Button>
+                  <Button size="icon" variant="ghost" aria-label={s.pinned.includes(m.id) ? `Unpin ${m.id}` : `Pin ${m.id}`} aria-pressed={s.pinned.includes(m.id)} className={s.pinned.includes(m.id) ? 'text-amber hover:text-amber' : ''} onClick={() => dispatch({ type: 'pin', id: m.id })}><Bookmark /></Button>
                   <Button size="icon" variant="ghost" aria-label={`Forget ${m.id}`} onClick={() => setForget(m)}><Trash /></Button>
                 </td>
               </tr>

@@ -44,8 +44,8 @@ export default function TaskView() {
   const think = () => { const r = route(ask, { budget: s.budget, approved: s.approved, force: true }); const nid = `${t.id}-r`; dispatch({ type: 'add', task: { ...t, ...r, id: nid, at: new Date(t.at.getTime() + 60000), started: Date.now(), escalatedFrom: t.id, ask } }); window.location.hash = `#/app/tasks/${nid}` }
   const steps = [
     { k: 'attention', title: 'Attention', body: t.habit ? `Matched a habit: ${memoryOf(t.habit)?.text}.` : t.used?.length ? `Looked for anything familiar and found ${t.used.length} ${t.used.length === 1 ? 'memory' : 'memories'}.` : 'Looked for anything familiar and found nothing close enough.' },
-    ...(t.escalated ? [{ k: 'recall', title: 'Recall', body: `${Math.round(t.conf * 100)}% sure, under your ${Math.round(threshold * 100)}% threshold. Not enough on its own.` }] : []),
-    { k: t.path, title: PATHS[t.path].name, body: t.why || PATHS[t.path].what },
+    ...(t.escalated ? [{ k: 'recall', title: 'Recall', body: `${Math.round(t.conf * 100)}% sure, under your ${Math.round(threshold * 100)}% threshold. Not enough on its own, so it handed over.` }] : []),
+    { k: t.path, title: PATHS[t.path].name, body: t.escalated ? `${PATHS[t.path].what} Checked against the ${t.used?.length === 1 ? 'memory' : 'memories'} Recall found.` : t.why || PATHS[t.path].what },
   ]
   const order = ['attention', 'recall', 'reflex', 'reason', 'writing', 'done']
   const reached = (k) => order.indexOf(st.stage) >= order.indexOf(k) || done || st.stage === 'writing'
@@ -78,7 +78,7 @@ export default function TaskView() {
                 {s.corrected.includes(t.id) && <Badge tone="warn" className="self-center">Corrected</Badge>}
               </div>
             )}
-            {done && t.path !== 'reason' && <p className="mt-3 text-[12.5px] text-muted">Thinking it through would take about <span className="num">20 s</span> and <span className="num">{fmt.usd(t.base)}</span>.</p>}
+            {done && t.path !== 'reason' && <p className="mt-3 text-[12.5px] text-muted">Thinking it through would take about 20 seconds and cost <span className="num">{fmt.usd(t.base)}</span>.</p>}
           </Card>
           <Card aria-labelledby="mem-h">
             <CardHead id="mem-h" title={`Memories used`}><span className="num text-[12.5px] text-muted">{t.used?.length || 0}</span></CardHead>
@@ -92,8 +92,8 @@ export default function TaskView() {
           <Card aria-labelledby="path-h">
             <CardHead id="path-h" title="How it got here" />
             <ol className="grid gap-4">
-              {steps.map((x) => (
-                <li key={x.k} className={`grid grid-cols-[14px_1fr] gap-3 transition-opacity ${reached(x.k) ? '' : 'opacity-35'}`}>
+              {steps.map((x, i) => (
+                <li key={`${i}-${x.k}`} className={`grid grid-cols-[14px_1fr] gap-3 transition-opacity ${reached(x.k) ? '' : 'opacity-35'}`}>
                   <span className="mt-1.5">{x.k === 'attention' ? <span className="block size-2 rounded-full border border-muted" /> : <PathMark path={x.k} />}</span>
                   <span><b className="block text-[13.5px] font-semibold">{x.title}</b><span className="text-[13px] text-muted">{x.body}</span></span>
                 </li>

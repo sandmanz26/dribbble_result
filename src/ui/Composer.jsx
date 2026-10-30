@@ -24,7 +24,7 @@ export function useAsk(base = '/app/tasks/') {
 }
 
 export default function Composer({ compact = false, autoFocus = false, base, onSent, placeholder = 'Ask a question or hand over a task, for example: draft the reply to Lindgren Timber about the oak delay' }) {
-  const { s } = useStore()
+  const { s, dispatch } = useStore()
   const loc = useLocation()
   const ask = useAsk(base)
   const [text, setText] = useState('')
@@ -40,10 +40,10 @@ export default function Composer({ compact = false, autoFocus = false, base, onS
         onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) send(e) }}
         className="w-full resize-none bg-transparent px-1 text-[15px] leading-relaxed text-ink outline-none placeholder:text-faint" />
       <div className="mt-2 flex flex-wrap items-center gap-3">
-        <button type="button" className="grid size-8 place-items-center rounded-full text-muted hover:bg-raised hover:text-ink" aria-label="Attach a file"><Attach width={16} height={16} /></button>
+        <button type="button" className="grid size-8 place-items-center rounded-full text-muted hover:bg-raised hover:text-ink" aria-label="Attach a file" onClick={() => dispatch({ type: 'toast', text: 'Attachments are not part of this prototype' })}><Attach width={16} height={16} /></button>
         <label className="flex items-center gap-2 text-[12.5px] text-muted"><Switch checked={force} onCheckedChange={setForce} aria-label="Think it through" /><Lightbulb width={14} height={14} />Think it through</label>
         <span className="min-w-0 flex-1 truncate text-[12.5px] text-muted" aria-live="polite">
-          {guess ? <span className="inline-flex items-center gap-1.5">Likely <PathMark path={guess.path} /> <b className="font-semibold text-ink">{guess.escalated ? 'Recall, then Reason' : PATHS[guess.path].name}</b> <span className="hidden sm:inline">· {guess.habit ? 'a habit matches' : guess.used.length ? `${guess.used.length} memories match` : 'nothing familiar'}</span></span> : <span>Enter to send, Shift Enter for a new line</span>}
+          {guess ? <span className="inline-flex items-center gap-1.5">Likely <PathMark path={guess.path} /> <b className="font-semibold text-ink">{guess.escalated ? 'Recall, then Reason' : PATHS[guess.path].name}</b> <span className="hidden sm:inline">· {guess.habit ? 'a habit matches' : guess.used.length ? `${guess.used.length} memories match` : 'nothing familiar'}</span></span> : <span className="hidden sm:inline">Enter to send, Shift Enter for a new line</span>}
         </span>
         <Button type="submit" variant="primary" size="sm" disabled={text.trim().length < 3}><Send />Send</Button>
       </div>

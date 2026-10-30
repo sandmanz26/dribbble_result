@@ -35,7 +35,7 @@ export const FEATURED = [
     ask: 'Why did returns rise in September?',
     answer: 'Returns rose from 3.1% to 4.6% of orders. Two thirds of the rise is the Fjord sofa in Moss: 41 returns, 33 citing colour. The September photos were shot in warm light and the fabric reads green-brown on screen but grey in daylight. Other products are flat. Suggest re-shooting Moss in daylight and adding a swatch request link.',
     used: ['E-21', 'F-14'], why: 'New question: nothing similar in memory, and it needs reasoning over 1,420 orders.' },
-  { id: 'T-2177', at: '2026-10-29T15:22', who: 'theo', type: 'Replies', path: 'recall', escalated: 'reason', time: 1.1 + 14.2, cost: 0.0011 + 0.058, base: 0.06, conf: 0.62,
+  { id: 'T-2177', at: '2026-10-29T15:22', who: 'theo', type: 'Replies', path: 'reason', escalated: true, time: 1.1 + 14.2, cost: 0.0011 + 0.058, base: 0.06, conf: 0.62,
     ask: 'Summarise the call notes from Andersen Retail and list what we promised.',
     answer: 'Andersen want 60 Ash dining tables for spring, delivered in two drops (March and May). We promised: a 7% volume discount, oak samples by 14 November, and an answer on the May drop by Friday. Open: they asked about white-label packaging; nobody committed.',
     used: ['E-18'], why: 'Recall found the notes but was only 62% sure it had all the promises, under your 75% threshold, so it thought it through.' },
@@ -152,16 +152,20 @@ export const BUDGETS = {
 // Forecast of the month's spend at each budget, from this month's work.
 export function forecast(key) {
   const b = BUDGETS[key]
-  const reasonShare = { frugal: 0.11, balanced: 0.19, thorough: 0.34 }[key]
-  return { cost: MONTH.base * (reasonShare + (1 - reasonShare) * 0.012), share: reasonShare, threshold: b.threshold }
+  const raw = (r) => r + (1 - r) * 0.012
+  const share = { frugal: 0.11, balanced: 0.2, thorough: 0.34 }
+  // Scaled so Balanced, the current setting, matches what this month really cost.
+  const k = MONTH.cost / raw(share.balanced)
+  return { cost: k * raw(share[key]), share: share[key], threshold: b.threshold }
 }
 
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 export const fmt = {
   usd: (v) => (v < 0.01 ? `$${v.toFixed(v < 0.001 ? 5 : 4)}` : v < 100 ? `$${v.toFixed(2)}` : `$${Math.round(v).toLocaleString('en-US')}`),
   pct: (v) => `${Math.round(v * 100)}%`,
   time: (s) => (s < 1 ? `${Math.round(s * 1000)} ms` : s < 60 ? `${s.toFixed(1)} s` : `${Math.floor(s / 60)} m ${Math.round(s % 60)} s`),
   clock: (d) => new Date(d).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }),
-  day: (d) => new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }),
+  day: (d) => { const x = new Date(d); return `${x.getDate()} ${MONTHS[x.getMonth()]}` },
 }
 export const taskOf = (id) => TASKS.find((t) => t.id === id)
 export const memoryOf = (id) => MEMORY.find((m) => m.id === id) || (id.startsWith('H-') ? { id, kind: 'habit', text: HABITS.find((h) => h.id === id)?.name } : null)

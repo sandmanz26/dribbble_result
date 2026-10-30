@@ -31,6 +31,9 @@ function LiveTrace() {
   )
 }
 
+// Starting points for the calculator; repeat shares from the research notes, volumes for a team of about ten.
+const TEAMS = [['Customer support', 20000, 80], ['Operations', 12000, 70], ['Finance reporting', 6000, 65], ['Research', 4000, 20]]
+
 function Calculator() {
   const [vol, setVol] = useState([12000])
   const [rep, setRep] = useState([70])
@@ -50,6 +53,15 @@ function Calculator() {
           <Slider id="rep" className="mt-3" min={10} max={95} step={5} value={rep} onValueChange={setRep} label="Share of repeat work" />
           <p className="mt-2 text-[13px] text-muted">Support, ops and reporting teams usually sit between 50% and 80%. Open-ended research sits under 20%.</p>
         </div>
+        <fieldset>
+          <legend className="text-[14px]">Or start from a team like yours</legend>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {TEAMS.map(([name, n, r]) => {
+              const on = vol[0] === n && rep[0] === r
+              return <button key={name} type="button" aria-pressed={on} onClick={() => { setVol([n]); setRep([r]) }} className={`rounded-full border px-3.5 py-1.5 text-[13px] transition-colors ${on ? 'border-amber text-ink' : 'border-control text-muted hover:text-ink'}`}>{name} <span className="num text-faint">{r}%</span></button>
+            })}
+          </div>
+        </fieldset>
       </div>
       <dl className="grid content-start gap-4 border-line md:border-l md:pl-8">
         <div><dt className="text-[13px] text-muted">Reasoning everything</dt><dd className="num text-[28px]">{fmt.usd(base)}</dd></div>
@@ -147,7 +159,7 @@ export default function Overview() {
         </section>
 
         <section id="why" className="grid gap-10 pb-28 lg:grid-cols-[1fr_1.2fr]" aria-labelledby="why-h">
-          <div>
+          <div className="lg:sticky lg:top-24 lg:self-start">
             <h2 data-rise id="why-h" className="font-display text-[clamp(32px,4vw,56px)] font-bold leading-[1.02] tracking-[-0.02em]">Measured, not imagined</h2>
             <p className="mt-5 max-w-none text-[16px] text-ink md:max-w-[46ch]">Brain-inspired AI usually gets a glowing brain and a purple gradient. Myelin borrows from the instruments that study real brains instead: the chart recorder’s trace, the switchboard’s routing, figures that line up. It shows what the system did, not what it looks like inside.</p>
             <ul className="mt-6 grid gap-3 text-[15px]">

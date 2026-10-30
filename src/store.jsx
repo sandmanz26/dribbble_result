@@ -19,7 +19,7 @@ function reducer(s, a) {
     case 'forget': return { ...s, forgotten: [...s.forgotten, a.id], toast: 'Forgotten. Answers stop using it from now on.' }
     case 'pin': return { ...s, pinned: s.pinned.includes(a.id) ? s.pinned.filter((x) => x !== a.id) : [...s.pinned, a.id] }
     case 'approve': return { ...s, approved: [...s.approved, a.id], toast: `Habit approved. The next "${a.name}" runs on Reflex.` }
-    case 'decline': return { ...s, declined: [...s.declined, a.id], toast: 'Declined. It will keep thinking these through.' }
+    case 'decline': return { ...s, declined: [...s.declined, a.id], toast: 'Not now. Reason keeps handling these, and it asks again if they keep repeating.' }
     case 'pause': return { ...s, paused: s.paused.includes(a.id) ? s.paused.filter((x) => x !== a.id) : [...s.paused, a.id] }
     case 'correct': return { ...s, corrected: [...s.corrected, a.id], toast: 'Thanks. The memory is updated and the correction is logged.' }
     case 'conflict': return { ...s, conflict: a.keep, toast: 'Kept one answer; the other now fades.' }

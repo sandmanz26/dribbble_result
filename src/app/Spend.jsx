@@ -25,7 +25,7 @@ function Share({ title, rows, total }) {
   return (
     <section className="min-w-0">
       <h3 className="mb-2 text-[14px] font-semibold">{title}</h3>
-      <div className="grid grid-cols-[1fr_64px_64px] gap-x-3 text-[12px] text-muted"><span>Name</span><span className="text-right">Share</span><span className="text-right">Spent</span></div>
+      <div className="grid grid-cols-[1fr_64px_64px] gap-x-3 px-2 text-[12px] text-muted"><span>Name</span><span className="text-right">Share</span><span className="text-right">Spent</span></div>
       <ul className="mt-1 grid gap-0.5">
         {rows.map((r) => (
           <li key={r.k} className="relative grid h-9 grid-cols-[1fr_64px_64px] items-center gap-x-3 px-2 text-[13px]">
@@ -48,7 +48,7 @@ export default function Spend() {
   const group = (key) => Object.entries(day.reduce((m, t) => { const k = key(t); m[k] = m[k] || { v: 0, cost: 0 }; m[k].v++; m[k].cost += t.cost; return m }, {})).map(([k, v]) => ({ k, ...v })).sort((a, b) => b.cost - a.cost)
   const cap = WORKSPACE.cap
   return (
-    <div className="grid gap-8">
+    <div className="grid grid-cols-[minmax(0,1fr)] gap-8">
       <header>
         <h1 className="text-[26px] font-semibold">Spend</h1>
         <p className="mt-1 max-w-[72ch] text-[14px] text-muted">The last 30 days cost <span className="num text-ink">{fmt.usd(MONTH.cost)}</span>. The same {MONTH.n.toLocaleString('en-US')} tasks done entirely by the reasoning model would have cost <span className="num text-ink">{fmt.usd(MONTH.base)}</span>, so this month ran <span className="num text-ink">{fmt.pct(1 - MONTH.cost / MONTH.base)}</span> cheaper.</p>
@@ -65,7 +65,7 @@ export default function Spend() {
           <h2 id="ch-h" className="text-[18px] text-muted">Daily spend</h2>
           <p className="flex items-center gap-4 text-[12.5px] text-muted"><span className="flex items-center gap-1.5"><span className="inline-block h-0.5 w-4 bg-amber" />Actual</span><span className="flex items-center gap-1.5"><span className="inline-block w-4 border-t border-dashed border-muted" />If everything were reasoned</span></p>
         </div>
-        <SpendChart />
+        <div className="overflow-x-auto"><div className="min-w-[680px]"><SpendChart /></div></div>
         <p className="mt-2 text-[12.5px] text-muted">The gap widens as habits are approved: the first week ran about 70% under the baseline, the last week about 80%. Weekends are quiet.</p>
       </section>
       <section aria-labelledby="sh-h">
@@ -78,7 +78,7 @@ export default function Spend() {
           <section>
             <h3 className="mb-2 text-[14px] font-semibold">Escalations</h3>
             {day.filter((t) => t.escalated).length ? (
-              <ul className="grid gap-2 text-[13px]">{day.filter((t) => t.escalated).map((t) => <li key={t.id}><a className="underline-offset-4 hover:underline" href={`#/app/tasks/${t.id}`}>{t.ask}</a><span className="num block text-muted">{Math.round(t.conf * 100)}% sure on Recall · then {fmt.usd(t.cost)}</span></li>)}</ul>
+              <ul className="grid gap-2 text-[13px]">{day.filter((t) => t.escalated).map((t) => <li key={t.id}><a className="underline-offset-4 hover:underline" href={`#/app/tasks/${t.id}`}>{t.ask}</a><span className="block text-muted">Recall was <span className="num">{Math.round(t.conf * 100)}%</span> sure, so Reason took over. Cost <span className="num">{fmt.usd(t.cost)}</span>.</span></li>)}</ul>
             ) : <p className="rounded-[4px] border border-dashed border-line p-3 text-[13px] text-muted">No fast answer escalated in the last 24 hours.</p>}
           </section>
         </div>
