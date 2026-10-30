@@ -1,0 +1,76 @@
+@import 'tailwindcss';
+
+/* Myelin. A neuroscience instrument, not a chat app: dark ground, cards darker than the ground, figures in a
+   monospace that stacks, and one accent, phosphor amber, used only as a 1px selection line, focus and the main
+   action. The three paths carry the only data hues: Reflex green, Recall blue, Reason full white (the heavy one). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: 'Red Hat Text', system-ui, sans-serif;
+  --font-mono: 'Red Hat Mono', ui-monospace, monospace;
+  --font-display: 'Red Hat Display', 'Red Hat Text', system-ui, sans-serif;
+  --color-ground: #141416;
+  --color-surface: #101013;
+  --color-raised: #1d1d21;
+  --color-line: #26262b;
+  --color-rule: #1b1b20;
+  --color-control: #34343a;
+  --color-ink: #f3f2ee;
+  --color-muted: #9a9ba1;
+  --color-faint: #8a8b91;
+  --color-amber: #f0b04a;
+  --color-amber-ink: #1a1306;
+  --color-reflex: #5fc39c;
+  --color-recall: #6ea8e6;
+  --color-reason: #f3f2ee;
+  --color-bad: #e5566f;
+  --color-warn: #d99a41;
+  --radius-card: 6px;
+}
+
+:root { --reflex: #5fc39c; --recall: #6ea8e6; --reason: #f3f2ee; --amber: #f0b04a; }
+
+@layer base {
+  html { background: var(--color-ground); color: var(--color-ink); }
+  body { font-family: var(--font-sans); font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+  ::selection { background: var(--color-amber); color: var(--color-amber-ink); }
+  :focus-visible { outline: 1px solid var(--color-amber); outline-offset: 2px; }
+  button { cursor: pointer; }
+}
+
+/* Figures: every number in the monospace, digits that stack */
+.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+
+/* The one selection mark: a 1px amber line exactly as wide as its label, on the nearest edge */
+.sel-under { position: relative; }
+.sel-under[data-on='true']::after, .sel-under[aria-selected='true']::after, .sel-under[data-state='active']::after, .sel-under.active::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: var(--color-amber);
+}
+.sel-side { position: relative; }
+.sel-side.active::before { content: ''; position: absolute; left: -10px; top: 6px; bottom: 6px; width: 1px; background: var(--color-amber); }
+
+/* Chart paper behind the trace: the retro instrument, drawn faintly */
+.paper { background-image: linear-gradient(to right, rgba(243, 242, 238, .045) 1px, transparent 1px); background-size: calc(100% / 24) 100%; } /* taste-skill-ignore: chart paper grid lines, not a gradient fill */
+
+.trace-mark { transition: opacity .2s; }
+.trace:hover .trace-mark { opacity: .55; }
+.trace .trace-mark:hover, .trace .trace-mark.is-on { opacity: 1; }
+
+@keyframes rise { from { opacity: 0; transform: translateY(6px); } }
+.rise { animation: rise .35s cubic-bezier(.2, .7, .2, 1) both; }
+@keyframes caret { 50% { opacity: 0; } }
+.caret::after { content: ''; display: inline-block; width: 7px; height: 1em; margin-left: 2px; vertical-align: -2px; background: var(--color-amber); animation: caret 1s steps(1) infinite; }
+@keyframes sweep { from { transform: translateX(-100%); } to { transform: translateX(100%); } }
+.scan { position: relative; overflow: hidden; }
+.scan::after { content: ''; position: absolute; inset: 0; width: 30%; background: rgba(240, 176, 74, .08); animation: sweep 1.1s linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+}
+
+/* Overview page only: figures in the text face outside the product fragments; entrances once per part */
+.ov .num:not([data-ui] .num) { font-family: var(--font-sans); letter-spacing: 0; }
+.js-rise [data-rise] { opacity: 0; transform: translateY(18px); transition: opacity .7s cubic-bezier(.2,.7,.2,1) var(--d, 0ms), transform .7s cubic-bezier(.2,.7,.2,1) var(--d, 0ms); }
+.js-rise [data-rise].is-in { opacity: 1; transform: none; }
+.drift { animation: drift 18s ease-in-out infinite alternate; }
+@keyframes drift { from { transform: scale(1.02); } to { transform: scale(1.08) translate(-1%, -1%); } }
