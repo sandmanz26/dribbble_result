@@ -18,5 +18,6 @@
   { "slug": "project17", "branch": "claude/school-student-records", "title": "Roll school student records" },
   { "slug": "rawat", "branch": "claude/flow-director-clinic-ops", "title": "Rawat clinic operations" },
   { "slug": "flowdirector", "branch": "claude/flow-director-clinic-ops", "title": "Rawat (old Flow Director link)" },
+  { "slug": "hotshoe", "branch": "claude/hotshoe-pixel-sync", "title": "Hotshoe pixel camera sync UI" },
   { "slug": "selvedge", "branch": "claude/selvedge-retail-os", "title": "Selvedge retail operating system" }
 ]

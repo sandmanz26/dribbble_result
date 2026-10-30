@@ -27,6 +27,7 @@ const PASSWORDS = {
   rawat: 'fd-w8tq-3jxc', // Rawat clinic operations, the owner's portfolio piece (same build as flowdirector)
   flowdirector: 'fd-w8tq-3jxc',
   project17: 'rl-i0oh-4gkf', // Roll, school student records app
+  hotshoe: 'hs-6bja-9at4', // Hotshoe, pixel UI for a Raspberry Pi camera sync screen (owner's portfolio piece)
   selvedge: 'sv-4rkx-msbd', // Selvedge retail OS, portfolio case for the Dribbble retail ERP brief // Flow Director clinic operations prototype (Upwork, not a projectN slug)
 }
 
