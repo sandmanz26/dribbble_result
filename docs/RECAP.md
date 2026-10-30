@@ -80,6 +80,7 @@ Live site: `https://proposal-virid-eight.vercel.app/<slug>/` (root and unknown p
 | project13 | og-7q0a-vvo8 | Oppsett, golf exercise setups drawn on the real photo | Mobile app |
 | project14 | db-2mmw-55ap | Darb, premium Arabic and English website for a Saudi logistics company | Website, RTL |
 | project15 | br-5zo1-i3nv | Skill-to-Research Bridge, student and lab dashboards with a Contribution Passport | Website + web app |
+| project16 | my-t6qe-8vzd | Myelin AI brain platform (web, desktop, mobile) | Website + web app + desktop + mobile |
 | rawat | fd-w8tq-3jxc | Rawat, clinic operations for an Indonesian primary clinic (owner's portfolio piece) | Web app |
 | flowdirector | fd-w8tq-3jxc | Old link, serves the same Rawat build | Web app |
 | selvedge | sv-4rkx-msbd | Selvedge, AI retail operating system for a luxury fashion group (portfolio case under NDA) | Web app + case notes |
@@ -183,6 +184,9 @@ Arabic-first, English mirror, one font family for both scripts (Readex Pro). The
 
 ### project15, Skill-to-Research Bridge (under $100)
 Landing with a live readiness matcher, student home, project page with the score worked out, evidence, applications, Contribution Passport (CRediT roles, share link with expiry, view log, PDF and JSON), privacy settings, and a researcher side (blind applicant review, pool coverage, contribution signing). Client palette kept (warm off-white, navy, lime). Accessibility led: Atkinson Hyperlegible Next, keyboard shortcuts, focus management. Notes in the branch's `docs/strategy.md`.
+
+### project16, Myelin (AI Brain UI/UX for Web/Desktop/Mobile, $10,000)
+Owner asked for deep research, a roast, a PRD and a design plan before the build (all in the branch's `docs/`). The concept turns the brief's "emulates the human brain, up to 80% cheaper" into something a user can see and check: every request takes one of three paths (Reflex habit, Recall memory, Reason large model), shows its confidence, cost and the saving against one stated baseline, and escalates on its own when unsure. Repeated work becomes a habit only after a person approves it; a nightly Sleep report merges, fades and flags memory conflicts. Surfaces: overview page, web app (Today, tasks, task detail, memory, habits, spend, settings, sleep), desktop quick ask over a mail app, mobile (today, voice ask, approve, report). shadcn-style components on Radix with Tailwind v4, as the brief asked. Placeholders: the name Myelin and the sample workspace Fernwood Studio.
 
 ## 6. Open items
 

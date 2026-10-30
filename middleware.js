@@ -23,6 +23,7 @@ const PASSWORDS = {
   project13: 'og-7q0a-vvo8', // Oppsett, golf exercise setups on the real photo
   project14: 'db-2mmw-55ap', // Darb, bilingual Arabic and English Saudi logistics website
   project15: 'br-5zo1-i3nv', // Skill-to-Research Bridge, student and lab dashboards with a passport
+  project16: 'my-t6qe-8vzd', // Myelin AI brain platform, web, desktop and mobile
   rawat: 'fd-w8tq-3jxc', // Rawat clinic operations, the owner's portfolio piece (same build as flowdirector)
   flowdirector: 'fd-w8tq-3jxc',
   selvedge: 'sv-4rkx-msbd', // Selvedge retail OS, portfolio case for the Dribbble retail ERP brief // Flow Director clinic operations prototype (Upwork, not a projectN slug)

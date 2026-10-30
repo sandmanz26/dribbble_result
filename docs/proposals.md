@@ -142,3 +142,25 @@ Password: br-5zo1-i3nv
 My portfolio: createdybdaniel.com
 
 To be upfront: the university, labs, people and numbers are sample content made for the prototype. If the direction fits, I will adapt it to your content and prepare the final screens.
+
+## project16, Myelin (AI Brain UI/UX for Web/Desktop/Mobile)
+
+Hi! Before designing I researched how people experience AI cost and speed today, roasted the usual "AI brain" look, wrote a short PRD and a design plan, then built a clickable prototype across web, desktop and mobile so you can judge the direction by using it.
+
+**1. The brain idea, made visible.** Each request takes one of three paths: Reflex (a learned habit, near zero cost), Recall (memory plus a small model) or Reason (a large model, only when needed). Every answer shows which path it took, how sure it was, what it cost and what it saved. No glowing brain, no neural network wallpaper.
+
+**2. Savings you can check.** The "up to 80% cheaper" claim is shown against one stated baseline: the same work done entirely by the large model. The spend screen compares the two day by day, and a thinking budget (Frugal, Balanced, Thorough) sets how quickly it escalates.
+
+**3. It learns, with a person in charge.** Repeated work is proposed as a habit with the evidence and the saving per run. Nothing becomes a habit until someone approves it, and every memory can be pinned, corrected or forgotten. A short night report shows what it merged, faded and wants to learn.
+
+**4. One product, three surfaces with one job each.** Web for running and auditing the work, desktop as a quick ask over whatever app you are in, mobile for a morning glance, voice asks and approvals.
+
+**5. Built the way you asked.** React with shadcn/ui components and Tailwind, a dark "data terminal" style with one amber accent, the day drawn as a three-lane trace that becomes the product's signature.
+
+Prototype: https://proposal-virid-eight.vercel.app/project16/
+Password: my-t6qe-8vzd
+(The overview page comes first; "Open the workspace" goes to the web app. The left rail also opens the desktop and mobile versions.)
+
+My portfolio: createdybdaniel.com
+
+To be upfront: the name Myelin, the sample company and every number are placeholders made for the prototype, and the research, PRD and design plan are ready to share. If the direction fits, I will adapt it to your product, your model costs and your brand, and deliver the full hi-fi screens and interaction prototypes.
