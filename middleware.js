@@ -26,6 +26,7 @@ const PASSWORDS = {
   project16: 'my-t6qe-8vzd', // Myelin AI brain platform, web, desktop and mobile
   rawat: 'fd-w8tq-3jxc', // Rawat clinic operations, the owner's portfolio piece (same build as flowdirector)
   flowdirector: 'fd-w8tq-3jxc',
+  project17: 'rl-i0oh-4gkf', // Roll, school student records app
   selvedge: 'sv-4rkx-msbd', // Selvedge retail OS, portfolio case for the Dribbble retail ERP brief // Flow Director clinic operations prototype (Upwork, not a projectN slug)
 }
 
