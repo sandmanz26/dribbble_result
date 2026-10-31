@@ -6,5 +6,4 @@ editing it. One row per branch or reserved project number. Delete your row when 
 | Branch or reservation | Session | Since | Working on |
 |---|---|---|---|
 | `claude/myelin-ai-brain` (project16) | cloud | 2026-10-30 | Second UI roast done and pushed; release when the owner signs off |
-| `claude/rimba-restaurant-landing` (project18, password `rb-qil0-uouv`) | desktop | 2026-11-01 | Reserved: restaurant landing page with a scroll-led experience |
 | `claude/tech-leader-awards` (project19, password `ta-sc-kyew`) | cloud | 2026-10-31 | Reserved: Tech Leader Awards website (Dribbble brief) |
