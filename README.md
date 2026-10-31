@@ -1,6 +1,9 @@
 # Rimba, restaurant landing page (project18)
 
 ## Status
+- **v2 (Osier, fine dining, at `/v2/`)**: owner asked for Western fine dining, better scroll, a
+  stronger hero, a minimal font and real research. Plan, research and three roasts in
+  `docs/v2-plan.md`. 15 new photos. v1 below is unchanged.
 - Done: one-page site with the scroll scenes (framed hero, words that light up as you read,
   five courses served on one pinned plate, horizontal walk through the rooms), menu with live
   photo, reviews, booking flow with confirmation and calendar file, pickup order drawer, visit
