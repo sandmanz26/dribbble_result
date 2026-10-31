@@ -81,6 +81,7 @@ Live site: `https://proposal-virid-eight.vercel.app/<slug>/` (root and unknown p
 | project14 | db-2mmw-55ap | Darb, premium Arabic and English website for a Saudi logistics company | Website, RTL |
 | project15 | br-5zo1-i3nv | Skill-to-Research Bridge, student and lab dashboards with a Contribution Passport | Website + web app |
 | project16 | my-t6qe-8vzd | Myelin AI brain platform (web, desktop, mobile) | Website + web app + desktop + mobile |
+| project19 | ta-sc-kyew | Tech Leader Awards website with published jury scorecards | Website |
 | rawat | fd-w8tq-3jxc | Rawat, clinic operations for an Indonesian primary clinic (owner's portfolio piece) | Web app |
 | flowdirector | fd-w8tq-3jxc | Old link, serves the same Rawat build | Web app |
 | selvedge | sv-4rkx-msbd | Selvedge, AI retail operating system for a luxury fashion group (portfolio case under NDA) | Web app + case notes |
@@ -190,6 +191,9 @@ Owner asked for deep research, a roast, a PRD and a design plan before the build
 
 ### Working with two Claude sessions (from 30 Oct 2026)
 The owner now runs a second Claude on their own computer next to the web session. Rules for sharing the repository without collisions are in `docs/COLLABORATION.md`: one owner per branch recorded in `docs/CLAIMS.md` on `main`, project numbers reserved before scaffolding, small pulled-first commits on `main`, a Status hand-over section in each branch README, and a `Session: cloud|desktop` line in commit bodies.
+
+### project19, Tech Leader Awards (Elegant Tech Leader Awards Site Design, $1,100)
+Owner asked to work as creative head: roast the idea and the style before building, then roast the result. Research found the category's real trust problem (pay-to-win awards, unnamed judges), so the idea is credibility as evidence: the citation card read on stage carries the jury's published scorecard on its back. Roasted and dropped: black and gold gala (also project9's look), SaaS blue, the dealt Bodoni serif, icon category cards. Sand, paper, charcoal and one laurel green; Hanken Grotesk. Many open portraits turned out to be politicians and public figures and were removed; the remaining placeholders are private people with sample names, stated on the credits page. Notes in the branch's `docs/strategy.md`.
 
 ## 6. Open items
 
