@@ -164,3 +164,47 @@ Password: my-t6qe-8vzd
 My portfolio: createdybdaniel.com
 
 To be upfront: the name Myelin, the sample company and every number are placeholders made for the prototype, and the research, PRD and design plan are ready to share. If the direction fits, I will adapt it to your product, your model costs and your brand, and deliver the full hi-fi screens and interaction prototypes.
+
+## project17, Roll (School Student Database App Design)
+
+Hi! I designed and built a clickable version of the app so you can try it as an administrator and as a teacher.
+
+1. Search that forgives. Staff can find a student by part of a name, a misspelling, the admission number, the class, or a parent's name or the last digits of their phone. Each result says why it matched, and there is a card scan shortcut.
+
+2. Data entry that never loses work. Adding a student takes five short steps with checks as you type, a draft that saves on the phone, and a duplicate check before anything is saved. A record can be saved with missing details; it is marked incomplete and stays on the registrar's list until it is fixed.
+
+3. Secure by role, not by trust. Teachers only see their own classes. Addresses, ID numbers and health details stay with the office, while allergy and condition alerts are visible to every teacher who needs them. Sensitive fields are masked and opening them asks for a reason, every view and change goes into an access log, and the app locks with a PIN when it is left alone. Teachers can't edit records, but they can suggest a correction that the registrar applies.
+
+4. Examination records. Teachers enter marks in a class list built for speed (enter moves to the next student, codes for absent and exempt, out-of-range marks flagged), see the class average and spread, and submit. The registrar approves and publishes or returns the sheet with a note. Each student's record shows the subject results term by term.
+
+5. Your branding. The school's name, crest and one colour from your guidelines run through the app, and everything else stays neutral so it fits. The demo switches between three sample schools to show it.
+
+Prototype: https://proposal-virid-eight.vercel.app/project17/
+Password: rl-i0oh-4gkf
+(Best on a phone. On desktop it opens in a phone frame with a panel to switch between registrar and teacher, change the school brand, go offline, and jump to the main flows. Demo PIN 1357.)
+
+My portfolio: createdybdaniel.com
+
+To be upfront: the school, students and marks are sample content made for the prototype, and students are shown with initials instead of photos on purpose. If the direction fits, I will adapt it to your branding guidelines and records, and prepare the final screens.
+
+## hotshoe, pixel UI for a 240x320 handheld (Upwork, CircuitMess-style brief)
+
+Hi! Instead of only pointing to past work, I made a small project under the same rules as your controller, so you can see how I handle pixel art and UI on limited hardware.
+
+1. Built to the hardware, not around it. A 240x320 screen, a 16-colour palette with every colour matched to what a 16-bit panel can show, at most 4 colours per sprite, transparency that is either on or off (dimming behind a dialog is a dither pattern, not a fade), and my own 5x7 pixel font used only at whole sizes. The screens are drawn by a small engine that checks these rules, so a screen can't quietly break them.
+
+2. The same scope as your brief. An intro animation with the logo, a tutorial, pairing, settings and system screens, an icon set for the controller's inputs (D-pad, A, B, menu, power, each with a pressed state), and themed screens for one device. Here the device is a Raspberry Pi that syncs photos from a camera instead of a Mars rover.
+
+3. Motion that fits the display. Redrawing the whole screen takes longer than one frame on this kind of display, so screens change with a cut and only small areas animate: a progress bar, a scanning ring, a countdown. The demo shows how much of each frame is sent to the screen.
+
+4. Screens written for real situations. Pairing explains the exact menu setting when the camera is in the wrong mode, a sync carries on from the next photo after the cable is pulled, and every screen shows which buttons work there.
+
+5. Ready to hand over. A design kit page with the palette values, the font, every icon and every screen at actual size, and a sprite sheet export. Once I have your specification, I will work to its exact limits and formats.
+
+Prototype: https://proposal-virid-eight.vercel.app/hotshoe/
+Password: hs-6bja-9at4
+(The device works with the on-screen buttons or the keyboard: arrows, Z for A, X for B, M for menu. "Design kit" and "Hardware rules" are at the top.)
+
+My portfolio: createdybdaniel.com
+
+To be upfront: this is my own concept made to show the approach, not your product, and the camera names and photos are sample content. For your controller, the themed Mars rover screens would follow the same rules: drive mode, battery, signal and a dithered camera view.
