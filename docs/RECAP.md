@@ -82,6 +82,7 @@ Live site: `https://proposal-virid-eight.vercel.app/<slug>/` (root and unknown p
 | project15 | br-5zo1-i3nv | Skill-to-Research Bridge, student and lab dashboards with a Contribution Passport | Website + web app |
 | project16 | my-t6qe-8vzd | Myelin AI brain platform (web, desktop, mobile) | Website + web app + desktop + mobile |
 | project19 | ta-sc-kyew | Tech Leader Awards website with published jury scorecards | Website |
+| project21 | cr-a4ij-fhg7 | Riuh Studio, creator dashboard and CRM for a Jakarta talent agency | Web app |
 | project20 | ro-zdxa-uv3w | Rolling, phone app for film and TV crew, creatives and production | Mobile app |
 | rawat | fd-w8tq-3jxc | Rawat, clinic operations for an Indonesian primary clinic (owner's portfolio piece) | Web app |
 | flowdirector | fd-w8tq-3jxc | Old link, serves the same Rawat build | Web app |
@@ -195,6 +196,9 @@ The owner now runs a second Claude on their own computer next to the web session
 
 ### project19, Tech Leader Awards (Elegant Tech Leader Awards Site Design, $1,100)
 Owner asked to work as creative head: roast the idea and the style before building, then roast the result. Research found the category's real trust problem (pay-to-win awards, unnamed judges), so the idea is credibility as evidence: the citation card read on stage carries the jury's published scorecard on its back. Roasted and dropped: black and gold gala (also project9's look), SaaS blue, the dealt Bodoni serif, icon category cards. Sand, paper, charcoal and one laurel green; Hanken Grotesk. Many open portraits turned out to be politicians and public figures and were removed; the remaining placeholders are private people with sample names, stated on the credits page. Notes in the branch's `docs/strategy.md`. Third roast on request (motion, transitions, content, layout) against the Webby Awards, D&AD, Cannes Lions and Awwwards: view transitions, a pausable hero, focus and titles per route, countdown, what to prepare, the winner's mark (section 9 of the branch's strategy).
+
+### project21, Riuh Studio (Creator Dashboard, $500)
+Owner asked for a senior UI/UX take that is not a standard admin panel: interactive, bright and young, with deep research on the data a creator business needs, and positioned as a portfolio piece for an Indonesian agency (Indonesian names, English UI). Research covered creator CRMs (Passionfroot, Beacons), contract terms (usage, exclusivity, whitelisting), the Indonesian KOL workflow (brief, script, draft, posting, insight report, deposit then final) and withholding tax (PPh 23 assumed at 2% via the agency, flagged to confirm). Built around money the creator can trust: every deal shows deposit, final, tax, the agency's 20% and take-home; offers are checked against an editable rate card and running exclusivity. Notes in the branch's `docs/strategy.md`.
 
 ## 6. Open items
 

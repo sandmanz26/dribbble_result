@@ -273,3 +273,27 @@ Password: ro-zdxa-uv3w
 My portfolio: createdybdaniel.com
 
 To be upfront: this is an early exploration made in limited time, so not every detail is polished. The name "Rolling", productions, people and rates are placeholders, and the photos are licensed stock until we have your brand and imagery. For the full project I would continue with research interviews, user flows, wireframes, the final brand direction and complete high-fidelity screens in Figma. If this direction feels right, I would love to hear which users matter most to you first.
+
+## project21, Riuh Studio (Creator Dashboard)
+
+Hi! A quick note first: what you will see is a draft, built before we have spoken, as proof that I take your project seriously. I would rather show you how I think than describe it, and all of it can change once I hear from you.
+
+**1. Today, in one look.** What is due (drafts, posts going live, insight reports), and when the money lands, laid out on a timeline. A late payment is called out with a reminder ready to send.
+
+**2. Offers checked before you answer.** Every brand request from email, WhatsApp and DMs is priced against the creator's rate card, including paid usage, exclusivity and whitelisting. It warns when an offer clashes with a running exclusivity and writes the counter for you.
+
+**3. Deals you can move.** A board from negotiating to paid, with each card showing its content, its next step and how much has been paid. Drag a card when a deal moves on.
+
+**4. Money that tells the truth.** Each deal shows the deposit and final payment, the tax withheld, the manager's share and what actually reaches the creator. Income by month and by stream, and the tax slips needed at the end of the year.
+
+**5. Calendar and media kit.** Posting dates with the categories a creator cannot promote while an exclusivity runs, and a media kit that updates the moment the rate card changes.
+
+Bright, friendly and quick to read on a phone, with a full desktop layout and keyboard search.
+
+Prototype: https://proposal-virid-eight.vercel.app/project21/
+Password: cr-a4ij-fhg7
+(Try an offer under Offers, drag a deal on the Deals board, and change a rate under Media kit.)
+
+My portfolio: createdybdaniel.com
+
+For a pilot I would start with the dashboard and one core workflow of your choice, then grow the visual system from there. All names, brands and figures in the prototype are samples.

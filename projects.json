@@ -21,6 +21,7 @@
   { "slug": "project18", "branch": "claude/rimba-restaurant-landing", "title": "Rimba restaurant landing page" },
   { "slug": "project19", "branch": "claude/tech-leader-awards", "title": "Tech Leader Awards website" },
   { "slug": "project20", "branch": "claude/film-tv-crew-app", "title": "Rolling film and TV crew app" },
+  { "slug": "project21", "branch": "claude/creator-studio-crm", "title": "Riuh Studio creator dashboard and CRM" },
   { "slug": "hotshoe", "branch": "claude/hotshoe-pixel-sync", "title": "Hotshoe pixel camera sync UI" },
   { "slug": "selvedge", "branch": "claude/selvedge-retail-os", "title": "Selvedge retail operating system" }
 ]
