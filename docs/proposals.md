@@ -209,27 +209,27 @@ My portfolio: createdybdaniel.com
 
 To be upfront: this is my own concept made to show the approach, not your product, and the camera names and photos are sample content. For your controller, the themed Mars rover screens would follow the same rules: drive mode, battery, signal and a dithered camera view.
 
-## project18, Rimba (Restaurant Landing Page)
+## project18, Osier (Restaurant Landing Page)
 
-Hi! I designed and built a working version of the landing page so you can scroll through it yourself, on desktop and on your phone.
+Hi! I designed and built a working version of the landing page for a fine-dining restaurant, so you can scroll through it yourself on desktop and on your phone.
 
-1. The page is one evening at the restaurant. Instead of stacking sections, the scroll follows a visit: the room at dusk, the story of the kitchen, the dishes, the menu, the spaces, what guests say, then the booking. Each step leads to the next, so the call to book arrives when the visitor already wants the table.
+1. Learned from the best dining sites first. Before designing, I studied fifteen of the most respected restaurant websites (Eleven Madison Park, Noma, Le Bernardin, Mirazur, Ynyshir and others). The pattern is clear: one calm image that sets the mood, the booking within reach from the first screen, few sections with a lot of space, and one quiet typeface. The page follows that, and avoids what they get wrong, like pop-ups covering the page.
 
-2. Signature dishes served as you scroll. Five courses appear one after another on the same plate position, each one turning in as if it were being set down, with the dish name, where the ingredients come from and how it is cooked. The motion has a reason everywhere: the hero photo frames into a window as the story starts, and the rooms are walked through sideways because where you sit is part of the booking.
+2. Ambience from light, not decoration. The page is dark like the room at night, with no accent colour: only warm white type and candlelit photographs. The hero is the dining room itself. As you scroll, the name drifts apart and the room dims, and the story lines rise into place one by one.
 
-3. A menu that sells, not a PDF. Tabs for the tasting menu, sharing plates and drinks, clear prices, vegetarian and spice marks, and a photo that changes as you move down the list. The PDF is still there for those who want it.
+3. Signature dishes revealed like eyes adjusting to candlelight. Six courses take the full screen in turn, each opening from a thin slit of light while the previous one sinks into the dark. The dish name and its story change with the image, and every photo is shot on the same plate, linen and light so they read as one menu.
 
-4. Booking and ordering that are quick to finish. One label for booking everywhere, a booking bar that stays at the bottom on phones and steps aside at the form, dates with closed days and full times shown honestly, a choice of where to sit, and only two fields to fill. The confirmation can be added to a calendar. Takeaway orders open in a side panel without leaving the page.
+4. Booking from the first screen to the last. Guests, date and time sit at the foot of the hero, and the choice carries into the reservation section, where closed days and full times are shown honestly and only two fields are needed. The confirmation can be added to a calendar. A small Reserve button stays in reach while scrolling and steps aside during the courses. Gift experiences replace takeaway, which fits fine dining better.
 
-5. Built to hand over. One type family, one accent colour, one corner radius, and spacing that holds from a phone to a wide screen, with light and dark versions. Motion respects the reduced-motion setting. The same tokens and components go into an organised Figma file with reusable components and exportable assets.
+5. Built to hand over. One type family in light weights, one shape language, and spacing that holds from a phone to a wide screen. Motion respects the reduced-motion setting, where the courses become a simple list. The same tokens and components go into an organised Figma file with reusable components and exportable assets.
 
-Prototype: https://proposal-virid-eight.vercel.app/project18/
+Prototype: https://proposal-virid-eight.vercel.app/project18/v2/
 Password: rb-qil0-uouv
-(Best with a mouse wheel or trackpad on desktop. On a phone it switches to swipe for the rooms and a sticky booking bar.)
+(Best with a mouse wheel or trackpad on desktop. A second, more casual direction is at /project18/ with the same password.)
 
 My portfolio: createdybdaniel.com
 
-To be upfront: the restaurant, menu, prices and reviews are sample content, and the photos are generated placeholders for the direction. If it fits, I will adapt it to your brand, real photography and menu, and deliver the Figma files and assets.
+To be upfront: the restaurant, menu, prices and guest words are sample content, and the photos are generated placeholders for the direction. If it fits, I will adapt it to your brand, real photography and menu, and deliver the Figma files and assets.
 
 ## project19, Tech Leader Awards (Elegant Tech Leader Awards Site Design)
 
