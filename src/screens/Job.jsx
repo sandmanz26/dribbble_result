@@ -28,7 +28,7 @@ export default function Job() {
   return (
     <div className="page page--flush">
       <div className="jobhero">
-        <Frame name={j.photo} alt={`Set photo for ${j.title}`} burn={j.kind.toUpperCase()} tc={j.where} className="jobhero__frame" />
+        <Frame name={j.photo} alt={`Set photo for ${j.title}`} className="jobhero__frame" />
         <div className="jobhero__bar">
           <IconButton icon={BiArrowBack} label="Back" onClick={() => nav(-1)} />
           <IconButton icon={saved ? BiSolidBookmark : BiBookmark} label={saved ? 'Remove from saved' : 'Save'} aria-pressed={saved} onClick={() => toggleSave(j.id)} />
@@ -50,7 +50,7 @@ export default function Job() {
           <dl className="table">
             <div><dt>Dates</dt><dd>{j.dates}, {j.days} days</dd></div>
             <div><dt>Where</dt><dd>{j.where}</dd></div>
-            <div><dt>Rate</dt><dd className="mono">{gbp(j.rate)} a day</dd></div>
+            <div><dt>Rate</dt><dd>{gbp(j.rate)} a day</dd></div>
             <div><dt>Terms</dt><dd>{j.terms}</dd></div>
           </dl>
         </Section>
@@ -63,7 +63,7 @@ export default function Job() {
           ) : <p className="row__s">Nobody booked yet. You would be one of the first.</p>}
         </Section>
 
-        <p className="mono small row__s">Posted {j.posted}. {j.replies} crew replied. Rates are samples.</p>
+        <p className="small row__s">Posted {j.posted}. {j.replies} crew replied. Rates are samples.</p>
       </div>
 
       <div className="cta">

@@ -35,18 +35,18 @@ export default function Role() {
                   <Avatar id={r.who} size={44} />
                   <div>
                     <p className="reply__name">{p.name}</p>
-                    <p className="mono small"><b className={`avail-${r.avail}`}>{availText[r.avail]}</b> {r.note}</p>
+                    <p className="small"><b className={`availtag availtag--${r.avail} mono`}>{availText[r.avail]}</b> {r.note}</p>
                   </div>
                   <span className="mono reply__rate">{gbp(r.rate)}</span>
                 </div>
                 <p className="row__s small">{r.credits}{r.worked.length ? `. Worked with ${r.worked.map((w) => people[w].name.split(' ')[0]).join(', ')}` : ''}</p>
                 <div className="reply__acts">
                   {state === 'booked' ? (
-                    <p className="mono small"><b>Booked.</b> Deal memo sent to {p.name.split(' ')[0]}.</p>
+                    <p className="small"><b>Booked.</b> Deal memo sent to {p.name.split(' ')[0]}.</p>
                   ) : (
                     <>
                       {state === 'pencil'
-                        ? <p className="mono small"><b>Pencilled</b> as {r.avail === 'pencil' ? '2nd' : '1st'}</p>
+                        ? <p className="small"><b>Pencilled</b> as {r.avail === 'pencil' ? '2nd' : '1st'}</p>
                         : <Button variant="line" size="sm" disabled={disabled} onClick={() => { crewAct(r.who, 'pencil'); toast(`${p.name.split(' ')[0]} pencilled. Their diary updates now`) }}>Pencil</Button>}
                       <HoldButton disabled={disabled} className="hold--sm" onDone={() => { crewAct(r.who, 'booked'); toast(`${p.name} booked for Northlight`) }}>Book</HoldButton>
                     </>

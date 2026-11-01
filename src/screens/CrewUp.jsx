@@ -17,13 +17,14 @@ export default function CrewUp() {
     <div className="page">
       <header className="mast mast--big">
         <h1 className="display">Crew up</h1>
-        <p className="mast__sub">{cp.title}, {cp.kind.toLowerCase()}. {cp.dates}, {cp.where}.</p>
+        <p className="mast__sub">{cp.title}, {cp.kind.toLowerCase()}. {cp.dates} in {cp.where}.</p>
       </header>
 
       <div className="tally-big">
-        <Frame name={cp.photo} small alt="" burn="NORTHLIGHT S2" tc={cp.prep} className="tally-big__frame" />
-        <p className="tally-big__n display"><span>{filled}</span>/{roles.length}</p>
-        <p className="mono small">roles booked</p>
+        <Frame name={cp.photo} small alt="" className="tally-big__frame" />
+        <div className="tally-big__text"><p className="tally-big__n display"><span>{filled}</span>/{roles.length}</p>
+        <p className="mono small">Roles booked</p>
+        <p className="small row__s">{cp.prep}</p></div>
       </div>
 
       <Button variant="line" className="btn--block" icon={BiPlus} onClick={() => setPost(true)}>Post a call</Button>
@@ -47,7 +48,7 @@ export default function CrewUp() {
               )
               return (
                 <li key={r.role}>
-                  {r.key ? <Link to={`/crew/${r.key}`} className="role">{body}<BiChevronRight aria-hidden="true" /></Link> : <div className="role">{body}</div>}
+                  {r.key ? <Link to={`/crew/${r.key}`} className="role">{body}<BiChevronRight aria-hidden="true" /></Link> : <div className="role">{body}<span aria-hidden="true" /></div>}
                 </li>
               )
             })}

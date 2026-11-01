@@ -118,7 +118,7 @@ function PreCall({ onLate }) {
       <h1 id="call-h" className="sr-only">Your call is {cs.myCall}</h1>
       <p className="hero-call__label mono"><span>Your call</span><span className="tally">in 48 min</span></p>
       <p className="giant" aria-hidden="true">06<span className="giant__colon">:</span>30</p>
-      <p className="hero-call__note">{cs.myCallNote}. Unit call <span className="mono">{cs.unitCall}</span>, breakfast from <span className="mono">06:00</span>.</p>
+      <p className="hero-call__note">{cs.myCallNote}. Unit call {cs.unitCall}, breakfast from 06:00.</p>
       {s.late && <p className="flag mono" role="status">Ines knows you are {s.late.mins} min late</p>}
       <div className="duo">
         <Button variant="green" icon={BiDirections} onClick={() => toast('Opens your maps app with the unit base, not the set')}>Directions</Button>
@@ -138,7 +138,7 @@ function Rolling() {
       <div className="pagebar" role="img" aria-label={`${pages(done)} of ${pages(totalEighths)} pages shot`}>
         {scenes.map((x) => <span key={x.id} className={`pagebar__seg is-${x.status}`} style={{ flex: x.eighths }} />)}
       </div>
-      <p className="mono small"><b>{pages(done)}</b> of {pages(totalEighths)} pages in the can. Next for lighting: Sc 18 at 11:30, one 4K through the side gate.</p>
+      <p className="hero-call__note"><b>{pages(done)} of {pages(totalEighths)} pages</b> in the can. Next for lighting: scene 18 at 11:30, one 4K through the side gate.</p>
     </section>
   )
 }
@@ -150,12 +150,12 @@ function Wrapped() {
       <p className="hero-call__label mono"><span>Wrapped 19:20</span><span className="tally">Day 14 done</span></p>
       <h1 id="wrap-h" className="giant giant--word">Wrap</h1>
       <dl className="ledger">
-        <div><dt>On the clock</dt><dd className="mono">12h 50m</dd></div>
-        <div><dt>Overtime</dt><dd className="mono">1h 50m</dd></div>
-        <div><dt>Turnaround</dt><dd className="mono">11h</dd></div>
-        <div><dt>Earliest call</dt><dd className="mono">06:20</dd></div>
+        <div><dt>On the clock</dt><dd>12h 50m</dd></div>
+        <div><dt>Overtime</dt><dd>1h 50m</dd></div>
+        <div><dt>Turnaround</dt><dd>11h</dd></div>
+        <div><dt>Earliest call</dt><dd>06:20</dd></div>
       </dl>
-      <p className="hero-call__note">All 5 scenes shot, <span className="mono">{pages(totalEighths)}</span> pages. Tomorrow's call sheet is out: you are on at <span className="mono">07:30</span>, same location.</p>
+      <p className="hero-call__note">All 5 scenes shot, {pages(totalEighths)} pages. Tomorrow's call sheet is out: you are on at 07:30, same location.</p>
       <div className="duo duo--one">
         <Button variant="green" icon={BiSend} onClick={() => toast('Timesheet sent to Kofi for approval')}>Send timesheet</Button>
       </div>
@@ -189,7 +189,7 @@ function Timeline({ now }) {
     <Section no="01" title="The day" id="day" aside={away ? <button className="textbtn" onClick={() => jump(now)}>Back to now</button> : <span className="mono">Now</span>}>
       <div className="tl">
         <div className="tl__readout" aria-live="polite">
-          <p className="tl__time mono">{fmt(Math.round(t / 5) * 5)}</p>
+          <p className="tl__time">{fmt(Math.round(t / 5) * 5)}</p>
           <div>
             <p className="tl__what">{info.title}</p>
             <p className="tl__line">{info.line}</p>
@@ -268,6 +268,7 @@ function Location() {
       <Frame name={l.photo} small alt="Brick warehouse on Wharf Road" burn="LOC 04 / RECCE" tc="11.09.26" className="frame--loc" />
       <p className="loc__name">{l.name}</p>
       <p className="row__s">{l.address}</p>
+      <p className="row__s small">{cs.weather.text}, wind {cs.weather.wind}.</p>
       <ul className="rows rows--icons">
         <li className="row"><BiMapPin aria-hidden="true" /><p>{l.base}</p></li>
         <li className="row"><BiCar aria-hidden="true" /><p>{l.parking}</p></li>
@@ -275,9 +276,9 @@ function Location() {
         <li className="row row--safety"><BiPlusMedical aria-hidden="true" /><p><b>Nearest A&E</b> {l.hospital}</p></li>
       </ul>
       <dl className="ledger ledger--3">
-        <div><dt>Sunrise</dt><dd className="mono">{cs.sunrise}</dd></div>
-        <div><dt>Sunset</dt><dd className="mono">{cs.sunset}</dd></div>
-        <div><dt>Drizzle to 10:00</dt><dd className="mono">{cs.weather.temp}°C</dd></div>
+        <div><dt>Sunrise</dt><dd>{cs.sunrise}</dd></div>
+        <div><dt>Sunset</dt><dd>{cs.sunset}</dd></div>
+        <div><dt>Weather</dt><dd>{cs.weather.temp}°C</dd></div>
       </dl>
     </Section>
   )
@@ -338,7 +339,7 @@ function LateSheet({ open, onClose }) {
           ))}
         </div>
       </fieldset>
-      <p className="row__s">New arrival <span className="mono">{fmt(toMin(cs.myCall) + mins)}</span>. Arlo, your best boy, can start the pre-rig.</p>
+      <p className="row__s">New arrival {fmt(toMin(cs.myCall) + mins)}. Arlo, your best boy, can start the pre-rig.</p>
     </Sheet>
   )
 }

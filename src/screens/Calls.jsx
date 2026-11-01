@@ -60,6 +60,7 @@ export default function Calls() {
         </div>
       </header>
 
+      <div className="filters">
       <label className="search">
         <BiSearch aria-hidden="true" />
         <span className="sr-only">Search calls</span>
@@ -80,6 +81,7 @@ export default function Calls() {
         {depts.map((d) => (
           <button key={d} className="dept" aria-pressed={dept === d} onClick={() => setDept(d)}>{d}</button>
         ))}
+      </div>
       </div>
 
       {list.length === 0 ? (
@@ -105,13 +107,15 @@ export default function Calls() {
                         <dl className="poster__facts mono">
                           <div><dt>Dates</dt><dd>{j.dates}</dd></div>
                           <div><dt>Rate</dt><dd>{gbp(j.rate)}/day</dd></div>
+                          <div><dt>Where</dt><dd>{j.where.split(',')[0]}</dd></div>
+                          <div><dt>Length</dt><dd>{j.days} {j.days === 1 ? 'day' : 'days'}</dd></div>
                         </dl>
                       </div>
                     </div>
                     <div className="poster__back" aria-hidden={!flip}>
                       <p className="poster__prod">{j.title} / {j.format}</p>
                       <p className="poster__pitch">"{j.pitch}"</p>
-                      <p className="mono small">{people[j.hod].name}, {people[j.hod].role.toLowerCase()}</p>
+                      <p className="small">{people[j.hod].name}, {people[j.hod].role.toLowerCase()}</p>
                       <div className="billing">
                         {j.booked.length ? j.booked.map((id) => (
                           <p key={id}><span>{people[id].role}</span><b>{people[id].name}</b></p>

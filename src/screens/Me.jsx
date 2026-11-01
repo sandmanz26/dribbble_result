@@ -28,7 +28,7 @@ export default function Me() {
     <div className="page page--me">
       <header className="me">
         <Frame name={me.photo} alt={me.name} burn={me.dept ? me.dept.toUpperCase() : ''} tc={me.city} className="me__frame" />
-        <h1 className="display me__name">{me.name.split(' ').map((w) => <span key={w}>{w}</span>)}</h1>
+        <h1 className="display me__name">{me.name}</h1>
         <p className="mono me__role">{me.role}{me.union ? ` / ${me.union}` : ''}</p>
       </header>
 

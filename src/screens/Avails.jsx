@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { statusLabel } from '../data/avails.js'
 import { useStore } from '../store.jsx'
-import { Avatar, Button, HoldButton, HoldHint, Section, Tabs } from '../ui/kit.jsx'
+import { Avatar, HoldButton, HoldHint, Section, Tabs } from '../ui/kit.jsx'
 
 const TODAY = '2026-11-17'
 const iso = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
@@ -84,9 +84,9 @@ export default function Avails() {
             <li key={h.id} className="holdrow">
               <span className={`holdrow__mark bar--${h.status}`} aria-hidden="true" />
               <div className="holdrow__main">
-                <p className="row__t">{h.title} <span className="row__s">{h.kind}</span></p>
-                <p className="mono small row__s">{fmt(h.from)} to {fmt(h.to)}{h.expires ? `, confirm by ${h.expires}` : ''}</p>
-                <p className="mono small"><b>{statusLabel[h.status]}</b></p>
+                <p className="row__t">{h.title}</p>
+                <p className="small row__s">{h.kind}, {fmt(h.from)} to {fmt(h.to)}</p>
+                <p className="holdrow__state mono">{statusLabel[h.status]}{h.expires ? ` / confirm by ${h.expires}` : ''}</p>
               </div>
               {(h.status === 'pencil1' || h.status === 'pencil2') && (
                 <button className="textbtn" onClick={() => { releaseHold(h.id); toast(`${h.title} released. They have been told`) }}>Release</button>
@@ -127,7 +127,7 @@ function Challenge({ s, onChallenge, onDecline }) {
       <p>They are your 2nd pencil for 14 to 22 Dec. Paper Moon holds 1st pencil on the same days. Challenge them and they get 24 hours to confirm you or let go.</p>
       <div className="block-green__acts">
         <HoldButton variant="ink" onDone={onChallenge}>Challenge Paper Moon</HoldButton>
-        <Button variant="line-ink" size="sm" onClick={onDecline}>Not this time</Button>
+        <button className="textbtn textbtn--on-green" onClick={onDecline}>Not this time</button>
       </div>
     </section>
   )

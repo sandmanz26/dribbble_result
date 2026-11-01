@@ -161,3 +161,22 @@ and one success-green used like a fintech app. That is the "AI slop" read.
 - Unit labels and pins collided on the timeline. Fixed: block labels sit at the bottom, pins at the top.
 - Checked: a short tap on a hold button does nothing, a full hold sends; keyboard scrub moves 15 min.
 
+
+## 10. Spacing pass (owner: "spacing is still very messy")
+
+Audit with viewport and full-page screenshots of every screen, then one system applied everywhere:
+- **Scale:** 4, 8, 12, 16, 24, 32, 48 px as `--s1` to `--s7`. Nothing else in layout CSS.
+- **Rhythm:** inside a group 8 to 12, between groups 24, between sections 48 (page gap 24 plus 24 on
+  each ruled section), header to content 16. The gap between groups is always at least twice the gap
+  inside a group, so grouping reads from space, not from more lines.
+- **One edge:** section numbers moved onto the rule at the trailing end, so every title, row and photo
+  starts on the same 20 px gutter. Rows all use 12 px vertical padding; full-bleed blocks (challenge,
+  urgent message, booked reply) use the same gutter inside.
+- **Type roles:** mono only for labels and standalone codes. Large numbers (timeline time, countdown,
+  rate) use the condensed face with tabular figures; numbers inside sentences use the body face, which
+  removed the "07 : 30" gaps.
+- **Fixes found on the way:** challenge button wrapped to two lines (actions now stacked), diary weeks
+  had uneven heights (fixed three-lane rows), crew-up badges did not line up (every row reserves the
+  chevron column), a class name clash restyled the availability strip, the poster deck pushed its actions
+  under the tab bar, and the toast covered the hold button at the bottom (toast now sits at the top and
+  ignores taps).
