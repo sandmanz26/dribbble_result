@@ -7,3 +7,4 @@ editing it. One row per branch or reserved project number. Delete your row when 
 |---|---|---|---|
 | `claude/myelin-ai-brain` (project16) | cloud | 2026-10-30 | Second UI roast done and pushed; release when the owner signs off |
 | project20 reserved: `claude/film-tv-crew-app`, password `ro-zdxa-uv3w` | desktop | 2026-11-01 | Rolling, Film and TV crew mobile app (Dribbble brief) |
+| `claude/tech-leader-awards` (project19) | cloud | 2026-11-01 | Third roast: motion, transitions, content, layout, against competitor sites |
