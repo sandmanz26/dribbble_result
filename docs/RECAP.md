@@ -82,6 +82,7 @@ Live site: `https://proposal-virid-eight.vercel.app/<slug>/` (root and unknown p
 | project15 | br-5zo1-i3nv | Skill-to-Research Bridge, student and lab dashboards with a Contribution Passport | Website + web app |
 | project16 | my-t6qe-8vzd | Myelin AI brain platform (web, desktop, mobile) | Website + web app + desktop + mobile |
 | project19 | ta-sc-kyew | Tech Leader Awards website with published jury scorecards | Website |
+| project20 | ro-zdxa-uv3w | Rolling, phone app for film and TV crew, creatives and production | Mobile app |
 | rawat | fd-w8tq-3jxc | Rawat, clinic operations for an Indonesian primary clinic (owner's portfolio piece) | Web app |
 | flowdirector | fd-w8tq-3jxc | Old link, serves the same Rawat build | Web app |
 | selvedge | sv-4rkx-msbd | Selvedge, AI retail operating system for a luxury fashion group (portfolio case under NDA) | Web app + case notes |

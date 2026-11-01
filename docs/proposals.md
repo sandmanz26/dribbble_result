@@ -252,3 +252,24 @@ Password: ta-sc-kyew
 My portfolio: createdybdaniel.com
 
 To be upfront: your two current prototypes were not attached to the brief, so I started from the brief itself. Send them and I will merge what works into this direction and show your current palette beside the new one. All names, companies, scores, dates and portraits are placeholders.
+
+## project20, Rolling (Film & TV mobile app)
+
+Hi! Your brief leaves the core features open, so I started by asking what people in film and TV actually juggle every day, then built a clickable prototype around it so you can judge the direction, not just read about it.
+
+**1. Three things every crew member and creative checks daily.** Tomorrow's call sheet, which productions are holding their dates, and who they have worked with. Today these live in a PDF, a phone diary and a dozen chats. The app puts them in one place:
+- **Today:** your own call time first, directions to the unit base, a two-tap "running late" to the 2nd AD, the nearest A&E, and the day's scenes in the stripboard colours people already know. During the shoot it shows what is rolling and what is next for your department; after wrap it shows hours, overtime and the earliest legal call tomorrow
+- **Avails:** a diary with 1st and 2nd pencils, expiry dates and the challenge (a 2nd pencil asks the 1st to confirm or let go within 24 hours). I have not seen another app model this, and it is how the industry books people
+- **Calls:** every job says whether it fits your diary, clashes with a booking, or already holds you, before you reply
+
+**2. Professionals and creatives in one product.** Crew, cast and creatives share the same diary and profile (reel, credits, a day rate shown only to people you choose). Production uses the same app to crew up: roles by department, replies ranked by who is free for the dates and who has worked with the heads of department.
+
+**3. Minimal, playful and professional.** A calm paper-and-ink base, like a printed call sheet, with one playful accent: chroma-key green. Numbers set in a mono face so times and page counts line up. Small insider touches (the "Abby Singer" and "Martini shot" labels on the last setups of the day) for personality without getting in the way. Light and dark modes.
+
+Prototype: https://proposal-virid-eight.vercel.app/project20/
+Password: ro-zdxa-uv3w
+(Best on a phone. On desktop it opens in a phone frame with a panel to switch between crew and production, and between before call, rolling and wrapped.)
+
+My portfolio: createdybdaniel.com
+
+To be upfront: this is an early exploration made in limited time, so not every detail is polished. The name "Rolling", productions, people and rates are placeholders, and the photos are licensed stock until we have your brand and imagery. For the full project I would continue with research interviews, user flows, wireframes, the final brand direction and complete high-fidelity screens in Figma. If this direction feels right, I would love to hear which users matter most to you first.
