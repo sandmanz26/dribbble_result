@@ -264,7 +264,7 @@ Hi! Your brief leaves the core features open, so I started by asking what people
 
 **2. Professionals and creatives in one product.** Crew, cast and creatives share the same diary and profile (reel, credits, a day rate shown only to people you choose). Production uses the same app to crew up: roles by department, replies ranked by who is free for the dates and who has worked with the heads of department.
 
-**3. Minimal, playful and professional.** A calm paper-and-ink base, like a printed call sheet, with one playful accent: chroma-key green. Numbers set in a mono face so times and page counts line up. Small insider touches (the "Abby Singer" and "Martini shot" labels on the last setups of the day) for personality without getting in the way. Light and dark modes.
+**3. Minimal, playful and professional, and built around how the industry already works.** The look borrows from the paperwork crews read every day: a call sheet set like a poster, with ruled sections, big condensed type, numbers in a mono face so times and page counts line up, and one chroma-key green used as a signal, not decoration. The playful part is in the interaction: you scrub your shoot day like an edit timeline, flip job posters to see who is already on the crew, see your pencils as a stripboard over your diary, press and hold to send anything that commits you, and your credits roll like the end of a film. Light and dark modes.
 
 Prototype: https://proposal-virid-eight.vercel.app/project20/
 Password: ro-zdxa-uv3w

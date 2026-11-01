@@ -231,4 +231,10 @@ Owner asked to work as creative head: roast the idea and the style before buildi
   ui-ux-pro-max roast and a proposal. Higgsfield was not authorised in the session, so all 27 photos are
   Unsplash, graded to one look. taste-skill is not installed on the desktop; ui-ux-pro-max was used.
 - Proposal is in `docs/proposals.md`. Research and roast log in the branch's `docs/strategy.md`.
+- Version 2 (same day): owner said version 1 still read as AI slop and asked for a more creative,
+  unique layout and interaction, researched on Dribbble. Rebuilt as "a call sheet set like a poster"
+  (ruled sections, huge condensed type, green as solid blocks, square corners) with signature
+  interactions: day timeline with a playhead, poster deck with flip, stripboard diary, hold to confirm,
+  end-credits crawl. Research notes and the diagnosis of what made v1 generic are in the branch's
+  `docs/strategy.md` section 9.
 
