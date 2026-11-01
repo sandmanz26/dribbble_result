@@ -229,7 +229,7 @@ Password: rb-qil0-uouv
 
 My portfolio: createdybdaniel.com
 
-To be upfront: the restaurant, menu, prices and guest words are sample content, and the photos are generated placeholders for the direction. If it fits, I will adapt it to your brand, real photography and menu, and deliver the Figma files and assets.
+To be upfront: this is an early stage of the concept, and I will keep refining it once I understand your restaurant better. The restaurant, menu, prices and guest words are sample content, and the photos are generated placeholders for the direction. If it fits, I will adapt it to your brand, real photography and menu, and deliver the Figma files and assets. Beyond the design, I can also help develop the site, as this prototype already shows.
 
 ## project19, Tech Leader Awards (Elegant Tech Leader Awards Site Design)
 
