@@ -17,7 +17,23 @@ const fresh = () => ({
   toast: null,
 })
 
+// Review links (#/avails?as=crew, #/?scene=rolling) skip the first-run screen
+// on the very first visit, before any route decides where to go.
+function fromLink() {
+  const q = new URLSearchParams(window.location.hash.split('?')[1] || '')
+  const patch = {}
+  if (['crew', 'production'].includes(q.get('as'))) patch.as = q.get('as')
+  if (['precall', 'rolling', 'wrapped'].includes(q.get('scene'))) patch.scene = q.get('scene')
+  const path = window.location.hash.replace(/^#/, '').split('?')[0]
+  if (Object.keys(patch).length || (path && path !== '/' && path !== '/welcome')) patch.onboarded = true
+  return patch
+}
+
 function load() {
+  return { ...loadSaved(), ...fromLink() }
+}
+
+function loadSaved() {
   try {
     const raw = localStorage.getItem(KEY)
     if (raw) {
