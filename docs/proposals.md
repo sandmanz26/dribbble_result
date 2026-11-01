@@ -233,17 +233,17 @@ To be upfront: this is an early stage of the concept, and I will keep refining i
 
 ## project19, Tech Leader Awards (Elegant Tech Leader Awards Site Design)
 
-Hi! I designed and built a clickable version of the site so you can judge the direction by using it, not by looking at a mood board.
+Hi! A quick note before anything else: what you will see is still a draft. I built it before we have spoken, as proof that I take your project seriously and that I would rather show you my thinking than describe it. Everything in it can change once I hear from you.
 
 **1. Credibility shown, not claimed.** Awards are often suspected of being pay-to-win. So every winner has a citation card, the sentence read on stage, and you can turn the card over to see the jury's scorecard: each juror, each criterion, the weights and the total. Jurors are named, with their declared interests and the categories they step away from.
 
-**2. People lead.** Recipients and jurors are the photographs: the winners' portraits change slowly beside the opening card, the jury chair writes a short letter beside the jury, and every category shows who judges it and who won last year. One treatment for every portrait, black and white at 4:5, so photos from different sources still look like one series.
+**2. People lead.** Recipients and jurors are the photographs. The winners' portraits change slowly beside the opening card, the jury chair writes a short letter beside the jury, and every category shows who judges it and who won last year. One treatment for every portrait, black and white at 4:5, so photos from different sources still look like one series.
 
-**3. Easy across many categories.** Twelve awards in four groups (Innovation, Experience, Growth, Leadership), plus a finder: type what your product does and the closest categories appear. Each category page has its criteria and weights, its jurors, last year's finalists and a direct way to enter.
+**3. Easy across many categories.** Twelve awards in four groups (Innovation, Experience, Growth, Leadership), plus a finder: type what your product does and the closest categories appear. Each category page shows its criteria and weights, its jurors, last year's finalists, what to prepare, and a direct way to enter.
 
-**4. A more refined palette.** Sand, paper and charcoal with one laurel green, the oldest sign of a win, instead of the usual black and gold. One typeface, square corners, and the award's striped ribbon as the only ornament. The design notes page explains the palette, suggests a logo refinement (a V-cut medal ribbon) and sets a photography guide.
+**4. A more refined palette.** Sand, paper and charcoal with one laurel green, the oldest sign of a win, instead of the usual black and gold. One typeface, square corners, and the award's striped ribbon as the only ornament. A design notes page explains the palette, suggests a logo refinement (a V-cut medal ribbon) and sets a guide for portraits.
 
-**5. The full journey.** Entry in four short steps with eligibility, fees shown up front and what money never buys, rules, the ceremony date, and questions, on desktop and phone.
+**5. The full journey, built to current standards.** A deadline countdown, entry in four short steps with fees shown up front and what money never buys, rules, the ceremony and questions. Smooth page transitions, keyboard and screen reader support, and a layout that works on desktop and phone.
 
 Prototype: https://proposal-virid-eight.vercel.app/project19/
 Password: ta-sc-kyew
