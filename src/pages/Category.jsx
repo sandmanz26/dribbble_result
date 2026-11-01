@@ -50,7 +50,7 @@ export default function Category() {
         <div className="two" style={{ alignItems: 'start' }}>
           <div>
             <h2 id="last-h" className="head" data-rise>{w ? 'Last year' : 'New for 2027'}</h2>
-            {w && <Link to={`/winners/${w.slug}`} data-rise style={{ display: 'block', marginTop: 28, width: '46%' }}><img src={photo(w.photo)} alt={`${w.name}, ${w.company}`} width="900" height="1125" loading="lazy" style={{ aspectRatio: '4 / 5', objectFit: 'cover', filter: 'grayscale(1)', width: '100%' }} /></Link>}
+            {w && <Link to={`/winners/${w.slug}`} data-rise style={{ display: 'block', marginTop: 28, width: '46%' }}><img src={photo(w.photo)} alt={`${w.name}, ${w.company}`} width="900" height="1125" loading="lazy" style={{ aspectRatio: '4 / 5', objectFit: 'cover', filter: 'grayscale(1)', width: '100%', viewTransitionName: `w-${w.slug}` }} /></Link>}
             {w ? (
               <>
                 <p className="lead" style={{ marginTop: 24 }} data-rise>{FINALISTS[c.slug]?.length || 4} finalists, one winner. Turn the card to see how it was scored.</p>
@@ -63,6 +63,21 @@ export default function Category() {
           <div data-rise>{w ? <Citation w={w} /> : (
             <div className="panel" style={{ padding: 0 }}><Ribbon /><img src={photo('crystal')} alt="Two crystal award trophies" width="1024" height="796" loading="lazy" style={{ width: '100%', aspectRatio: '16 / 9', objectFit: 'cover', filter: 'grayscale(1)' }} /><div style={{ padding: 32 }}><p className="cat" style={{ fontWeight: 600 }}>{c.name}, 2027</p><p className="lead" style={{ marginTop: 20 }}>The first winner is named on {fmtDate(dateOf('ceremony'))}. Their scorecard will be printed here the same night.</p></div></div>
           )}</div>
+        </div>
+      </section>
+
+      <section className="section wrap" aria-labelledby="prep-h">
+        <div className="two w48">
+          <div>
+            <h2 id="prep-h" className="head" data-rise>What to prepare</h2>
+            <p style={{ marginTop: 20, maxWidth: '34ch' }} data-rise>Everything an entry to {c.name} needs. You can save a draft and add the rest any time before {fmtDate(dateOf('close'))}.</p>
+          </div>
+          <ol className="prep">
+            {c.criteria.map(([name, wt]) => <li key={name} data-rise><b>{name}</b><span>An answer of up to 400 words, with evidence. Counts for {wt}% of the score.</span></li>)}
+            <li data-rise><b>Access for the jury</b><span>A demo account or a recorded walkthrough of the real product, valid until {fmtDate(dateOf('ceremony'))}.</span></li>
+            <li data-rise><b>Evidence for every number</b><span>Analytics exports, audited figures or customer letters. Numbers without evidence are ignored.</span></li>
+            <li data-rise><b>One portrait</b><span>{c.group === 'leadership' ? 'Of the person entered' : 'Of the person who will accept the award'}, 4:5, at least 1600 px tall. Used only if you are shortlisted.</span></li>
+          </ol>
         </div>
       </section>
 

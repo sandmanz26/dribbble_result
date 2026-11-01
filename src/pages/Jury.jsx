@@ -9,6 +9,12 @@ export default function Jury() {
         <h1 id="ph" data-rise>Six jurors, all named</h1>
         <p data-rise>Each juror declares their interests before judging opens. Where they have one, they step aside, and the category page says so.</p>
       </section>
+      <section className="wrap" style={{ marginTop: 48 }} aria-labelledby="chosen-h">
+        <div className="panel chosen" data-rise>
+          <h2 id="chosen-h">How jurors are chosen</h2>
+          <p>Jurors are invited for one year by the jury chair from people who buy, build or research the software in each category. None may work for an entrant, and none are paid per entry. Each category has at least two jurors without a conflict, and no juror scores more than six categories.</p>
+        </div>
+      </section>
       <section className="wrap" style={{ marginTop: 48, paddingBottom: 40 }} aria-label="The jury">
         {JURY.map((j) => (
           <article key={j.slug} id={j.slug} className="jury-row" aria-labelledby={`${j.slug}-h`}>

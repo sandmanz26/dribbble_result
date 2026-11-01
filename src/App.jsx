@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react'
-import { Link, NavLink, Route, Routes, useLocation } from 'react-router-dom'
+import { useEffect, useRef, useState } from 'react'
+import { flushSync } from 'react-dom'
+import { Link, NavLink, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { LiaBarsSolid, LiaTimesSolid } from 'react-icons/lia'
 import { Mark, photo, useRise } from './ui.jsx'
 import { dateOf, fmtDate } from './data/awards.js'
@@ -17,15 +18,56 @@ const NAV = [['/categories', 'Categories'], ['/winners', 'Winners 2026'], ['/jur
 
 export default function App() {
   const loc = useLocation()
+  const navigate = useNavigate()
   const [open, setOpen] = useState(false)
-  useEffect(() => { setOpen(false); if (!loc.state?.keepScroll) window.scrollTo(0, 0) }, [loc.pathname])
+  const [scrolled, setScrolled] = useState(false)
+  const menuBtn = useRef(null)
+  const first = useRef(true)
+
+  // Page to page: a view transition where the browser has one (the winner's portrait travels with it), a plain swap where not.
+  useEffect(() => {
+    const onClick = (e) => {
+      const a = e.target.closest('a[href^="#/"]')
+      if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || a.target === '_blank') return
+      if (!document.startViewTransition || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+      const to = a.getAttribute('href').slice(1)
+      if (to === window.location.hash.slice(1)) return
+      e.preventDefault(); e.stopPropagation()
+      document.startViewTransition(() => flushSync(() => navigate(to)))
+    }
+    document.addEventListener('click', onClick, true)
+    return () => document.removeEventListener('click', onClick, true)
+  }, [navigate])
+
+  // After a route change: top of the page, the tab title from the page's heading, focus on that heading.
+  useEffect(() => {
+    setOpen(false)
+    if (!loc.state?.keepScroll) window.scrollTo(0, 0)
+    const h1 = document.querySelector('main h1')
+    const name = h1 ? (h1.dataset.title || h1.textContent).trim() : ''
+    document.title = loc.pathname === '/' || !name ? 'Tech Leader Awards 2027' : `${name}, Tech Leader Awards`
+    if (first.current) { first.current = false; return }
+    if (h1) { h1.setAttribute('tabindex', '-1'); h1.focus({ preventScroll: true }) }
+  }, [loc.pathname])
+
+  useEffect(() => {
+    const on = () => setScrolled(window.scrollY > 8)
+    on(); window.addEventListener('scroll', on, { passive: true })
+    return () => window.removeEventListener('scroll', on)
+  }, [])
+  useEffect(() => {
+    if (!open) return
+    const on = (e) => { if (e.key === 'Escape') { setOpen(false); menuBtn.current?.focus() } }
+    document.addEventListener('keydown', on)
+    return () => document.removeEventListener('keydown', on)
+  }, [open])
   useRise()
   return (
     <>
       <a href="#main" className="sr-only" onFocus={(e) => e.currentTarget.classList.remove('sr-only')} onBlur={(e) => e.currentTarget.classList.add('sr-only')} onClick={(e) => { e.preventDefault(); document.getElementById('main')?.focus() }}>Skip to content</a>
-      <header className="bar">
+      <header className={`bar${scrolled ? ' scrolled' : ''}`}>
         <Link to="/" className="mark" aria-label="Tech Leader Awards, home"><Mark />Tech Leader Awards</Link>
-        <button className="menu-btn" aria-expanded={open} aria-controls="nav" onClick={() => setOpen((v) => !v)}>{open ? <LiaTimesSolid size={20} aria-hidden="true" /> : <LiaBarsSolid size={20} aria-hidden="true" />}Menu</button>
+        <button ref={menuBtn} className="menu-btn" aria-expanded={open} aria-controls="nav" onClick={() => setOpen((v) => !v)}>{open ? <LiaTimesSolid size={20} aria-hidden="true" /> : <LiaBarsSolid size={20} aria-hidden="true" />}Menu</button>
         <nav id="nav" className={open ? 'open' : ''} aria-label="Main">
           {NAV.map(([to, label]) => <NavLink key={to} to={to}>{label}</NavLink>)}
           <NavLink to="/enter" className="mobile-only">Enter 2027</NavLink>

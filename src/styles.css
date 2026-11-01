@@ -394,7 +394,7 @@ ul, ol { padding: 0; list-style: none; }
 
 /* Motion: parts of each section rise in once, staggered. Content stays visible without script. */
 .js [data-rise] { opacity: 0; transform: translateY(24px); transition: opacity .7s var(--ease), transform .7s var(--ease); transition-delay: var(--d, 0ms); }
-.js [data-rise].in { opacity: 1; transform: none; }
+.js [data-rise].is-in { opacity: 1; transform: none; }
 .drift { animation: drift 24s ease-in-out infinite alternate; }
 @keyframes drift { from { transform: scale(1.02) translate3d(0, 0, 0); } to { transform: scale(1.1) translate3d(-1.5%, -1%, 0); } }
 @media (prefers-reduced-motion: reduce) {
@@ -461,4 +461,77 @@ ul, ol { padding: 0; list-style: none; }
   .steps { gap: 4px; }
   .steps li:not(.on) { flex: 0 0 18px; padding: 0; font-size: 0; height: 40px; }
   .steps li.on { flex: 1; }
+}
+
+/* ---- Third roast: motion and transitions ---- */
+main h1:focus, .step-title:focus, legend:focus { outline: none; }
+main h1:focus-visible, .step-title:focus-visible { outline: 3px solid var(--accent); outline-offset: 6px; }
+
+/* Header steps to paper once the page moves under it. */
+.bar { transition: background .25s var(--ease); view-transition-name: bar; }
+.bar.scrolled { background: var(--paper); }
+@media (max-width: 900px) {
+  .bar nav { transition: opacity .2s var(--ease), transform .25s var(--ease); }
+  .bar nav.open { animation: menu-in .25s var(--ease) both; }
+}
+@keyframes menu-in { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+
+/* The ribbon unfurls stripe by stripe when its card arrives. */
+.js [data-unfurl] span { transform: scaleY(0); transform-origin: top; }
+.js [data-unfurl].is-in span { animation: unfurl .5s var(--ease) both; animation-delay: calc(var(--i) * 18ms + 120ms); }
+@keyframes unfurl { to { transform: scaleY(1); } }
+
+/* Hero portraits: pause control and a thin timer under the caption. */
+.hero .photo .pause { position: absolute; top: 14px; right: 14px; z-index: 2; width: 44px; height: 44px; display: grid; place-items: center; border: 0; background: var(--paper); color: var(--ink); cursor: pointer; transition: background .15s; }
+.hero .photo .pause:hover { background: var(--ground); }
+.hero .photo .tick { position: absolute; left: 0; right: 0; top: 0; z-index: 2; height: 4px; background: var(--accent); transform: scaleX(0); transform-origin: left; }
+.hero .photo .tick.run { animation: tick 5.6s linear both; }
+@keyframes tick { to { transform: scaleX(1); } }
+.hero .photo figcaption { z-index: 1; }
+.count-line { margin-top: 28px; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 24px; }
+.count-line b { font-size: var(--step-lead); font-weight: 500; letter-spacing: -0.02em; color: var(--accent); }
+
+/* Page to page. The header stays put; portraits travel between list and detail. */
+::view-transition-old(root) { animation: vt-out .22s var(--ease) both; }
+::view-transition-new(root) { animation: vt-in .38s var(--ease) both; }
+::view-transition-group(*) { animation-duration: .45s; animation-timing-function: var(--ease); }
+@keyframes vt-out { to { opacity: 0; transform: translateY(-8px); } }
+@keyframes vt-in { from { opacity: 0; transform: translateY(14px); } }
+
+/* Accordions open smoothly where the browser can size to content. */
+@supports (interpolate-size: allow-keywords) {
+  :root { interpolate-size: allow-keywords; }
+  details::details-content { block-size: 0; overflow: hidden; transition: block-size .35s var(--ease), content-visibility .35s allow-discrete; }
+  details[open]::details-content { block-size: auto; }
+}
+.hits, .step-body, .win-list { animation: fade-up .35s var(--ease) both; }
+@keyframes fade-up { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+/* Targets */
+.finder .chips button { min-height: 44px; padding: 0 16px; }
+.filter { display: flex; flex-wrap: wrap; gap: 6px; }
+.filter button { min-height: 44px; padding: 0 16px; border: 0; background: var(--surface); cursor: pointer; transition: background .15s, color .15s; }
+.filter button span { color: var(--muted); margin-left: 4px; }
+.filter button[aria-pressed='true'] { background: var(--ink); color: var(--paper); }
+.filter button[aria-pressed='true'] span { color: inherit; opacity: .75; }
+
+/* Content blocks */
+.step-title { font-size: var(--step-lead); font-weight: 600; letter-spacing: -0.02em; margin-bottom: 20px; }
+.prep { display: grid; gap: 6px; }
+.prep li { display: grid; gap: 4px; background: var(--paper); padding: 18px 22px; }
+.prep b { font-weight: 600; }
+.prep span { color: var(--muted); }
+.badges { display: grid; gap: 6px; align-content: start; }
+.badge { display: flex; align-items: center; gap: 18px; padding: 22px 26px; background: var(--paper); }
+.badge b { display: block; font-weight: 600; }
+.badge.dark { background: var(--night); color: var(--field-ink); }
+.chosen h2 { font-size: var(--step-lead); font-weight: 600; letter-spacing: -0.02em; }
+.chosen p { margin-top: 10px; max-width: 70ch; }
+
+@media (prefers-reduced-motion: reduce) {
+  .js [data-unfurl] span { transform: none; animation: none; }
+  .hero .photo .tick { display: none; }
+  ::view-transition-old(root), ::view-transition-new(root), ::view-transition-group(*) { animation: none; }
+  .hits, .step-body, .win-list, .bar nav.open { animation: none; }
+  details::details-content { transition: none; }
 }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { CATEGORIES, GROUPS, WINNERS, dateOf, fmtDate } from '../data/awards.js'
 import { Ribbon, photo } from '../ui.jsx'
@@ -11,7 +11,7 @@ const blank = { step: 0, sells: '', size: '', cats: [], name: '', site: '', comp
 function load() { try { return { ...blank, ...JSON.parse(localStorage.getItem(KEY)) } } catch { return blank } }
 
 // Fees for the review: first category at the size rate (early rate before 15 January), then $150 each.
-export function feeOf(size, n, today = new Date('2026-11-02')) {
+export function feeOf(size, n, today = new Date()) {
   if (!n || !size) return 0
   if (size === 'nonprofit') return 0
   if (size === 'under2') return 95 * n
@@ -33,13 +33,21 @@ export default function Enter() {
     if (f.step === 1 && !f.cats.length) e.cats = 'Choose at least one category.'
     if (f.step === 1 && f.cats.length > max) e.cats = `Choose up to ${max}.`
     if (f.step === 2) { if (f.name.trim().length < 2) e.name = 'Give the product’s name.'; if (f.company.trim().length < 2) e.company = 'Give the company’s name.'; if (!/^https?:\/\/\S+\.\S+/.test(f.site.trim())) e.site = 'Use a full address, starting with https://'; if (f.what.trim().split(/\s+/).length < 8) e.what = 'Two sentences at least: what it does and for whom.' }
-    setErr(e); return !Object.keys(e).length
+    setErr(e)
+    // Send focus to the first thing that needs fixing.
+    const firstBad = Object.keys(e)[0]
+    if (firstBad) requestAnimationFrame(() => { const el = document.getElementById(firstBad) || document.querySelector(`[name="${firstBad}"]`) || document.querySelector('.err'); el?.focus?.() })
+    return !Object.keys(e).length
   }
   const next = () => { if (check()) set('step', Math.min(3, f.step + 1)) }
   const back = () => set('step', Math.max(0, f.step - 1))
   const submit = () => set('done', `TLA-27-${String(4100 + Math.floor(Math.random() * 800))}`)
   const reset = () => { setF(blank); setErr({}) }
   const fee = feeOf(f.size, f.cats.length)
+  const stepHead = useRef(null)
+  const moved = useRef(false)
+  // Each step is announced and focused when you arrive at it, so keyboard and screen reader users are not left on the old button.
+  useEffect(() => { if (moved.current) stepHead.current?.focus(); moved.current = true }, [f.step, f.done])
 
   return (
     <>
@@ -53,8 +61,8 @@ export default function Enter() {
             <Ribbon thin />
             <div style={{ padding: 'clamp(22px,3vw,40px)' }}>
               {f.done ? (
-                <div role="status">
-                  <h2 style={{ fontSize: 'var(--step-lead)', fontWeight: 600 }}>Entry received</h2>
+                <div role="status" className="step-body">
+                  <h2 ref={stepHead} tabIndex={-1} style={{ fontSize: 'var(--step-lead)', fontWeight: 600 }}>Entry received</h2>
                   <p style={{ marginTop: 12 }}>Your reference is <b>{f.done}</b>. We check eligibility within ten days and write to you either way. If it is not eligible, the fee is refunded in full.</p>
                   <p style={{ marginTop: 12 }} className="muted">Next: write your 400-word answer for each criterion and add a demo account. You can do it any time before {fmtDate(dateOf('close'))}.</p>
                   <div className="form-nav"><Link to="/categories" className="link">Back to the categories</Link><button className="ghost" onClick={reset}>Start another entry</button></div>
@@ -62,24 +70,26 @@ export default function Enter() {
               ) : (
                 <>
                   <ol className="steps" aria-label="Steps" data-rise>{STEPS.map((s, i) => <li key={s} className={i === f.step ? 'on' : i < f.step ? 'done' : ''} aria-current={i === f.step ? 'step' : undefined}>{s}</li>)}</ol>
+                  <h2 className="step-title" ref={stepHead} tabIndex={-1}>{STEPS[f.step]}<span className="sr-only">, step {f.step + 1} of 4</span></h2>
+                  <div className="step-body" key={f.step}>
                   {f.step === 0 && (
                     <>
                       <fieldset className="field" style={{ border: 0, padding: 0, margin: '0 0 22px' }}>
                         <legend>Is the product live, with paying customers or active users?</legend>
-                        <div className="choice">{[['yes', 'Yes, people use it today'], ['no', 'Not yet']].map(([v, l]) => <label key={v}><input type="radio" name="sells" checked={f.sells === v} onChange={() => set('sells', v)} />{l}</label>)}</div>
+                        <div className="choice">{[['yes', 'Yes, people use it today'], ['no', 'Not yet']].map(([v, l]) => <label key={v}><input type="radio" name="sells" id={v === 'yes' ? 'sells' : undefined} checked={f.sells === v} onChange={() => set('sells', v)} />{l}</label>)}</div>
                         {err.sells && <p className="err" role="alert">{err.sells}</p>}
                       </fieldset>
                       <fieldset className="field" style={{ border: 0, padding: 0, margin: 0 }}>
                         <legend>Size of the company</legend>
                         <p className="hint">The fee depends on this. We may ask for proof.</p>
-                        <div className="choice">{SIZES.map(([v, l, p]) => <label key={v}><input type="radio" name="size" checked={f.size === v} onChange={() => set('size', v)} /><span>{l}<br /><span className="muted small">{p ? `From $${p} a category` : 'Free, one category'}</span></span></label>)}</div>
+                        <div className="choice">{SIZES.map(([v, l, p]) => <label key={v}><input type="radio" name="size" id={v === SIZES[0][0] ? 'size' : undefined} checked={f.size === v} onChange={() => set('size', v)} /><span>{l}<br /><span className="muted small">{p ? `From $${p} a category` : 'Free, one category'}</span></span></label>)}</div>
                         {err.size && <p className="err" role="alert">{err.size}</p>}
                       </fieldset>
                     </>
                   )}
                   {f.step === 1 && (
                     <fieldset className="field" style={{ border: 0, padding: 0, margin: 0 }}>
-                      <legend>Which categories? Up to {max}.</legend>
+                      <legend id="cats" tabIndex={-1}>Which categories? Up to {max}.</legend>
                       <p className="hint">Not sure? The <Link className="link" to="/categories">category finder</Link> matches what your product does.</p>
                       {GROUPS.map((g) => (
                         <div key={g.key} style={{ marginTop: 14 }}>
@@ -111,6 +121,7 @@ export default function Enter() {
                       <div><dt className="muted small">Fee</dt><dd style={{ fontSize: 'var(--step-lead)', letterSpacing: '-0.02em' }}>{fee ? `$${fee}` : 'Free'}</dd></div>
                     </dl>
                   )}
+                  </div>
                   <div className="form-nav" data-rise>
                     {f.step > 0 ? <button className="ghost" onClick={back}>Back</button> : <span />}
                     {f.step < 3 ? <button className="btn" onClick={next}>Continue</button> : <button className="btn" onClick={submit}>Send the entry</button>}

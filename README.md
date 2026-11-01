@@ -1,6 +1,7 @@
 # Tech Leader Awards
 
 ## Status
+- Third roast (motion, transitions, content, layout) done: view transitions between pages with the winner's portrait carried across, ribbon that unfurls, receipt that prints, pause control on the hero portraits, focus and tab title on every route change, Escape closes the menu, smooth accordions, deadline countdown, winners filter, what to prepare per category, the winner's mark, how jurors are chosen. Notes and competitor research in `docs/strategy.md` section 9.
 - Done: home, categories with finder, 12 category pages, 2026 winners list and pages, jury, judging and rules, four-step entry, design notes (palette, logo, portraits), credits. Inspector 0 FAIL on all 11 routes; lint clean.
 - Next: swap in the client's two prototypes and real palette on `#/notes`; replace sample people, companies, scores, dates, fees and venue.
 

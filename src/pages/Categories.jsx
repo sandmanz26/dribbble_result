@@ -25,7 +25,7 @@ export function Finder({ autoFocus = false }) {
       <label htmlFor="finder">What does your product do?</label>
       <input id="finder" value={q} onChange={(e) => setQ(e.target.value)} placeholder="For example: invoices for small suppliers" autoComplete="off" autoFocus={autoFocus} aria-describedby="finder-out" />
       <div className="chips" aria-label="Try a word">{SUGGEST.map((s) => <button key={s} type="button" onClick={() => setQ(s)}>{s}</button>)}</div>
-      <div id="finder-out" className="hits" aria-live="polite">
+      <div id="finder-out" className="hits" aria-live="polite" key={hits.map((h) => h.c.slug).join() || (q.trim().length > 1 ? 'none' : 'idle')}>
         {q.trim().length > 1 && (hits.length ? hits.map(({ c }) => (
           <Link key={c.slug} to={`/categories/${c.slug}`}><b>{c.name}</b><span>{c.for}</span></Link>
         )) : <p className="muted">No category matches “{q}”. Try a plainer word for what your product does, or browse the groups.</p>)}
@@ -51,7 +51,7 @@ export default function Categories({ winners = false }) {
       <section className="wrap" style={{ marginTop: 56 }} aria-labelledby="strip-h">
         <h2 id="strip-h" className="sr-only">The 2026 winners</h2>
         <div className="strip">
-          {WINNERS.map((w) => <Link key={w.slug} to={`/winners/${w.slug}`} data-rise><img src={photo(w.photo)} alt={`${w.name}, ${catOf(w.cat).name} 2026`} width="900" height="1125" loading="lazy" /><b>{w.name}</b><span>{catOf(w.cat).name}</span></Link>)}
+          {WINNERS.map((w) => <Link key={w.slug} to={`/winners/${w.slug}`} data-rise><img src={photo(w.photo)} alt={`${w.name}, ${catOf(w.cat).name} 2026`} width="900" height="1125" loading="lazy" style={{ viewTransitionName: `w-${w.slug}` }} /><b>{w.name}</b><span>{catOf(w.cat).name}</span></Link>)}
         </div>
       </section>
       <section className="section wrap" style={{ marginTop: 96 }} aria-label="Find a category">
@@ -81,18 +81,24 @@ export default function Categories({ winners = false }) {
 }
 
 function Winners() {
+  const [g, setG] = useState('all')
+  const list = WINNERS.filter((w) => g === 'all' || catOf(w.cat).group === g)
   return (
     <>
       <section className="page-head" aria-labelledby="ph">
         <h1 id="ph" data-rise>The 2026 winners</h1>
         <p data-rise>Seven awards, named in New York on 3 June 2026. Open any winner to read the citation and the full scorecard.</p>
       </section>
-      <section className="wrap" style={{ marginTop: 64, paddingBottom: 40 }} aria-label="Winners">
-        <ul className="win-list">
-          {WINNERS.map((w) => (
+      <section className="wrap" style={{ marginTop: 56, paddingBottom: 40 }} aria-label="Winners">
+        <div className="filter" role="group" aria-label="Show winners from">
+          {[['all', 'All seven'], ...GROUPS.map((x) => [x.key, x.name])].map(([k, l]) => <button key={k} type="button" aria-pressed={g === k} onClick={() => setG(k)}>{l} <span>{k === 'all' ? WINNERS.length : WINNERS.filter((w) => catOf(w.cat).group === k).length}</span></button>)}
+        </div>
+        <p className="muted" style={{ marginTop: 16 }} aria-live="polite">{g === 'all' ? 'The awards were first given in 2026, so this is the whole archive so far.' : `${list.length} ${list.length === 1 ? 'winner' : 'winners'} in ${GROUPS.find((x) => x.key === g).name}.`}</p>
+        <ul className="win-list" style={{ marginTop: 28 }} key={g}>
+          {list.map((w) => (
             <li key={w.slug} data-rise>
               <Link to={`/winners/${w.slug}`}>
-                <img src={photo(w.photo)} alt={`${w.name}, ${w.role} at ${w.company}`} width="900" height="1125" loading="lazy" />
+                <img src={photo(w.photo)} alt={`${w.name}, ${w.role} at ${w.company}`} width="900" height="1125" loading="lazy" style={{ viewTransitionName: `w-${w.slug}` }} />
                 <span className="t">
                   <b>{w.name}</b>
                   <span className="o"><span className="c">{catOf(w.cat).name}</span>, {w.company}, {w.city}. Jury score {scoreOf(w).total.toFixed(1)}</span>

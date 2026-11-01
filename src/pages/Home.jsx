@@ -1,22 +1,42 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { LiaPauseSolid, LiaPlaySolid } from 'react-icons/lia'
 import { Link } from 'react-router-dom'
 import { Ribbon, photo, Citation } from '../ui.jsx'
 import { CATEGORIES, GROUPS, WINNERS, JURY, FEES, NEVER, FAQ, catOf, winnerFor, scoreOf, dateOf, fmtDate, YEAR } from '../data/awards.js'
 import { Finder } from './Categories.jsx'
 
+// Days left, from the visitor's own clock.
+function daysTo(k) { const d = Math.ceil((dateOf(k) - new Date()) / 86400000); return d }
+function Countdown() {
+  const close = daysTo('close'); const early = daysTo('early')
+  if (close < 0) return <p className="count-line">Entries for {YEAR} are closed. Winners are named on {fmtDate(dateOf('ceremony'))}.</p>
+  return (
+    <p className="count-line">
+      <span><b>{close}</b> {close === 1 ? 'day' : 'days'} left to enter</span>
+      {early >= 0 && <span><b>{early}</b> {early === 1 ? 'day' : 'days'} at the early rate</span>}
+    </p>
+  )
+}
+
 const HERO = ['ana-ribeiro', 'marcus-bell', 'mei-lin-zhao', 'yasmin-haddad'].map((s) => WINNERS.find((w) => w.slug === s))
 
 // Signature move: the winners' portraits crossfade slowly beside the card, like light shifting in a room.
+// It can be paused (WCAG 2.2.2), and it holds still while a pointer or focus is on it.
 function HeroPhoto() {
   const [i, setI] = useState(0)
+  const reduce = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const [playing, setPlaying] = useState(!reduce)
+  const [held, setHeld] = useState(false)
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    let id = setInterval(() => { if (!document.hidden) setI((v) => (v + 1) % HERO.length) }, 5600)
+    if (!playing || held) return
+    const id = setInterval(() => { if (!document.hidden) setI((v) => (v + 1) % HERO.length) }, 5600)
     return () => clearInterval(id)
-  }, [])
+  }, [playing, held])
   const w = HERO[i]
   return (
-    <figure className="photo">
+    <figure className="photo" onMouseEnter={() => setHeld(true)} onMouseLeave={() => setHeld(false)} onFocus={() => setHeld(true)} onBlur={() => setHeld(false)}>
+      <button className="pause" onClick={() => setPlaying((v) => !v)} aria-label={playing ? 'Pause the winners’ portraits' : 'Play the winners’ portraits'}>{playing ? <LiaPauseSolid size={18} aria-hidden="true" /> : <LiaPlaySolid size={18} aria-hidden="true" />}</button>
+      <span className={`tick${playing && !held ? ' run' : ''}`} key={`${i}-${playing}-${held}`} aria-hidden="true" />
       {HERO.map((h, k) => <img key={h.slug} src={photo(h.photo)} alt={k === i ? `${h.name}, winner of ${catOf(h.cat).name} 2026` : ''} aria-hidden={k !== i} className={k === i ? 'on' : ''} width="900" height="1125" fetchpriority={k === 0 ? 'high' : 'low'} />)}
       <figcaption aria-live="polite"><Link className="link" to={`/winners/${w.slug}`}>{w.name}, {w.company}</Link><span className="muted">{catOf(w.cat).name}, 2026</span></figcaption>
     </figure>
@@ -36,8 +56,9 @@ export default function Home() {
           <div className="card-body">
             <p className="year" data-rise>Tech Leader Awards {YEAR}</p>
             <h1 id="hero-h" data-rise>Awards judged in the open</h1>
-            <p className="say" data-rise>Twelve awards for the software companies and people moving tech forward. Named jurors, flat fees, and every winner’s scorecard published. Entries close {fmtDate(dateOf('close'))}; winners are named in New York on {fmtDate(dateOf('ceremony'))}.</p>
-            <Link to="/enter" className="btn" data-rise>Enter your product</Link>
+            <p className="say" data-rise>Twelve awards for software companies and the people who lead them. Named jurors, flat fees, and every winner’s scorecard published. Winners are named in New York on {fmtDate(dateOf('ceremony'))}.</p>
+            <div data-rise><Countdown /></div>
+            <Link to="/enter" className="btn" data-rise>Enter by {fmtDate(dateOf('close'), true)}</Link>
           </div>
           <p className="facts"><Link className="link" to="/categories">See the 12 categories</Link><Link className="link" to="/jury">Meet the jury</Link><Link className="link" to="/judging">How judging works</Link></p>
         </div>
@@ -90,18 +111,18 @@ export default function Home() {
           <Link to="/judging" className="btn ink" data-rise>Read the rules</Link>
         </div>
         <div className="receipt" data-rise aria-label="The judging timeline">
-          <h3>November to February</h3>
-          <p className="row"><span>Entries open, one fee per category</span><i className="dots" /><span className="v">{fmtDate(dateOf('open'), true)}</span></p>
-          <p className="row"><span>Early entry closes</span><i className="dots" /><span className="v">{fmtDate(dateOf('early'), true)}</span></p>
-          <p className="row"><span>Entries close</span><i className="dots" /><span className="v">{fmtDate(dateOf('close'), true)}</span></p>
-          <h3>March</h3>
-          <p className="row"><span>Eligibility checked, fees refunded if not</span><i className="dots" /><span className="v">10 days</span></p>
-          <p className="row"><span>Jurors declare interests and recuse</span><i className="dots" /><span className="v">1 week</span></p>
-          <p className="row"><span>Each entry scored by two jurors or more</span><i className="dots" /><span className="v">3 weeks</span></p>
-          <h3>April to June</h3>
-          <p className="row"><span>Shortlists published with scores so far</span><i className="dots" /><span className="v">{fmtDate(dateOf('shortlist'), true)}</span></p>
-          <p className="row"><span>Finalists demo to the full jury</span><i className="dots" /><span className="v">May</span></p>
-          <p className="final"><span>Winner, citation and scorecard published</span><span>{fmtDate(dateOf('ceremony'), true)}</span></p>
+          <h3 data-rise>November to February</h3>
+          <p className="row" data-rise><span>Entries open, one fee per category</span><i className="dots" /><span className="v">{fmtDate(dateOf('open'), true)}</span></p>
+          <p className="row" data-rise><span>Early entry closes</span><i className="dots" /><span className="v">{fmtDate(dateOf('early'), true)}</span></p>
+          <p className="row" data-rise><span>Entries close</span><i className="dots" /><span className="v">{fmtDate(dateOf('close'), true)}</span></p>
+          <h3 data-rise>March</h3>
+          <p className="row" data-rise><span>Eligibility checked, fees refunded if not</span><i className="dots" /><span className="v">10 days</span></p>
+          <p className="row" data-rise><span>Jurors declare interests and recuse</span><i className="dots" /><span className="v">1 week</span></p>
+          <p className="row" data-rise><span>Each entry scored by two jurors or more</span><i className="dots" /><span className="v">3 weeks</span></p>
+          <h3 data-rise>April to June</h3>
+          <p className="row" data-rise><span>Shortlists published with scores so far</span><i className="dots" /><span className="v">{fmtDate(dateOf('shortlist'), true)}</span></p>
+          <p className="row" data-rise><span>Finalists demo to the full jury</span><i className="dots" /><span className="v">May</span></p>
+          <p className="final" data-rise><span>Winner, citation and scorecard published</span><span>{fmtDate(dateOf('ceremony'), true)}</span></p>
         </div>
       </section>
 
@@ -170,7 +191,7 @@ export default function Home() {
           <h2 id="faq-h" data-rise>Questions</h2>
           <div className="facts" data-rise>
             <p>Entries close {fmtDate(dateOf('close'))}, 11:59 pm Eastern</p>
-            <p>Ceremony {fmtDate(dateOf('ceremony'))}, New York</p>
+            <p>Ceremony {fmtDate(dateOf('ceremony'))}, 6:30 pm, [Venue], New York, and free to watch online</p>
             <p>From $95 a category, refunded if not eligible</p>
           </div>
           {FAQ.map(([q, a], i) => (

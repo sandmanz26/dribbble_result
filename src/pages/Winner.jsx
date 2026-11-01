@@ -1,6 +1,6 @@
 import { Link, useParams } from 'react-router-dom'
 import { WINNERS, catOf, winnerOf, jurorOf, scoreOf, FINALISTS } from '../data/awards.js'
-import { Citation, Scorecard, photo, Night } from '../ui.jsx'
+import { Citation, Scorecard, photo, Night, Mark } from '../ui.jsx'
 
 export default function Winner() {
   const { slug } = useParams()
@@ -14,7 +14,7 @@ export default function Winner() {
     <>
       <nav className="crumbs" aria-label="Breadcrumb"><Link to="/winners">Winners 2026</Link><span aria-hidden="true">/</span><Link to={`/categories/${c.slug}`}>{c.name}</Link></nav>
       <section className="winner-top" aria-label={`${w.name}, ${c.name}`}>
-        <figure className="portrait" data-rise><img src={photo(w.photo)} alt={`${w.name}, ${w.role} at ${w.company}`} width="900" height="1125" /></figure>
+        <figure className="portrait" data-rise><img src={photo(w.photo)} alt={`${w.name}, ${w.role} at ${w.company}`} width="900" height="1125" style={{ viewTransitionName: `w-${w.slug}` }} /></figure>
         <div data-rise><Citation w={w} headingLevel={1} /></div>
       </section>
 
@@ -40,7 +40,7 @@ export default function Winner() {
         <div className="two" style={{ alignItems: 'start' }}>
           <div>
             <h2 id="sc-h" className="head" data-rise>The scorecard</h2>
-            <p className="lead" style={{ marginTop: 24, maxWidth: '32ch' }} data-rise>{r.jurors.length} jurors scored this entry. Here is what each of them said, and who else was in the room.</p>
+            <p className="lead" style={{ marginTop: 24, maxWidth: '32ch' }} data-rise>{r.jurors.length} jurors scored this entry, alone and before they met. Here is what each of them gave, criterion by criterion.</p>
             <ul className="people" style={{ marginTop: 32 }} data-rise>
               {r.jurors.map((j) => { const J = jurorOf(j); return <li key={j}><Link to={`/jury#${j}`}><img src={photo(J.photo)} alt="" width="64" height="80" loading="lazy" /><span><b>{J.name}</b><span>{J.org}</span></span></Link></li> })}
             </ul>
@@ -49,6 +49,20 @@ export default function Winner() {
             <h3 style={{ fontWeight: 600 }}>{c.name}, 2026</h3>
             <Scorecard w={w} />
             <p className="muted" style={{ marginTop: 16 }}>Finalists: {(FINALISTS[c.slug] || []).join(', ')}. Finalists’ own scores are shared with them privately.</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="section wrap" aria-labelledby="mark-h">
+        <div className="two w48">
+          <div>
+            <h2 id="mark-h" className="head" data-rise>The winner’s mark</h2>
+            <p style={{ marginTop: 20, maxWidth: '36ch' }} data-rise>{w.company} may use this mark on its site, in sales material and in the product, linked to this page so anyone can read the scorecard behind it.</p>
+          </div>
+          <div className="badges">
+            <div className="badge" data-rise><Mark size={44} /><span><b>Winner, {c.name}</b>Tech Leader Awards 2026</span></div>
+            <div className="badge dark" data-rise><Mark size={44} /><span><b>Winner, {c.name}</b>Tech Leader Awards 2026</span></div>
+            <p className="muted" data-rise>Free to use, never sold. The mark always names the category and the year.</p>
           </div>
         </div>
         <p style={{ marginTop: 48, textAlign: 'right' }}><Link className="link" to={`/winners/${next.slug}`}>Next winner: {next.name}, {catOf(next.cat).name}</Link></p>

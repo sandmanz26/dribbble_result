@@ -18,7 +18,7 @@ export function Night({ caption = true }) {
 
 // The award's ribbon: laurel bars on paper, built from filled blocks.
 export function Ribbon({ thin = false, bars = 40 }) {
-  return <div className={`ribbon${thin ? ' thin' : ''}`} aria-hidden="true">{Array.from({ length: bars }, (_, i) => <span key={i} />)}</div>
+  return <div className={`ribbon${thin ? ' thin' : ''}`} aria-hidden="true" data-unfurl>{Array.from({ length: bars }, (_, i) => <span key={i} style={{ '--i': i }} />)}</div>
 }
 
 // The mark: a medal ribbon cut with a V, five stripes. Proposed in the design notes as the logo refinement.
@@ -40,11 +40,11 @@ export function Mark({ size = 28 }) {
 export function useRise() {
   const loc = useLocation()
   useEffect(() => {
-    const els = [...document.querySelectorAll('[data-rise]:not(.in)')]
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) { els.forEach((e) => e.classList.add('in')); return }
+    const els = [...document.querySelectorAll('[data-rise]:not(.is-in), [data-unfurl]:not(.is-in)')]
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) { els.forEach((e) => e.classList.add('is-in')); return }
     document.documentElement.classList.add('js')
-    const io = new IntersectionObserver((list) => list.forEach((x) => { if (x.isIntersecting) { x.target.classList.add('in'); io.unobserve(x.target) } }), { rootMargin: '0px 0px -6% 0px' })
-    els.forEach((e) => { const sibs = [...e.parentElement.querySelectorAll(':scope > [data-rise]')]; e.style.setProperty('--d', `${Math.max(0, sibs.indexOf(e)) * 80}ms`); io.observe(e) })
+    const io = new IntersectionObserver((list) => list.forEach((x) => { if (x.isIntersecting) { x.target.classList.add('is-in'); io.unobserve(x.target) } }), { rootMargin: '0px 0px -6% 0px' })
+    els.forEach((e) => { const sibs = [...e.parentElement.querySelectorAll(':scope > [data-rise]')]; if (e.hasAttribute('data-rise')) e.style.setProperty('--d', `${Math.max(0, sibs.indexOf(e)) * 80}ms`); io.observe(e) })
     return () => io.disconnect()
   }, [loc.pathname])
 }
@@ -81,7 +81,7 @@ export function Citation({ w, headingLevel = 3, compact = false }) {
         <div className="face" inert={turned ? '' : undefined}>
           <Ribbon />
           <div className="in">
-            <H id={`${id}-n`} className="name"><span className="cat">{c.name}, 2026</span>{w.name}</H>
+            <H id={`${id}-n`} className="name" data-title={`${w.name}, ${c.name} 2026`}><span className="cat">{c.name}, 2026</span><span className="sr-only">: </span>{w.name}</H>
             <p className="org">{w.role}, {w.company}, {w.city}</p>
             <blockquote>{w.citation[0].toUpperCase() + w.citation.slice(1)}</blockquote>
             <div className="foot-row">

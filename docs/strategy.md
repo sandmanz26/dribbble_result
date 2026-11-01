@@ -103,3 +103,30 @@ Portraits are placeholders from Open Images (CC BY 2.0); the people shown are no
 
 Still short: the ceremony photographs are 1024 px originals, soft when full-bleed; the same three are reused on
 three pages. Both go away with the client's own photography.
+
+## 9. Third roast: motion, transitions, content, layout
+
+### What the established awards do (competitor research, November 2026)
+| Program | Pattern worth taking | Source |
+|---|---|---|
+| Webby Awards | A guide to finding the right category; work can sit in more than one media type; a Winners Gallery and Index to browse past winners by category | [How to find the right category](https://www.webbyawards.com/how-to-find-the-right-category/), [Season explainer](https://www.webbyawards.com/webby-awards-season-explainer) |
+| D&AD Awards | Tiered deadlines (super early, early, final) with payment and material dates, shortlist and winner dates announced up front, an entry kit listing what each category needs, winning work published in full | [Entry kit 2026](https://media.dandad.org/documents/Entry_Kit_2026_EN.pdf), [D&AD Awards](https://dandad.org/d-ad-awards) |
+| Cannes Lions | Fees per entry and per category, published late-fee dates, an entry guide with material requirements per category, an awards team to ask about categories | [Dates and fees](https://canneslions.com/awards/awards-support/dates-and-fees), [Awards FAQ](https://www.canneslions.com/awards/awards-support/awards-faqs), [Entry guide](https://canneslions.com/awards/awards-support/awards-entry-guide) |
+| Awwwards | Published criteria with weights (design, usability, creativity, content), many jurors, outliers removed before the score | [Judging criteria explained](https://www.hontran.dev/blog/awwwards-judging-criteria), [Awwwards](https://en.wikipedia.org/wiki/Awwwards) |
+
+### Roast
+| Area | Problem found | Standard it breaks | Fix |
+|---|---|---|---|
+| Motion | Hero portraits change every 5.6 s with no way to stop them | WCAG 2.2.2 Pause, Stop, Hide | Pause and play control; pauses on hover and focus |
+| Motion | Only one kind of entrance (fade up) on every section; the ribbon, the page's one ornament, never moves | Motion should carry the idea, not decorate | The ribbon unfurls stripe by stripe; the judging receipt prints line by line |
+| Transitions | Route changes jump with no transition; a winner's portrait vanishes and reappears on the next page | Continuity between list and detail | View transitions between pages, with the portrait carried from the list into the winner page (progressive enhancement) |
+| Transitions | Accordions, finder results and form steps snap open | Changes should be traceable | Accordions open smoothly where supported; results and steps fade in |
+| Transitions | After a route change, focus stays where the old link was and the tab title never changes | WCAG 2.4.3 Focus order, 2.4.2 Page titled | Focus moves to the new page's heading; each page sets its own title |
+| Transitions | Mobile menu opens instantly, cannot be closed with Escape | WAI-ARIA disclosure practice | Escape closes and returns focus; the menu slides in |
+| Content | The deadline is buried in a sentence; no sense of urgency or of the early rate | Competitors show tiered deadlines up front | Days left to the deadline and to the early rate, from the visitor's own clock |
+| Content | No list of what an entry needs | D&AD and Cannes publish materials per category | "What to prepare" on every category page |
+| Content | Winners cannot be browsed by group; no word on what a winner may do with the award | Webby winners index | Group filter on Winners; a winner's mark section on each winner page |
+| Content | Jury page does not say how jurors are chosen; the evening has no time or place | Credibility and planning | How jurors are chosen; the evening's time, place and livestream |
+| Layout | Sticky header has the same colour as the page, so content slides under it with no edge | Orientation while scrolling | The bar steps to paper once the page scrolls |
+| Layout | Finder chips are 35 px tall | WCAG 2.5.8 target size, comfortable thumb targets | 44 px chips |
+| Layout | Form errors are listed, but focus stays on the button | Error identification and recovery | Focus moves to the first field with an error; each step has its own heading |
