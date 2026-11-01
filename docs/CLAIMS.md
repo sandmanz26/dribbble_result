@@ -6,3 +6,4 @@ editing it. One row per branch or reserved project number. Delete your row when 
 | Branch or reservation | Session | Since | Working on |
 |---|---|---|---|
 | `claude/myelin-ai-brain` (project16) | cloud | 2026-10-30 | Second UI roast done and pushed; release when the owner signs off |
+| `claude/creator-studio-crm` (project21, password `cr-a4ij-fhg7`) | cloud | 2026-11-01 | Reserved: creator dashboard and CRM for an Indonesian creator agency (Dribbble brief) |
