@@ -221,3 +221,14 @@ Owner asked to work as creative head: roast the idea and the style before buildi
   project's `public/` folder, or drawn in code when no honest picture exists.
 - Commit messages: imperative summary, short why. No AI model names in commits, code or docs. Never
   force-push.
+
+### project20, Rolling (Film & TV mobile app)
+- Brief: "Film & TV Mobile App UI/UX Design" ($2,000, a month or more), minimal, playful and professional,
+  for professionals and creatives. Core features were open, so the prototype proposes them: call sheet day
+  (before call, rolling, wrapped), calls that know your diary, avails with 1st and 2nd pencils and the
+  challenge, profile with reel and credits, and crew up for production.
+- Owner asked to work as creative head, Unsplash first, up to 10 Higgsfield images, harmonised tone,
+  ui-ux-pro-max roast and a proposal. Higgsfield was not authorised in the session, so all 27 photos are
+  Unsplash, graded to one look. taste-skill is not installed on the desktop; ui-ux-pro-max was used.
+- Proposal is in `docs/proposals.md`. Research and roast log in the branch's `docs/strategy.md`.
+
