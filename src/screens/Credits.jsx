@@ -7,11 +7,11 @@ export default function Credits() {
   const nav = useNavigate()
   return (
     <div className="page">
-      <header className="top top--back">
+      <header className="mast mast--back">
         <IconButton icon={BiArrowBack} label="Back" onClick={() => nav(-1)} />
-        <h1 className="h1">Photo credits</h1>
       </header>
-      <p className="muted">Photos from Unsplash under the Unsplash License, graded to one look for this prototype. People shown are not the people named in the app; every name, production and rate is a sample.</p>
+      <h1 className="display">Photo credits</h1>
+      <p className="row__s">Photos from Unsplash under the Unsplash License, graded to one look for this prototype. People shown are not the people named in the app; every name, production and rate is a sample.</p>
       <ul className="creditlist">
         {credits.map((c) => (
           <li key={c.file}>

@@ -75,7 +75,8 @@ function Shell() {
             <span className="statusbar__right"><i /><i /><i /><b /></span>
           </div>
           <main className="screen" ref={scroller} id="main">
-            <Routes>
+            <div className="cut" key={loc.pathname}>
+            <Routes location={loc}>
               <Route path="/welcome" element={<Welcome />} />
               <Route path="/" element={s.onboarded ? <Today /> : <Navigate to="/welcome" replace />} />
               <Route path="/calls" element={<Calls />} />
@@ -88,11 +89,13 @@ function Shell() {
               <Route path="/credits" element={<Credits />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
+            </div>
           </main>
           {!bare && (
             <nav className="tabbar" aria-label="Main">
               {tabs.map((t) => (
                 <NavLink key={t.to} to={t.to} end={t.to === '/'} className="tab">
+                  <i className="tab__tally" aria-hidden="true" />
                   <t.icon aria-hidden="true" className="tab__icon" />
                   <span>{t.label}</span>
                 </NavLink>

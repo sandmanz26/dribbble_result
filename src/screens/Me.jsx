@@ -1,118 +1,107 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { BiPlay, BiLockAlt, BiCheckCircle, BiChevronRight } from 'react-icons/bi'
+import { BiPlay, BiPause, BiChevronRight } from 'react-icons/bi'
 import { people } from '../data/people.js'
 import { useStore } from '../store.jsx'
-import { Avatar, Badge, IconButton, Photo, Sheet, Stack, gbp } from '../ui/kit.jsx'
+import { Frame, IconButton, Section, Sheet, gbp } from '../ui/kit.jsx'
 
 const credits = [
-  { y: 2026, title: 'Saltmarsh', kind: 'Feature film', role: 'Gaffer', photo: 'set-warehouse-2', now: true },
-  { y: 2026, title: 'The Long Field', kind: 'Series, 4 episodes', role: 'Gaffer', photo: 'set-operator' },
-  { y: 2025, title: 'Glass Harbour', kind: 'Feature film', role: 'Best boy electric', photo: 'set-monitor' },
-  { y: 2025, title: 'Copper', kind: 'Commercial', role: 'Gaffer', photo: 'set-lights' },
-  { y: 2024, title: 'Night Bus', kind: 'Short film', role: 'Gaffer', photo: 'set-sunset' },
+  { y: 2026, title: 'Saltmarsh', kind: 'Feature film', role: 'Gaffer', now: true },
+  { y: 2026, title: 'The Long Field', kind: 'Series, 4 episodes', role: 'Gaffer' },
+  { y: 2025, title: 'Glass Harbour', kind: 'Feature film', role: 'Best boy electric' },
+  { y: 2025, title: 'Copper', kind: 'Commercial', role: 'Gaffer' },
+  { y: 2024, title: 'Night Bus', kind: 'Short film', role: 'Gaffer' },
+  { y: 2024, title: 'Under the Pier', kind: 'Music video', role: 'Gaffer' },
+  { y: 2023, title: 'Two Rivers', kind: 'Series, 6 episodes', role: 'Electrician' },
+  { y: 2022, title: 'Lantern', kind: 'Short film', role: 'Spark' },
 ]
-
-const kit = ['Aputure 600d pair', 'Astera Titan tubes, 8', 'Creamsource Vortex4', 'Van with tail lift']
+const kit = ['Aputure 600d, pair', 'Astera Titan tubes, 8', 'Creamsource Vortex4', 'Van with tail lift']
 
 export default function Me() {
   const { s, set } = useStore()
   const me = people[s.as === 'production' ? 'kofi' : 'mara']
   const [reel, setReel] = useState(false)
+  const [roll, setRoll] = useState(true)
   const [rateOpen, setRateOpen] = useState(true)
 
   return (
-    <div className="page">
+    <div className="page page--me">
       <header className="me">
-        <Avatar id={me.id} size={88} />
-        <div>
-          <h1 className="h1">{me.name}</h1>
-          <p className="muted">{me.role}{me.dept ? `, ${me.dept.toLowerCase()}` : ''}</p>
-          <p className="small muted">{me.city}{me.union ? `, ${me.union}` : ''}</p>
-        </div>
+        <Frame name={me.photo} alt={me.name} burn={me.dept ? me.dept.toUpperCase() : ''} tc={me.city} className="me__frame" />
+        <h1 className="display me__name">{me.name.split(' ').map((w) => <span key={w}>{w}</span>)}</h1>
+        <p className="mono me__role">{me.role}{me.union ? ` / ${me.union}` : ''}</p>
       </header>
 
       {s.as === 'crew' ? (
         <>
-          <div className="status">
-            <span className="status__dot" aria-hidden="true" />
-            <p><b>Available from 14 Dec</b><br /><span className="small muted">Productions see this on your profile. Pencils do not hide you.</span></p>
-          </div>
+          <p className="avail"><i className="live" aria-hidden="true" /><span><b>Available from 14 Dec.</b> Productions see this. Pencils do not hide you.</span></p>
 
-          <section className="block" aria-labelledby="reel-h">
-            <div className="block__head"><h2 id="reel-h" className="h2">Showreel</h2><span className="small muted mono">2:14</span></div>
+          <Section no="01" title="Showreel" id="reel" aside={<span className="mono">2:14</span>}>
             <div className="reel">
-              <Photo name="set-lights" className="reel__img" alt="Frame from the showreel: three LED panels on stands in a warm room" />
+              <Frame name="set-lights" alt="Frame from the showreel: three LED panels on stands" burn="REEL / MARA ILIĆ" tc="00:00:12:08" className="reel__frame" />
               <IconButton icon={BiPlay} label="Play showreel" className="reel__play" onClick={() => setReel(true)} />
             </div>
-          </section>
+          </Section>
 
-          <section className="block" aria-labelledby="cr-h">
-            <h2 id="cr-h" className="h2">Credits</h2>
-            <ul className="credits">
-              {credits.map((c) => (
-                <li key={c.title} className="credit">
-                  <Photo name={c.photo} small className="credit__img" alt="" />
-                  <div>
-                    <p className="credit__title">{c.title} {c.now && <Badge tone="live">Shooting</Badge>}</p>
-                    <p className="small muted">{c.kind}, {c.role.toLowerCase()}</p>
-                  </div>
-                  <span className="mono small muted">{c.y}</span>
-                </li>
-              ))}
-            </ul>
-          </section>
-
-          <section className="block" aria-labelledby="rate-h">
-            <h2 id="rate-h" className="h2">Rate</h2>
-            <div className="rate">
-              <p><span className="mono rate__n">{gbp(520)}</span> <span className="muted">a day, 10 + 1</span></p>
-              <label className="switch">
-                <input type="checkbox" checked={rateOpen} onChange={(e) => setRateOpen(e.target.checked)} />
-                <span className="switch__track" aria-hidden="true" />
-                <span className="small">Show to productions I have worked with</span>
-              </label>
-              <p className="small muted"><BiLockAlt aria-hidden="true" /> {rateOpen ? 'Hidden from everyone else.' : 'Hidden from everyone. You share it when they pencil you.'}</p>
+          <Section
+            no="02"
+            title="End credits"
+            id="cr"
+            aside={<button className="textbtn" onClick={() => setRoll(!roll)} aria-pressed={!roll}>{roll ? <><BiPause aria-hidden="true" /> Pause</> : <><BiPlay aria-hidden="true" /> Roll</>}</button>}
+          >
+            <div className={`crawl${roll ? '' : ' is-paused'}`} tabIndex={0} aria-label="Credits, rolling. Focus or hover to pause">
+              <div className="crawl__in">
+                {[0, 1].map((k) => (
+                  <ul key={k} className="crawl__list" aria-hidden={k === 1}>
+                    {credits.map((c) => (
+                      <li key={c.title + k}>
+                        <span className="crawl__role">{c.role}</span>
+                        <span className="crawl__title">{c.title}{c.now && <sup className="mono"> now</sup>}</span>
+                        <span className="crawl__meta mono">{c.kind}, {c.y}</span>
+                      </li>
+                    ))}
+                  </ul>
+                ))}
+              </div>
             </div>
-          </section>
+          </Section>
 
-          <section className="block" aria-labelledby="kit-h">
-            <h2 id="kit-h" className="h2">Kit</h2>
-            <ul className="kit">{kit.map((k) => <li key={k}><BiCheckCircle aria-hidden="true" /> {k}</li>)}</ul>
-          </section>
+          <Section no="03" title="Rate" id="rate">
+            <p className="ratebig"><span className="mono">{gbp(520)}</span><span className="row__s">a day, 10 + 1</span></p>
+            <label className="switch">
+              <input type="checkbox" checked={rateOpen} onChange={(e) => setRateOpen(e.target.checked)} />
+              <span className="switch__track" aria-hidden="true" />
+              <span>Show to productions I have worked with</span>
+            </label>
+            <p className="row__s small">{rateOpen ? 'Hidden from everyone else.' : 'Hidden from everyone. You share it when they pencil you.'}</p>
+          </Section>
 
-          <section className="block" aria-labelledby="wk-h">
-            <h2 id="wk-h" className="h2">Worked with</h2>
-            <div className="crewrow crewrow--static">
-              <Stack ids={['june', 'ruben', 'dele', 'arlo', 'milo', 'noor', 'theo']} size={32} />
-              <span className="crewrow__text"><b>48 people</b> across 11 productions</span>
-            </div>
-          </section>
+          <Section no="04" title="Kit" id="kit">
+            <ol className="notes">{kit.map((k, i) => <li key={k}><span className="mono">{i + 1}</span>{k}</li>)}</ol>
+          </Section>
         </>
       ) : (
-        <section className="block">
-          <h2 className="h2">Productions</h2>
-          <ul className="credits">
-            <li className="credit"><Photo name="set-warehouse" small className="credit__img" alt="" /><div><p className="credit__title">Saltmarsh <Badge tone="live">Shooting</Badge></p><p className="small muted">Feature film, line producer</p></div><span className="mono small muted">2026</span></li>
-            <li className="credit"><Photo name="set-night" small className="credit__img" alt="" /><div><p className="credit__title">Northlight</p><p className="small muted">Series 2, crewing up</p></div><span className="mono small muted">2027</span></li>
-          </ul>
-        </section>
+        <Section no="01" title="Productions" id="prods">
+          <div className="billing billing--page">
+            <p><span>Line producer, shooting</span><b>Saltmarsh</b></p>
+            <p><span>Line producer, crewing up</span><b>Northlight</b></p>
+          </div>
+        </Section>
       )}
 
-      <section className="block" aria-labelledby="app-h">
-        <h2 id="app-h" className="h2">Appearance</h2>
-        <div className="chips" role="group" aria-label="Appearance">
-          {[['system', 'Match phone'], ['light', 'Light'], ['dark', 'Dark']].map(([v, l]) => (
-            <button key={v} className="chip" aria-pressed={s.theme === v} onClick={() => set({ theme: v })}>{l}</button>
+      <Section no={s.as === 'crew' ? '05' : '02'} title="Appearance" id="app">
+        <div className="seg4 seg4--words seg4--3" role="group" aria-label="Appearance">
+          {[['system', 'Phone'], ['light', 'Light'], ['dark', 'Dark']].map(([v, l]) => (
+            <button key={v} aria-pressed={s.theme === v} onClick={() => set({ theme: v })}>{l}</button>
           ))}
         </div>
-      </section>
+      </Section>
 
       <Link to="/credits" className="rowlink">Photo credits <BiChevronRight aria-hidden="true" /></Link>
 
       <Sheet open={reel} onClose={() => setReel(false)} title="Showreel">
-        <Photo name="set-lights" className="reel__img reel__img--sheet" alt="" />
-        <p className="muted">The reel plays here, full screen, with chapters for each credit. This prototype shows a still.</p>
+        <Frame name="set-lights" alt="" burn="REEL / MARA ILIĆ" tc="00:00:12:08" className="reel__frame" />
+        <p className="row__s">The reel plays here, full screen, with a chapter for each credit. This prototype shows a still.</p>
       </Sheet>
     </div>
   )

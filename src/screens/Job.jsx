@@ -1,23 +1,21 @@
-import { useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { BiArrowBack, BiBookmark, BiSolidBookmark, BiCalendar, BiMap, BiTime, BiSend } from 'react-icons/bi'
+import { BiArrowBack, BiBookmark, BiSolidBookmark } from 'react-icons/bi'
 import { jobs } from '../data/jobs.js'
 import { people } from '../data/people.js'
 import { useStore } from '../store.jsx'
-import { Avatar, Button, IconButton, Photo, Sheet, Stack, gbp } from '../ui/kit.jsx'
+import { Avatar, Button, Frame, HoldButton, HoldHint, IconButton, Section, gbp } from '../ui/kit.jsx'
 import { Fit } from './Calls.jsx'
 
 export default function Job() {
   const { id } = useParams()
   const nav = useNavigate()
   const { s, toggleSave, offer, withdraw, toast } = useStore()
-  const [open, setOpen] = useState(false)
   const j = jobs.find((x) => x.id === id)
 
   if (!j) {
     return (
       <div className="page">
-        <div className="empty"><p className="h3">This call has closed</p><Link to="/calls" className="link">Back to calls</Link></div>
+        <div className="empty"><p className="display display--sm">This call has wrapped</p><Link to="/calls" className="textbtn">Back to calls</Link></div>
       </div>
     )
   }
@@ -27,86 +25,67 @@ export default function Job() {
   const saved = s.saved.includes(j.id)
   const known = j.booked.filter((x) => ['june', 'ruben', 'dele', 'milo', 'noor', 'arlo'].includes(x))
 
-  const send = () => {
-    offer(j.id, j.fit === 'clash' ? 'pencil2' : 'sent')
-    setOpen(false)
-    toast(`Avails sent to ${hod.name.split(' ')[0]}. You will hear back here`)
-  }
-
   return (
     <div className="page page--flush">
-      <div className="hero">
-        <Photo name={j.photo} className="hero__img" alt={`Set photo for ${j.title}`} />
-        <div className="hero__bar">
-          <IconButton icon={BiArrowBack} label="Back" className="iconbtn--float" onClick={() => nav(-1)} />
-          <IconButton
-            icon={saved ? BiSolidBookmark : BiBookmark}
-            label={saved ? 'Remove from saved' : 'Save'}
-            className="iconbtn--float"
-            aria-pressed={saved}
-            onClick={() => toggleSave(j.id)}
-          />
+      <div className="jobhero">
+        <Frame name={j.photo} alt={`Set photo for ${j.title}`} burn={j.kind.toUpperCase()} tc={j.where} className="jobhero__frame" />
+        <div className="jobhero__bar">
+          <IconButton icon={BiArrowBack} label="Back" onClick={() => nav(-1)} />
+          <IconButton icon={saved ? BiSolidBookmark : BiBookmark} label={saved ? 'Remove from saved' : 'Save'} aria-pressed={saved} onClick={() => toggleSave(j.id)} />
+        </div>
+        <div className="jobhero__title">
+          <p className="mono">{j.title} / {j.format}</p>
+          <h1 className="display">{j.role}</h1>
         </div>
       </div>
 
       <div className="page__in">
-        <p className="eyebrowless muted">{j.title}, {j.kind.toLowerCase()}</p>
-        <h1 className="h1">{j.role}</h1>
-        <p className="muted">{j.format}</p>
         <Fit job={j} offered={sent} />
+        <blockquote className="pull">
+          <p>{j.pitch}</p>
+          <footer><Avatar id={j.hod} size={28} /> {hod.name}, {hod.role.toLowerCase()}</footer>
+        </blockquote>
 
-        <figure className="quote">
-          <blockquote>{j.pitch}</blockquote>
-          <figcaption><Avatar id={j.hod} size={32} /> <span><b>{hod.name}</b>, {hod.role.toLowerCase()}</span></figcaption>
-        </figure>
+        <Section no="01" title="The job" id="spec">
+          <dl className="table">
+            <div><dt>Dates</dt><dd>{j.dates}, {j.days} days</dd></div>
+            <div><dt>Where</dt><dd>{j.where}</dd></div>
+            <div><dt>Rate</dt><dd className="mono">{gbp(j.rate)} a day</dd></div>
+            <div><dt>Terms</dt><dd>{j.terms}</dd></div>
+          </dl>
+        </Section>
 
-        <dl className="spec">
-          <div><dt><BiCalendar aria-hidden="true" /> Dates</dt><dd>{j.dates} <span className="muted">({j.days} days)</span></dd></div>
-          <div><dt><BiMap aria-hidden="true" /> Where</dt><dd>{j.where}</dd></div>
-          <div><dt><span className="pound" aria-hidden="true">£</span> Rate</dt><dd><span className="mono">{gbp(j.rate)}</span> a day</dd></div>
-          <div><dt><BiTime aria-hidden="true" /> Terms</dt><dd>{j.terms}</dd></div>
-        </dl>
-
-        {j.booked.length > 0 && (
-          <section className="block">
-            <h2 className="h2">Already on the crew</h2>
-            <div className="crewrow crewrow--static">
-              <Stack ids={j.booked} size={32} />
-              <span className="crewrow__text">{known.length ? <><b>You have worked with {known.length}</b> of them</> : 'No one you know yet'}</span>
+        <Section no="02" title="Already on it" id="on" aside={<span className="mono">{known.length} you know</span>}>
+          {j.booked.length ? (
+            <div className="billing billing--page">
+              {j.booked.map((x) => <p key={x}><span>{people[x].role}</span><b>{people[x].name}</b></p>)}
             </div>
-          </section>
-        )}
+          ) : <p className="row__s">Nobody booked yet. You would be one of the first.</p>}
+        </Section>
 
-        <p className="small muted fine">Posted {j.posted}, {j.replies} crew have replied. Rates are samples.</p>
+        <p className="mono small row__s">Posted {j.posted}. {j.replies} crew replied. Rates are samples.</p>
       </div>
 
       <div className="cta">
+        <HoldHint />
         {sent ? (
-          <>
-            <p className="cta__note small"><b>Avails sent</b>{sent === 'pencil2' ? ' as 2nd pencil' : ''}. Nothing is booked until they confirm.</p>
-            <Button variant="ghost" onClick={() => { withdraw(j.id); toast('Avails withdrawn') }}>Withdraw</Button>
-          </>
+          <div className="cta__sent">
+            <p className="small"><b>Avails sent{sent === 'pencil2' ? ' as 2nd pencil' : ''}.</b> Nothing is booked until they confirm.</p>
+            <Button variant="line" size="sm" onClick={() => { withdraw(j.id); toast('Avails withdrawn') }}>Withdraw</Button>
+          </div>
         ) : (
-          <Button className="btn--block" icon={BiSend} onClick={() => setOpen(true)}>Offer my avails</Button>
+          <>
+            <p className="cta__note small">
+              {j.fit === 'clash'
+                ? <>You are booked on <b>{j.clashWith}</b>. This goes in as <b>2nd pencil</b>.</>
+                : <>You are free for these dates. If they pencil you, you hold them first.</>}
+            </p>
+            <HoldButton onDone={() => { offer(j.id, j.fit === 'clash' ? 'pencil2' : 'sent'); toast(`Avails sent to ${hod.name.split(' ')[0]}`) }}>
+              Offer my avails
+            </HoldButton>
+          </>
         )}
       </div>
-
-      <Sheet
-        open={open}
-        onClose={() => setOpen(false)}
-        title="Offer your avails"
-        footer={<Button className="btn--block" icon={BiSend} onClick={send}>Send to {hod.name.split(' ')[0]}</Button>}
-      >
-        {j.fit === 'clash' ? (
-          <p>You are booked on <b>{j.clashWith}</b> until 11 Dec. You can still offer these dates as <b>2nd pencil</b>. If {j.clashWith} wraps early, you move up.</p>
-        ) : (
-          <p>You are free for <b>{j.dates}</b>. If {j.title} pencils you, they hold those days first and anyone after them goes on 2nd pencil.</p>
-        )}
-        <ul className="facts">
-          <li><span className="mono">{gbp(j.rate)}</span><span>a day, as posted. You can talk rate after they pencil you</span></li>
-          <li><span className="mono">1</span><span>credit list and reel shared from your profile</span></li>
-        </ul>
-      </Sheet>
     </div>
   )
 }

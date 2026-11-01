@@ -68,7 +68,7 @@ Production: Today (with arrivals), Crew up (roles by department, replies ranked 
   with the heads of department.
 - **Rate privacy.** A day rate shows only to productions you have worked with, or to nobody.
 
-## 6. Brand and visual language
+## 6. Brand and visual language (version 1, replaced, see section 9)
 
 - Minimal: warm paper ground like a printed call sheet, ink type, white cards, one dark card for the call.
 - Playful: one chroma-key green (#00b140, the green screen) as the only accent, used for "go" actions,
@@ -111,3 +111,53 @@ visible focus rings, reduced motion respected, contrast tokens per theme, scrim 
   real set photos long term).
 - Cast and creative versions of Today and Me, messaging threads, document uploads (contracts, deal memos),
   real maps.
+
+## 9. Version 2: redesign after owner feedback
+
+Owner, after seeing version 1: it still reads as AI slop; wants a more creative, unique layout and
+interaction, researched on Dribbble and other creative platforms.
+
+### Research (Dribbble, 1 Nov 2026)
+Searches: film production app, film mobile app, cinema app, film festival app, editorial mobile app,
+experimental mobile UI, brutalist mobile app, video editor app, timeline interaction. About 190 shots
+scanned, 28 kept on a reference board. What separated the memorable shots from the rest:
+- Type as the layout: huge condensed words (festival identities such as IFX "Artists Films About",
+  the ATTN app "Ready to notice?"), not small headings over cards.
+- Data-terminal precision: hairline rules, mono readouts, timecodes (brutalist weather "command
+  center", Stark Weather), tables instead of cards.
+- Poster thinking: full-bleed photo plus a billing block (film festival and production-company work).
+- Tools that feel like tools: editors with a scrubbable timeline and a fixed playhead.
+
+What version 1 shared with the forgettable majority (most cinema and streaming app shots): stacked
+white rounded cards with soft shadows, pill chips, a floating pill tab bar, a friendly geometric sans,
+and one success-green used like a fintech app. That is the "AI slop" read.
+
+### Concept: a call sheet set like a poster
+- Square corners, hairline and 2 px ink rules, numbered sections in a left rail like call-sheet rows.
+- Sofia Sans Extra Condensed for display (huge, uppercase), Sofia Sans for reading, Azeret Mono for
+  every time, page count, rate and label. Fonts not used in any other project.
+- Chroma-key green as solid blocks (a challenge, an urgent message, the scene now rolling), never as a
+  soft tint. Ink bar for safety (nearest A&E).
+- Photos shown as on a camera monitor: corner frame lines and a burn-in label (clip, location).
+
+### Signature interactions
+1. **The day as an edit timeline.** Under the call time, the whole shoot day sits on a timeline with a
+   fixed green playhead. Drag the day (touch, mouse or arrow keys) and the readout says what happens at
+   that time: scene, set, cast, lunch, daylight left. Done scenes fade, the rolling one turns green.
+2. **Calls as a deck of one-sheets.** Swipe through posters (photo, huge role, billing facts); cards
+   settle as they snap (scroll-driven animation where supported). Flip a poster to see the billing block
+   of who is already on the crew. A list view is one tap away.
+3. **Avails as a stripboard over the diary.** Each hold is a strip across its days: ink for booked,
+   green for 1st pencil, hatched for 2nd pencil, hatched green while a challenge runs.
+4. **Hold to confirm.** Anything that tells someone else something (challenge, offer avails, book crew)
+   is press and hold, so a slip of the thumb never sends it. Works with Enter or Space held.
+5. **Profile ends in an end-credits crawl** that rolls and pauses on hover, focus or the Pause button.
+6. Route changes cut with a short wipe; the tab bar is a slate strip with a tally light on the live tab.
+
+### Roast of version 2
+- Timeline rendered blank: flex and grid children grew to the track width. Fixed with min-width 0.
+- Done and rolling scenes looked the same on the timeline. Fixed: done fades, now is green.
+- Tab bar turned light in dark mode. Fixed: the slate stays black in both themes.
+- Unit labels and pins collided on the timeline. Fixed: block labels sit at the bottom, pins at the top.
+- Checked: a short tap on a hold button does nothing, a full hold sends; keyboard scrub moves 15 min.
+

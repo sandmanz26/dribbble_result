@@ -1,96 +1,109 @@
-import { useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import {
-  BiBus, BiCar, BiChevronRight, BiCloudDrizzle, BiDirections, BiHourglass, BiInfoCircle,
-  BiMapPin, BiMoon, BiPlusMedical, BiSun, BiTime, BiCheckCircle, BiSend,
-} from 'react-icons/bi'
+import { BiBus, BiCar, BiDirections, BiMapPin, BiPlusMedical, BiSend, BiTime, BiInfoCircle } from 'react-icons/bi'
 import { callSheet as cs, production, pages } from '../data/day.js'
 import { people } from '../data/people.js'
 import { useStore } from '../store.jsx'
-import { Avatar, Badge, Button, Photo, Sheet, Stack } from '../ui/kit.jsx'
+import { Avatar, Button, Frame, Section, Sheet } from '../ui/kit.jsx'
 
+const NOW = { precall: '05:42', rolling: '10:05', wrapped: '19:20' }
+const toMin = (t) => { const [h, m] = t.split(':').map(Number); return h * 60 + m }
+const fmt = (m) => `${String(Math.floor(m / 60)).padStart(2, '0')}:${String(Math.round(m) % 60).padStart(2, '0')}`
+const span = (m) => (m >= 60 ? `${Math.floor(m / 60)}h ${String(m % 60).padStart(2, '0')}m` : `${m} min`)
+
+// The day as an edit timeline. Scenes end where the next block starts.
+const T0 = toMin('05:00')
+const T1 = toMin('21:00')
+const PX = 1.5 // pixels per minute
+const unit = [
+  { id: 'bf', label: 'Breakfast', from: '06:00', to: '06:45' },
+  { id: 'lunch', label: 'Lunch', from: '13:00', to: '14:00' },
+]
+const sceneEnds = { 41: '09:40', 42: '11:30', 18: '13:00', 57: '17:45', 58: '19:00' }
+const scenes = cs.scenes.map((s) => ({ ...s, from: s.start, to: sceneEnds[s.id] }))
+const totalEighths = cs.scenes.reduce((n, x) => n + x.eighths, 0)
 const nickTip = {
   'Abby Singer': 'The second to last shot of the day, named after the assistant director who always called it.',
   'Martini shot': 'The last shot of the day. The next one is in a glass.',
 }
 
-const totalEighths = cs.scenes.reduce((n, x) => n + x.eighths, 0)
+function at(m) {
+  const sc = scenes.find((s) => m >= toMin(s.from) && m < toMin(s.to))
+  const u = unit.find((s) => m >= toMin(s.from) && m < toMin(s.to))
+  const sun = m >= toMin(cs.sunrise) && m < toMin(cs.sunset)
+  let what
+  if (u) what = { title: u.label, line: u.id === 'lunch' ? 'Unit lunch at base. Blackout drapes must be up on the office set.' : 'At unit base, car park B.' }
+  else if (sc) what = { title: `Scene ${sc.id}`, line: `${sc.ie}/${sc.dn}, ${sc.set}. ${sc.what}. Cast ${sc.cast.join(', ')}.` }
+  else if (m < toMin(cs.myCall)) what = { title: 'Before your call', line: `You are due at ${cs.myCall}, unit call ${cs.unitCall}.` }
+  else if (m < toMin(cs.unitCall)) what = { title: 'Pre-call', line: cs.myCallNote + '.' }
+  else if (m >= toMin('19:00')) what = { title: 'Wrap', line: 'De-rig the office set, trucks loaded by 20:00.' }
+  else what = { title: 'Turning over', line: 'Unit call. First setup on the main floor.' }
+  const sunLine = sun ? `Daylight, ${span(toMin(cs.sunset) - Math.round(m))} left` : m < toMin(cs.sunrise) ? `Dark, sunrise ${cs.sunrise}` : `Dark since ${cs.sunset}`
+  return { ...what, sunLine }
+}
 
 export default function Today() {
   const { s } = useStore()
   const me = people[s.as === 'production' ? 'kofi' : 'mara']
   const [late, setLate] = useState(false)
   const [crew, setCrew] = useState(false)
+  const wrapped = s.scene === 'wrapped'
 
   return (
-    <div className="page">
-      <header className="top">
-        <div>
-          <p className="top__date">Tuesday 17 November</p>
-          <h1 className="h1">{s.scene === 'wrapped' ? 'Good work today' : `Morning, ${me.name.split(' ')[0]}`}</h1>
-        </div>
-        <Link to="/me" aria-label="Your profile"><Avatar id={me.id} size={44} /></Link>
+    <div className="page page--today">
+      <header className="mast">
+        <p className="mast__line mono">
+          <span>Tue 17 Nov</span>
+          <span>{production.title} / day {production.day} of {production.days}</span>
+        </p>
+        <Link to="/me" className="mast__me" aria-label="Your profile"><Avatar id={me.id} size={36} /></Link>
       </header>
-
-      <section className="prod" aria-label="Production">
-        <Photo name={production.photo} small className="prod__img" alt="" />
-        <div className="prod__text">
-          <p className="prod__title">{production.title}</p>
-          <p className="muted small">{production.kind}, day {production.day} of {production.days}</p>
-        </div>
-        <div className="prod__bar" role="img" aria-label={`Day ${production.day} of ${production.days}`}>
-          <span style={{ width: `${(production.day / production.days) * 100}%` }} />
-        </div>
-      </section>
 
       {s.scene === 'precall' && <PreCall onLate={() => setLate(true)} />}
       {s.scene === 'rolling' && <Rolling />}
-      {s.scene === 'wrapped' && <Wrapped />}
+      {wrapped && <Wrapped />}
 
-      {s.as === 'production' && <Arrivals />}
+      <Timeline key={s.scene} now={toMin(NOW[s.scene])} />
 
-      {s.scene !== 'wrapped' && <Location />}
+      {s.as === 'production' && (
+        <Section no="02" title="Arrivals" id="arr" aside={<span className="mono">61/64 in</span>}>
+          <ul className="rows">
+            <li className="row"><Avatar id="mara" size={36} /><div><p className="row__t">Mara Ilić, gaffer</p><p className="row__s">20 min late, traffic. Arlo starts the pre-rig</p></div></li>
+            <li className="row"><Avatar id="theo" size={36} /><div><p className="row__t">Theo Lund, electrician</p><p className="row__s">On the DLR, due 06:38</p></div></li>
+          </ul>
+        </Section>
+      )}
 
-      {s.scene === 'wrapped' ? (
-        <p className="summary"><BiCheckCircle aria-hidden="true" /><span>All 5 scenes shot, <span className="mono">{pages(totalEighths)}</span> pages. Martini shot called at <span className="mono">19:02</span>.</span></p>
-      ) : (
-      <section className="block" aria-labelledby="sch">
-        <div className="block__head">
-          <h2 id="sch" className="h2">Today's scenes</h2>
-          <span className="muted small mono">{pages(totalEighths)} pages</span>
+      {!wrapped && <Location />}
+
+      {!wrapped && (
+        <Section no="04" title="Stripboard" id="sch" aside={<span className="mono">{pages(totalEighths)} pg</span>}>
+          <ol className="board">
+            {scenes.map((sc) => <Strip key={sc.id} sc={sc} scene={s.scene} />)}
+          </ol>
+          <p className="key mono"><i className="sw sw--di" />Day int <i className="sw sw--de" />Day ext <i className="sw sw--ni" />Night int</p>
+        </Section>
+      )}
+
+      {!wrapped && (
+        <Section no="05" title="From the ADs" id="notes">
+          <ol className="notes">{cs.notes.map((n, i) => <li key={n}><span className="mono">{i + 1}</span>{n}</li>)}</ol>
+        </Section>
+      )}
+
+      <Section no={wrapped ? '02' : '06'} title="On the call sheet" id="crew" aside={<button className="textbtn" onClick={() => setCrew(true)}>All {cs.onSet.length}</button>}>
+        <div className="faces">
+          {cs.onSet.slice(0, 6).map((id) => (
+            <div key={id} className="face"><Avatar id={id} size={52} /><span>{people[id].name.split(' ')[0]}</span></div>
+          ))}
         </div>
-        <ol className="strips">
-          {cs.scenes.map((sc) => <Strip key={sc.id} sc={sc} scene={s.scene} />)}
-        </ol>
-        <p className="legend small muted">
-          <span className="sw sw--di" /> Day interior <span className="sw sw--de" /> Day exterior <span className="sw sw--ni" /> Night interior
-        </p>
-      </section>
-      )}
-
-      {s.scene !== 'wrapped' && (
-      <section className="block" aria-labelledby="notes">
-        <h2 id="notes" className="h2">From the ADs</h2>
-        <ul className="notes">
-          {cs.notes.map((n) => <li key={n}>{n}</li>)}
-        </ul>
-      </section>
-      )}
-
-      <button className="crewrow" onClick={() => setCrew(true)}>
-        <Stack ids={cs.onSet} size={30} max={5} />
-        <span className="crewrow__text"><b>{cs.onSet.length} people you know</b> are on today's call sheet</span>
-        <BiChevronRight aria-hidden="true" />
-      </button>
+      </Section>
 
       <LateSheet open={late} onClose={() => setLate(false)} />
       <Sheet open={crew} onClose={() => setCrew(false)} title="On today's call sheet">
-        <ul className="people">
+        <ul className="rows">
           {cs.onSet.map((id) => (
-            <li key={id} className="person">
-              <Avatar id={id} size={40} />
-              <div><p className="person__name">{people[id].name}</p><p className="muted small">{people[id].role}</p></div>
-            </li>
+            <li key={id} className="row"><Avatar id={id} size={40} /><div><p className="row__t">{people[id].name}</p><p className="row__s">{people[id].role}</p></div></li>
           ))}
         </ul>
       </Sheet>
@@ -101,49 +114,31 @@ export default function Today() {
 function PreCall({ onLate }) {
   const { s, toast } = useStore()
   return (
-    <section className="call" aria-labelledby="call-h">
-      <div className="call__row">
-        <h2 id="call-h" className="call__label">Your call</h2>
-        <span className="call__in"><BiHourglass aria-hidden="true" /> in 48 min</span>
-      </div>
-      <p className="call__time mono" aria-label={`Call time ${cs.myCall}`}>{cs.myCall.slice(0, 2)}<span className="call__colon">:</span>{cs.myCall.slice(3)}</p>
-      <p className="call__note">{cs.myCallNote}</p>
-      <dl className="call__facts">
-        <div><dt>Unit call</dt><dd className="mono">{cs.unitCall}</dd></div>
-        <div><dt>Breakfast</dt><dd className="mono">06:00</dd></div>
-        <div><dt>Lunch</dt><dd className="mono">{cs.lunch}</dd></div>
-        <div><dt>Est. wrap</dt><dd className="mono">{cs.wrap}</dd></div>
-      </dl>
-      {s.late && (
-        <p className="call__late" role="status"><BiCheckCircle aria-hidden="true" /> Ines knows you are {s.late.mins} min late ({s.late.reason.toLowerCase()})</p>
-      )}
-      <div className="call__actions">
-        <Button icon={BiDirections} onClick={() => toast('Opens your maps app with the unit base, not the set')}>Directions</Button>
-        <Button variant="ghost-dark" icon={BiTime} onClick={onLate}>{s.late ? 'Update' : 'Running late'}</Button>
+    <section className="hero-call" aria-labelledby="call-h">
+      <h1 id="call-h" className="sr-only">Your call is {cs.myCall}</h1>
+      <p className="hero-call__label mono"><span>Your call</span><span className="tally">in 48 min</span></p>
+      <p className="giant" aria-hidden="true">06<span className="giant__colon">:</span>30</p>
+      <p className="hero-call__note">{cs.myCallNote}. Unit call <span className="mono">{cs.unitCall}</span>, breakfast from <span className="mono">06:00</span>.</p>
+      {s.late && <p className="flag mono" role="status">Ines knows you are {s.late.mins} min late</p>}
+      <div className="duo">
+        <Button variant="green" icon={BiDirections} onClick={() => toast('Opens your maps app with the unit base, not the set')}>Directions</Button>
+        <Button variant="line" icon={BiTime} onClick={onLate}>{s.late ? 'Update' : 'Running late'}</Button>
       </div>
     </section>
   )
 }
 
 function Rolling() {
-  const done = cs.scenes.filter((x) => x.status === 'done').reduce((n, x) => n + x.eighths, 0)
+  const done = scenes.filter((x) => x.status === 'done').reduce((n, x) => n + x.eighths, 0)
   return (
-    <section className="call call--rolling" aria-labelledby="roll-h">
-      <div className="call__row">
-        <h2 id="roll-h" className="call__label"><span className="live" aria-hidden="true" /> Rolling</h2>
-        <span className="call__in">15 min behind</span>
+    <section className="hero-call" aria-labelledby="roll-h">
+      <p className="hero-call__label mono"><span><i className="live" aria-hidden="true" />Rolling</span><span className="tally tally--line">15 min behind</span></p>
+      <h1 id="roll-h" className="giant giant--word">Sc 42</h1>
+      <p className="hero-call__note">Ada and Pell argue over the ledger. Main floor, haze in.</p>
+      <div className="pagebar" role="img" aria-label={`${pages(done)} of ${pages(totalEighths)} pages shot`}>
+        {scenes.map((x) => <span key={x.id} className={`pagebar__seg is-${x.status}`} style={{ flex: x.eighths }} />)}
       </div>
-      <p className="call__big">Scene 42</p>
-      <p className="call__note">Ada and Pell argue over the ledger. Main floor, haze in.</p>
-      <div className="meter" role="img" aria-label={`${pages(done)} of ${pages(totalEighths)} pages shot`}>
-        <span style={{ width: `${(done / totalEighths) * 100}%` }} />
-        <span className="meter__now" style={{ width: `${(7 / totalEighths) * 100}%` }} />
-      </div>
-      <p className="small call__sub"><span className="mono">{pages(done)}</span> of <span className="mono">{pages(totalEighths)}</span> pages shot</p>
-      <div className="next">
-        <p className="next__label">Next for lighting</p>
-        <p className="next__what">Scene 18, warehouse yard at <span className="mono">11:30</span>. One 4K through the side gate, the rest is daylight.</p>
-      </div>
+      <p className="mono small"><b>{pages(done)}</b> of {pages(totalEighths)} pages in the can. Next for lighting: Sc 18 at 11:30, one 4K through the side gate.</p>
     </section>
   )
 }
@@ -151,97 +146,167 @@ function Rolling() {
 function Wrapped() {
   const { toast } = useStore()
   return (
-    <section className="call call--wrap" aria-labelledby="wrap-h">
-      <div className="call__row">
-        <h2 id="wrap-h" className="call__label">Wrapped at <span className="mono">19:20</span></h2>
-        <span className="call__in">Day 14 done</span>
-      </div>
-      <p className="call__big">That's a wrap</p>
-      <dl className="call__facts call__facts--two">
+    <section className="hero-call" aria-labelledby="wrap-h">
+      <p className="hero-call__label mono"><span>Wrapped 19:20</span><span className="tally">Day 14 done</span></p>
+      <h1 id="wrap-h" className="giant giant--word">Wrap</h1>
+      <dl className="ledger">
         <div><dt>On the clock</dt><dd className="mono">12h 50m</dd></div>
         <div><dt>Overtime</dt><dd className="mono">1h 50m</dd></div>
         <div><dt>Turnaround</dt><dd className="mono">11h</dd></div>
         <div><dt>Earliest call</dt><dd className="mono">06:20</dd></div>
       </dl>
-      <div className="next">
-        <p className="next__label">Tomorrow, day 15</p>
-        <p className="next__what">Call sheet is out. Your call is <span className="mono">07:30</span>, same location.</p>
-      </div>
-      <div className="call__actions">
-        <Button icon={BiSend} onClick={() => toast('Timesheet sent to Kofi for approval')}>Send timesheet</Button>
+      <p className="hero-call__note">All 5 scenes shot, <span className="mono">{pages(totalEighths)}</span> pages. Tomorrow's call sheet is out: you are on at <span className="mono">07:30</span>, same location.</p>
+      <div className="duo duo--one">
+        <Button variant="green" icon={BiSend} onClick={() => toast('Timesheet sent to Kofi for approval')}>Send timesheet</Button>
       </div>
     </section>
+  )
+}
+
+// Scrub the day: the playhead stays in the middle and the day slides under it.
+function Timeline({ now }) {
+  const ref = useRef(null)
+  const [t, setT] = useState(now)
+  const [pad, setPad] = useState(160)
+  const width = (T1 - T0) * PX
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    setPad(el.clientWidth / 2)
+    requestAnimationFrame(() => { el.scrollLeft = (now - T0) * PX })
+  }, [now])
+
+  const onScroll = () => setT(Math.max(T0, Math.min(T1, T0 + ref.current.scrollLeft / PX)))
+  const jump = (m) => ref.current?.scrollTo({ left: (m - T0) * PX, behavior: 'smooth' })
+  const info = useMemo(() => at(t), [t])
+  const away = Math.abs(t - now) > 4
+  const hours = []
+  for (let h = 5; h <= 21; h++) hours.push(h)
+  const x = (m) => (m - T0) * PX
+
+  return (
+    <Section no="01" title="The day" id="day" aside={away ? <button className="textbtn" onClick={() => jump(now)}>Back to now</button> : <span className="mono">Now</span>}>
+      <div className="tl">
+        <div className="tl__readout" aria-live="polite">
+          <p className="tl__time mono">{fmt(Math.round(t / 5) * 5)}</p>
+          <div>
+            <p className="tl__what">{info.title}</p>
+            <p className="tl__line">{info.line}</p>
+            <p className="tl__sun mono">{info.sunLine}</p>
+          </div>
+        </div>
+        <div className="tl__view">
+          <div
+            className="tl__scroll"
+            ref={ref}
+            onScroll={onScroll}
+            onPointerDown={(e) => {
+              // Touch scrolls natively; a mouse drags the day like a scrub bar.
+              if (e.pointerType !== 'mouse') return
+              const el = ref.current
+              const x0 = e.clientX, s0 = el.scrollLeft
+              el.classList.add('is-drag')
+              const move = (ev) => { el.scrollLeft = s0 - (ev.clientX - x0) }
+              const up = () => { el.classList.remove('is-drag'); window.removeEventListener('pointermove', move); window.removeEventListener('pointerup', up) }
+              window.addEventListener('pointermove', move)
+              window.addEventListener('pointerup', up)
+            }}
+            tabIndex={0}
+            role="slider"
+            aria-label="Time of day. Scroll, drag or use the arrow keys"
+            aria-valuemin={T0}
+            aria-valuemax={T1}
+            aria-valuenow={Math.round(t)}
+            aria-valuetext={fmt(Math.round(t))}
+            onKeyDown={(e) => {
+              if (e.key === 'ArrowRight') { e.preventDefault(); jump(t + 15) }
+              if (e.key === 'ArrowLeft') { e.preventDefault(); jump(t - 15) }
+            }}
+          >
+            <div className="tl__track" style={{ width: width + pad * 2, paddingInline: pad }}>
+              <div className="tl__inner" style={{ width }}>
+                <div className="tl__sunband" style={{ left: x(toMin(cs.sunrise)), width: (toMin(cs.sunset) - toMin(cs.sunrise)) * PX }} />
+                <div className="tl__ruler">
+                  {hours.map((h) => <span key={h} className="tl__hour mono" style={{ left: x(h * 60) }}>{String(h).padStart(2, '0')}</span>)}
+                </div>
+                <div className="tl__lane tl__lane--unit">
+                  {unit.map((u) => (
+                    <span key={u.id} className="tl__clip tl__clip--unit" style={{ left: x(toMin(u.from)), width: (toMin(u.to) - toMin(u.from)) * PX - 2 }}>{u.label}</span>
+                  ))}
+                  <span className="tl__pin tl__pin--me mono" style={{ left: x(toMin(cs.myCall)) }}>Call</span>
+                  <span className="tl__pin mono" style={{ left: x(toMin(cs.unitCall)) }}>Unit</span>
+                  <span className="tl__pin mono" style={{ left: x(toMin(cs.wrap)) }}>Wrap</span>
+                </div>
+                <div className="tl__lane">
+                  {scenes.map((sc) => {
+                    const tone = sc.dn === 'NIGHT' ? 'ni' : sc.ie === 'EXT' ? 'de' : 'di'
+                    const st = toMin(sc.to) <= now ? ' is-done' : toMin(sc.from) <= now ? ' is-now' : ''
+                    return (
+                      <span key={sc.id} className={`tl__clip tl__clip--${tone}${st}`} style={{ left: x(toMin(sc.from)), width: (toMin(sc.to) - toMin(sc.from)) * PX - 2 }}>
+                        <b className="mono">{sc.id}</b><span className="mono">{pages(sc.eighths)}</span>
+                      </span>
+                    )
+                  })}
+                </div>
+                <span className="tl__now" style={{ left: x(now) }} aria-hidden="true" />
+              </div>
+            </div>
+          </div>
+          <span className="tl__head" aria-hidden="true" />
+        </div>
+        <p className="tl__help mono">Drag the day under the playhead</p>
+      </div>
+    </Section>
   )
 }
 
 function Location() {
   const l = cs.location
   return (
-    <section className="block loc" aria-labelledby="loc-h">
-      <Photo name={l.photo} small className="loc__img" alt="Brick warehouse on Wharf Road" />
-      <div className="loc__body">
-        <h2 id="loc-h" className="h2">{l.name}</h2>
-        <p className="muted">{l.address}</p>
-        <ul className="facts">
-          <li><BiMapPin aria-hidden="true" /><span>{l.base}</span></li>
-          <li><BiCar aria-hidden="true" /><span>{l.parking}</span></li>
-          <li><BiBus aria-hidden="true" /><span>{l.transit}</span></li>
-          <li className="facts__safety"><BiPlusMedical aria-hidden="true" /><span>Nearest A&E: {l.hospital}</span></li>
-        </ul>
-        <div className="sky">
-          <div><BiSun aria-hidden="true" /><span className="mono">{cs.sunrise}</span><small>Sunrise</small></div>
-          <div><BiMoon aria-hidden="true" /><span className="mono">{cs.sunset}</span><small>Sunset</small></div>
-          <div><BiCloudDrizzle aria-hidden="true" /><span className="mono">{cs.weather.temp}°C</span><small>Drizzle to 10:00</small></div>
-        </div>
-      </div>
-    </section>
+    <Section no="03" title="Location" id="loc">
+      <Frame name={l.photo} small alt="Brick warehouse on Wharf Road" burn="LOC 04 / RECCE" tc="11.09.26" className="frame--loc" />
+      <p className="loc__name">{l.name}</p>
+      <p className="row__s">{l.address}</p>
+      <ul className="rows rows--icons">
+        <li className="row"><BiMapPin aria-hidden="true" /><p>{l.base}</p></li>
+        <li className="row"><BiCar aria-hidden="true" /><p>{l.parking}</p></li>
+        <li className="row"><BiBus aria-hidden="true" /><p>{l.transit}</p></li>
+        <li className="row row--safety"><BiPlusMedical aria-hidden="true" /><p><b>Nearest A&E</b> {l.hospital}</p></li>
+      </ul>
+      <dl className="ledger ledger--3">
+        <div><dt>Sunrise</dt><dd className="mono">{cs.sunrise}</dd></div>
+        <div><dt>Sunset</dt><dd className="mono">{cs.sunset}</dd></div>
+        <div><dt>Drizzle to 10:00</dt><dd className="mono">{cs.weather.temp}°C</dd></div>
+      </dl>
+    </Section>
   )
 }
 
 function Strip({ sc, scene }) {
   const [info, setInfo] = useState(false)
   const tone = sc.dn === 'NIGHT' ? 'ni' : sc.ie === 'EXT' ? 'de' : 'di'
-  let status = 'next'
-  if (scene === 'rolling') status = sc.status
-  if (scene === 'wrapped') status = 'done'
+  const status = scene === 'rolling' ? sc.status : 'next'
   return (
-    <li className={`strip strip--${tone} strip--${status}`}>
+    <li className={`strip strip--${tone} is-${status}`}>
       <span className="strip__no mono">{sc.id}</span>
       <div className="strip__main">
-        <p className="strip__set"><span className="strip__tag mono">{sc.ie}/{sc.dn}</span> {sc.set}</p>
+        <p className="strip__set mono">{sc.ie}/{sc.dn} &nbsp;{sc.set}</p>
         <p className="strip__what">{sc.what}</p>
-        <p className="strip__meta small">
-          <span className="mono">{pages(sc.eighths)} pg</span>
-          <span>Cast {sc.cast.join(', ')}</span>
-          {sc.nick && (
-            <button className="martini" onClick={() => setInfo((v) => !v)} aria-expanded={info}>
-              {sc.nick} <BiInfoCircle aria-hidden="true" />
-            </button>
-          )}
-        </p>
-        {info && <p className="strip__tip small">{nickTip[sc.nick]}</p>}
+        {sc.nick && (
+          <button className="nick mono" onClick={() => setInfo((v) => !v)} aria-expanded={info}>
+            {sc.nick} <BiInfoCircle aria-hidden="true" />
+          </button>
+        )}
+        {info && <p className="strip__tip">{nickTip[sc.nick]}</p>}
       </div>
-      <div className="strip__side">
-        <span className="mono">{sc.start}</span>
-        {status === 'now' && <Badge tone="live">Now</Badge>}
-        {status === 'done' && <Badge tone="done">Shot</Badge>}
+      <div className="strip__side mono">
+        <span>{sc.start}</span>
+        <span>{pages(sc.eighths)}</span>
+        {status === 'now' && <span className="tag tag--green">Now</span>}
+        {status === 'done' && <span className="tag">Shot</span>}
       </div>
     </li>
-  )
-}
-
-function Arrivals() {
-  return (
-    <section className="block" aria-labelledby="arr">
-      <div className="block__head">
-        <h2 id="arr" className="h2">Arrivals</h2>
-        <span className="small muted"><span className="mono">61</span> of <span className="mono">64</span> in</span>
-      </div>
-      <ul className="people">
-        <li className="person"><Avatar id="mara" size={40} /><div><p className="person__name">Mara Ilić, gaffer</p><p className="muted small">20 min late, traffic. Arlo starts the pre-rig</p></div></li>
-        <li className="person"><Avatar id="theo" size={40} /><div><p className="person__name">Theo Lund, electrician</p><p className="muted small">On the DLR, due 06:38</p></div></li>
-      </ul>
-    </section>
   )
 }
 
@@ -255,38 +320,25 @@ function LateSheet({ open, onClose }) {
     onClose()
   }
   return (
-    <Sheet
-      open={open}
-      onClose={onClose}
-      title="Running late"
-      footer={<Button className="btn--block" icon={BiSend} onClick={send}>Tell Ines, 2nd AD</Button>}
-    >
-      <p className="muted">One message to the person who needs it. They see your new arrival time on the call sheet.</p>
+    <Sheet open={open} onClose={onClose} title="Running late" footer={<Button variant="green" className="btn--block" icon={BiSend} onClick={send}>Tell Ines, 2nd AD</Button>}>
+      <p className="row__s">One message to the person who needs it. Your new arrival time shows on the call sheet.</p>
       <fieldset className="field">
         <legend>How late</legend>
-        <div className="chips">
+        <div className="seg4">
           {[10, 20, 30, 45].map((m) => (
-            <button key={m} className="chip" aria-pressed={mins === m} onClick={() => setMins(m)}>
-              <span className="mono">{m}</span> min
-            </button>
+            <button key={m} aria-pressed={mins === m} onClick={() => setMins(m)}><b className="mono">{m}</b><span>min</span></button>
           ))}
         </div>
       </fieldset>
       <fieldset className="field">
         <legend>Why</legend>
-        <div className="chips">
+        <div className="seg4 seg4--words">
           {['Traffic', 'Train', 'Parking', 'Other'].map((r) => (
-            <button key={r} className="chip" aria-pressed={reason === r} onClick={() => setReason(r)}>{r}</button>
+            <button key={r} aria-pressed={reason === r} onClick={() => setReason(r)}>{r}</button>
           ))}
         </div>
       </fieldset>
-      <p className="small muted">New arrival <span className="mono">{addMins(cs.myCall, mins)}</span>. Arlo, your best boy, can start the pre-rig.</p>
+      <p className="row__s">New arrival <span className="mono">{fmt(toMin(cs.myCall) + mins)}</span>. Arlo, your best boy, can start the pre-rig.</p>
     </Sheet>
   )
-}
-
-const addMins = (t, m) => {
-  const [h, mm] = t.split(':').map(Number)
-  const x = h * 60 + mm + m
-  return `${String(Math.floor(x / 60)).padStart(2, '0')}:${String(x % 60).padStart(2, '0')}`
 }

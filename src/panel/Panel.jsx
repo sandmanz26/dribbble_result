@@ -6,7 +6,7 @@ export default function Panel() {
   const { s, set, firstReleases, reset, toast } = useStore()
   return (
     <aside className="panel" aria-label="Prototype controls">
-      <p className="wordmark"><span className="wordmark__dot" aria-hidden="true" />Rolling</p>
+      <p className="wordmark"><i className="live" aria-hidden="true" />Rolling</p>
       <h2 className="panel__h">A phone app for the people who make film and TV</h2>
       <p className="panel__p">
         Crew and creatives live by three things: tomorrow's call sheet, which productions are holding their dates,
