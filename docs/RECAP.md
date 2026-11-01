@@ -242,3 +242,5 @@ Owner asked for a senior UI/UX take that is not a standard admin panel: interact
   end-credits crawl. Research notes and the diagnosis of what made v1 generic are in the branch's
   `docs/strategy.md` section 9.
 
+- Spacing pass (same day): one 4 to 48 px scale and a fixed rhythm on every screen after the owner
+  said spacing was still messy. Details in the branch's `docs/strategy.md` section 10.
