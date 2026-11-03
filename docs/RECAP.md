@@ -83,6 +83,7 @@ Live site: `https://proposal-virid-eight.vercel.app/<slug>/` (root and unknown p
 | project16 | my-t6qe-8vzd | Myelin AI brain platform (web, desktop, mobile) | Website + web app + desktop + mobile |
 | project19 | ta-sc-kyew | Tech Leader Awards website with published jury scorecards | Website |
 | project21 | cr-a4ij-fhg7 | Riuh Studio, creator dashboard and CRM for a Jakarta talent agency | Web app |
+| project22 | kt-9vqe-2mlx | Kartenregal, review and redesign of a Swiss Pokémon card shop | Website (shop) + review |
 | project20 | ro-zdxa-uv3w | Rolling, phone app for film and TV crew, creatives and production | Mobile app |
 | rawat | fd-w8tq-3jxc | Rawat, clinic operations for an Indonesian primary clinic (owner's portfolio piece) | Web app |
 | flowdirector | fd-w8tq-3jxc | Old link, serves the same Rawat build | Web app |
@@ -199,6 +200,9 @@ Owner asked to work as creative head: roast the idea and the style before buildi
 
 ### project21, Riuh Studio (Creator Dashboard, $500)
 Owner asked for a senior UI/UX take that is not a standard admin panel: interactive, bright and young, with deep research on the data a creator business needs, and positioned as a portfolio piece for an Indonesian agency (Indonesian names, English UI). Research covered creator CRMs (Passionfroot, Beacons), contract terms (usage, exclusivity, whitelisting), the Indonesian KOL workflow (brief, script, draft, posting, insight report, deposit then final) and withholding tax (PPh 23 assumed at 2% via the agency, flagged to confirm). Built around money the creator can trust: every deal shows deposit, final, tax, the agency's 20% and take-home; offers are checked against an editable rate card and running exclusivity. Notes in the branch's `docs/strategy.md`.
+
+### project22, Kartenregal (Swiss TCG Card Shop Website Design, $300)
+Owner asked to work as senior motion designer and creative head, liked trek.cards as a reference (and wondered about cloning it). The client's site and trek.cards were blocked until the owner added them to the environment's allowed domains. Decision: not a clone (the client must keep three brand colours and a clone would be someone else's site); the motion vocabulary of trek.cards (fanned cards leaning toward the pointer, pinned story, foil sheen, flip) was rebuilt for a shop. Real products, prices, stock and the shop's own photos from kartenregal.ch. Deliverables inside the prototype: design review with screenshots (`#/review`, English) and components and motion notes for the Figma file (`#/system`). Open: pickup windows are examples, registered-mail price unknown, Figma file after scope is agreed.
 
 ## 6. Open items
 

@@ -30,6 +30,7 @@ const PASSWORDS = {
   project18: 'rb-qil0-uouv', // Rimba, restaurant landing page
   project19: 'ta-sc-kyew', // Tech Leader Awards, awards website with published jury scorecards
   project21: 'cr-a4ij-fhg7', // Riuh Studio, creator dashboard and CRM for a Jakarta talent agency
+  project22: 'kt-9vqe-2mlx', // Kartenregal, Swiss TCG shop review and redesign
   project20: 'ro-zdxa-uv3w', // Rolling, phone app for film and TV crew, creatives and production
   hotshoe: 'hs-6bja-9at4', // Hotshoe, pixel UI for a Raspberry Pi camera sync screen (owner's portfolio piece)
   selvedge: 'sv-4rkx-msbd', // Selvedge retail OS, portfolio case for the Dribbble retail ERP brief // Flow Director clinic operations prototype (Upwork, not a projectN slug)

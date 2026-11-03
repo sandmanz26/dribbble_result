@@ -297,3 +297,29 @@ Password: cr-a4ij-fhg7
 My portfolio: createdybdaniel.com
 
 For a pilot I would start with the dashboard and one core workflow of your choice, then grow the visual system from there. All names, brands and figures in the prototype are samples.
+
+## project22, Kartenregal (Swiss TCG Card Shop Website Design)
+
+Hi! A quick note first: what you will see is a draft, built before we have spoken, as proof that I take your project seriously. I would rather show you how I think than describe it, and all of it can change once we agree on the pages that need work.
+
+I reviewed kartenregal.ch on desktop and on a phone. Two specific observations:
+
+**1. The lime button is on every card, so it stops meaning "buy".** The home page ends each of the 14 products with a full-width lime "In den Korb", which makes it the loudest shape on the screen, louder than the product names. I kept lime only for buying: one full button on the product page and in the basket, and a small square add button in lists.
+
+**2. "Genau dieses Exemplar" is your strongest promise, but the photos have no names, and on desktop the sticky buy bar covers the text below them.** No other Swiss shop I compared shows the exact copy. In the draft every photo is labelled (manufacturer image, front, back, seal), the main view zooms, and for the Pitch Black ETB the buyer chooses between your two photographed copies.
+
+What stays: the shelf idea (Regal, Fach 01 to 05, "2 im Fach"), the honest stock count, your plain copy, and the three colours. Red, lime and green keep their hue; each one now has one job (brand, buying, stock).
+
+Approach: review first, agree on the areas, then revise. The draft already holds the review, with ten points on screenshots of your live site and the change for each, plus a component and motion sheet.
+
+Deliverable: an editable Figma file with desktop (1440) and mobile (390) layouts, reusable components with their states, and notes on interactions and motion.
+
+Estimate: home, compartment, product, basket and checkout for $300, ready in about four working days after we agree the scope. Extra pages such as pickup, shipping and the confirmation can be added if you need them.
+
+Prototype: https://proposal-virid-eight.vercel.app/project22/
+Password: kt-9vqe-2mlx
+(Start with "Design review (EN)" in the green bar at the top. Then add a few boosters and open the basket to see how the letter fills up, or open Pitch Black ETB and choose a copy.)
+
+My portfolio, including e-commerce work where I did the UX, the UI and the front-end: createdybdaniel.com
+
+The prototype uses your real products, prices and photos from 3 November 2026. Nothing is ordered or paid.
