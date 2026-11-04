@@ -2,8 +2,8 @@
 
 Review and redesign of kartenregal.ch (a Swiss Pokémon card shop in Wetzikon) for the Dribbble brief
 "Swiss TCG Card Shop Website Design". React 18, Vite 5, HashRouter, Grommet icons (`react-icons/gr`),
-Switzer (Fontshare, self-hosted), no animation library. Products, prices, stock and the shop's own
-photos are copied from the live shop on 3 Nov 2026. No backend: basket and orders live in
+Switzer (Fontshare, self-hosted), no animation library. Products, prices, stock and
+photos are taken as listed on kartenregal.ch on 3 Nov 2026 (not verified as real stock). No backend: basket and orders live in
 localStorage (`kr-state-v1`, theme `kr-theme-v1`).
 
 ```bash

@@ -11,6 +11,9 @@ This prototype is the review plus the revised design, built in React so every in
 tried. Routes `#/review` and `#/system` (English) are the written deliverables for the client.
 
 ## 1. What the shop is (kartenregal.ch, 3 Nov 2026)
+Note from the owner: the site is a reference, not confirmed as a real trading shop. Everything below is
+what the site showed, used as sample content; never describe it as real stock or real products.
+
 - Shopify shop, German (Swiss), CHF. Pokémon only, 14 products: 4 boosters, 8 bundles and boxes
   (one sold out), 2 single cards. Independent seller from Wetzikon ZH.
 - Navigation as a shelf: 01 Neu, 02 Booster, 03 Bundles & Boxen, 04 Einzelkarten, 05 Abholung.

@@ -58,7 +58,7 @@ export function ProtoStrip() {
   return (
     <div className="proto">
       <div className="wrap">
-        <span className="long">Redesign-Prototyp für Kartenregal TCG. Echte Produkte und Preise vom 3. November 2026, keine echte Bestellung.</span><span className="short">Prototyp, keine echte Bestellung</span>
+        <span className="long">Redesign-Prototyp für Kartenregal TCG. Produkte, Preise und Fotos wie auf kartenregal.ch am 3. November 2026 gelistet. Keine echte Bestellung.</span><span className="short">Prototyp, keine echte Bestellung</span>
         <span style={{ display: 'flex', gap: 16 }}><Link to="/review">Design review (EN)</Link><Link to="/system">Components (EN)</Link></span>
       </div>
     </div>

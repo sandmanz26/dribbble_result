@@ -1,5 +1,6 @@
-// The shop's real stock on 3 Nov 2026 (kartenregal.ch), copied for the redesign prototype.
-// Prices, stock counts, release data and the shop's own copy photos are theirs.
+// Products as listed on kartenregal.ch on 3 Nov 2026 (its public product feed), used as the redesign's content.
+// Whether these are real stock or placeholder listings is not known; treat them as the brief's sample data.
+// Prices, stock counts, release data and photos are as the site showed them.
 // `copies` lists the physical copies a customer can choose between when the shop photographed more than one.
 
 export const FAECHER = [
