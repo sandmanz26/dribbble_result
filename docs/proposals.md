@@ -320,13 +320,13 @@ I reviewed kartenregal.ch on desktop and on a phone. Two specific observations:
 
 **Approach:** review first, agree on the areas that need attention, then revise. The draft already holds the written review (ten points on screenshots of your current site, each with the proposed change) and a sheet of components and interaction notes, so we can start from something concrete.
 
-**Deliverable:** an editable Figma file with desktop (1440) and mobile (390) layouts, reusable components with their states, and notes on interactions.
+**Deliverable:** an editable Figma file with desktop (1440) and mobile (390) layouts, reusable components with their states, and notes on interactions. The Figma file is not part of this draft: I will build it once we have agreed on the scope, using the review and the prototype as the starting point.
 
 **Estimate:** home, compartment, product, basket and checkout for $300, ready in about four working days after we agree the scope. Pickup, shipping and confirmation pages can be added if you need them, and we can confirm the final scope and quote once we have discussed which pages need work.
 
 **Relevant e-commerce work:**
-- Flock & Flame, an ordering app for a chicken and grill restaurant: menu, basket, checkout, pickup and delivery, and orders that still work offline. I did the research, the UX flows, the UI and the front-end.
-- Proof, a marketplace for photographers and videographers: browsing portfolios, comparing packages and booking. Research, UX, UI and front-end by me.
+- vherkudara.id: web design and development by me.
+- suedeson.com: web design and development by me.
 
 More in my portfolio: createdybdaniel.com
 
