@@ -304,19 +304,25 @@ Hi! A quick note first: what you will see is a draft, built before we have spoke
 
 I reviewed kartenregal.ch on desktop and on a phone. Two specific observations:
 
-**1. The lime button is on every card, so it stops meaning "buy".** The home page ends each of the 14 products with a full-width lime "In den Korb", which makes it the loudest shape on the screen, louder than the product names. In the draft lime is kept for buying only: one full button on the product page and in the basket, and a small square add button in lists.
+**1. The lime button is on every card, so it stops meaning "buy".** The home page ends each of the 14 products with a full-width lime "In den Korb", which makes it the loudest shape on the screen, louder than the product names and prices. Visual hierarchy is upside down: the action shouts, the product whispers. In the draft lime is kept for buying only: one full button on the product page and in the basket, and a small square add button in lists.
 
-**2. "Genau dieses Exemplar" is your strongest promise, but the photos have no names, and on desktop the sticky buy bar covers the text below them.** None of the other Swiss shops I compared show the exact copy. In the draft every photo is labelled (manufacturer image, front, back, seal), the main view zooms, and for the Pitch Black ETB the buyer chooses between your two photographed copies.
+**2. "Genau dieses Exemplar" is your strongest promise, but the photos have no names, and on desktop the sticky buy bar covers the text below them.** In the draft every photo is labelled (manufacturer image, front, back, seal), the main view zooms, the buy bar only appears on phones when the real button is off screen, and where two copies exist the buyer chooses which one.
 
-What stays: the shelf idea (Regal, Fach 01 to 05, "2 im Fach"), the honest stock count, your plain copy and your three colours. Red, lime and green keep their hue; each now has one job (brand, buying, stock).
+**What works and stays:** the shelf idea (Regal, Fach 01 to 05, "2 im Fach"), the honest stock count, the plain and specific copy, the square buttons with an ink edge, and your three colours.
 
-What changes, in short: a first screen that says why to buy from you, the whole shelf on one page instead of a grid, your letter-post prices turned into something the basket shows live, a clearer product page, calmer type, and motion with a purpose (compartments that stack as you scroll, page transitions that carry the product picture). The studio still lifes in the draft are concept images I art-directed to show a possible visual direction; your own product photos stay on every product.
+**What feels generic:** a first screen that names the category ("Pokémon-Karten: Booster, Bundles und Boxen") instead of the shop, the same product card repeated as a grid, condensed capitals for every title, and spacing that is the same everywhere, so nothing groups. On a phone the 14 products become a very long scroll with no way to filter by German or English.
 
-**Approach:** review first, agree on the areas that need attention, then revise. The draft already holds the written review (ten points on screenshots of your live site, each with the change) and a sheet of components and motion notes.
+**Typography, spacing and hierarchy in the draft:** one calm grotesk instead of condensed capitals, short titles in sentence case with the set and language on a second line, prices large but secondary to the name, tighter spacing inside a product and more space between groups, and the whole shelf on one page as a list with filters.
 
-**Deliverable:** an editable Figma file with desktop (1440) and mobile (390) layouts, reusable components with their states, and notes on interactions and motion.
+**Colours:** red, lime and green keep their hue and each gets one job: red for the brand and the compartment numbers, lime only for buying, green only for stock. The only adjustment is a slightly darker red for text on the rose ground, so it passes contrast.
 
-**Estimate:** home, compartment, product, basket and checkout for $300, ready in about four working days after we agree the scope. Pickup, shipping and confirmation pages can be added if you need them.
+**Usability on desktop and mobile:** both are designed and tested at 1440 and 390, including the basket, the checkout and the pickup flow, with your letter-post prices shown live in the basket.
+
+**Approach:** review first, agree on the areas that need attention, then revise. The draft already holds the written review (ten points on screenshots of your current site, each with the proposed change) and a sheet of components and interaction notes, so we can start from something concrete.
+
+**Deliverable:** an editable Figma file with desktop (1440) and mobile (390) layouts, reusable components with their states, and notes on interactions.
+
+**Estimate:** home, compartment, product, basket and checkout for $300, ready in about four working days after we agree the scope. Pickup, shipping and confirmation pages can be added if you need them, and we can confirm the final scope and quote once we have discussed which pages need work.
 
 **Relevant e-commerce work:**
 - Flock & Flame, an ordering app for a chicken and grill restaurant: menu, basket, checkout, pickup and delivery, and orders that still work offline. I did the research, the UX flows, the UI and the front-end.
@@ -326,6 +332,6 @@ More in my portfolio: createdybdaniel.com
 
 Prototype: https://proposal-virid-eight.vercel.app/project22/
 Password: kt-9vqe-2mlx
-(Start with "Design review (EN)" in the green bar at the top. Then add a few boosters and open the basket to see the letter fill up, or open Pitch Black ETB and choose a copy.)
+(Start with "Design review (EN)" in the green bar at the top. Then add a few boosters and open the basket, or open Pitch Black ETB and choose a copy.)
 
-The products, prices and photos in the prototype are taken from your current site as it looked on 3 November 2026. Nothing is ordered or paid.
+The products, prices and photos in the prototype are taken from your current site as it looked on 3 November 2026. The studio still lifes are concept images I art-directed to show a possible visual direction. Nothing is ordered or paid.
