@@ -23,6 +23,8 @@
   { "slug": "project20", "branch": "claude/film-tv-crew-app", "title": "Rolling film and TV crew app" },
   { "slug": "project21", "branch": "claude/creator-studio-crm", "title": "Riuh Studio creator dashboard and CRM" },
   { "slug": "project22", "branch": "claude/kartenregal-tcg-shop", "title": "Kartenregal Swiss TCG shop review and redesign" },
+  { "slug": "project23", "branch": "claude/coop-app-ar-en", "title": "Cooperative app redesign, Arabic and English, white label" },
+  { "slug": "project24", "branch": "claude/coware-cowarehousing", "title": "Co-Ware co-warehousing website" },
   { "slug": "hotshoe", "branch": "claude/hotshoe-pixel-sync", "title": "Hotshoe pixel camera sync UI" },
   { "slug": "selvedge", "branch": "claude/selvedge-retail-os", "title": "Selvedge retail operating system" }
 ]

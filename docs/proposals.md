@@ -335,3 +335,56 @@ Password: kt-9vqe-2mlx
 (Start with "Design review (EN)" in the green bar at the top. Then add a few boosters and open the basket, or open Pitch Black ETB and choose a copy.)
 
 The products, prices and photos in the prototype are taken from your current site as it looked on 3 November 2026. The studio still lifes are concept images I art-directed to show a possible visual direction. Nothing is ordered or paid.
+
+## project23, Cooperative app redesign (Cooperative Mobile Redesign AR/EN Figma)
+
+Hi! A quick note first: what you will see is a draft, built before we have spoken, as proof that I take your project seriously. I would rather show you how I think than describe it, and all of it can change once I have seen your current app.
+
+**The idea:** a co-op is the only shop its members own, so the app should show it. Home shows the purchase dividend growing, every price shows roughly what comes back, and the shareholder number is added to every order instead of being typed.
+
+**What the draft covers, in Arabic and English (the whole layout mirrors):**
+- Search that understands Arabic, English and Arabic typed in Latin letters, with typo tolerance and a "did you mean".
+- Shopping lists shared with the family, sorted by the aisles of the chosen branch, and sent to the basket in one tap.
+- An AI assistant that answers with a list or a basket ("dinner for six"), shows prices and dividend, and never orders on its own.
+- Product display, departments, deals, substitution per basket line, express, scheduled and pickup.
+- White label: switch between three sample co-ops and only four colour tokens, a mark and a name change.
+
+**Phase 1:** a UX audit (framed as hypotheses until I can test your app), information architecture and key journeys, all inside the draft. **Phase 2:** iOS and Android UI, interactive prototypes and developer-ready Figma files in RTL and LTR, built with Auto Layout, Components, Variants and Variables (collections for Brand, Theme, Direction and Platform). The Figma files are not part of this draft; I will build them once we agree the scope.
+
+**Estimate:** $500 for Phase 1 and the core screens shown in the draft, about three weeks after we start. The full screen set for both platforms can be quoted once the audit is done.
+
+Arabic and RTL work: I have designed and built bilingual Arabic and English products before, including a right-to-left logistics website where every layout, digit and icon follows the reading direction.
+
+My portfolio: createdybdaniel.com
+
+Prototype: https://proposal-virid-eight.vercel.app/project23/
+Password: cp-7hx2-qm4v
+(On desktop the panel beside the phone switches language, co-op and member type. Try the search with "labne", open the family list, and ask the assistant for "dinner for six". The audit, IA and system pages are linked in the panel.)
+
+Co-op names, people and prices are samples, and the product pictures are AI-generated packshots. Nothing is ordered or charged.
+
+## project24, Co-Ware (Bold Colorful Modern UI/UX for Co-Ware)
+
+Hi! A quick note first: what you will see is a draft, built before we have spoken, as proof that I take your project seriously. I would rather show you how I think than describe it, and all of it can change once we talk.
+
+**The idea:** in a co-warehouse the floor is already painted in colour blocks, so I made that the brand. Each colour is a kind of space (lemon for shelf bays, teal for pallets, cobalt for private bays, tangerine for packing desks), and the same blocks run through the whole site, so the colour is never just decoration.
+
+**What the draft shows:**
+- A live floor plan: filter by space type, pick a free unit, choose the months and see the price, then book a tour of that exact unit.
+- Four ways to take space, sliding past as you scroll, each with what is included.
+- Shared kit (dock, packing tables, receiving, courier pickups, lounge) and the community side, with member evenings.
+- Bold geometric motion with a purpose: shapes that assemble in the hero, pages that change with a block of the next page's colour, and clear navigation on desktop and phones.
+
+**Development support:** the draft is already built in React, so the same code can become the production front-end. I can take it from design to a working site.
+
+**Approach and deliverables:** agree the pages and content, refine the visual system, design desktop and mobile layouts in Figma with components, then build the front-end. The Figma file follows once the scope is agreed.
+
+**Estimate:** $1,000 for the design of the home page, space pages and tour booking, plus front-end development of the same pages, in about three to four weeks.
+
+My portfolio: createdybdaniel.com
+
+Prototype: https://proposal-virid-eight.vercel.app/project24/
+Password: cw-3rb8-ny6k
+(Scroll the home page, pick a free unit on the floor plan, and open a space type from the menu to see the page transition.)
+
+Prices, units and dates are samples, and the photos are AI-generated concept images.
