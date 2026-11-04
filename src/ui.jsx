@@ -314,7 +314,7 @@ export function Footer() {
         <b aria-hidden="true">{'KARTENREGAL'.split('').map((c, i) => <span key={i} style={{ '--i': i }}>{c}</span>)}</b>
         <div className="legal">
           <span>© 2026 Kartenregal TCG, unabhängiger Händler aus Wetzikon. Pokémon ist eine Marke von Nintendo, Creatures und GAME FREAK; Kartenregal steht mit diesen Firmen in keiner Verbindung.</span>
-          <span>Fotos: Kartenregal und Hersteller</span>
+          <span>Produktfotos: Kartenregal und Hersteller. Stimmungsbilder (Verpackung, Pfäffikersee): mit KI erstellt, Higgsfield.</span>
         </div>
       </div>
     </footer>

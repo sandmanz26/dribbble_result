@@ -7,6 +7,7 @@ export function Pickup() {
       <nav className="crumbs" aria-label="Pfad"><Link to="/">Regal</Link><span aria-hidden="true">/</span><span aria-current="page">Abholung</span></nav>
       <h1 className="lead-h">Gratis abholen in Wetzikon ZH</h1>
       <p className="lead-p">Wähle im Korb «Abholung» und eine Wunschzeit. Du zahlst beim Bestellen, vor Ort brauchst du nur die Bestellnummer.</p>
+      <figure className="doc-photo"><img src="mood/pfaeffikersee.webp" alt="Abendstimmung am Pfäffikersee bei Wetzikon" width="1600" height="905" /><figcaption>Pfäffikersee bei Wetzikon, Stimmungsbild</figcaption></figure>
       <h2>So läuft es</h2>
       <ol className="steps-list">
         <li><span><b>Bestellen und bezahlen</b>Im Shop wie gewohnt, mit TWINT oder Karte. Wähle als Lieferung «Abholung» und, wenn du willst, eine Wunschzeit.</span></li>

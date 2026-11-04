@@ -127,5 +127,15 @@ travel from lists into the product page; pictures that only exist on the new pag
 uncovered. Browsers without view transitions get the short rise-in. All of it is off under reduced
 motion (stack becomes a list, the track becomes a swipe row).
 
-Higgsfield: the owner offered 30 credits, but the connector in this session can only read the catalogue
-and history, not generate, so no images were generated. The shop's own photos remain the only pictures.
+Higgsfield: the first connector could only read; after the owner added a second Higgsfield connector,
+five atmosphere images were generated (model gpt_image_2_5, high quality, 2K, 2.75 credits each, 13.75
+of the 30 credits offered). Four are used, self-hosted in `public/mood/` and credited in the footer as
+made with AI: `toploader` (single card into a toploader), `couvert` (unprinted packs into a padded
+envelope), `karton` (box in paper padding), `pfaeffikersee` (Lake Pfäffikon near Wetzikon). The fifth
+(phone photographing a box on a red and white round mat) was left out because the mat reads as a
+trademarked shape. Prompts asked for no logos, no text and unprinted packs; generated images never stand
+in for the shop's products, which stay the shop's own photos.
+
+New section "So verpacken wir": the heading stays pinned while three photo columns drift at different
+speeds (parallax), one per way of shipping. The pickup board shows the lake behind the Wetzikon sign,
+and the pickup page opens with the same picture.

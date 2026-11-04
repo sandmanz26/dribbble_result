@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { GrDeliver, GrLocation, GrView, GrFormDown, GrAdd, GrSubtract } from 'react-icons/gr'
 import { FAECHER, PRODUCTS, byId, chf, stockText, langText, title } from '../data/catalog.js'
 import { useTilt, useReveal, reduced, useScroll } from '../motion.js'
-import { FachStack, NewTrack, Marquee } from './Scenes.jsx'
+import { FachStack, NewTrack, Marquee, Pack } from './Scenes.jsx'
 import { AddButton } from '../ui.jsx'
 
 export default function Home() {
@@ -16,6 +16,7 @@ export default function Home() {
       <Shelf />
       <Exemplar />
       <Post />
+      <Pack />
       <Marquee />
       <Know />
       <Faq />

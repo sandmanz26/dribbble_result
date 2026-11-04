@@ -49,7 +49,10 @@ export function FachStack() {
               </div>
               <div className="sc-pics" aria-hidden="true">
                 {list.length ? list.map((p, j) => <img key={p.id} src={p.hero} alt="" loading="lazy" style={{ '--j': j }} />) : (
-                  <div className="sc-sign"><GrLocation /><b>Wetzikon ZH</b><span>Bestellnummer mitbringen, Folie vor Ort prüfen.</span></div>
+                  <>
+                    <img className="sc-photo" src="mood/pfaeffikersee.webp" alt="" loading="lazy" />
+                    <div className="sc-sign"><GrLocation /><b>Wetzikon ZH</b><span>Bestellnummer mitbringen, Folie vor Ort prüfen.</span></div>
+                  </>
                 )}
               </div>
             </article>
@@ -124,6 +127,35 @@ export function Marquee() {
       <div className="mq-band b1"><p className="mq-row r1" aria-hidden="true">{row(a)}</p></div>
       <div className="mq-band b2"><p className="mq-row r2" aria-hidden="true">{row(b)}</p></div>
       <p className="sr">{[...a, ...b].join('. ')}.</p>
+    </section>
+  )
+}
+
+// Packing, three ways: the photo columns drift at different speeds while the words stay put.
+const PACK = [
+  { img: 'mood/toploader', h: 'Einzelkarten', t: 'In Sleeve und Toploader, im gepolsterten Couvert. Ab CHF 50 eingeschrieben.' },
+  { img: 'mood/couvert', h: 'Booster', t: 'Bis sechs Packs im gepolsterten B-Post-Brief, für CHF 2 oder CHF 4.' },
+  { img: 'mood/karton', h: 'Boxen und Bundles', t: 'Im Karton mit Papierpolster, damit die Ecken heil ankommen. CHF 9.' },
+]
+export function Pack() {
+  const ref = useScroll()
+  return (
+    <section className="pack-sec" ref={ref} aria-labelledby="pack-h">
+      <div className="wrap pack-grid">
+        <div className="pack-head">
+          <h2 id="pack-h">So verpacken wir</h2>
+          <p>Jede Bestellung geht in einer Sendung raus, innert drei Werktagen nach der Zahlung.</p>
+          <Link to="/versand" className="link">Alle Versandpreise</Link>
+        </div>
+        <div className="pack-cols">
+          {PACK.map((x, i) => (
+            <figure key={x.h} className="pack-fig" style={{ '--k': i }}>
+              <div className="pack-pic"><img src={`${x.img}-s.webp`} srcSet={`${x.img}-s.webp 800w, ${x.img}.webp 1600w`} sizes="(max-width: 800px) 90vw, 30vw" alt="" loading="lazy" width="800" height="597" /></div>
+              <figcaption><b>{x.h}</b>{x.t}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
     </section>
   )
 }
