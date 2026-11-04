@@ -304,22 +304,28 @@ Hi! A quick note first: what you will see is a draft, built before we have spoke
 
 I reviewed kartenregal.ch on desktop and on a phone. Two specific observations:
 
-**1. The lime button is on every card, so it stops meaning "buy".** The home page ends each of the 14 products with a full-width lime "In den Korb", which makes it the loudest shape on the screen, louder than the product names. I kept lime only for buying: one full button on the product page and in the basket, and a small square add button in lists.
+**1. The lime button is on every card, so it stops meaning "buy".** The home page ends each of the 14 products with a full-width lime "In den Korb", which makes it the loudest shape on the screen, louder than the product names. In the draft lime is kept for buying only: one full button on the product page and in the basket, and a small square add button in lists.
 
-**2. "Genau dieses Exemplar" is your strongest promise, but the photos have no names, and on desktop the sticky buy bar covers the text below them.** No other Swiss shop I compared shows the exact copy. In the draft every photo is labelled (manufacturer image, front, back, seal), the main view zooms, and for the Pitch Black ETB the buyer chooses between your two photographed copies.
+**2. "Genau dieses Exemplar" is your strongest promise, but the photos have no names, and on desktop the sticky buy bar covers the text below them.** None of the other Swiss shops I compared show the exact copy. In the draft every photo is labelled (manufacturer image, front, back, seal), the main view zooms, and for the Pitch Black ETB the buyer chooses between your two photographed copies.
 
-What stays: the shelf idea (Regal, Fach 01 to 05, "2 im Fach"), the honest stock count, your plain copy, and the three colours. Red, lime and green keep their hue; each one now has one job (brand, buying, stock).
+What stays: the shelf idea (Regal, Fach 01 to 05, "2 im Fach"), the honest stock count, your plain copy and your three colours. Red, lime and green keep their hue; each now has one job (brand, buying, stock).
 
-Approach: review first, agree on the areas, then revise. The draft already holds the review, with ten points on screenshots of your live site and the change for each, plus a component and motion sheet.
+What changes, in short: a first screen that says why to buy from you, the whole shelf on one page instead of a grid, your letter-post prices turned into something the basket shows live, a clearer product page, calmer type, and motion with a purpose (compartments that stack as you scroll, page transitions that carry the product picture). The studio still lifes in the draft are concept images I art-directed to show a possible visual direction; your own product photos stay on every product.
 
-Deliverable: an editable Figma file with desktop (1440) and mobile (390) layouts, reusable components with their states, and notes on interactions and motion.
+**Approach:** review first, agree on the areas that need attention, then revise. The draft already holds the written review (ten points on screenshots of your live site, each with the change) and a sheet of components and motion notes.
 
-Estimate: home, compartment, product, basket and checkout for $300, ready in about four working days after we agree the scope. Extra pages such as pickup, shipping and the confirmation can be added if you need them.
+**Deliverable:** an editable Figma file with desktop (1440) and mobile (390) layouts, reusable components with their states, and notes on interactions and motion.
+
+**Estimate:** home, compartment, product, basket and checkout for $300, ready in about four working days after we agree the scope. Pickup, shipping and confirmation pages can be added if you need them.
+
+**Relevant e-commerce work:**
+- Flock & Flame, an ordering app for a chicken and grill restaurant: menu, basket, checkout, pickup and delivery, and orders that still work offline. I did the research, the UX flows, the UI and the front-end.
+- Proof, a marketplace for photographers and videographers: browsing portfolios, comparing packages and booking. Research, UX, UI and front-end by me.
+
+More in my portfolio: createdybdaniel.com
 
 Prototype: https://proposal-virid-eight.vercel.app/project22/
 Password: kt-9vqe-2mlx
-(Start with "Design review (EN)" in the green bar at the top. Then add a few boosters and open the basket to see how the letter fills up, or open Pitch Black ETB and choose a copy.)
-
-My portfolio, including e-commerce work where I did the UX, the UI and the front-end: createdybdaniel.com
+(Start with "Design review (EN)" in the green bar at the top. Then add a few boosters and open the basket to see the letter fill up, or open Pitch Black ETB and choose a copy.)
 
 The prototype uses your real products, prices and photos from 3 November 2026. Nothing is ordered or paid.
