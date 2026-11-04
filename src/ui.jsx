@@ -303,7 +303,7 @@ export function Footer() {
   const sc = useScroll()
   return (
     <footer className="foot" ref={sc}>
-      <img src="products/ascended-heroes-etb-de-3.webp" alt="" loading="lazy" width="750" height="750" />
+      <img src="mood/regal-s.webp" srcSet="mood/regal-s.webp 1000w, mood/regal.webp 2000w" sizes="100vw" alt="" loading="lazy" width="2000" height="857" />
       <div className="wrap top">
         <div><h2>Regal</h2>{FAECHER.map((f) => <Link key={f.id} to={`/fach/${f.id}`}>{f.no} {f.name}</Link>)}</div>
         <div><h2>Service</h2><Link to="/abholung">Abholung</Link><Link to="/versand">Versand und Rückgabe</Link><a href="#/" onClick={(e) => e.preventDefault()}>Impressum</a><a href="#/" onClick={(e) => e.preventDefault()}>AGB und Datenschutz</a></div>
@@ -314,7 +314,7 @@ export function Footer() {
         <b aria-hidden="true">{'KARTENREGAL'.split('').map((c, i) => <span key={i} style={{ '--i': i }}>{c}</span>)}</b>
         <div className="legal">
           <span>© 2026 Kartenregal TCG, unabhängiger Händler aus Wetzikon. Pokémon ist eine Marke von Nintendo, Creatures und GAME FREAK; Kartenregal steht mit diesen Firmen in keiner Verbindung.</span>
-          <span>Produktfotos: Kartenregal und Hersteller. Stimmungsbilder (Verpackung, Pfäffikersee): mit KI erstellt, Higgsfield.</span>
+          <span>Produktfotos: Kartenregal und Hersteller. Stimmungsbilder (Regal, Verpackung, Pfäffikersee): mit KI erstellt, Higgsfield. Einige Produktfotos mit KI hochgerechnet.</span>
         </div>
       </div>
     </footer>

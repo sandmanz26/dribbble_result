@@ -77,7 +77,7 @@ function ProductView({ p }) {
               </>
             ) : (
               <>
-                <img ref={imgRef} key={ph.src} src={ph.src} alt={`${title(p)}, ${ph.maker ? 'Herstellerbild' : ph.label}`} style={at === 0 ? { viewTransitionName: `p-${p.id}` } : undefined} />
+                <img ref={imgRef} key={ph.src} src={ph.src} data-low={p.lowres && at === 0 ? '' : undefined} alt={`${title(p)}, ${ph.maker ? 'Herstellerbild' : ph.label}`} style={at === 0 ? { viewTransitionName: `p-${p.id}` } : undefined} />
                 <span className="hint">{zoom ? 'Klicken zum Verkleinern' : 'Klicken zum Vergrössern'}</span>
               </>
             )}

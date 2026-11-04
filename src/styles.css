@@ -339,7 +339,7 @@ html.vt-on .page { animation: none; }
 
 /* FOOTER: name across the last photograph */
 .foot { position: relative; min-height: 92svh; color: #f4e9e7; display: grid; grid-template-rows: auto 1fr auto; overflow: clip; background: #120b0a; }
-.foot > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(.5) saturate(.9); }
+.foot > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%; filter: brightness(.55) saturate(.95); }
 .foot .top { position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; padding-block: 40px; }
 .foot .top h2 { font-size: var(--step-small); font-weight: 600; color: var(--lime); margin-bottom: 10px; }
 .foot .top a, .foot .top button { display: block; padding: 4px 0; text-decoration: none; font-size: 1rem; background: none; border: 0; cursor: pointer; text-align: left; }
@@ -741,7 +741,7 @@ html.vt-on .page { animation: none; }
 /* Photo parallax and the footer name rising */
 .know .shape img { transform: translateY(calc((var(--p, .5) - .5) * -90px)) scale(1.18); transition: none; }
 .foot > img { transform: translateY(calc((1 - var(--p, 1)) * -12%)) scale(1.12); }
-.foot .name b span { display: inline-block; transform: translateY(calc((1 - max(0, min(1, var(--in, 1) * 1.3 - .25 - var(--i) * .03))) * 110%)); }
+.foot .name b span { display: inline-block; transform: translateY(calc((1 - max(0, min(1, var(--in, 1) * 1.6 - .2 - var(--i) * .03))) * 110%)); }
 .foot .name b { overflow: hidden; padding-bottom: .08em; }
 
 /* Route transitions: the old page lifts away, the new one is uncovered from the bottom like a drawer pulled out.
@@ -795,3 +795,9 @@ html.vt-on .page { animation: none; }
   .pack-pic { aspect-ratio: 4 / 3; }
 }
 @media (prefers-reduced-motion: reduce) { .pack-fig, .pack-pic img { transform: none; } }
+
+/* The one product picture the shop only has at 360 px is never blown up past its size. */
+.shelf-pic img[data-low] { inset: 24%; width: 52%; height: 52%; }
+.viewer .main > img[data-low] { inset: 22%; width: 56%; height: 56%; }
+.item .pic img[data-low] { inset: 14%; width: 72%; height: 72%; }
+.sc-pics img[data-low] { max-width: 180px; }

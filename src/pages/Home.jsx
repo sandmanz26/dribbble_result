@@ -85,7 +85,7 @@ function Shelf() {
       <div className="shelf-grid">
         <div className="shelf-pic" aria-hidden="true">
           <div className="cap"><span className="no">Fach {FAECHER.find((f) => f.id === a.fach).no}</span><span>{stockText(a.stock)}</span></div>
-          {PRODUCTS.map((p) => <img key={p.id} src={p.hero} alt="" className={p.id === active ? 'on' : ''} loading="lazy" />)}
+          {PRODUCTS.map((p) => <img key={p.id} src={p.hero} alt="" className={p.id === active ? 'on' : ''} data-low={p.lowres ? '' : undefined} loading="lazy" />)}
           <div className="board" />
         </div>
         <div>
@@ -255,8 +255,8 @@ function Know() {
     <section className="know" aria-labelledby="know-h" ref={ref}>
       <div className="wrap grid">
         <figure className="shape" data-reveal ref={px}>
-          <img src="products/30-jahre-ttb-2.webp" alt="30 Jahre Top-Trainer-Box, unser Exemplar, Seite mit Siegel" loading="lazy" width="483" height="791" />
-          <figcaption>30 Jahre Top-Trainer-Box, unser Exemplar</figcaption>
+          <img src="mood/siegel-s.webp" srcSet="mood/siegel-s.webp 700w, mood/siegel.webp 1400w" sizes="(max-width: 900px) 88vw, 40vw" alt="Hände prüfen die Folie einer versiegelten Box" loading="lazy" width="1045" height="1400" />
+          <figcaption>Folie prüfen, bevor es ins Paket geht</figcaption>
         </figure>
         <div>
           <h2 id="know-h" data-reveal>Gut zu wissen, bevor du bestellst</h2>

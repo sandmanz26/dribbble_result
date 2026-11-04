@@ -22,7 +22,7 @@ export function Item({ p, i = 0 }) {
     <article ref={self} className={`item ${p.stock === 0 ? 'out' : ''}`} data-item data-reveal style={{ '--i': i }}>
       {p.isNew && <span className="flag">Neu</span>}
       <TLink to={`/p/${p.id}`} className="pic" ref={tilt} aria-label={`${title(p)}, ${chf(p.price)}`} tabIndex={-1}>
-        <img ref={img} src={p.hero.replace('.webp', '-s.webp')} alt="" loading="lazy" style={{ viewTransitionName: `p-${p.id}` }} />
+        <img ref={img} src={p.lowres ? p.hero : p.hero.replace('.webp', '-s.webp')} data-low={p.lowres ? '' : undefined} alt="" loading="lazy" style={{ viewTransitionName: `p-${p.id}` }} />
       </TLink>
       <div className="meta">
         <TLink to={`/p/${p.id}`}>{title(p)}</TLink>

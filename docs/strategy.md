@@ -139,3 +139,22 @@ in for the shop's products, which stay the shop's own photos.
 New section "So verpacken wir": the heading stays pinned while three photo columns drift at different
 speeds (parallax), one per way of shipping. The pickup board shows the lake behind the Wetzikon sign,
 and the pickup page opens with the same picture.
+
+## 10. Image quality pass (owner: some pictures still looked bad)
+Audit of every picture against its display size. Worst was the footer, a 750 px phone photo stretched
+across the screen.
+
+- New generated images (gpt_image_2_5, high, 2K, 2.75 credits each): `mood/regal` (a pale oak wall
+  shelf with five open compartments of plain sealed boxes and packs, dusk, a Swiss village outside) now
+  the footer photo behind the name; `mood/siegel` (hands checking the film seam of a plain sealed box)
+  replaces the 483 px copy photo in "Gut zu wissen".
+- Upscaled the shop's own low-resolution copy photos with Higgsfield (bytedance upscale to 2K,
+  2 credits each), then checked every result for changed text: kept Ascended Heroes front, seal side and
+  logo side, the 30 Jahre TTB seal side and the 151 Mini-Tin example; rejected four (Boosterbundle front,
+  Perfect Order pack, both box backs) because the upscaler rewrote small print ("Herausforderung" became
+  "Heraustorderang", "Trading Card Game" became nonsense). For exact-copy photos, invented text is not
+  acceptable, so those stay at their original resolution.
+- The 360 px Boosterbundle picture is flagged `lowres` and is never shown larger than it can carry.
+- Footer credit names the AI-made mood pictures and the AI upscaling.
+
+Credits: second round 23.5 (9 upscales, 2 images); both rounds together 37.25 of the 45 offered.

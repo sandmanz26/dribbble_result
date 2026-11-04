@@ -40,7 +40,7 @@ export const PRODUCTS = [
   },
   {
     id: '30-jahre-boosterbundle-de', fach: 'bundles-boxen', kind: 'box',
-    name: '30 Jahre Boosterbundle', lang: 'DE', price: 84.9, stock: 1, added: '2026-10-28',
+    name: '30 Jahre Boosterbundle', lang: 'DE', price: 84.9, stock: 1, added: '2026-10-28', lowres: true,
     facts: [['Produktart', 'Boosterbundle, 6 Booster'], ['Set', '30 Jahre Pokémon'], ['Sprache', 'Deutsch'], ['Zustand', 'Neu, Folie intakt']],
     note: 'Neu und originalverpackt, Folie unbeschädigt.',
     hero: P('30-jahre-boosterbundle-de-0.webp'),

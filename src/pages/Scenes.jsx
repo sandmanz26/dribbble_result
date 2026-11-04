@@ -48,7 +48,7 @@ export function FachStack() {
                 <TLink to={to} className="btn sc-btn">{s.id === 'abholung' ? 'So läuft die Abholung' : 'Fach öffnen'}<GrFormNext aria-hidden="true" /></TLink>
               </div>
               <div className="sc-pics" aria-hidden="true">
-                {list.length ? list.map((p, j) => <img key={p.id} src={p.hero} alt="" loading="lazy" style={{ '--j': j }} />) : (
+                {list.length ? list.map((p, j) => <img key={p.id} src={p.hero} alt="" loading="lazy" data-low={p.lowres ? '' : undefined} style={{ '--j': j }} />) : (
                   <>
                     <img className="sc-photo" src="mood/pfaeffikersee.webp" alt="" loading="lazy" />
                     <div className="sc-sign"><GrLocation /><b>Wetzikon ZH</b><span>Bestellnummer mitbringen, Folie vor Ort prüfen.</span></div>
