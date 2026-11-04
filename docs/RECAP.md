@@ -210,6 +210,7 @@ Owner's own e-commerce work for proposals: vherkudara.id and suedeson.com (owner
 
 ### project23 and project24 (two briefs in one request, 40 Higgsfield credits)
 Owner asked to work as head of design with care for transitions and scrolling, use Unsplash where possible and keep images consistent. Unsplash search was blocked by a bot check in this environment, so both image sets were generated in one art direction each: project23 24 studio packshots (medium, 12 credits), project24 ten co-warehouse photos (one high, nine medium, 7.25 credits); 19.25 of 40 credits used. project23: Gulf co-op research (Kuwait shareholder dividend, Union Coop tiers), audit framed as hypotheses because the brief's app was not attached. project24: the painted floor zones are the palette; the brief asks for many colours, so one action colour (ink) and four colours that mean space types.
+Owner feedback after launch: department tiles looked disabled in dark mode (multiply blend on dark surfaces). Fixed: in dark mode packshots sit on their cream plate without blending. Lesson: never multiply-blend images over a surface that can turn dark.
 
 ## 6. Open items
 
