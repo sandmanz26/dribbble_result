@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { GrDeliver, GrLocation, GrView, GrFormDown, GrAdd, GrSubtract } from 'react-icons/gr'
 import { FAECHER, PRODUCTS, byId, chf, stockText, langText, title } from '../data/catalog.js'
 import { useTilt, useReveal, reduced, useScroll } from '../motion.js'
-import { FachStack, NewTrack, Marquee, Pack } from './Scenes.jsx'
+import { FachStack, NewTrack, Marquee } from './Scenes.jsx'
 import { AddButton } from '../ui.jsx'
 
 export default function Home() {
@@ -16,7 +16,6 @@ export default function Home() {
       <Shelf />
       <Exemplar />
       <Post />
-      <Pack />
       <Marquee />
       <Know />
       <Faq />
@@ -196,8 +195,6 @@ function Post() {
     const top = el.getBoundingClientRect().top + window.scrollY
     window.scrollTo({ top: top + span * ((Math.max(1, Math.min(9, m)) - 0.5) / 9), behavior: reduced() ? 'auto' : 'smooth' })
   }
-  const packs = ['pitch-black-booster-en-0', '30-jahre-booster-en-0', 'booster-perfect-order-en-0', 'pitch-black-booster-en-0', '30-jahre-booster-en-0', 'booster-perfect-order-en-0']
-  const rot = [-8, 5, -3, 9, -6, 4]
   return (
     <section className="post" ref={ref} data-s={s} aria-labelledby="post-h">
       <div className="sticky">
@@ -206,6 +203,7 @@ function Post() {
           <p className="word" aria-hidden="true" key={s}>{st.word.map((w) => <span key={w}>{w}</span>)}</p>
           <span className="price num">{st.price}</span>
           <p className="say">{st.say}</p>
+          <ol className="post-load" aria-hidden="true">{Array.from({ length: 8 }, (_, k) => <li key={k} className={`${k < Math.min(n, 8) && n < 9 ? 'in' : ''} ${k >= 6 ? 'over' : ''}`} />)}</ol>
           <div className="try">
             <span id="try-l">Probier es:</span>
             <div className="stepper" role="group" aria-labelledby="try-l">
@@ -215,21 +213,12 @@ function Post() {
             </div>
           </div>
         </div>
-        {s < 3 ? (
-          <div className={`env ${s === 2 ? 'parcel' : ''}`} aria-hidden="true">
-            <div className="back" />
-            {s < 2 && <div className="bubble" />}
-            {s === 2 && <img className={`box in`} src="products/pitch-black-etb-en-0.webp" alt="" />}
-            <div className="packs">
-              {packs.map((f, k) => <img key={k} src={`products/${f}.webp`} alt="" className={k < Math.min(n, 6) && s < 2 ? 'in' : ''} style={{ '--k': k, '--r': `${rot[k]}deg` }} />)}
-            </div>
-            {s === 2 && <div className="tape" />}
-            <div className="front" />
-            {s < 2 && <div className="stamp" />}
-          </div>
-        ) : (
-          <div className="env pickup" aria-hidden="true"><div className="pin"><div className="sign"><b>Abholung Wetzikon ZH</b><span>Bereit nach 2 bis 4 Tagen. Bestellnummer mitbringen, Folie gleich vor Ort prüfen.</span></div></div></div>
-        )}
+        <div className="post-pics" aria-hidden="true">
+          {['camp/brief', 'camp/dick', 'camp/paket', 'mood/pfaeffikersee'].map((src, i) => (
+            <img key={src} src={`${src}-s.webp`} srcSet={`${src}-s.webp 900w, ${src}.webp 1800w`} sizes="50vw" alt="" className={i === s ? 'on' : ''} loading="lazy" />
+          ))}
+          {s === 3 && <div className="post-sign"><b>Abholung Wetzikon ZH</b><span>Bereit nach 2 bis 4 Tagen. Bestellnummer mitbringen, Folie gleich vor Ort prüfen.</span></div>}
+        </div>
         <div className="dots" aria-hidden="true">{STAGES.map((_, i) => <i key={i} className={i === s ? 'on' : ''} />)}</div>
       </div>
     </section>

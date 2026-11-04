@@ -158,3 +158,27 @@ across the screen.
 - Footer credit names the AI-made mood pictures and the AI upscaling.
 
 Credits: second round 23.5 (9 upscales, 2 images); both rounds together 37.25 of the 45 offered.
+
+## 11. Campaign still lifes (owner: images need not follow the reference, be creative, it still looks rough)
+Instead of documentary pictures that imitate the shop's phone photos, one art-directed series: overhead
+studio still lifes on seamless paper in the brand's own fields (signal red, chocolate brown, dusty rose),
+hard soft-box light from the top left, crisp shadows, Swiss graphic layout with the empty side kept for
+type. Everything unprinted (plain silver foil packs, plain sealed boxes, navy card backs), so nothing
+poses as a real product. Six images (gpt_image_2_5, high, 2K, 16.5 credits) in `public/camp/`:
+
+| Image | Field | Used for |
+|---|---|---|
+| `booster` fan of seven foil packs | red | stacking board 02, Fach header 01 and 02 |
+| `boxen` three sealed boxes as a staircase | brown | stacking board 03, Fach header 03 |
+| `karten` grid of nine toploaders, one lifted | rose | stacking board 04, Fach header 04 |
+| `brief` two packs into a padded envelope | rose | post scene, Brief CHF 2 |
+| `dick` six packs fanning out of a full envelope | brown | post scene, Dicker Brief CHF 4 |
+| `paket` sealed box in kraft padding, tape | red | post scene, Paket CHF 9 |
+
+Changes: the boards take the photo's paper as their own field (text on the empty side); compartment
+headers carry the same photo on the right; the post scene's CSS-drawn envelope is gone and each stage
+crossfades to its photo, with a row of eight pack marks that fill as you add boosters (two past the
+gap mean parcel). The "So verpacken wir" section and its three documentary photos were removed as
+duplicates of the post scene. Real product photos stay in lists, the shelf and the product pages.
+
+Credits across all rounds: 53.75 of 65 offered.

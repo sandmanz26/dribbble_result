@@ -44,6 +44,8 @@ export function Boards({ items, per = 4 }) {
   return rows.map((r, k) => <div className="board-row" key={k}>{r.map((p, i) => <Item key={p.id} p={p} i={i} />)}</div>)
 }
 
+const HEAD = { neu: { tone: 'red', img: 'camp/booster' }, booster: { tone: 'red', img: 'camp/booster' }, 'bundles-boxen': { tone: 'dark', img: 'camp/boxen' }, einzelkarten: { tone: 'rose', img: 'camp/karten' } }
+
 export default function Fach() {
   const { id } = useParams()
   const f = fachOf(id)
@@ -63,7 +65,8 @@ export default function Fach() {
   if (!f) return <NotFound />
   return (
     <>
-      <section className="fach-head">
+      <section className={`fach-head tone-${HEAD[f.id].tone}`}>
+        <img className="fach-photo" src={`${HEAD[f.id].img}-s.webp`} srcSet={`${HEAD[f.id].img}-s.webp 900w, ${HEAD[f.id].img}.webp 1800w`} sizes="100vw" alt="" />
         <div className="wrap">
           <span className="no" aria-hidden="true" style={{ viewTransitionName: `fach-${f.id}` }}>{f.no}</span>
           <div><h1>{f.name}</h1><p>{f.line}. {all.length} {all.length === 1 ? 'Produkt' : 'Produkte'} im Fach.</p></div>
