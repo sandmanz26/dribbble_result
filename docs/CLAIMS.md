@@ -6,3 +6,5 @@ editing it. One row per branch or reserved project number. Delete your row when 
 | Branch or reservation | Session | Since | Working on |
 |---|---|---|---|
 | `claude/myelin-ai-brain` (project16) | cloud | 2026-10-30 | Second UI roast done and pushed; release when the owner signs off |
+| project23 (reserved, cooperative mobile app AR/EN) | cloud | 2026-11-04 | Audit, IA, white-label system and prototype |
+| project24 (reserved, Co-Ware co-warehousing website) | cloud | 2026-11-04 | Bold geometric website with scroll scenes |
