@@ -4,7 +4,7 @@ import { GrSearch, GrCart, GrClose, GrAdd, GrSubtract, GrMenu, GrFormDown } from
 import { useStore } from './store.jsx'
 import { FAECHER, PRODUCTS, chf, stockText, langText, title, byId } from './data/catalog.js'
 import { postFor, boosterLoad, METHODS, arrival, pickupReady, fmtDate } from './data/shipping.js'
-import { flyToCart } from './motion.js'
+import { flyToCart, useScroll, withTransition } from './motion.js'
 
 export function Mark() {
   return (
@@ -215,7 +215,7 @@ export function Drawer() {
               <div><span>{delivery === 'pickup' ? 'Abholung' : t.post?.name}</span><span className="num">{delivery === 'pickup' ? 'gratis' : t.post?.price === null ? 'im Checkout' : chf(t.ship)}</span></div>
               <div className="t"><span>Total</span><span className="num">{chf(t.total)}</span></div>
             </div>
-            <button className="btn buy wide" style={{ marginTop: 14 }} onClick={() => { close(); nav('/kasse') }}>Zur Kasse</button>
+            <button className="btn buy wide" style={{ marginTop: 14 }} onClick={() => { close(); withTransition(() => nav('/kasse')) }}>Zur Kasse</button>
             <p className="small muted" style={{ marginTop: 8 }}>Bezahlen mit TWINT, Karte, Apple Pay oder Google Pay.</p>
           </footer>
         )}
@@ -300,8 +300,9 @@ export function Footer() {
     else document.documentElement.dataset.theme = next
     try { localStorage.setItem('kr-theme-v1', next) } catch { /* ignore */ }
   }
+  const sc = useScroll()
   return (
-    <footer className="foot">
+    <footer className="foot" ref={sc}>
       <img src="products/ascended-heroes-etb-de-3.webp" alt="" loading="lazy" width="750" height="750" />
       <div className="wrap top">
         <div><h2>Regal</h2>{FAECHER.map((f) => <Link key={f.id} to={`/fach/${f.id}`}>{f.no} {f.name}</Link>)}</div>
@@ -310,7 +311,7 @@ export function Footer() {
         <div><h2>Darstellung</h2><button onClick={cycle} aria-label={`Darstellung: ${theme === 'auto' ? 'wie System' : theme === 'dark' ? 'dunkel' : 'hell'}. Wechseln`}>{theme === 'auto' ? 'Wie System' : theme === 'dark' ? 'Dunkel' : 'Hell'} <GrFormDown style={{ verticalAlign: 'middle' }} /></button><Link to="/review">Design review</Link><Link to="/system">Components</Link></div>
       </div>
       <div className="name">
-        <b aria-hidden="true">KARTENREGAL</b>
+        <b aria-hidden="true">{'KARTENREGAL'.split('').map((c, i) => <span key={i} style={{ '--i': i }}>{c}</span>)}</b>
         <div className="legal">
           <span>© 2026 Kartenregal TCG, unabhängiger Händler aus Wetzikon. Pokémon ist eine Marke von Nintendo, Creatures und GAME FREAK; Kartenregal steht mit diesen Firmen in keiner Verbindung.</span>
           <span>Fotos: Kartenregal und Hersteller</span>

@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useState } from 'react'
-import { Routes, Route, useLocation } from 'react-router-dom'
+import { useCallback, useEffect, useLayoutEffect, useState } from 'react'
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom'
+import { withTransition } from './motion.js'
 import { Header, Drawer, Toast, Search, Footer, ProtoStrip } from './ui.jsx'
 import Home from './pages/Home.jsx'
 import Fach from './pages/Fach.jsx'
@@ -28,8 +29,23 @@ export default function App() {
   const loc = useLocation()
   const [search, setSearch] = useState(false)
   const closeSearch = useCallback(() => setSearch(false), [])
+  const nav = useNavigate()
+  // Every in-app link changes page inside a view transition (where the browser has one).
   useEffect(() => {
-    window.scrollTo(0, 0)
+    const click = (e) => {
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return
+      const a = e.target.closest?.('a[href^="#/"]')
+      if (!a || a.target) return
+      const to = a.getAttribute('href').slice(1)
+      if (to === window.location.hash.slice(1)) return
+      e.preventDefault()
+      withTransition(() => nav(to))
+    }
+    document.addEventListener('click', click, true)
+    return () => document.removeEventListener('click', click, true)
+  }, [nav])
+  useLayoutEffect(() => { window.scrollTo(0, 0) }, [loc.pathname])
+  useEffect(() => {
     const t = TITLES.find(([r]) => r.test(loc.pathname))
     if (t && !/^\/(fach|p)\//.test(loc.pathname)) document.title = t[1].startsWith('Kartenregal') ? t[1] : `${t[1]} | Kartenregal TCG`
     const main = document.getElementById('main')

@@ -2,7 +2,8 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { GrDeliver, GrLocation, GrView, GrFormDown, GrAdd, GrSubtract } from 'react-icons/gr'
 import { FAECHER, PRODUCTS, byId, chf, stockText, langText, title } from '../data/catalog.js'
-import { useTilt, useReveal, reduced } from '../motion.js'
+import { useTilt, useReveal, reduced, useScroll } from '../motion.js'
+import { FachStack, NewTrack, Marquee } from './Scenes.jsx'
 import { AddButton } from '../ui.jsx'
 
 export default function Home() {
@@ -10,9 +11,12 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <FachStack />
+      <NewTrack />
       <Shelf />
       <Exemplar />
       <Post />
+      <Marquee />
       <Know />
       <Faq />
     </>
@@ -23,8 +27,9 @@ function Hero() {
   const tilt = useTilt({ max: 7 })
   const top = byId('ascended-heroes-etb-de')
   const img = useRef(null)
+  const sc = useScroll()
   return (
-    <section className="hero" aria-labelledby="hero-h">
+    <section className="hero" aria-labelledby="hero-h" ref={sc}>
       <div className="wrap">
         <div>
           <h1 id="hero-h"><span><i style={{ '--i': 0 }}>Pokémon-Karten</i></span><span><i style={{ '--i': 1 }}>aus Wetzikon</i></span></h1>
@@ -41,9 +46,9 @@ function Hero() {
         </div>
         <div className="stage" ref={tilt}>
           <div className="fan" aria-hidden="true">
-            <img className="pack a" src="products/pitch-black-booster-en-0.webp" alt="" width="602" height="1100" />
-            <img className="pack b" src="products/30-jahre-booster-en-0.webp" alt="" width="602" height="1100" />
-            <img className="pack c" src="products/booster-perfect-order-en-0.webp" alt="" width="602" height="1100" />
+            <span className="pk a"><img className="pack" src="products/pitch-black-booster-en-0.webp" alt="" width="602" height="1100" /></span>
+            <span className="pk b"><img className="pack" src="products/30-jahre-booster-en-0.webp" alt="" width="602" height="1100" /></span>
+            <span className="pk c"><img className="pack" src="products/booster-perfect-order-en-0.webp" alt="" width="602" height="1100" /></span>
             <div className="box"><img ref={img} src={top.hero} alt="" width="1100" height="1049" fetchpriority="high" /></div>
           </div>
           <div className="tagcard" data-item>
@@ -244,10 +249,11 @@ const POINTS = [
 
 function Know() {
   const ref = useReveal()
+  const px = useScroll()
   return (
     <section className="know" aria-labelledby="know-h" ref={ref}>
       <div className="wrap grid">
-        <figure className="shape" data-reveal>
+        <figure className="shape" data-reveal ref={px}>
           <img src="products/30-jahre-ttb-2.webp" alt="30 Jahre Top-Trainer-Box, unser Exemplar, Seite mit Siegel" loading="lazy" width="483" height="791" />
           <figcaption>30 Jahre Top-Trainer-Box, unser Exemplar</figcaption>
         </figure>

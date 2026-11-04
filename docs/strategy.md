@@ -105,3 +105,27 @@ labels and table text at their own sizes.
 - Registered-mail price for singles from CHF 50 is not on the site; shown as "im Checkout".
 - Flaw text per Pitch Black copy is read from the photos; confirm.
 - Figma file follows once the pages to cover are agreed.
+
+## 9. Scroll and transition pass (owner request: more scroll effects, better transitions)
+One shared scroll loop (`useScroll` in `src/motion.js`) writes progress variables (`--p`, `--pin`,
+`--out`, `--in`, page `--read`, scroll speed `--vel`) and CSS does the moving, so React does not
+re-render while scrolling.
+
+| Effect | Where | What it shows |
+|---|---|---|
+| Hero parallax | first screen | Text lifts and fades, the box sinks and shrinks, the booster fan opens outwards, the price tag swings on its pin |
+| Stacking compartments | "Vier Fächer, ein Regal" | Booster, Bundles & Boxen, Einzelkarten, Abholung as boards that slide up and settle; the one underneath shrinks and darkens like a drawer pushed in; pictures rise into each board |
+| Horizontal track | "Neu im Regal" | Vertical scroll moves the six new arrivals sideways (pinned), lime progress line; phones swipe with snap |
+| Marquee | before "Gut zu wissen" | Two bands of the shop's facts move with the scroll in opposite directions and lean with its speed |
+| Photo parallax | "Gut zu wissen", footer | The copy photo drifts inside its shape; the footer photo drifts and the name rises letter by letter |
+| Reading line | header | Lime line under the dark bar shows how far down the page you are |
+
+Route transitions (View Transitions API, every in-app link and the checkout steps): the old page lifts
+away, the new page is uncovered from the bottom like a drawer pulled out; the header holds still; the
+compartment number travels from its stacking board into the compartment page header; product pictures
+travel from lists into the product page; pictures that only exist on the new page wait until it is
+uncovered. Browsers without view transitions get the short rise-in. All of it is off under reduced
+motion (stack becomes a list, the track becomes a swipe row).
+
+Higgsfield: the owner offered 30 credits, but the connector in this session can only read the catalogue
+and history, not generate, so no images were generated. The shop's own photos remain the only pictures.

@@ -78,7 +78,10 @@ export function flyToCart(fromEl) {
 // Route change inside a view transition when the browser has one: the product picture keeps its place.
 export function withTransition(fn) {
   if (!document.startViewTransition || reduced()) { fn(); return }
-  document.startViewTransition(() => flushSync(fn))
+  const root = document.documentElement
+  root.classList.add('vt-on')
+  const t = document.startViewTransition(() => flushSync(fn))
+  t.finished.finally(() => root.classList.remove('vt-on'))
 }
 
 // A link that changes route inside a view transition, so the product picture travels to the product page.
@@ -94,3 +97,53 @@ export const TLink = forwardRef(function TLink({ to, onClick, ...rest }, ref) {
     withTransition(() => nav(to))
   } })
 })
+
+// One scroll loop for the whole page. Each registered element gets CSS variables it can use in calc():
+//   --p    0 when its top meets the bottom of the screen, 1 when its bottom leaves the top
+//   --pin  0..1 across the part where a sticky child is held (element taller than the screen)
+//   --out  0..1 as the element's own height scrolls past the top (for the hero)
+const watched = new Set()
+let looping = false, lastY = 0, vel = 0
+function frame() {
+  const vh = window.innerHeight
+  const y = window.scrollY
+  vel = vel * 0.85 + (y - lastY) * 0.15
+  lastY = y
+  document.documentElement.style.setProperty('--vel', Math.max(-1, Math.min(1, vel / 40)).toFixed(3))
+  const doc = document.documentElement
+  doc.style.setProperty('--read', (y / Math.max(1, doc.scrollHeight - vh)).toFixed(4))
+  watched.forEach((w) => {
+    const r = w.el.getBoundingClientRect()
+    if (r.bottom < -vh || r.top > vh * 2) return
+    const p = Math.min(1, Math.max(0, (vh - r.top) / (vh + r.height)))
+    const span = r.height - vh
+    const pin = span > 0 ? Math.min(1, Math.max(0, -r.top / span)) : 0
+    const out = Math.min(1, Math.max(0, -r.top / r.height))
+    w.el.style.setProperty('--p', p.toFixed(4))
+    w.el.style.setProperty('--pin', pin.toFixed(4))
+    w.el.style.setProperty('--out', out.toFixed(4))
+    w.el.style.setProperty('--in', Math.min(1, Math.max(0, (vh - r.top) / Math.min(vh, r.height))).toFixed(4))
+    w.cb?.({ p, pin, out, r, vh })
+  })
+  if (Math.abs(vel) > 0.05) requestAnimationFrame(frame)
+  else looping = false
+}
+function kick() { if (!looping) { looping = true; requestAnimationFrame(frame) } }
+if (typeof window !== 'undefined') {
+  window.addEventListener('scroll', kick, { passive: true })
+  window.addEventListener('resize', kick)
+}
+export function useScroll(cb) {
+  const ref = useRef(null)
+  const cbRef = useRef(cb)
+  cbRef.current = cb
+  useEffect(() => {
+    const el = ref.current
+    if (!el || reduced()) return
+    const w = { el, cb: (v) => cbRef.current?.(v) }
+    watched.add(w)
+    kick()
+    return () => watched.delete(w)
+  }, [])
+  return ref
+}

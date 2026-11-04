@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useStore } from '../store.jsx'
 import { chf, title, langText } from '../data/catalog.js'
 import { Delivery, Meter, totals } from '../ui.jsx'
+import { withTransition } from '../motion.js'
 
 const PAY = ['TWINT', 'Karte', 'Apple Pay', 'Google Pay']
 
@@ -45,7 +46,7 @@ export default function Checkout() {
     setTimeout(() => {
       const no = `KR-${String(1000 + Math.floor((Date.now() / 1000) % 9000))}`
       dispatch({ type: 'order', order: { no, at: new Date().toISOString(), lines: lines.map((l) => ({ id: l.id, copy: l.copy, qty: l.qty, price: l.p.price })), delivery, window: win, pay: v.pay, total: t.total, ship: t.ship, method: delivery === 'pickup' ? 'Abholung in Wetzikon' : t.post?.name, email: v.email, city: v.city } })
-      nav(`/danke/${no}`)
+      withTransition(() => nav(`/danke/${no}`))
     }, 1100)
   }
   const F = ({ k, label, cls = '', type = 'text', auto, help, inputMode }) => (

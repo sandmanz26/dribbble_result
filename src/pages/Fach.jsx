@@ -65,7 +65,7 @@ export default function Fach() {
     <>
       <section className="fach-head">
         <div className="wrap">
-          <span className="no" aria-hidden="true">{f.no}</span>
+          <span className="no" aria-hidden="true" style={{ viewTransitionName: `fach-${f.id}` }}>{f.no}</span>
           <div><h1>{f.name}</h1><p>{f.line}. {all.length} {all.length === 1 ? 'Produkt' : 'Produkte'} im Fach.</p></div>
         </div>
       </section>

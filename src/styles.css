@@ -126,6 +126,7 @@ ul, ol { padding: 0; list-style: none; }
 
 /* Route wipe and reveals */
 .page { animation: page-in .5s var(--ease-out) both; }
+html.vt-on .page { animation: none; }
 @keyframes page-in { from { opacity: 0; transform: translateY(14px); } }
 [data-reveal] { opacity: 0; transform: translateY(26px); transition: opacity .7s var(--ease-out), transform .9s var(--ease-out); transition-delay: calc(var(--i, 0) * 70ms); }
 [data-reveal].is-in { opacity: 1; transform: none; }
@@ -149,18 +150,21 @@ ul, ol { padding: 0; list-style: none; }
 
 .stage { position: relative; height: 100%; min-height: 560px; perspective: 1400px; align-self: stretch; }
 .fan { position: absolute; inset: 0; transform-style: preserve-3d; transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); }
-.fan .pack { position: absolute; bottom: 30%; width: 20%; filter: drop-shadow(0 24px 30px rgb(60 0 0 / .45)); animation: deal 1.1s var(--ease-out) both; }
-.fan .pack.a { left: 4%; --r: -14deg; --tz: -60px; animation-delay: .35s; }
-.fan .pack.b { left: 19%; --r: -6deg; --tz: -30px; animation-delay: .45s; bottom: 36%; }
-.fan .pack.c { right: -2%; --r: 11deg; --tz: -50px; animation-delay: .55s; }
-.fan .pack { transform: translateZ(var(--tz)) rotate(var(--r)); }
+/* Each pack sits in a wrapper: the wrapper moves with scroll (the fan opens), the image deals in and bobs. */
+.fan .pk { position: absolute; bottom: 30%; width: 20%; transform-style: preserve-3d; transition: none; }
+.fan .pk.a { left: 4%; --r: -14deg; --tz: -60px; --dx: -90px; --dr: -10deg; transform: translate3d(calc(var(--out, 0) * var(--dx)), calc(var(--out, 0) * -40px), var(--tz)) rotate(calc(var(--r) + var(--out, 0) * var(--dr))); }
+.fan .pk.b { left: 19%; bottom: 36%; --r: -6deg; --tz: -30px; --dx: -30px; --dr: -6deg; transform: translate3d(calc(var(--out, 0) * var(--dx)), calc(var(--out, 0) * -90px), var(--tz)) rotate(calc(var(--r) + var(--out, 0) * var(--dr))); }
+.fan .pk.c { right: -2%; --r: 11deg; --tz: -50px; --dx: 70px; --dr: 12deg; transform: translate3d(calc(var(--out, 0) * var(--dx)), calc(var(--out, 0) * -60px), var(--tz)) rotate(calc(var(--r) + var(--out, 0) * var(--dr))); }
+.fan .pack { width: 100%; filter: drop-shadow(0 24px 30px rgb(60 0 0 / .45)); }
+.fan .pk.a .pack { animation: deal 1.1s var(--ease-out) .35s both, bob 6s ease-in-out 1.6s infinite; }
+.fan .pk.b .pack { animation: deal 1.1s var(--ease-out) .45s both, bob 7s ease-in-out 2.2s infinite; }
+.fan .pk.c .pack { animation: deal 1.1s var(--ease-out) .55s both, bob 6.5s ease-in-out 1.9s infinite; }
 @keyframes bob { 50% { translate: 0 -10px; } }
-.fan .pack.a { animation: deal 1.1s var(--ease-out) .35s both, bob 6s ease-in-out 1.6s infinite; }
-.fan .pack.b { animation: deal 1.1s var(--ease-out) .45s both, bob 7s ease-in-out 2.2s infinite; }
-.fan .pack.c { animation: deal 1.1s var(--ease-out) .55s both, bob 6.5s ease-in-out 1.9s infinite; }
-@keyframes deal { from { opacity: 0; transform: translateZ(var(--tz)) translateY(40%) rotate(0deg); } }
+@keyframes deal { from { opacity: 0; transform: translateY(40%) rotate(-8deg); } }
 .fan .box { position: absolute; left: 24%; right: -2%; bottom: -3%; transform: translateZ(40px); animation: box-in 1.2s var(--ease-out) .15s both; }
-.fan .box img { width: 100%; filter: drop-shadow(0 40px 50px rgb(50 0 0 / .5)); }
+.fan .box img { width: 100%; filter: drop-shadow(0 40px 50px rgb(50 0 0 / .5)); transform: translateY(calc(var(--out, 0) * 120px)) scale(calc(1 - var(--out, 0) * .1)); }
+.hero .wrap > div:first-child { transform: translateY(calc(var(--out, 0) * -70px)); opacity: calc(1 - var(--out, 0) * 1.4); }
+.tagcard { rotate: calc(var(--out, 0) * 14deg); translate: 0 calc(var(--out, 0) * 60px); }
 @keyframes box-in { from { opacity: 0; transform: translateZ(40px) translateY(18%) scale(.94); } }
 .tagcard { position: absolute; z-index: 3; right: 2%; top: 6%; width: min(300px, 46%); background: var(--surface); color: var(--ink); padding: 16px 16px 14px; transform: translateZ(90px) rotate(2deg); border: 2px solid var(--ink); animation: tag-in 1s var(--ease-spring) .8s both; transform-origin: top center; }
 .tagcard::before { content: ''; position: absolute; top: -9px; left: 50%; width: 14px; height: 14px; margin-left: -7px; background: var(--bar); border-radius: 50%; box-shadow: 0 0 0 3px var(--surface); }
@@ -647,3 +651,118 @@ ul, ol { padding: 0; list-style: none; }
 }
 ::view-transition-old(root), ::view-transition-new(root) { animation-duration: .35s; }
 ::view-transition-group(*) { animation-duration: .55s; animation-timing-function: cubic-bezier(.16, 1, .3, 1); }
+
+/* Header: reading progress */
+.bar::after { content: ''; position: absolute; left: 0; bottom: 0; height: 3px; width: 100%; background: var(--lime); transform-origin: left; transform: scaleX(var(--read, 0)); }
+.bar { position: sticky; }
+.bar, .proto { view-transition-name: none; }
+.bar { view-transition-name: bar; }
+
+/* STACK: compartments that slide up and settle on each other */
+.stack { padding-block: clamp(64px, 8vw, 120px) 40px; }
+.stack-h { font-size: var(--step-head); font-weight: 700; letter-spacing: -0.035em; line-height: 1; margin-bottom: 40px; }
+.stack-list { display: grid; gap: 28px; }
+.sc { position: sticky; top: calc(84px + var(--k) * 26px); min-height: min(72svh, 640px); display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 24px; padding: clamp(24px, 3.4vw, 56px); overflow: hidden; transform-origin: 50% 0; transform: scale(calc(1 - var(--cover, 0) * .07)); filter: brightness(calc(1 - var(--cover, 0) * .35)); border: 2px solid var(--ink); }
+.sc.tone-light { background: var(--surface); color: var(--ink); }
+.sc.tone-dark { background: var(--bar); color: var(--on-bar); border-color: var(--bar); }
+.sc.tone-red { background: var(--red); color: var(--on-red); border-color: var(--red); }
+.sc.tone-rose { background: var(--surface-2); color: var(--ink); }
+.sc-text { display: flex; flex-direction: column; align-items: flex-start; z-index: 2; }
+.sc-no { font-size: clamp(5rem, 2rem + 9vw, 12rem); font-weight: 800; letter-spacing: -0.07em; line-height: .78; color: var(--red-ink); }
+.sc.tone-dark .sc-no { color: var(--red); }
+.sc.tone-red .sc-no { color: var(--on-red); }
+.sc h3 { margin-top: 20px; font-size: clamp(2rem, 1.2rem + 2.6vw, 3.5rem); font-weight: 700; letter-spacing: -0.035em; line-height: 1; }
+.sc p { margin-top: 14px; font-size: var(--step-lead); line-height: 1.4; max-width: 28ch; }
+.sc .sc-count { margin-top: auto; padding-top: 24px; font-size: var(--step-small); font-weight: 600; }
+.sc-btn { margin-top: 14px; border-color: currentColor; color: inherit; }
+.sc-btn svg path, .sc-btn svg polyline { stroke: currentColor; }
+.sc-pics { position: relative; min-height: 320px; }
+.sc-pics img { position: absolute; bottom: 0; width: 38%; max-height: 92%; object-fit: contain; object-position: bottom; left: calc(8% + var(--j) * 28%); transform: translateY(calc((1 - var(--enter, 1)) * (90px + var(--j) * 60px))) rotate(calc((var(--j) - 1) * 6deg)); filter: drop-shadow(0 20px 24px rgb(0 0 0 / .3)); }
+.sc-sign { position: absolute; inset: auto 0 0 auto; width: min(360px, 100%); padding: 24px; background: var(--on-red); color: var(--ink); border: 2px solid var(--ink); transform: rotate(-3deg) translateY(calc((1 - var(--enter, 1)) * 80px)); }
+.sc-sign svg { width: 28px; height: 28px; }
+.sc-sign svg path, .sc-sign svg circle { stroke: currentColor; }
+.sc-sign b { display: block; margin-top: 10px; font-size: 1.75rem; letter-spacing: -0.03em; }
+.sc-sign span { display: block; margin-top: 6px; }
+@media (max-width: 800px) {
+  .sc { grid-template-columns: 1fr; min-height: 0; gap: 8px; padding: 22px; top: calc(100px + var(--k) * 14px); }
+  .sc-no { font-size: 4.5rem; }
+  .sc h3 { margin-top: 10px; }
+  .sc-pics { min-height: 0; height: 190px; }
+  .sc .sc-count { padding-top: 16px; }
+  .sc-pics img { width: 46%; left: calc(var(--j) * 26%); }
+  .sc-sign { width: 100%; padding: 14px; }
+  .sc-sign b { font-size: 1.25rem; }
+  .sc-sign span { display: none; }
+  .sc p { font-size: 1.0625rem; }
+}
+
+/* TRACK: new arrivals moving sideways while you scroll down */
+.track { position: relative; background: var(--bar); color: var(--on-bar); }
+.track-stick { position: sticky; top: 64px; height: calc(100svh - 64px); display: grid; grid-template-rows: auto minmax(0, 1fr) auto; overflow: hidden; padding-block: 40px 28px; }
+.track-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; }
+.track-head h2 { font-size: var(--step-head); font-weight: 700; letter-spacing: -0.035em; line-height: 1; }
+.track-head .link:hover { color: var(--lime); }
+.track-view { overflow: hidden; padding-block: 28px; }
+.track-row { display: flex; gap: clamp(16px, 2.4vw, 32px); height: 100%; padding-inline: var(--gutter); will-change: transform; }
+.tcard { flex: none; width: clamp(260px, 26vw, 380px); display: grid; grid-template-rows: minmax(0, 1fr) auto; background: var(--surface); color: var(--ink); border: 2px solid var(--surface); }
+.tcard:nth-child(3n + 2) { transform: translateY(5%); }
+.tcard:nth-child(3n) { transform: translateY(-3%); }
+.tpic { position: relative; display: block; min-height: 0; overflow: hidden; background: var(--surface-2); }
+.tpic img { position: absolute; inset: 8%; width: 84%; height: 84%; object-fit: contain; transition: transform .6s var(--ease-out); }
+.tcard:hover .tpic img { transform: scale(1.06) rotate(-2deg); }
+.tmeta { padding: 14px 16px 16px; display: grid; gap: 4px; }
+.tno { font-size: var(--step-small); font-weight: 600; color: var(--red-ink); }
+.tname { font-weight: 600; font-size: 1.125rem; line-height: 1.25; text-decoration: none; }
+.tname:hover { text-decoration: underline; }
+.tbuy { margin-top: 8px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.tbuy b { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.015em; }
+.track-bar { height: 3px; background: color-mix(in srgb, var(--on-bar) 22%, transparent); }
+.track-bar i { display: block; height: 100%; background: var(--lime); transform-origin: left; transform: scaleX(var(--pin, 0)); }
+@media (max-width: 699px) {
+  .track-stick { position: relative; top: 0; height: auto; }
+  .track-view { overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .track-view::-webkit-scrollbar { display: none; }
+  .track-row { height: auto; }
+  .tcard { width: 72vw; scroll-snap-align: start; height: 440px; transform: none !important; }
+  .track-bar { display: none; }
+}
+
+/* MARQUEE: moves with the scroll, leans with its speed */
+.mq { overflow: hidden; padding-block: 0; }
+.mq-band { overflow: hidden; }
+.mq-band.b1 { background: var(--red); color: var(--on-red); }
+.mq-band.b2 { background: var(--bar); color: var(--lime); }
+.mq-row { display: flex; width: max-content; white-space: nowrap; font-size: clamp(2.25rem, 1rem + 4.4vw, 5.5rem); font-weight: 800; letter-spacing: -0.045em; line-height: 1.05; padding-block: 14px 18px; }
+.mq-row span { display: inline-flex; align-items: center; gap: .35em; padding-right: .35em; }
+.mq-row span i { display: inline-block; width: .5em; height: .5em; background: currentColor; transform: rotate(45deg) scale(.5); }
+.mq .r1 { transform: translateX(calc(var(--p, 0) * -33.3%)) skewX(calc(var(--vel, 0) * -8deg)); }
+.mq .r2 { transform: translateX(calc(-33.3% + var(--p, 0) * 33.3%)) skewX(calc(var(--vel, 0) * -8deg)); }
+
+/* Photo parallax and the footer name rising */
+.know .shape img { transform: translateY(calc((var(--p, .5) - .5) * -90px)) scale(1.18); transition: none; }
+.foot > img { transform: translateY(calc((1 - var(--p, 1)) * -12%)) scale(1.12); }
+.foot .name b span { display: inline-block; transform: translateY(calc((1 - max(0, min(1, var(--in, 1) * 1.3 - .25 - var(--i) * .03))) * 110%)); }
+.foot .name b { overflow: hidden; padding-bottom: .08em; }
+
+/* Route transitions: the old page lifts away, the new one is uncovered from the bottom like a drawer pulled out.
+   The header, the shelf numbers and product pictures keep their place and morph between pages. */
+@keyframes vt-out { to { opacity: .0; transform: translateY(-48px) scale(.98); } }
+@keyframes vt-in { from { clip-path: inset(100% 0 0 0); transform: translateY(40px); } to { clip-path: inset(0 0 0 0); transform: none; } }
+::view-transition-old(root) { animation: vt-out .5s cubic-bezier(.5, 0, .75, 0) both; }
+::view-transition-new(root) { animation: vt-in .75s cubic-bezier(.16, 1, .3, 1) both; }
+::view-transition-group(bar) { animation: none; }
+/* Pictures that exist only on the new page wait until the page is uncovered; ones that exist on both morph. */
+@keyframes vt-fade { from { opacity: 0; transform: translateY(24px); } }
+::view-transition-new(*):only-child { animation: vt-fade .45s cubic-bezier(.16, 1, .3, 1) .35s both; }
+::view-transition-old(*):only-child { animation: vt-out .3s ease both; }
+::view-transition-image-pair(bar) { isolation: auto; }
+::view-transition-old(bar), ::view-transition-new(bar) { animation: none; mix-blend-mode: normal; }
+@media (prefers-reduced-motion: reduce) {
+  .sc { position: relative; top: 0; transform: none; filter: none; }
+  .mq .r1, .mq .r2 { transform: none; }
+  .fan .pk { transform: none !important; }
+  .track-stick { position: relative; top: 0; height: auto; }
+  .track-view { overflow-x: auto; }
+  .track-row { height: 460px; }
+  .foot .name b span { transform: none; }
+}
