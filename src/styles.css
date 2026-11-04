@@ -149,6 +149,10 @@ a { color: inherit; }
 .cats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 0 16px; }
 .cat { display: grid; justify-items: center; gap: 6px; padding: 10px 6px 12px; border-radius: var(--r); background: var(--surface); text-decoration: none; text-align: center; font-size: 13px; font-weight: 500; }
 .cat img { width: 64px; height: 64px; object-fit: contain; mix-blend-mode: multiply; }
+@media (prefers-color-scheme: dark) {
+  .cat img, .deal img { mix-blend-mode: normal; background: var(--plate); border-radius: 14px; }
+  .deal img { width: 100px; height: 100px; }
+}
 .foot-note { padding: 20px 16px 0; color: var(--muted); font-size: 12px; }
 
 /* Product card */
