@@ -328,4 +328,4 @@ Prototype: https://proposal-virid-eight.vercel.app/project22/
 Password: kt-9vqe-2mlx
 (Start with "Design review (EN)" in the green bar at the top. Then add a few boosters and open the basket to see the letter fill up, or open Pitch Black ETB and choose a copy.)
 
-The prototype uses your real products, prices and photos from 3 November 2026. Nothing is ordered or paid.
+The products, prices and photos in the prototype are taken from your current site as it looked on 3 November 2026. Nothing is ordered or paid.
