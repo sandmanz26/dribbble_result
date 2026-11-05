@@ -1,0 +1,102 @@
+<!doctype html>
+<!-- Builds public/3d/bag.glb: a stand-up coffee pouch with a rolled top, a tin tie and a round label.
+     Materials are named so the site can tint the paper and swap the label per coffee.
+     Run: serve the project root, open this page in a browser, call make(). -->
+<html><head><meta charset="utf-8">
+<script type="importmap">{ "imports": { "three": "../node_modules/three/build/three.module.js", "three/addons/": "../node_modules/three/examples/jsm/" } }</script>
+</head><body>
+<script type="module">
+import * as THREE from 'three'
+import { GLTFExporter } from 'three/addons/exporters/GLTFExporter.js'
+
+const W = 1.0, H = 1.62, D = 0.5
+const thick = (t) => {
+  // full gusset at the bottom, easing to a pinched seal under the roll
+  if (t < 0.62) return D / 2 * (1 - 0.12 * t)
+  const k = Math.min(1, (t - 0.62) / 0.26)
+  const e = k * k * (3 - 2 * k)
+  return D / 2 * (1 - 0.12 * t) * (1 - e) + 0.03 * e
+}
+const bulge = (x) => 1 - 0.5 * Math.pow(Math.abs(2 * x / W), 2.4)
+const surfaceZ = (x, y) => thick(y / H) * bulge(x)
+
+function paperTexture() {
+  const c = document.createElement('canvas'); c.width = c.height = 256
+  const g = c.getContext('2d')
+  g.fillStyle = '#f4f1ec'; g.fillRect(0, 0, 256, 256)
+  const img = g.getImageData(0, 0, 256, 256), d = img.data
+  for (let i = 0; i < d.length; i += 4) { const n = (Math.random() - .5) * 14; d[i] += n; d[i + 1] += n; d[i + 2] += n }
+  g.putImageData(img, 0, 0)
+  g.globalAlpha = .08; g.strokeStyle = '#8a8070'
+  for (let i = 0; i < 130; i++) { const x = Math.random() * 256, y = Math.random() * 256, a = Math.random() * Math.PI; g.lineWidth = Math.random() * 1.2; g.beginPath(); g.moveTo(x, y); g.lineTo(x + Math.cos(a) * 10, y + Math.sin(a) * 10); g.stroke() }
+  const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.colorSpace = THREE.SRGBColorSpace
+  return t
+}
+function labelTexture() {
+  const c = document.createElement('canvas'); c.width = c.height = 128
+  const g = c.getContext('2d')
+  g.fillStyle = '#fbf5ea'; g.fillRect(0, 0, 128, 128)
+  g.fillStyle = '#c8372d'; g.beginPath(); g.arc(64, 58, 15, 0, Math.PI * 2); g.fill()
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.flipY = false
+  return t
+}
+
+window.make = async () => {
+  const scene = new THREE.Scene()
+  const paper = new THREE.MeshStandardMaterial({ name: 'paper', color: 0xffffff, roughness: .93, metalness: 0, map: paperTexture() })
+  const label = new THREE.MeshStandardMaterial({ name: 'label', color: 0xffffff, roughness: .8, metalness: 0, map: labelTexture() })
+  const tie = new THREE.MeshStandardMaterial({ name: 'tie', color: 0xb8b2a8, roughness: .35, metalness: .85 })
+
+  // Body: a box pushed into a soft pillow that pinches at the top.
+  const body = new THREE.BoxGeometry(W, H * 0.9, D, 48, 72, 24)
+  body.translate(0, H * 0.45, 0)
+  const p = body.attributes.position
+  for (let i = 0; i < p.count; i++) {
+    let x = p.getX(i), y = p.getY(i), z = p.getZ(i)
+    const t = y / H, zn = z / (D / 2)
+    z = zn * surfaceZ(x, y)
+    x = x * (1 - 0.05 * zn * zn) * (1 - 0.03 * t)
+    if (t < 0.04) y = y + 0.035 * zn * zn * (1 - t / 0.04)
+    z += Math.sin(x * 17 + y * 11) * 0.003 * Math.abs(zn) + Math.sin(y * 31) * 0.002 * Math.abs(zn)
+    p.setXYZ(i, x, y, z)
+  }
+  body.computeVertexNormals()
+  const uv = body.attributes.uv
+  for (let i = 0; i < uv.count; i++) uv.setXY(i, uv.getX(i) * 1.5, uv.getY(i) * 2.4)
+  scene.add(new THREE.Mesh(body, paper))
+
+  // Rolled top fold.
+  const roll = new THREE.CylinderGeometry(0.075, 0.075, W * 0.99, 40, 1, false)
+  roll.rotateZ(Math.PI / 2); roll.scale(1, 1.05, 1.25)
+  roll.translate(0, H * 0.875, 0.025)
+  scene.add(new THREE.Mesh(roll, paper))
+  const cap = new THREE.BoxGeometry(W * 0.97, 0.06, 0.05); cap.translate(0, H * 0.915, 0)
+  scene.add(new THREE.Mesh(cap, paper))
+
+  // Tin tie along the roll, with the two folded tabs.
+  const strip = new THREE.BoxGeometry(W * 0.62, 0.028, 0.014); strip.translate(0, H * 0.875, 0.12)
+  scene.add(new THREE.Mesh(strip, tie))
+  for (const s of [-1, 1]) {
+    const tab = new THREE.BoxGeometry(0.03, 0.05, 0.014); tab.translate(s * W * 0.31, H * 0.86, 0.122)
+    scene.add(new THREE.Mesh(tab, tie))
+  }
+
+  // Round label that follows the curve of the front.
+  const R = 0.27, cy = H * 0.47
+  const lab = new THREE.CircleGeometry(R, 80)
+  const lp = lab.attributes.position
+  for (let i = 0; i < lp.count; i++) { const x = lp.getX(i), y = lp.getY(i) + cy; lp.setXYZ(i, x, y, surfaceZ(x, y) + 0.014) }
+  lab.computeVertexNormals()
+  const luv = lab.attributes.uv
+  for (let i = 0; i < luv.count; i++) luv.setY(i, 1 - luv.getY(i))
+  scene.add(new THREE.Mesh(lab, label))
+
+  scene.position.y = -H * 0.45
+  const ex = new GLTFExporter()
+  const buf = await new Promise((res, rej) => ex.parse(scene, res, rej, { binary: true }))
+  const bytes = new Uint8Array(buf); let s = ''
+  for (let i = 0; i < bytes.length; i += 0x8000) s += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000))
+  return btoa(s)
+}
+window.ready = true
+</script></body></html>
