@@ -217,6 +217,8 @@ Owner feedback after launch: department tiles looked disabled in dark mode (mult
 ### gvhmxvg and jjbkpcm (Coffee E-Commerce UI/UX Design & Dev, $250; KhangoSupps Landing Page Design, $250; 40 Higgsfield credits)
 Owner asked for random URLs instead of projectN, as senior product designer and creative head. Credits used: 24.5 of 40 (24 images at medium 12, one 5 s 480p video 12.5). Three 3D attempts on Higgsfield failed and were refunded (SAM 3D, Tripo); Meshy and Hunyuan cost 15 to 20 credits, so the coffee bag GLB was built in code with three.js instead (`tools/make-bag.html`), which also lets the site change paper colour and label per coffee. A first video from the sprinter photo was rejected by the provider's filter (refunded); a product shot clip worked. Model-viewer 4.4 throws if `orientation` is set (AR renderer bug), so scroll turns the camera orbit instead.
 
+Proposal rules from 5 Nov 2026 (owner): put the prototype link and password in paragraph 2 or 3 so it is easy to find; never include a price or estimate (the owner sets prices); do not name vherkudara.id or suedeson.com; every proposal says the owner can help with both design and build.
+
 ## 6. Open items
 
 - project9: generate the hero tiles, metal card and panel renders in Higgsfield once the generation

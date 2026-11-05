@@ -393,6 +393,10 @@ Prices, units and dates are samples, and the photos are AI-generated concept ima
 
 Hi! A quick note first: what you will see is a draft, built before we have spoken, as proof that I take your project seriously. I would rather show you how I think than describe it, and the brand, coffees and prices in it are samples that change to yours once we talk.
 
+Prototype: https://proposal-virid-eight.vercel.app/gvhmxvg/
+Password: bf-vf0i-gmxc
+(Drag the bag in the hero, pick another coffee from the colour dots, try Brew match, then add a bag and go through checkout.)
+
 **The idea:** coffee is a fruit. Each bag is painted the colour of the fruit you taste in the cup, so the shop reads like a taste map, and the bag is a real 3D object you can turn in your hand.
 
 **What the draft shows:**
@@ -403,25 +407,21 @@ Hi! A quick note first: what you will see is a draft, built before we have spoke
 - A subscription builder, origins with farm details, and a roast-day countdown that gives people a reason to order now.
 - Scroll and motion with a purpose: a pinned "from cherry to cup" story, cards that lean toward the pointer, and the bag that travels from the card to its page.
 
-**Development support:** the draft is already built in React, so the same code can become your production front-end and connect to your store platform.
+**Design and build:** I can help with both. The draft is already built in React, so the same code can become your production front-end and connect to your store platform.
 
-**Deliverables after we agree the scope:** refined design for desktop and mobile in Figma with components, then the front-end. The Figma file follows once the scope is agreed.
-
-**Estimate:** $250 covers the design direction and the core pages shown (home, product page, bag and checkout) for your brand. Extra pages or store integration can be quoted once I have seen your platform.
-
-E-commerce work: vherkudara.id and suedeson.com (web design and development).
+**After we agree the scope:** refined design for desktop and mobile in Figma with components, then the front-end. The Figma file follows once the scope is agreed.
 
 My portfolio: createdybdaniel.com
 
-Prototype: https://proposal-virid-eight.vercel.app/gvhmxvg/
-Password: bf-vf0i-gmxc
-(Drag the bag in the hero, pick another coffee from the colour dots, try Brew match, then add a bag and go through checkout.)
-
-Brand, coffees, farms and prices are samples. Images and the 3D bag are AI-generated or built for this draft. Nothing is charged.
+Brand, coffees, farms and prices in the draft are samples. Images and the 3D bag are AI-generated or built for this draft. Nothing is charged.
 
 ## jjbkpcm, KhangoSupps (KhangoSupps Landing Page Design)
 
 Hi! A quick note first: what you will see is a draft, built before we have spoken, as proof that I take your project seriously. I would rather show you how I think than describe it, and everything in it changes to your real products, numbers and reviews once we talk.
+
+Prototype: https://proposal-virid-eight.vercel.app/jjbkpcm/
+Password: ks-h9h1-mnky
+(Pick a flavour in the hero, scroll through the day, and open one of the three squeeze pages from "Who it is for".)
 
 **The idea:** "stay ready" is a time of day. Five in the morning on the track, seven after a night shift, half past six before the school run. The page tells the brand story through those hours, and each hour becomes its own squeeze page.
 
@@ -433,16 +433,10 @@ Hi! A quick note first: what you will see is a draft, built before we have spoke
 - A starter pack offer with one email field, the low-risk first step for a protein brand that sells on taste.
 - Persona squeeze pages for athletes, shift workers and busy parents, built from the same blocks: photo, promise, three reasons, the label, one review and the offer. A new audience or a new state in the national rollout is a new set of words, not a new design.
 
-**Development support:** the draft is built in React, so the same code can become the production page.
+**Design and build:** I can help with both. The draft is built in React, so the same code can become the production page.
 
-**Deliverables after we agree the scope:** the landing page and squeeze-page templates in Figma with components, then the front-end. The Figma file follows once the scope is agreed.
-
-**Estimate:** $250 covers the landing page design and the squeeze-page template shown in the draft, adapted to your products and brand. More personas or state pages can be added from the same template.
+**After we agree the scope:** the landing page and squeeze-page templates in Figma with components, then the front-end. The Figma file follows once the scope is agreed.
 
 My portfolio: createdybdaniel.com
 
-Prototype: https://proposal-virid-eight.vercel.app/jjbkpcm/
-Password: ks-h9h1-mnky
-(Pick a flavour in the hero, scroll through the day, and open one of the three squeeze pages from "Who it is for".)
-
-Product names, nutrition, prices and reviews are samples. Photos, packshots and the video are AI-generated concept images.
+Product names, nutrition, prices and reviews in the draft are samples. Photos, packshots and the video are AI-generated concept images.
