@@ -25,6 +25,8 @@
   { "slug": "project22", "branch": "claude/kartenregal-tcg-shop", "title": "Kartenregal Swiss TCG shop review and redesign" },
   { "slug": "project23", "branch": "claude/coop-app-ar-en", "title": "Cooperative app redesign, Arabic and English, white label" },
   { "slug": "project24", "branch": "claude/coware-cowarehousing", "title": "Co-Ware co-warehousing website" },
+  { "slug": "gvhmxvg", "branch": "claude/coffee-ecommerce-3d", "title": "Ripe coffee e-commerce with a 3D bag" },
+  { "slug": "jjbkpcm", "branch": "claude/khangosupps-landing", "title": "KhangoSupps retro landing page" },
   { "slug": "hotshoe", "branch": "claude/hotshoe-pixel-sync", "title": "Hotshoe pixel camera sync UI" },
   { "slug": "selvedge", "branch": "claude/selvedge-retail-os", "title": "Selvedge retail operating system" }
 ]

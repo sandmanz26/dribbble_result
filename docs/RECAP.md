@@ -85,6 +85,8 @@ Live site: `https://proposal-virid-eight.vercel.app/<slug>/` (root and unknown p
 | project21 | cr-a4ij-fhg7 | Riuh Studio, creator dashboard and CRM for a Jakarta talent agency | Web app |
 | project23 | cp-7hx2-qm4v | Cooperative app redesign, Arabic and English, white label | Mobile app |
 | project24 | cw-3rb8-ny6k | Co-Ware co-warehousing website | Website |
+| gvhmxvg | bf-vf0i-gmxc | Ripe coffee e-commerce with a 3D bag | Website (shop) |
+| jjbkpcm | ks-h9h1-mnky | KhangoSupps retro landing page | Landing page |
 | project22 | kt-9vqe-2mlx | Kartenregal, review and redesign of a Swiss Pokémon card shop | Website (shop) + review |
 | project20 | ro-zdxa-uv3w | Rolling, phone app for film and TV crew, creatives and production | Mobile app |
 | rawat | fd-w8tq-3jxc | Rawat, clinic operations for an Indonesian primary clinic (owner's portfolio piece) | Web app |
@@ -211,6 +213,9 @@ Owner's own e-commerce work for proposals: vherkudara.id and suedeson.com (owner
 ### project23 and project24 (two briefs in one request, 40 Higgsfield credits)
 Owner asked to work as head of design with care for transitions and scrolling, use Unsplash where possible and keep images consistent. Unsplash search was blocked by a bot check in this environment, so both image sets were generated in one art direction each: project23 24 studio packshots (medium, 12 credits), project24 ten co-warehouse photos (one high, nine medium, 7.25 credits); 19.25 of 40 credits used. project23: Gulf co-op research (Kuwait shareholder dividend, Union Coop tiers), audit framed as hypotheses because the brief's app was not attached. project24: the painted floor zones are the palette; the brief asks for many colours, so one action colour (ink) and four colours that mean space types.
 Owner feedback after launch: department tiles looked disabled in dark mode (multiply blend on dark surfaces). Fixed: in dark mode packshots sit on their cream plate without blending. Lesson: never multiply-blend images over a surface that can turn dark.
+
+### gvhmxvg and jjbkpcm (Coffee E-Commerce UI/UX Design & Dev, $250; KhangoSupps Landing Page Design, $250; 40 Higgsfield credits)
+Owner asked for random URLs instead of projectN, as senior product designer and creative head. Credits used: 24.5 of 40 (24 images at medium 12, one 5 s 480p video 12.5). Three 3D attempts on Higgsfield failed and were refunded (SAM 3D, Tripo); Meshy and Hunyuan cost 15 to 20 credits, so the coffee bag GLB was built in code with three.js instead (`tools/make-bag.html`), which also lets the site change paper colour and label per coffee. A first video from the sprinter photo was rejected by the provider's filter (refunded); a product shot clip worked. Model-viewer 4.4 throws if `orientation` is set (AR renderer bug), so scroll turns the camera orbit instead.
 
 ## 6. Open items
 

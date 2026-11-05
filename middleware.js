@@ -33,6 +33,8 @@ const PASSWORDS = {
   project22: 'kt-9vqe-2mlx', // Kartenregal, Swiss TCG shop review and redesign
   project23: 'cp-7hx2-qm4v', // Cooperative app redesign, Arabic and English, white label
   project24: 'cw-3rb8-ny6k', // Co-Ware, co-warehousing website
+  gvhmxvg: 'bf-vf0i-gmxc', // Ripe coffee e-commerce with a 3D bag (random slug, owner's request)
+  jjbkpcm: 'ks-h9h1-mnky', // KhangoSupps retro landing page (random slug, owner's request)
   project20: 'ro-zdxa-uv3w', // Rolling, phone app for film and TV crew, creatives and production
   hotshoe: 'hs-6bja-9at4', // Hotshoe, pixel UI for a Raspberry Pi camera sync screen (owner's portfolio piece)
   selvedge: 'sv-4rkx-msbd', // Selvedge retail OS, portfolio case for the Dribbble retail ERP brief // Flow Director clinic operations prototype (Upwork, not a projectN slug)

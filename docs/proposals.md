@@ -388,3 +388,61 @@ Password: cw-3rb8-ny6k
 (Scroll the home page, pick a free unit on the floor plan, and open a space type from the menu to see the page transition.)
 
 Prices, units and dates are samples, and the photos are AI-generated concept images.
+
+## gvhmxvg, Ripe Coffee Co. (Coffee E-Commerce UI/UX Design & Dev)
+
+Hi! A quick note first: what you will see is a draft, built before we have spoken, as proof that I take your project seriously. I would rather show you how I think than describe it, and the brand, coffees and prices in it are samples that change to yours once we talk.
+
+**The idea:** coffee is a fruit. Each bag is painted the colour of the fruit you taste in the cup, so the shop reads like a taste map, and the bag is a real 3D object you can turn in your hand.
+
+**What the draft shows:**
+- 3D where it helps people buy: the bag turns as you scroll the home page and can be dragged on every product page. One 3D model serves every coffee, because the paper colour and the label change in the browser, so a new coffee needs no new 3D work.
+- Natural and playful, still professional: soft clay-style 3D renders, rounded type, warm colours, and a clean shop underneath.
+- A real shop flow: coffee pages with size, grind and subscription, a bag drawer with a free-delivery meter, a one-page checkout and an order page.
+- Brew match: say how you brew and what you like, get one coffee, its grind and the recipe.
+- A subscription builder, origins with farm details, and a roast-day countdown that gives people a reason to order now.
+- Scroll and motion with a purpose: a pinned "from cherry to cup" story, cards that lean toward the pointer, and the bag that travels from the card to its page.
+
+**Development support:** the draft is already built in React, so the same code can become your production front-end and connect to your store platform.
+
+**Deliverables after we agree the scope:** refined design for desktop and mobile in Figma with components, then the front-end. The Figma file follows once the scope is agreed.
+
+**Estimate:** $250 covers the design direction and the core pages shown (home, product page, bag and checkout) for your brand. Extra pages or store integration can be quoted once I have seen your platform.
+
+E-commerce work: vherkudara.id and suedeson.com (web design and development).
+
+My portfolio: createdybdaniel.com
+
+Prototype: https://proposal-virid-eight.vercel.app/gvhmxvg/
+Password: bf-vf0i-gmxc
+(Drag the bag in the hero, pick another coffee from the colour dots, try Brew match, then add a bag and go through checkout.)
+
+Brand, coffees, farms and prices are samples. Images and the 3D bag are AI-generated or built for this draft. Nothing is charged.
+
+## jjbkpcm, KhangoSupps (KhangoSupps Landing Page Design)
+
+Hi! A quick note first: what you will see is a draft, built before we have spoken, as proof that I take your project seriously. I would rather show you how I think than describe it, and everything in it changes to your real products, numbers and reviews once we talk.
+
+**The idea:** "stay ready" is a time of day. Five in the morning on the track, seven after a night shift, half past six before the school run. The page tells the brand story through those hours, and each hour becomes its own squeeze page.
+
+**What the draft shows:**
+- Bold, colourful and retro: a poster hero with racing stripes, heavy rounded type, and product shots on flat flavour colours in the spirit of Promix and Bare Performance Nutrition.
+- Pick a flavour and the whole page repaints itself in that flavour's colours, tub and label included.
+- Simple ingredients and great taste: five ingredients, each with the reason it is there, next to a large nutrition panel.
+- A muted product video band (with a pause button), customer reviews, the brand principles, flavours and an FAQ.
+- A starter pack offer with one email field, the low-risk first step for a protein brand that sells on taste.
+- Persona squeeze pages for athletes, shift workers and busy parents, built from the same blocks: photo, promise, three reasons, the label, one review and the offer. A new audience or a new state in the national rollout is a new set of words, not a new design.
+
+**Development support:** the draft is built in React, so the same code can become the production page.
+
+**Deliverables after we agree the scope:** the landing page and squeeze-page templates in Figma with components, then the front-end. The Figma file follows once the scope is agreed.
+
+**Estimate:** $250 covers the landing page design and the squeeze-page template shown in the draft, adapted to your products and brand. More personas or state pages can be added from the same template.
+
+My portfolio: createdybdaniel.com
+
+Prototype: https://proposal-virid-eight.vercel.app/jjbkpcm/
+Password: ks-h9h1-mnky
+(Pick a flavour in the hero, scroll through the day, and open one of the three squeeze pages from "Who it is for".)
+
+Product names, nutrition, prices and reviews are samples. Photos, packshots and the video are AI-generated concept images.
