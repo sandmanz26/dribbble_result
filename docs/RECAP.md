@@ -87,6 +87,7 @@ Live site: `https://proposal-virid-eight.vercel.app/<slug>/` (root and unknown p
 | project24 | cw-3rb8-ny6k | Co-Ware co-warehousing website | Website |
 | gvhmxvg | bf-vf0i-gmxc | Ripe coffee e-commerce with a 3D bag | Website (shop) |
 | jjbkpcm | ks-h9h1-mnky | KhangoSupps retro landing page | Landing page |
+| mpcrvnj | pw-vx33-iymr | Pathwell career transition admin (owner's portfolio piece) | Web app (admin) |
 | project22 | kt-9vqe-2mlx | Kartenregal, review and redesign of a Swiss Pokémon card shop | Website (shop) + review |
 | project20 | ro-zdxa-uv3w | Rolling, phone app for film and TV crew, creatives and production | Mobile app |
 | rawat | fd-w8tq-3jxc | Rawat, clinic operations for an Indonesian primary clinic (owner's portfolio piece) | Web app |
@@ -218,6 +219,9 @@ Owner feedback after launch: department tiles looked disabled in dark mode (mult
 Owner asked for random URLs instead of projectN, as senior product designer and creative head. Credits used: 24.5 of 40 (24 images at medium 12, one 5 s 480p video 12.5). Three 3D attempts on Higgsfield failed and were refunded (SAM 3D, Tripo); Meshy and Hunyuan cost 15 to 20 credits, so the coffee bag GLB was built in code with three.js instead (`tools/make-bag.html`), which also lets the site change paper colour and label per coffee. A first video from the sprinter photo was rejected by the provider's filter (refunded); a product shot clip worked. Model-viewer 4.4 throws if `orientation` is set (AR renderer bug), so scroll turns the camera orbit instead.
 
 Proposal rules from 5 Nov 2026 (owner): put the prototype link and password in paragraph 2 or 3 so it is easy to find; never include a price or estimate (the owner sets prices); do not name vherkudara.id or suedeson.com; every proposal says the owner can help with both design and build.
+
+### mpcrvnj, Pathwell Admin (6 Nov 2026)
+The owner is applying for a UI/UX Designer job at Pelgo (AI career transition platform) and wanted an admin system, not a landing page, that looks made in 2022, to show a recruiter. Built as a self-initiated concept with a fictional brand; Randstad RiseSmart (RiseSmart Insight HR dashboard) suggested as the one reference company. Advised the owner to present it as a concept, not as client work for Pelgo or RiseSmart. No Higgsfield credits used.
 
 ## 6. Open items
 
