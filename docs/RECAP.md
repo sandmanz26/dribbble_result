@@ -88,6 +88,7 @@ Live site: `https://proposal-virid-eight.vercel.app/<slug>/` (root and unknown p
 | gvhmxvg | bf-vf0i-gmxc | Ripe coffee e-commerce with a 3D bag | Website (shop) |
 | jjbkpcm | ks-h9h1-mnky | KhangoSupps retro landing page | Landing page |
 | xvvgwpx | fw-mrnz-an6x | Fuwa Matcha Club, fun matcha cafe | Website |
+| twtkgwd | fv-8161-a7br | Fuwa Matcha Club version 2 | Website |
 | qcdxfkx | ku-sm6d-1xsm | KUMO, minimal canned matcha latte | Website (shop) |
 | mpcrvnj | pw-vx33-iymr | Pathwell career transition admin (owner's portfolio piece) | Web app (admin) |
 | project22 | kt-9vqe-2mlx | Kartenregal, review and redesign of a Swiss Pokémon card shop | Website (shop) + review |
@@ -227,6 +228,9 @@ The owner is applying for a UI/UX Designer job at Pelgo (AI career transition pl
 
 ### xvvgwpx and qcdxfkx, two matcha websites (6 Nov 2026, 50 Higgsfield credits)
 Owner asked, as head of creative, design and marketing, for two matcha sites: one fun (cafe, reference coupletcoffee.com for spirit) and one minimal (matcha latte in a can), 4 to 5 home sections plus about and product pages, showing credibility and quality with calm, peace and enjoyment. Image list was roasted before generating (risks and fixes in each branch's `docs/strategy.md`): one short wordmark only on packaging, the can packshot used as the reference for every can image, shade cloth in the field shots for credibility, no faces. About 18 credits used; all 30 images kept on the first try.
+
+### twtkgwd, Fuwa version 2 (6 Nov 2026)
+Owner liked Fuwa but said it was too close to the reference. Duplicated to a new branch (owner's request, so branched from the v1 branch) and roasted against Couplet: removed pastel block sections, chunky type, outlined cards with hard shadows, spinning badge, ticker and coloured product backdrops. New "foam" direction (see AGENTS row). Ten images reshot, about 7 credits; roughly 25 of the 50 matcha credits used in total.
 
 ## 6. Open items
 

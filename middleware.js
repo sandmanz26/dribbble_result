@@ -36,6 +36,7 @@ const PASSWORDS = {
   gvhmxvg: 'bf-vf0i-gmxc', // Ripe coffee e-commerce with a 3D bag (random slug, owner's request)
   jjbkpcm: 'ks-h9h1-mnky', // KhangoSupps retro landing page (random slug, owner's request)
   xvvgwpx: 'fw-mrnz-an6x', // Fuwa Matcha Club, fun matcha cafe (random slug)
+  twtkgwd: 'fv-8161-a7br', // Fuwa Matcha Club version 2, reworked away from the reference (random slug)
   qcdxfkx: 'ku-sm6d-1xsm', // KUMO, minimal canned matcha latte (random slug)
   mpcrvnj: 'pw-vx33-iymr', // Pathwell career transition admin, owner's portfolio piece (random slug)
   project20: 'ro-zdxa-uv3w', // Rolling, phone app for film and TV crew, creatives and production
