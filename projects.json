@@ -1,12 +1,4 @@
 [
-  { "slug": "project1", "branch": "claude/modest-mayer-eyddvw", "title": "Wanderlog Gang" },
-  { "slug": "project2", "branch": "claude/photo-video-marketplace-app", "title": "Proof" },
-  { "slug": "project3", "branch": "claude/nubrakes-dual-brand", "title": "NuBrakes dual-brand" },
-  { "slug": "project4", "branch": "claude/busticated-audio-plugin", "title": "Scrapyard BC-01" },
-  { "slug": "project5", "branch": "claude/student-portal-bilingual", "title": "Nelum Vidyalaya SMS" },
-  { "slug": "project6", "branch": "claude/westpoint-case-study", "title": "Westpoint case study" },
-  { "slug": "project7", "branch": "claude/caravan-group-travel", "title": "Caravan group travel" },
-  { "slug": "project8", "branch": "claude/tend-wellness-ritual", "title": "Tend wellness ritual" },
   { "slug": "project9", "branch": "claude/globaltrade-broker", "title": "GlobalTrade broker" },
   { "slug": "project10", "branch": "claude/planogram-restock-app", "title": "Faceup planogram restock" },
   { "slug": "project11", "branch": "claude/flock-flame-menu-app", "title": "Flock & Flame menu app" },
