@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { IoIosRefresh, IoIosWater, IoIosSync, IoIosDownload } from 'react-icons/io'
 import { RETAIL, FAQ } from '../data.js'
 import { useReveal, Arrow } from '../App.jsx'
@@ -12,7 +12,9 @@ export function WhereToBuy() {
   return (
     <div ref={ref} className="wrap page-pad">
       <header className="page-head"><h1 data-r>Where to buy</h1><p data-r>Coming soon to stores near you. Until then, the full range ships from here.</p></header>
-      <ul className="retail big" data-r>{RETAIL.map((r) => <li key={r}>{r}<small>Coming soon</small></li>)}<li>Amazon<small>Decision pending</small></li></ul>
+      <ul className="retail big" data-r>{RETAIL.map((r) => <li key={r}><span className="logo-ph">{r}</span><small>Coming soon</small></li>)}</ul>
+      <p className="note" data-r>Logo grid placeholder: each logo links to that retailer’s product page once BRTH is live there.</p>
+      <div className="amazon" data-r><button className="btn ghost" onClick={(e) => e.currentTarget.nextSibling.hidden = false}>Also on Amazon</button><p className="note" hidden>Placeholder: Amazon at launch or later is still an open decision.</p></div>
       <form className="locator" onSubmit={(e) => { e.preventDefault(); setRes(/^\d{5}$/.test(zip) ? 'none' : 'bad') }} data-r>
         <label className="field"><span>Find a store by ZIP code</span><input inputMode="numeric" value={zip} onChange={(e) => setZip(e.target.value.replace(/\D/g, '').slice(0, 5))} placeholder="10001" /></label>
         <button className="btn">Search</button>
@@ -97,7 +99,7 @@ export function Wholesale() {
   return (
     <div ref={ref} className="wrap page-pad wholesale">
       <header className="page-head"><h1 data-r>Wholesale and press</h1><p data-r>BRTH is the pocket breath spray that feels like a premium object, at a drugstore price.</p></header>
-      <dl className="stats" data-r>
+      <dl className="stats" data-r id="press">
         <div><dt>Format</dt><dd>2-pack, 2 × 10 mL</dd></div>
         <div><dt>Retail price</dt><dd>$7.99</dd></div>
         <div><dt>Flavors</dt><dd>Spearmint, Arctic Mint</dd></div>
@@ -116,6 +118,21 @@ export function Wholesale() {
           </form>
         )}
       </section>
+    </div>
+  )
+}
+
+// Footer legal pages: clearly marked placeholders until the client's policies are written.
+const LEGAL = { privacy: 'Privacy policy', terms: 'Terms of service', accessibility: 'Accessibility statement', shipping: 'Shipping and returns' }
+export function Legal() {
+  const { page } = useParams()
+  const title = LEGAL[page] || 'Policy'
+  return (
+    <div className="wrap page-pad legal">
+      <header className="page-head"><h1>{title}</h1><p>Placeholder page. The final text comes from BRTH Labs LLC before launch.</p></header>
+      {page === 'shipping' && <ul className="plain"><li>Free shipping on 2+ packs (threshold still an open decision).</li><li>30-day happiness guarantee.</li><li>Ship times set with fulfilment.</li></ul>}
+      {page === 'accessibility' && <p className="big">We aim for WCAG 2.1 AA: 4.5:1 text contrast, full keyboard use, labeled flavors, and reduced motion respected.</p>}
+      <Link to="/faq" className="more">Read the FAQ<Arrow /></Link>
     </div>
   )
 }

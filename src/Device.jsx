@@ -1,6 +1,6 @@
 // The BRTH device drawn in SVG: silver cap, twist section, body with the vertical wordmark.
 // `open` (0 to 1) twists the top a quarter turn, lifts it and raises the nozzle.
-export default function Device({ flavor, open = 0, className = '', label = true }) {
+export default function Device({ flavor, open = 0, className = '', label = true, still = false }) {
   const lift = Math.min(1, Math.max(0, (open - 0.25) / 0.75))
   const twist = Math.min(1, open / 0.6)
   const dark = flavor.field
@@ -8,6 +8,12 @@ export default function Device({ flavor, open = 0, className = '', label = true 
   const hi = flavor.id === 'arctic' ? '#2f5594' : '#2c6a49'
   return (
     <svg className={`device ${className}`} viewBox="0 0 140 440" role="img" aria-label={`${flavor.name} BRTH device${open > 0.9 ? ', twisted open' : ''}`}>
+      {/* a still mist for reduced motion and placeholder shots */}
+      {still && open > 0.9 && (
+        <g fill="#fff" aria-hidden="true">
+          {[[70, 22, 6, .55], [58, 10, 8, .4], [82, 6, 9, .38], [64, -8, 11, .3], [88, -18, 13, .26], [50, -22, 12, .24], [74, -34, 16, .2], [96, -40, 14, .16], [44, -44, 15, .16], [70, -58, 19, .12]].map(([x, y, r, o], i) => <circle key={i} cx={x} cy={y} r={r} opacity={o} />)}
+        </g>
+      )}
       {/* nozzle, hidden inside until the top lifts */}
       <g transform={`translate(0 ${30 - lift * 30})`}>
         <rect x="62" y="38" width="16" height="26" rx="3" fill="#c9cbcd" />

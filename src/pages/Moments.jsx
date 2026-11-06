@@ -16,7 +16,7 @@ export default function Moments() {
       <header className="page-head"><h1 data-r>Everyone has a story.</h1><p data-r>Real moments. Real people. Some went better than others.</p></header>
       <div className="tags" role="tablist" aria-label="Moment">{TAGS.map((t) => <button key={t} role="tab" aria-selected={tag === t} onClick={() => setTag(t)}>{t}</button>)}</div>
       {list.length ? (
-        <ul className="mgrid" key={tag}>{list.map((m, i) => <li key={m.t} className="mcard" data-r style={{ '--i': i }}><img src={`img/${m.img}.webp`} alt="" loading="lazy" /><span className="mtag">{m.tag}</span><p>{m.t}</p></li>)}</ul>
+        <ul className="mgrid" key={tag}>{list.map((m, i) => <li key={m.t} className="mcard" data-r style={{ '--i': i }}><div className="mframe"><img src={`img/${m.img}.webp`} alt="" loading="lazy" /></div><span className="mtag">{m.tag}</span><p>{m.t}</p></li>)}</ul>
       ) : <p className="empty-line">No {tag.toLowerCase()} stories yet. Be the first.</p>}
       <p className="note">Cards stand in for 9:16 creator videos (muted, looping, with a pause control).</p>
       <section className="submit" aria-labelledby="sub-h">
@@ -26,7 +26,7 @@ export default function Moments() {
             <label className="field"><span>Name</span><input required autoComplete="name" /></label>
             <label className="field"><span>Email</span><input type="email" required autoComplete="email" /></label>
             <label className="field full"><span>Your story ({500 - len} characters left)</span><textarea required maxLength={500} rows={5} onChange={(e) => setLen(e.target.value.length)} /></label>
-            <label className="field full"><span>Video (optional)</span><input type="text" placeholder="Paste a link to your clip" /></label>
+            <label className="field full file"><span>Video (optional)</span><input type="file" accept="video/*" /><small>Prototype: the file stays on your device.</small></label>
             <label className="check full"><input type="checkbox" required /><span>I agree BRTH may share my story.</span></label>
             <button className="btn">Share your moment</button>
           </form>
