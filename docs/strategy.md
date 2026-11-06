@@ -46,3 +46,7 @@ Direction: quiet wabi-sabi minimal, off-white and stone, soft light, negative sp
 - Fun site copying the reference's neon pink and purple: use our own palette and calm light.
 - Signage text in the cafe: "no signs, no text".
 - Aspect ratios chosen for the layout first (heroes 16:9 or 4:5, products 4:5, backgrounds 3:2).
+
+## Version 2 (owner: "too similar to the reference")
+Roast of v1 against Couplet: pastel block per section, chunky rounded display type, black outlined cards with hard offset shadows, spinning circular badge, ticker band, products shot on flat coloured backdrops. Every one of those was removed.
+New direction "foam": the cafe's name means fluffy, so the page is soft. Cream and one deep matcha green; Fraunces with the SOFT axis driven by scroll; blobs and Japanese arch windows instead of rectangles; bubbles instead of stickers; a drawn vine for the field to bowl story. Ten images reshot on one cream linen set (about 7 credits).

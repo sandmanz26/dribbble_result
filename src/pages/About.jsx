@@ -1,13 +1,12 @@
 import { Link } from 'react-router-dom'
-import { ImArrowRight, ImLeaf, ImHappy, ImHourGlass } from 'react-icons/im'
-import { useReveal, useSectionColours } from '../App.jsx'
+import { SlArrowRight as ImArrowRight, SlDrop as ImLeaf, SlEmotsmile as ImHappy, SlClock as ImHourGlass } from 'react-icons/sl'
+import { useReveal, Bubbles } from '../App.jsx'
 
 export default function About() {
-  useSectionColours()
   const ref = useReveal()
   return (
     <div ref={ref}>
-      <section className="ab-hero" data-bg="#d3e3b8">
+      <section className="ab-hero">
         <div className="wrap ab-grid">
           <div>
             <h1><span>fuwa</span><span>means</span><span className="wob">fluffy.</span></h1>
@@ -17,7 +16,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="ab-farm" data-bg="#f9cfd8">
+      <section className="ab-farm">
         <div className="wrap">
           <h2 data-r>one farm, one spring picking</h2>
           <div className="farm-grid">
@@ -31,7 +30,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="ab-values" data-bg="#fbe8a6">
+      <section className="ab-values">
         <div className="wrap">
           <h2 data-r>what we care about</h2>
           <ul className="values">
@@ -42,7 +41,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="ab-sift" data-bg="#cfe7f6">
+      <section className="ab-sift">
         <div className="wrap ab-grid rev">
           <div className="ab-photo" data-r><img src="img/sift.webp" alt="Matcha being sifted into a ceramic bowl" loading="lazy" /></div>
           <div>

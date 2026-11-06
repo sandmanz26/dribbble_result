@@ -1,4 +1,4 @@
-// Sample content for Fuwa Matcha Club, a fun matcha cafe. Name, address, prices and sourcing details are samples.
+// Sample content for Fuwa Matcha Club (version 2), a fun matcha cafe. Name, address, prices and sourcing details are samples.
 export const CAFE = {
   name: 'Fuwa Matcha Club',
   street: '214 Gertrude Street', suburb: 'Fitzroy, Melbourne',

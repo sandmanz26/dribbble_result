@@ -1,8 +1,8 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
 import { HashRouter } from 'react-router-dom'
-import '@fontsource/bagel-fat-one'
-import '@fontsource-variable/fredoka'
+import '@fontsource-variable/fraunces/full.css'
+import '@fontsource-variable/nunito'
 import './styles.css'
 import App from './App.jsx'
 

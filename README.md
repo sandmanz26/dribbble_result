@@ -1,10 +1,11 @@
-# Fuwa Matcha Club (concept)
+# Fuwa Matcha Club, version 2 (concept)
 
-The fun one of a pair of matcha websites. A matcha cafe: playful in colour and type, calm in light and pace, serious about the tea.
+A rework of Fuwa (branch `claude/fuwa-matcha-cafe`) at the owner's request, moved away from the reference (coupletcoffee.com) it resembled. Same cafe, same pages, new visual language.
 
-- React 18, Vite 5, HashRouter, IcoMoon icons (`react-icons/im`), plain CSS, no animation library. Bagel Fat One + Fredoka.
-- Ink deep matcha green is the action colour; the page takes the pastel of the section in view (pink, sage, butter, sky, lilac), like pouring a new drink.
-- Pages: home (hero, proper matcha in three steps with proof, the line-up row, visit with live open/closed and a quiet hour, take-home tins), `#/menu` (sections, item sheet with milk, sweetness and hot or iced, pick-up order bar), `#/about` (name, the farm in Wazuka, values, how we whisk).
-- 18 AI-generated photos in one art direction (Higgsfield) in `public/img/`. Brand, address, prices and sourcing details are samples.
+- What changed: no pastel colour blocks per section, no chunky display type, no outlined cards with hard shadows, no spinning badge or ticker, no products on coloured backdrops.
+- Now: "foam". Cream ground, one deep matcha green, Fraunces (soft and wonky axes) + Nunito, organic blob and arch shapes, foam bubbles that drift up, the word "fluffy" gets softer as you scroll, a green vine that draws itself between the field, the mill and the whisk, a wavy green visit section, a soft footer wordmark that firms up on hover.
+- React 18, Vite 5, HashRouter, Simple Line Icons (`react-icons/sl`), plain CSS, no animation library.
+- Pages: home, `#/menu` (item sheet, pick-up order), `#/about`.
+- Photos: the drinks, sweets, hero bowl and tins were reshot (AI, Higgsfield) on cream linen and oak with soft window light; field, mill, whisk, sift, cafe and friends carried over from version 1. Brand, address, prices and sourcing details are samples.
 
 `npm ci && npm run build` outputs to `dist/`.

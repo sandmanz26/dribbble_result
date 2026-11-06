@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useSearchParams } from 'react-router-dom'
-import { ImCross, ImPlus, ImMug, ImCart } from 'react-icons/im'
+import { SlClose as ImCross, SlPlus as ImPlus, SlCup as ImMug, SlBag as ImCart } from 'react-icons/sl'
 import { MENU, CATS, usd } from '../data.js'
-import { useOrder, useReveal, useSectionColours } from '../App.jsx'
+import { useOrder, useReveal } from '../App.jsx'
 
 const MILKS = [['Dairy', 0], ['Oat', 0.8], ['Soy', 0.8], ['Coconut', 0.8]]
 const SWEET = ['None', 'A little', 'Regular']
@@ -14,10 +14,9 @@ export default function Menu() {
   const open = MENU.find((m) => m.id === sp.get('item'))
   const list = useMemo(() => MENU.filter((m) => cat === 'all' || m.cat === cat), [cat])
   const ref = useReveal([cat])
-  useSectionColours([])
   const o = useOrder()
   return (
-    <div ref={ref} className="menu-page" data-bg="#fbf3e2">
+    <div ref={ref} className="menu-page">
       <section className="menu-hero wrap">
         <h1>the menu</h1>
         <p className="lede">Every drink starts with matcha sifted and whisked by hand. Order ahead and it will be waiting, or pick at the counter and watch.</p>
