@@ -89,6 +89,7 @@ Live site: `https://proposal-virid-eight.vercel.app/<slug>/` (root and unknown p
 | jjbkpcm | ks-h9h1-mnky | KhangoSupps retro landing page | Landing page |
 | xvvgwpx | fw-mrnz-an6x | Fuwa Matcha Club, fun matcha cafe | Website |
 | twtkgwd | fv-8161-a7br | Fuwa Matcha Club version 2 | Website |
+| sgrtvtr | br-hxes-olfp | BRTH Labs pocket breath spray, three switchable directions | Website (shop) |
 | qcdxfkx | ku-sm6d-1xsm | KUMO, minimal canned matcha latte | Website (shop) |
 | mpcrvnj | pw-vx33-iymr | Pathwell career transition admin (owner's portfolio piece) | Web app (admin) |
 | project22 | kt-9vqe-2mlx | Kartenregal, review and redesign of a Swiss Pokémon card shop | Website (shop) + review |
@@ -231,6 +232,12 @@ Owner asked, as head of creative, design and marketing, for two matcha sites: on
 
 ### twtkgwd, Fuwa version 2 (6 Nov 2026)
 Owner liked Fuwa but said it was too close to the reference. Duplicated to a new branch (owner's request, so branched from the v1 branch) and roasted against Couplet: removed pastel block sections, chunky type, outlined cards with hard shadows, spinning badge, ticker and coloured product backdrops. New "foam" direction (see AGENTS row). Ten images reshot, about 7 credits; roughly 25 of the 50 matcha credits used in total.
+
+### sgrtvtr, BRTH Labs (6 Nov 2026, 30 Higgsfield credits offered)
+Owner sent the BRTH Labs website design brief PDF plus carton and device photos, and asked, as head of design, creative and marketing, for several directions switchable live. Built one codebase with three directions (A Quiet, B Field, C Carton) behind a switcher and `?v=`. Image list roasted before generating (branch `docs/strategy.md`); about 7 credits used. Open item for the client: the device print says 0.39 fl oz, but 10 mL is 0.34 fl oz.
+
+### project1 to project8 no longer built (6 Nov 2026)
+At the owner's request, to lighten the Vercel build, project1 to project8 were removed from `projects.json`. Their branches and passwords stay, so any of them can be brought back by re-adding its entry. project6 (the owner's Westpoint case study) is among them and is offline until re-added.
 
 ## 6. Open items
 
