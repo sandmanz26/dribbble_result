@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Pamit · Offboarding</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23b3471d'/%3E%3Cpath d='M11 8h9v16h-9z' fill='none' stroke='white' stroke-width='2.4'/%3E%3Ccircle cx='17' cy='16.5' r='1.4' fill='white'/%3E%3C/svg%3E" />
+    <script>
+      try { var t = JSON.parse(localStorage.getItem('pmt-state-v1') || '{}').settings?.theme || 'system';
+        if (t === 'dark' || (t === 'system' && matchMedia('(prefers-color-scheme: dark)').matches)) document.documentElement.classList.add('dark') } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <div id="toasts" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-2 items-center pointer-events-none" aria-live="polite"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

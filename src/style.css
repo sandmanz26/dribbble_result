@@ -1,0 +1,70 @@
+@import "@fontsource/be-vietnam-pro/400.css";
+@import "@fontsource/be-vietnam-pro/500.css";
+@import "@fontsource/be-vietnam-pro/600.css";
+@import "@fontsource/be-vietnam-pro/700.css";
+@import "tailwindcss";
+@plugin "@iconify/tailwind4";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Be Vietnam Pro", ui-sans-serif, system-ui, sans-serif;
+  --color-ground: #ecebe5;
+  --color-surface: #ffffff;
+  --color-sunk: #f6f5f1;
+  --color-ink: #1c1a17;
+  --color-muted: #686358;
+  --color-line: #dcd8ce;
+  --color-accent: #b3471d;
+  --color-accent-hover: #9a3c17;
+  --color-accent-ink: #ffffff;
+  --color-accent-soft: #f6e5dc;
+}
+
+.dark {
+  --color-ground: #131210;
+  --color-surface: #1c1b18;
+  --color-sunk: #232220;
+  --color-ink: #efece6;
+  --color-muted: #a39e94;
+  --color-line: #34322d;
+  --color-accent: #e2743f;
+  --color-accent-hover: #ec8656;
+  --color-accent-ink: #1b0f09;
+  --color-accent-soft: #3a2318;
+}
+
+html { background: var(--color-ground); }
+body { @apply bg-ground text-ink font-sans antialiased; font-feature-settings: "tnum" 0; }
+.num { font-variant-numeric: tabular-nums; }
+::selection { background: var(--color-accent-soft); }
+
+:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; border-radius: 6px; }
+
+@layer components {
+  .card { @apply bg-surface border border-line rounded-[10px]; }
+  .btn { @apply inline-flex items-center justify-center gap-2 h-10 px-4 rounded-[8px] text-sm font-medium border border-line bg-surface text-ink hover:bg-sunk transition-colors whitespace-nowrap disabled:opacity-50 disabled:pointer-events-none; }
+  .btn-primary { @apply bg-accent text-accent-ink border-accent hover:bg-accent-hover; }
+  .btn-quiet { @apply border-transparent bg-transparent hover:bg-sunk; }
+  .btn-sm { @apply h-8 px-3 text-[13px]; }
+  .field { @apply w-full h-10 px-3 rounded-[8px] border border-line bg-surface text-ink text-sm placeholder:text-muted/70 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20; }
+  textarea.field { @apply h-auto py-2.5 leading-relaxed; }
+  select.field { @apply pr-8 appearance-none bg-no-repeat; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpath d='m7 10 5 5 5-5'/%3E%3C/svg%3E"); background-position: right 10px center; background-size: 16px; }
+  .label { @apply block text-[13px] font-medium mb-1.5; }
+  .hint { @apply text-xs text-muted mt-1.5 leading-relaxed; }
+  .err { @apply text-xs text-red-700 dark:text-red-400 mt-1.5; }
+  .tab { @apply h-9 px-3 rounded-[8px] text-sm text-muted hover:text-ink hover:bg-sunk whitespace-nowrap inline-flex items-center gap-2; }
+  .tab[aria-selected="true"], .tab[aria-current="page"] { @apply bg-surface text-ink font-medium border border-line; }
+  .kv dt { @apply text-xs text-muted; }
+  .kv dd { @apply text-sm mt-0.5; }
+}
+
+dialog::backdrop { background: rgb(20 18 15 / 0.45); }
+dialog { color: inherit; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .rise { animation: rise .32s cubic-bezier(.2,.7,.2,1) both; }
+  .flash { animation: flash 2.4s ease-out 1; }
+}
+@keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@keyframes flash { 0%, 30% { background: var(--color-accent-soft); } 100% { background: transparent; } }
