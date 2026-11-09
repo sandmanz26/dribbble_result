@@ -133,6 +133,12 @@ push to main ──► Vercel builds main ──► node build.mjs
 - **`projects.json`:** the list of projects to build (`slug`, `branch`, `title`).
 - **`build.mjs`:** clones each branch from the public GitHub repo and builds it. If the repo becomes
   private, set the `PROJECTS_REPO` env var in Vercel to an authenticated clone URL.
+  **Build cache (9 Nov 2026):** each project's `dist/` is kept in `node_modules/.cache/project-builds/<slug>/<sha>`
+  (Vercel keeps `node_modules` between builds; `vercel.json` uses `npm install`, not `npm ci`, so it survives).
+  A branch whose head has not moved is copied from the cache instead of rebuilt, so a deploy usually builds only
+  the project that changed. `NO_BUILD_CACHE=1` forces a full rebuild. The build log says how many were reused.
+- **Preview builds:** project branches should not get their own Vercel preview builds (they waste build
+  minutes). Vercel, Settings, Git, Ignored Build Step set to "Only build production" stops them.
 - **`middleware.js`:** Vercel Routing Middleware (`@vercel/functions`). Runs on every path:
   - `/<slug>/...` without a valid cookie → password page (401). This also blocks JS, CSS and images.
   - Correct password (POST to `/<slug>/`) → sets an HttpOnly cookie `gate_<slug>` scoped to
