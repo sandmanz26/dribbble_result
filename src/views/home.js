@@ -86,8 +86,8 @@ export function render() {
         <div class="relative card !rounded-[28px] p-7 group">
           <div class="flex items-start justify-between"><span class="size-12 rounded-full bg-accent-soft text-accent grid place-items-center"><span class="icon-[majesticons--settings-cog-line] size-6"></span></span>${go('Open settings')}</div>
           <h2 class="mt-6 text-xl font-semibold"><a href="#/settings" class="after:absolute after:inset-0 after:rounded-[28px]">Settings</a></h2>
-          <p class="mt-1 text-sm text-muted">Company details, users and roles, notifications and connected systems.</p>
-          <p class="mt-5 text-sm"><span class="font-semibold num">${st.users.length}</span> people with access <span class="text-muted">·</span> <span class="font-semibold num">${st.settings.company.workweek}</span>-day week</p>
+          <p class="mt-1 text-sm text-muted">Company details, notifications, connected systems and theme.</p>
+          <p class="mt-5 text-sm"><span class="font-semibold num">${Object.values(st.settings.integrations).filter(Boolean).length}</span> systems connected <span class="text-muted">·</span> <span class="font-semibold num">${st.settings.company.workweek}</span>-day week</p>
           ${offInt ? `<p class="mt-1.5 text-xs text-muted">${offInt} systems not connected yet</p>` : ''}
         </div>
       </div>

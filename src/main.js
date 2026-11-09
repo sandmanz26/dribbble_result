@@ -48,7 +48,7 @@ function shell(section, inner) {
         <div class="relative">
           <button id="me" class="flex items-center gap-2 h-12 pl-1.5 pr-3 rounded-full hover:bg-sunk" aria-haspopup="menu" aria-expanded="false">
             ${avatar(me.name, 'size-8 text-[11px]')}
-            <span class="hidden sm:block text-left leading-tight"><span class="block text-sm font-medium">${esc(me.name)}</span><span class="block text-xs text-muted">${esc(me.role)}</span></span>
+            <span class="hidden sm:block text-left leading-tight"><span class="block text-sm font-medium">${esc(me.name)}</span><span class="block text-xs text-muted">${esc(me.title)}</span></span>
             <span class="icon-[majesticons--chevron-down-line] size-4 text-muted"></span>
           </button>
           <div id="menu" role="menu" class="hidden absolute right-0 mt-2 w-60 card p-2">

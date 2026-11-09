@@ -2,7 +2,6 @@ import { S, signIn } from '../store.js'
 import { esc, avatar, on } from '../ui.js'
 import { COMPANY } from '../data.js'
 
-const DEMO_CODE = '240611'
 const CREDIT = {
   name: 'Annie Spratt',
   profile: 'https://unsplash.com/@anniespratt?utm_source=pamit_prototype&utm_medium=referral',
@@ -17,7 +16,7 @@ const logo = (tone = '') => `
   </span>`
 
 export function render({ query }) {
-  const users = S().users.slice(0, 4)
+  const admin = S().users[0]
   return {
     title: 'Sign in',
     html: `
@@ -49,71 +48,37 @@ export function render({ query }) {
           <p class="mt-2 text-sm text-muted">Offboarding for ${esc(COMPANY.name)}.</p>
         </div>
         <div class="card !rounded-[28px] p-6 sm:p-8">
-          <div id="step1">
-            <h2 class="text-xl font-semibold">Sign in to Pamit</h2>
-            <p class="text-sm text-muted mt-1">Use your ${esc(COMPANY.short)} work account.</p>
-            <form id="emailForm" novalidate class="mt-6">
-              <label class="label" for="email">Work email</label>
-              <div class="relative"><span class="icon-[majesticons--mail-line] size-5 text-muted absolute left-3 top-3"></span>
-                <input id="email" class="field h-11 pl-10" type="email" autocomplete="username" value="rani.wulandari@arunika.co.id" /></div>
-              <p id="emailErr" class="err hidden" role="alert"></p>
-              <button class="btn btn-primary w-full h-11 mt-4">Send sign-in code<span class="icon-[majesticons--arrow-right-line] size-5"></span></button>
-            </form>
-            <div class="flex items-center gap-3 my-5 text-xs text-muted"><span class="h-px flex-1 bg-line"></span>or<span class="h-px flex-1 bg-line"></span></div>
-            <button id="sso" class="btn w-full h-11"><span class="icon-[majesticons--shield-check-line] size-5 shrink-0"></span><span class="sm:hidden">Company single sign-on</span><span class="hidden sm:inline">Continue with company single sign-on</span></button>
-          </div>
-          <div id="step2" class="hidden">
-            <button id="back" class="btn btn-quiet btn-sm -ml-3 mb-3"><span class="icon-[majesticons--arrow-left-line] size-4"></span>Use another email</button>
-            <h2 class="text-xl font-semibold">Check your email</h2>
-            <p class="text-sm text-muted mt-1">We sent a 6-digit code to <span id="sentTo" class="text-ink font-medium break-all"></span>. It expires in 10 minutes.</p>
-            <form id="codeForm" novalidate class="mt-6">
-              <label class="label" for="code">Sign-in code</label>
-              <input id="code" class="field h-12 text-center text-xl tracking-[0.5em] num" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="000000" />
-              <p id="codeErr" class="err hidden" role="alert"></p>
-              <p class="hint">Prototype: the code is <button type="button" id="fill" class="font-semibold text-ink underline underline-offset-2">${DEMO_CODE}</button></p>
-              <button class="btn btn-primary w-full h-11 mt-4">Verify and sign in</button>
-            </form>
+          <h2 class="text-xl font-semibold">Sign in to Pamit</h2>
+          <p class="text-sm text-muted mt-1">Use your ${esc(COMPANY.short)} work account.</p>
+          <form id="emailForm" novalidate class="mt-6">
+            <label class="label" for="email">Work email</label>
+            <div class="relative"><span class="icon-[majesticons--mail-line] size-5 text-muted absolute left-3.5 top-3"></span>
+              <input id="email" class="field h-11 pl-11" type="email" autocomplete="username" value="${esc(admin.email)}" /></div>
+            <p id="emailErr" class="err hidden" role="alert"></p>
+            <button class="btn btn-primary w-full h-11 mt-4">Sign in<span class="icon-[majesticons--arrow-right-line] size-5"></span></button>
+          </form>
+          <div class="flex items-center gap-3 my-5 text-xs text-muted"><span class="h-px flex-1 bg-line"></span>or<span class="h-px flex-1 bg-line"></span></div>
+          <button id="sso" class="btn w-full h-11"><span class="icon-[majesticons--shield-check-line] size-5 shrink-0"></span><span class="sm:hidden">Company single sign-on</span><span class="hidden sm:inline">Continue with company single sign-on</span></button>
+          <div class="mt-6 flex items-center gap-3 rounded-[18px] bg-accent-soft p-3.5">
+            ${avatar(admin.name, 'size-10 text-xs')}
+            <p class="text-sm leading-snug"><span class="font-medium">Demo account: ${esc(admin.name)}</span><br /><span class="text-muted">${esc(admin.title)}, full access to all data</span></p>
           </div>
         </div>
-        <p class="mt-4 text-xs text-muted text-center">No access yet? Ask People & Culture to add you. Sign-ins are logged.</p>
+        <p class="mt-4 text-xs text-muted text-center">Prototype: any work email signs you in as the admin. Sign-ins are logged.</p>
 
-        <div class="mt-8">
-          <p class="text-xs text-muted mb-2">Prototype: sign in straight away as</p>
-          <div class="grid grid-cols-2 gap-2">
-            ${users.map((u, i) => `<button class="demo card flex items-center gap-2.5 p-2.5 text-left hover:border-accent" data-i="${i}">${avatar(u.name, 'size-8 text-[11px]')}<span class="min-w-0 leading-tight"><span class="block text-sm font-medium truncate">${esc(u.name)}</span><span class="block text-xs text-muted truncate">${esc(u.role)}</span></span></button>`).join('')}
-          </div>
-        </div>
       </div>
     </section>
   </div>`,
     mount(root, { go }) {
       const next = query.next ? decodeURIComponent(query.next) : '/'
-      const finish = (u) => { signIn(u); go('#' + (next.startsWith('/login') ? '/' : next)) }
-      const users = S().users
-      let chosen = null
-      on(root, '#sso', 'click', () => finish(users[0]))
-      on(root, '.demo', 'click', (e, el) => finish(users[+el.dataset.i]))
+      const finish = () => { signIn(admin); go('#' + (next.startsWith('/login') ? '/' : next)) }
+      on(root, '#sso', 'click', finish)
       on(root, '#emailForm', 'submit', (e) => {
         e.preventDefault()
-        const v = root.querySelector('#email').value.trim().toLowerCase()
+        const v = root.querySelector('#email').value.trim()
         const err = root.querySelector('#emailErr')
-        chosen = users.find((u) => u.email === v)
         if (!v || !v.includes('@')) { err.textContent = 'Enter your work email.'; err.classList.remove('hidden'); return }
-        if (!chosen) { err.textContent = 'This email has no access to Pamit. Ask People & Culture to add you.'; err.classList.remove('hidden'); return }
-        err.classList.add('hidden')
-        root.querySelector('#sentTo').textContent = v
-        root.querySelector('#step1').classList.add('hidden')
-        root.querySelector('#step2').classList.remove('hidden')
-        root.querySelector('#code').focus()
-      })
-      on(root, '#back', 'click', () => { root.querySelector('#step2').classList.add('hidden'); root.querySelector('#step1').classList.remove('hidden') })
-      on(root, '#fill', 'click', () => { root.querySelector('#code').value = DEMO_CODE })
-      on(root, '#codeForm', 'submit', (e) => {
-        e.preventDefault()
-        const v = root.querySelector('#code').value.trim()
-        const err = root.querySelector('#codeErr')
-        if (v !== DEMO_CODE) { err.textContent = v.length < 6 ? 'Enter all 6 digits.' : 'That code is not right. Check the latest email.'; err.classList.remove('hidden'); return }
-        finish(chosen)
+        finish()
       })
     },
   }

@@ -3,7 +3,7 @@
 Internal offboarding system for an Indonesian company (sample: PT Arunika Daya Nusantara), in the spirit of Pelgo's
 transition tooling. English UI, Indonesian rules. Front end only: Vite, Tailwind v4, plain JavaScript modules, mock data.
 
-- `#/login` sign in (single sign-on button, one-time code `240611`, or a demo account)
+- `#/login` sign in: any work email or the single sign-on button signs in as the admin (Rani Wulandari, full access). Roles are hidden for the demo
 - `#/` home with four cards: create, list, rules and documents, settings
 - `#/new` create an offboarding (`?type=layoff`, `?workforce=external`, `?emp=ADN-1903-0142`)
 - `#/offboarding` list with stages and filters; `#/offboarding/OFB-2026-032/response` case detail

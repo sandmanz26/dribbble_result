@@ -1,7 +1,8 @@
 import { S, update, reset, session } from '../store.js'
 import { esc, avatar, on, toast, modal, modalHead } from '../ui.js'
 
-const TABS = [['company', 'Company'], ['users', 'Users and roles'], ['notifications', 'Notifications'], ['integrations', 'Integrations'], ['appearance', 'Appearance and data']]
+// 'users' (users and roles) is hidden for the demo; the tab code below stays in place.
+const TABS = [['company', 'Company'], ['notifications', 'Notifications'], ['integrations', 'Integrations'], ['appearance', 'Appearance and data']]
 const ROLES = {
   'HR Admin': 'Everything, including rules, settings and users',
   HRBP: 'Create and run cases for their divisions',
@@ -21,6 +22,7 @@ const toggle = (name, on, label) => `<label class="relative inline-flex shrink-0
 
 export function render({ params }) {
   const tab = TABS.some(([k]) => k === params.tab) ? params.tab : 'company'
+  // users tab stays reachable only in code
   return {
     title: 'Settings',
     html: `

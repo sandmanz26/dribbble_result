@@ -41,6 +41,13 @@ export const activeCaseFor = (empId) => state.cases.find((c) => c.emp === empId 
 export const rule = (type) => state.rules.find((r) => r.type === type)
 export const tpl = (id) => state.templates.find((t) => t.id === id)
 
-export function session() { try { return JSON.parse(localStorage.getItem(SESSION)) } catch { return null } }
+// Demo: every session is the HR admin with full access. Role switching is hidden for now.
+export function session() {
+  let v = null
+  try { v = JSON.parse(localStorage.getItem(SESSION)) } catch {}
+  if (!v) return null
+  const a = state.users.find((u) => u.role === 'HR Admin') || state.users[0]
+  return { name: a.name, email: a.email, role: a.role, title: a.title }
+}
 export function signIn(user) { try { localStorage.setItem(SESSION, JSON.stringify({ name: user.name, email: user.email, role: user.role, title: user.title })) } catch {} }
 export function signOut() { try { localStorage.removeItem(SESSION) } catch {} }

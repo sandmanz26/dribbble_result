@@ -31,6 +31,9 @@ Owner asked for an image on the login page. Picked an Unsplash photo of an empty
 ## Visual pass 2 (9 Nov 2026)
 Owner: use blue, make it rounder and less stiff, it looked AI-generated. Diagnosis: every box identical (white, 1 px border, 10 px corners), icon-in-square tiles with corner arrows, black numbered circles, grey table headers and lines everywhere. Changes: one blue #2457d6 (not the default framework blue, and different from Pathwell's #4c6fff) on a cool ground; borderless cards with soft shadow, 24 to 28 px corners, 14 px filled fields, pill buttons, tabs and a floating pill header; Wix Madefor Display and Text; bento home (tall blue create card, wide list card, two smaller cards) instead of four equal cards; soft round icon tiles; key facts as tinted tiles. Status colours moved so blue only means action: Awaiting response is amber, Negotiating orange.
 
+## Demo mode (9 Nov 2026)
+Owner: sign straight in as admin for demos, keep roles but hide them, show the full data. Login is one step (email or single sign-on, no code, no account picker) and always gives the HR Admin. `session()` in `src/store.js` always returns the admin, so old sessions with other roles also get full access. The Users and roles tab is removed from the Settings tabs; its code stays for later.
+
 ## Open
 - Uang pisah formula is a sample PKB rule; the client's PKB decides.
 - Wages, cases and the company are invented. Legal review needed before real use.
