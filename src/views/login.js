@@ -12,7 +12,7 @@ const CREDIT = {
 
 const logo = (tone = '') => `
   <span class="flex items-center gap-2.5 ${tone}">
-    <span class="size-9 rounded-[8px] bg-accent text-accent-ink grid place-items-center"><span class="icon-[majesticons--door-exit-line] size-5"></span></span>
+    <span class="size-10 rounded-full bg-accent text-accent-ink grid place-items-center"><span class="icon-[majesticons--door-exit-line] size-5"></span></span>
     <span class="font-semibold text-lg tracking-tight">Pamit</span>
   </span>`
 
@@ -22,11 +22,11 @@ export function render({ query }) {
     title: 'Sign in',
     html: `
   <div class="min-h-dvh lg:grid lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
-    <section class="relative h-[260px] sm:h-[340px] lg:h-auto lg:min-h-dvh overflow-hidden bg-[#2a2118]">
+    <section class="relative h-[260px] sm:h-[340px] lg:h-auto lg:min-h-[calc(100dvh-24px)] lg:m-3 rounded-b-[28px] lg:rounded-[32px] overflow-hidden bg-[#1a2234]">
       <img src="img/login-desk-900.webp" srcset="img/login-desk-900.webp 900w, img/login-desk-1600.webp 1600w" sizes="(min-width: 1024px) 56vw, 100vw"
         alt="An empty office desk by a window in late afternoon light, with a letter left on it"
         class="absolute inset-0 size-full object-cover object-[50%_62%] lg:object-[50%_55%]" fetchpriority="high" />
-      <div class="absolute inset-0 bg-gradient-to-t from-[#1a130d]/85 via-[#1a130d]/20 to-[#1a130d]/30"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-[#0b1426]/85 via-[#0b1426]/20 to-[#0b1426]/25"></div>
       <div class="relative h-full flex flex-col justify-between p-5 sm:p-8 lg:p-12 text-white">
         ${logo()}
         <div class="max-w-[540px]">
@@ -48,7 +48,7 @@ export function render({ query }) {
           <h1 class="text-[28px] leading-tight font-semibold tracking-[-0.02em]">Every exit, handled properly.</h1>
           <p class="mt-2 text-sm text-muted">Offboarding for ${esc(COMPANY.name)}.</p>
         </div>
-        <div class="card p-6 sm:p-8 shadow-[0_1px_2px_rgb(0_0_0/0.04),0_12px_32px_-12px_rgb(0_0_0/0.12)]">
+        <div class="card !rounded-[28px] p-6 sm:p-8">
           <div id="step1">
             <h2 class="text-xl font-semibold">Sign in to Pamit</h2>
             <p class="text-sm text-muted mt-1">Use your ${esc(COMPANY.short)} work account.</p>

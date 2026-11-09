@@ -98,7 +98,7 @@ export function render({ query }) {
         $('#rows').innerHTML = `
         <div class="card hidden md:block overflow-hidden">
           <table class="w-full text-sm">
-            <thead class="text-xs text-muted text-left border-b border-line bg-sunk">
+            <thead class="text-xs text-muted text-left border-b border-line">
               <tr><th class="font-medium px-5 py-3">Employee</th><th class="font-medium px-3 py-3">Exit type</th><th class="font-medium px-3 py-3">Last day</th><th class="font-medium px-3 py-3">Status</th><th class="font-medium px-3 py-3 w-[150px]">Clearance</th><th class="font-medium px-5 py-3 text-right">Owner</th></tr>
             </thead>
             <tbody class="divide-y divide-line">

@@ -59,7 +59,7 @@ export function profileCard(e, { compact = false } = {}) {
     <div class="p-5 ${compact ? '' : 'border-b border-line'}">
       <div class="flex items-baseline justify-between"><p class="text-sm font-semibold">Assets held <span class="text-muted font-normal num">(${e.assets.length})</span></p>${assetsTotal ? `<p class="text-xs text-muted num">book value ${idr(assetsTotal)}</p>` : ''}</div>
       ${e.assets.length ? `<ul class="mt-3 space-y-2">${e.assets.map((a) => `
-        <li class="flex items-center gap-3 text-sm"><span class="size-8 rounded-[8px] bg-sunk border border-line grid place-items-center shrink-0">${assetIcon(a.kind)}</span>
+        <li class="flex items-center gap-3 text-sm"><span class="size-8 rounded-full bg-sunk grid place-items-center shrink-0">${assetIcon(a.kind)}</span>
           <span class="min-w-0 flex-1"><span class="block truncate">${esc(a.label)}</span><span class="block text-xs text-muted truncate num">${esc(a.model)} · ${a.tag}</span></span>
           <span class="text-xs text-muted shrink-0">${a.dept}</span></li>`).join('')}</ul>` : '<p class="mt-2 text-sm text-muted">No company assets on record.</p>'}
     </div>
@@ -118,13 +118,13 @@ export function render({ query }) {
       <div class="space-y-5 min-w-0">
 
         <section class="card p-5 sm:p-6">
-          <h2 class="flex items-center gap-2.5 font-semibold"><span class="size-6 rounded-full bg-ink text-ground text-xs grid place-items-center num">1</span>Who is leaving</h2>
+          <h2 class="flex items-center gap-2.5 font-semibold"><span class="size-7 rounded-full bg-accent-soft text-accent text-xs font-semibold grid place-items-center num">1</span>Who is leaving</h2>
           <div class="mt-5 grid sm:grid-cols-2 gap-4">
             <fieldset>
               <legend class="label">Workforce</legend>
-              <div class="grid grid-cols-2 p-1 rounded-[8px] bg-sunk border border-line" role="radiogroup">
-                <button type="button" class="wf h-9 rounded-[6px] text-sm" data-v="internal">Internal</button>
-                <button type="button" class="wf h-9 rounded-[6px] text-sm" data-v="external">External</button>
+              <div class="grid grid-cols-2 p-1 rounded-full bg-sunk" role="radiogroup">
+                <button type="button" class="wf h-9 rounded-lg text-sm" data-v="internal">Internal</button>
+                <button type="button" class="wf h-9 rounded-lg text-sm" data-v="external">External</button>
               </div>
               <p id="wfHint" class="hint"></p>
             </fieldset>
@@ -136,14 +136,14 @@ export function render({ query }) {
           <div class="mt-4">
             <label class="label" for="q">Employee</label>
             <div class="relative"><span class="icon-[majesticons--search-line] size-4 text-muted absolute left-3 top-3"></span><input id="q" class="field pl-9" placeholder="Search by name, position or employee number" autocomplete="off" /></div>
-            <div id="empList" class="mt-2 max-h-[300px] overflow-auto rounded-[8px] border border-line divide-y divide-line" role="listbox" aria-label="Employees"></div>
+            <div id="empList" class="mt-2 max-h-[300px] overflow-auto rounded-2xl bg-sunk p-1.5 space-y-0.5" role="listbox" aria-label="Employees"></div>
             <p id="err-emp" class="err hidden"></p>
           </div>
           <div id="profileMobile" class="lg:hidden mt-4"></div>
         </section>
 
         <section class="card p-5 sm:p-6">
-          <h2 class="flex items-center gap-2.5 font-semibold"><span class="size-6 rounded-full bg-ink text-ground text-xs grid place-items-center num">2</span>Exit type and reason</h2>
+          <h2 class="flex items-center gap-2.5 font-semibold"><span class="size-7 rounded-full bg-accent-soft text-accent text-xs font-semibold grid place-items-center num">2</span>Exit type and reason</h2>
           <div id="types" class="mt-5 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-2.5" role="radiogroup" aria-label="Exit type"></div>
           <p id="err-type" class="err hidden"></p>
           <div class="mt-4 grid sm:grid-cols-2 gap-4">
@@ -165,7 +165,7 @@ export function render({ query }) {
         </section>
 
         <section class="card p-5 sm:p-6">
-          <h2 class="flex items-center gap-2.5 font-semibold"><span class="size-6 rounded-full bg-ink text-ground text-xs grid place-items-center num">3</span>Dates</h2>
+          <h2 class="flex items-center gap-2.5 font-semibold"><span class="size-7 rounded-full bg-accent-soft text-accent text-xs font-semibold grid place-items-center num">3</span>Dates</h2>
           <div class="mt-5 grid sm:grid-cols-3 gap-4">
             <div><label class="label" for="notice">Notice date</label><input id="notice" type="date" class="field num" /></div>
             <div><label class="label" for="lastDay">Last working day</label><input id="lastDay" type="date" class="field num" /><p id="err-lastDay" class="err hidden"></p></div>
@@ -175,7 +175,7 @@ export function render({ query }) {
         </section>
 
         <section class="card p-5 sm:p-6">
-          <h2 class="flex items-center gap-2.5 font-semibold"><span class="size-6 rounded-full bg-ink text-ground text-xs grid place-items-center num">4</span>Email and documents</h2>
+          <h2 class="flex items-center gap-2.5 font-semibold"><span class="size-7 rounded-full bg-accent-soft text-accent text-xs font-semibold grid place-items-center num">4</span>Email and documents</h2>
           <div class="mt-5">
             <label class="label" for="template">Email template</label>
             <select id="template" class="field"></select>
@@ -189,7 +189,7 @@ export function render({ query }) {
           <div id="approvals" class="mt-5"></div>
         </section>
 
-        <div class="sticky bottom-0 z-20 -mx-4 sm:mx-0 px-4 sm:px-5 py-3 bg-ground/95 backdrop-blur border-t sm:border sm:rounded-[10px] border-line flex flex-wrap items-center gap-2 justify-end">
+        <div class="sticky bottom-0 z-20 -mx-4 sm:mx-0 px-4 sm:px-5 py-3 bg-ground/95 backdrop-blur border-t sm:border sm:rounded-full border-line sm:shadow-[0_10px_30px_-16px_rgb(21_32_57/0.3)] flex flex-wrap items-center gap-2 justify-end">
           <p id="formMsg" class="text-sm text-muted mr-auto"></p>
           <a href="#/" class="btn btn-quiet">Cancel</a>
           <button type="button" id="draft" class="btn">Save as draft</button>
@@ -228,7 +228,7 @@ export function render({ query }) {
         root.querySelectorAll('.wf').forEach((b) => {
           const on = b.dataset.v === f.workforce
           b.setAttribute('aria-checked', on); b.setAttribute('role', 'radio')
-          b.className = `wf h-9 rounded-[6px] text-sm ${on ? 'bg-surface border border-line font-medium shadow-sm' : 'text-muted hover:text-ink'}`
+          b.className = `wf h-9 rounded-full text-sm ${on ? 'bg-surface font-medium shadow-[0_1px_2px_rgb(21_32_57/0.08),0_4px_10px_-6px_rgb(21_32_57/0.25)]' : 'text-muted hover:text-ink'}`
         })
         $('#wfHint').textContent = f.workforce === 'internal' ? 'On our payroll: permanent (PKWTT) and fixed-term (PKWT).' : 'Outsourced or freelance. The vendor settles their rights; we collect assets and close access.'
       }
@@ -240,7 +240,7 @@ export function render({ query }) {
           const busy = used.has(e.id) && e.id !== f.emp
           const sel = e.id === f.emp
           const c = busy ? activeCaseFor(e.id) : null
-          return `<button type="button" role="option" aria-selected="${sel}" ${busy ? 'aria-disabled="true"' : ''} data-id="${e.id}" class="emp w-full flex items-center gap-3 px-3 py-2.5 text-left ${sel ? 'bg-accent-soft' : busy ? 'opacity-55 cursor-not-allowed' : 'hover:bg-sunk'}">
+          return `<button type="button" role="option" aria-selected="${sel}" ${busy ? 'aria-disabled="true"' : ''} data-id="${e.id}" class="emp w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left ${sel ? 'bg-surface ring-2 ring-accent' : busy ? 'opacity-55 cursor-not-allowed' : 'hover:bg-surface'}">
             ${avatar(e.name, 'size-8 text-[11px]')}
             <span class="min-w-0 flex-1"><span class="block text-sm font-medium truncate">${esc(e.name)}</span><span class="block text-xs text-muted truncate">${esc(e.position)} · ${esc(getDiv(e.div).name)}</span></span>
             <span class="text-right shrink-0"><span class="block text-xs num text-muted">${e.empNo}</span><span class="block text-xs ${busy ? 'text-ink font-medium' : 'text-muted'}">${busy ? 'In ' + c.id : e.contract}</span></span>
@@ -260,7 +260,7 @@ export function render({ query }) {
         $('#types').innerHTML = types().map((t) => {
           const disabled = e && ((t.id === 'contract' && e.contract !== 'PKWT'))
           const sel = f.type === t.id
-          return `<button type="button" role="radio" aria-checked="${sel}" ${disabled ? 'disabled' : ''} data-t="${t.id}" class="xt text-left rounded-[8px] border p-3 flex gap-3 items-start ${sel ? 'border-accent bg-accent-soft' : 'border-line hover:border-ink/30'} disabled:opacity-45 disabled:cursor-not-allowed">
+          return `<button type="button" role="radio" aria-checked="${sel}" ${disabled ? 'disabled' : ''} data-t="${t.id}" class="xt text-left rounded-2xl border p-3.5 flex gap-3 items-start ${sel ? 'border-accent bg-accent-soft' : 'border-line hover:border-accent/40 hover:bg-sunk'} disabled:opacity-45 disabled:cursor-not-allowed">
             <span class="mt-0.5 ${sel ? 'text-accent' : 'text-muted'}">${EXIT_ICON[t.icon]}</span>
             <span><span class="block text-sm font-medium">${esc(t.label)}</span><span class="block text-xs text-muted">${disabled ? 'Only for PKWT contracts' : esc(t.who)}</span></span>
           </button>`
@@ -279,14 +279,14 @@ export function render({ query }) {
         if (!(f.type === 'layoff' && e)) { $('#redeploy').innerHTML = ''; return }
         const matches = OPENINGS.map((o) => ({ o, score: o.skills.filter((s) => e.skills.includes(s)).length })).filter((m) => m.score > 0).sort((a, b) => b.score - a.score)
         $('#redeploy').innerHTML = `
-          <div class="rounded-[8px] border border-line bg-sunk p-4">
+          <div class="rounded-xl border border-line bg-sunk p-4">
             <div class="flex items-start gap-3">
               <span class="icon-[majesticons--git-branch-line] size-5 text-accent mt-0.5 shrink-0"></span>
               <div class="min-w-0 flex-1">
                 <p class="text-sm font-medium">Check internal openings first</p>
                 <p class="text-xs text-muted mt-0.5">The law asks companies to try to avoid layoffs. ${matches.length ? `${matches.length} open role${matches.length > 1 ? 's' : ''} match ${esc(e.name.split(' ')[0])}'s skills.` : 'No open role matches this person’s skills right now.'}</p>
                 ${matches.length ? `<div class="mt-3 space-y-1.5">${matches.map(({ o, score }) => `
-                  <label class="flex items-center gap-3 rounded-[8px] bg-surface border border-line px-3 py-2.5 cursor-pointer has-[:checked]:border-accent">
+                  <label class="flex items-center gap-3 rounded-xl bg-surface border border-line px-3 py-2.5 cursor-pointer has-[:checked]:border-accent">
                     <input type="radio" name="role" value="${o.id}" class="accent-[var(--color-accent)]" ${f.redeployRole === o.id ? 'checked' : ''} />
                     <span class="min-w-0 flex-1"><span class="block text-sm">${esc(o.title)} <span class="text-muted num">· ${o.grade}</span></span><span class="block text-xs text-muted truncate">${o.id} · ${esc(getDiv(o.div).name)} · ${esc(LOCATIONS[o.loc])}</span></span>
                     <span class="text-xs text-muted shrink-0">${score} skill${score > 1 ? 's' : ''} match</span>
@@ -317,8 +317,8 @@ export function render({ query }) {
         const msgs = checkDates()
         const le = $('#err-lastDay'); le.textContent = f.errors.lastDay || ''; le.classList.toggle('hidden', !f.errors.lastDay)
         $('#ruleNote').innerHTML = r ? `
-          <div class="rounded-[8px] bg-sunk border border-line p-3.5 text-sm flex gap-3"><span class="icon-[majesticons--information-circle-line] size-5 text-muted shrink-0"></span><div><p><span class="font-medium">Rule:</span> ${esc(r.note)}</p><p class="text-xs text-muted mt-1 num">Default notice ${r.noticeDays} days, response window ${r.responseDays} days. <a href="#/rules/exit" class="underline underline-offset-2">Edit rule</a></p></div></div>
-          ${msgs.map(([, m]) => `<div class="mt-2 rounded-[8px] border border-amber-300 bg-amber-50 dark:bg-amber-900/20 dark:border-amber-800 p-3.5 text-sm flex gap-3"><span class="icon-[majesticons--exclamation-line] size-5 text-amber-700 dark:text-amber-400 shrink-0"></span><p>${esc(m)}</p></div>`).join('')}` : '<p class="text-sm text-muted">Choose an exit type to apply its rule.</p>'
+          <div class="rounded-xl bg-sunk border border-line p-3.5 text-sm flex gap-3"><span class="icon-[majesticons--information-circle-line] size-5 text-muted shrink-0"></span><div><p><span class="font-medium">Rule:</span> ${esc(r.note)}</p><p class="text-xs text-muted mt-1 num">Default notice ${r.noticeDays} days, response window ${r.responseDays} days. <a href="#/rules/exit" class="underline underline-offset-2">Edit rule</a></p></div></div>
+          ${msgs.map(([, m]) => `<div class="mt-2 rounded-xl border border-amber-300 bg-amber-50 dark:bg-amber-900/20 dark:border-amber-800 p-3.5 text-sm flex gap-3"><span class="icon-[majesticons--exclamation-line] size-5 text-amber-700 dark:text-amber-400 shrink-0"></span><p>${esc(m)}</p></div>`).join('')}` : '<p class="text-sm text-muted">Choose an exit type to apply its rule.</p>'
       }
 
       function drawTemplates() {
@@ -343,7 +343,7 @@ export function render({ query }) {
         const v = vars(e, { lastDay: f.lastDay, deadline: f.deadline, owner: f.owner }, currentSettlement())
         const to = !e ? '[Employee]' : e.type === 'external' ? `${VENDORS[e.vendor].name} (${VENDORS[e.vendor].pic})` : `${e.name} <${e.personalEmail}>, ${e.email}`
         $('#preview').innerHTML = `
-          <div class="rounded-[8px] border border-line overflow-hidden">
+          <div class="rounded-xl border border-line overflow-hidden">
             <dl class="text-xs grid grid-cols-[64px_1fr] gap-y-1.5 px-4 py-3 bg-sunk border-b border-line">
               <dt class="text-muted">To</dt><dd class="truncate">${esc(to)}</dd>
               <dt class="text-muted">Cc</dt><dd class="truncate">${esc(e ? e.manager : '[Manager]')}, ${esc(f.owner)}</dd>
@@ -362,7 +362,7 @@ export function render({ query }) {
         const list = S().documents.filter((d) => !f.type || d.types.includes(f.type))
         if (!f.type) { $('#docs').innerHTML = '<p class="text-sm text-muted sm:col-span-2">Choose an exit type to see the documents it needs.</p>'; return }
         $('#docs').innerHTML = list.map((d) => `
-          <label class="min-w-0 flex items-start gap-2.5 rounded-[8px] border border-line px-3 py-2.5 cursor-pointer has-[:checked]:border-ink/40">
+          <label class="min-w-0 flex items-start gap-2.5 rounded-2xl border border-line px-3.5 py-2.5 cursor-pointer has-[:checked]:border-ink/40">
             <input type="checkbox" class="doc mt-0.5 size-4 accent-[var(--color-accent)]" value="${d.id}" ${f.docs?.includes(d.id) ? 'checked' : ''} />
             <span class="min-w-0"><span class="block text-sm">${esc(d.name)}</span><span class="block text-xs text-muted truncate">${esc(d.local)}</span></span>
           </label>`).join('')

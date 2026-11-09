@@ -22,6 +22,7 @@ const TONES = {
   stone: 'bg-stone-200/80 text-stone-700 dark:bg-stone-700/50 dark:text-stone-300',
   sky: 'bg-sky-100 text-sky-800 dark:bg-sky-900/50 dark:text-sky-200',
   amber: 'bg-amber-100 text-amber-900 dark:bg-amber-900/40 dark:text-amber-200',
+  orange: 'bg-orange-100 text-orange-900 dark:bg-orange-900/40 dark:text-orange-200',
   teal: 'bg-teal-100 text-teal-800 dark:bg-teal-900/50 dark:text-teal-200',
   rose: 'bg-rose-100 text-rose-800 dark:bg-rose-900/40 dark:text-rose-200',
   red: 'bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-200',
@@ -30,7 +31,7 @@ const TONES = {
   emerald: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-200',
   ink: 'bg-ink text-ground',
 }
-const DOTS = { stone: 'bg-stone-400', sky: 'bg-sky-500', amber: 'bg-amber-500', teal: 'bg-teal-500', rose: 'bg-rose-500', red: 'bg-red-600', green: 'bg-green-600', lime: 'bg-lime-600', emerald: 'bg-emerald-600', ink: 'bg-ground' }
+const DOTS = { stone: 'bg-stone-400', sky: 'bg-sky-500', amber: 'bg-amber-500', orange: 'bg-orange-500', teal: 'bg-teal-500', rose: 'bg-rose-500', red: 'bg-red-600', green: 'bg-green-600', lime: 'bg-lime-600', emerald: 'bg-emerald-600', ink: 'bg-ground' }
 export const toneOf = (status) => STATUSES[status]?.tone || 'stone'
 export const dot = (status) => DOTS[toneOf(status)]
 export function pill(status, extra = '') {
@@ -39,7 +40,7 @@ export function pill(status, extra = '') {
 }
 
 export const initials = (name) => name.split(' ').filter(Boolean).slice(0, 2).map((x) => x[0]).join('').toUpperCase()
-const AV = ['bg-[#e9dccb] text-[#5b4126]', 'bg-[#d9e3dc] text-[#2e4b3a]', 'bg-[#dfdcea] text-[#3e3a5e]', 'bg-[#ebd8d6] text-[#6a2f2a]', 'bg-[#d8e1e8] text-[#2c4659]', 'bg-[#e6e3cf] text-[#55502a]']
+const AV = ['bg-[#dce6fb] text-[#1d3f8f]', 'bg-[#d8efe6] text-[#1f5a45]', 'bg-[#fbe5d6] text-[#7a3d14]', 'bg-[#f6dde4] text-[#7a2440]', 'bg-[#e4e1f7] text-[#3b347a]', 'bg-[#f3ecd0] text-[#5f4d10]']
 export function avatar(name, size = 'size-9 text-xs') {
   let h = 0; for (const c of name) h = (h + c.charCodeAt(0)) % AV.length
   return `<span class="${size} ${AV[h]} shrink-0 rounded-full inline-grid place-items-center font-semibold" aria-hidden="true">${initials(name)}</span>`
@@ -48,7 +49,7 @@ export function avatar(name, size = 'size-9 text-xs') {
 export function toast(msg, tone = 'ink') {
   const box = document.getElementById('toasts')
   const el = document.createElement('div')
-  el.className = 'rise pointer-events-auto flex items-center gap-2 rounded-[10px] bg-ink text-ground text-sm px-4 py-3 shadow-lg max-w-[92vw]'
+  el.className = 'rise pointer-events-auto flex items-center gap-2 rounded-full bg-ink text-ground text-sm pl-4 pr-5 py-3 shadow-lg max-w-[92vw]'
   el.innerHTML = `<span class="icon-[majesticons--check-circle-line] size-5 shrink-0 ${tone === 'warn' ? 'hidden' : ''}"></span><span>${esc(msg)}</span>`
   box.appendChild(el)
   setTimeout(() => { el.style.transition = 'opacity .3s'; el.style.opacity = '0'; setTimeout(() => el.remove(), 320) }, 3200)
@@ -70,7 +71,7 @@ export function modal(html, { wide = false, onMount } = {}) {
 export function modalHead(title, sub = '') {
   return `<div class="flex items-start justify-between gap-4 px-5 pt-5 pb-4 border-b border-line">
     <div><h2 class="text-base font-semibold">${title}</h2>${sub ? `<p class="text-sm text-muted mt-0.5">${sub}</p>` : ''}</div>
-    <button class="btn btn-quiet btn-sm -mr-2 -mt-1 px-2" data-close aria-label="Close"><span class="icon-[majesticons--close-line] size-5"></span></button></div>`
+    <button class="btn btn-quiet btn-sm -mr-2 -mt-1 px-2 size-9" data-close aria-label="Close"><span class="icon-[majesticons--close-line] size-5"></span></button></div>`
 }
 
 export function merge(text, vars) {

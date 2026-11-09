@@ -172,8 +172,8 @@ export const REASONS = {
 // The lifecycle. `stage` groups the list tabs.
 export const STATUSES = {
   draft: { label: 'Draft', stage: 'draft', tone: 'stone', next: 'Review and send the notice' },
-  sent: { label: 'Awaiting response', stage: 'response', tone: 'sky', next: 'Employee to accept, counter or ask questions' },
-  negotiating: { label: 'Negotiating', stage: 'response', tone: 'amber', next: 'Answer the counter-proposal' },
+  sent: { label: 'Awaiting response', stage: 'response', tone: 'amber', next: 'Employee to accept, counter or ask questions' },
+  negotiating: { label: 'Negotiating', stage: 'response', tone: 'orange', next: 'Answer the counter-proposal' },
   redeploy: { label: 'Redeployment offered', stage: 'response', tone: 'teal', next: 'Employee to accept or decline the internal role' },
   bipartite: { label: 'Bipartite', stage: 'dispute', tone: 'rose', next: 'Reach agreement within 30 days or go to mediation' },
   mediation: { label: 'Mediation (Disnaker)', stage: 'dispute', tone: 'red', next: 'Follow the mediator’s recommendation' },

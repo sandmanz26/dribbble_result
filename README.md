@@ -10,7 +10,7 @@ transition tooling. English UI, Indonesian rules. Front end only: Vite, Tailwind
 - `#/rules/exit|templates|documents|checklist`, `#/settings/company|users|notifications|integrations|appearance`
 
 State: localStorage `pmt-state-v1`, session `pmt-session-v1`. Demo clock Mon 9 Nov 2026.
-Icons: Majesticons through `@iconify/tailwind4`. Font: Be Vietnam Pro. One accent, clay `#b3471d`.
+Icons: Majesticons through `@iconify/tailwind4`. Fonts: Wix Madefor Display (headings) and Wix Madefor Text. One accent, blue `#2457d6`, on a cool ground `#eef2f8`. Rounded system: 24 to 28 px cards, 14 px fields, pill buttons, tabs and header.
 
 ```
 npm ci && npm run build   # dist/

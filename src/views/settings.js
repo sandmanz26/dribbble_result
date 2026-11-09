@@ -97,7 +97,7 @@ export function render({ params }) {
         const g = st.settings.integrations
         $('#body').innerHTML = `<div class="card divide-y divide-line">${INTEGRATIONS.map(([k, l, d, s]) => `
           <div class="px-5 py-4 flex items-center gap-4">
-            <span class="size-10 rounded-[8px] bg-sunk border border-line grid place-items-center shrink-0"><span class="icon-[majesticons--data-line] size-5"></span></span>
+            <span class="size-10 rounded-full bg-sunk grid place-items-center shrink-0"><span class="icon-[majesticons--data-line] size-5"></span></span>
             <div class="flex-1 min-w-0"><p class="text-sm font-medium">${l}</p><p class="text-xs text-muted">${d}</p><p class="text-xs mt-1 ${g[k] ? 'text-green-700 dark:text-green-400' : 'text-muted'}">${g[k] ? (s.startsWith('Not') ? 'Connected' : s) : 'Not connected'}</p></div>
             <button data-k="${k}" class="int btn btn-sm">${g[k] ? 'Disconnect' : 'Connect'}</button>
           </div>`).join('')}</div>
@@ -108,7 +108,7 @@ export function render({ params }) {
       if (tab === 'appearance') {
         $('#body').innerHTML = `
         <div class="card p-5"><h2 class="text-sm font-semibold">Theme</h2>
-          <div class="mt-3 grid grid-cols-3 gap-2 max-w-[420px]" role="radiogroup">${[['system', 'System'], ['light', 'Light'], ['dark', 'Dark']].map(([k, l]) => `<button role="radio" aria-checked="${st.settings.theme === k}" data-t="${k}" class="th h-10 rounded-[8px] border text-sm ${st.settings.theme === k ? 'border-accent bg-accent-soft font-medium' : 'border-line hover:bg-sunk'}">${l}</button>`).join('')}</div>
+          <div class="mt-3 grid grid-cols-3 gap-2 max-w-[420px]" role="radiogroup">${[['system', 'System'], ['light', 'Light'], ['dark', 'Dark']].map(([k, l]) => `<button role="radio" aria-checked="${st.settings.theme === k}" data-t="${k}" class="th h-10 rounded-xl border text-sm ${st.settings.theme === k ? 'border-accent bg-accent-soft font-medium' : 'border-line hover:bg-sunk'}">${l}</button>`).join('')}</div>
         </div>
         <div class="card p-5 mt-4"><h2 class="text-sm font-semibold">Demo data</h2><p class="text-sm text-muted mt-1">Cases, templates and settings you changed are kept in this browser. Reset to start again from the sample data.</p><button id="rs" class="btn mt-4"><span class="icon-[majesticons--refresh-line] size-4"></span>Reset demo data</button></div>`
         on(root, '.th', 'click', (e, el) => { update(() => { st.settings.theme = el.dataset.t }); import('../main.js').then((m) => m.applyTheme()); redraw() })

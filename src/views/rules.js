@@ -42,7 +42,7 @@ export function render({ params }) {
         $('#body').innerHTML = `
         <div class="card overflow-x-auto">
           <table class="w-full text-sm min-w-[880px]">
-            <thead class="text-xs text-muted text-left border-b border-line bg-sunk"><tr>
+            <thead class="text-xs text-muted text-left border-b border-line"><tr>
               <th class="font-medium px-5 py-3">Exit type</th><th class="font-medium px-3 py-3">Notice</th><th class="font-medium px-3 py-3">Reply in</th><th class="font-medium px-3 py-3">Settlement</th><th class="font-medium px-3 py-3">Default email</th><th class="font-medium px-3 py-3">Approvals</th><th class="px-5 py-3"></th></tr></thead>
             <tbody class="divide-y divide-line">
               ${st.rules.map((r, i) => `<tr>
@@ -95,7 +95,7 @@ export function render({ params }) {
             <div class="card">
               <div class="p-3 border-b border-line"><button id="newT" class="btn btn-sm w-full"><span class="icon-[majesticons--plus-line] size-4"></span>New template</button></div>
               <ul class="p-1.5 max-h-[640px] overflow-auto">
-                ${st.templates.map((t) => `<li><button data-id="${t.id}" class="pick w-full text-left rounded-[8px] px-3 py-2.5 ${t.id === cur.id ? 'bg-accent-soft' : 'hover:bg-sunk'}">
+                ${st.templates.map((t) => `<li><button data-id="${t.id}" class="pick w-full text-left rounded-xl px-3 py-2.5 ${t.id === cur.id ? 'bg-accent-soft' : 'hover:bg-sunk'}">
                   <span class="flex items-center justify-between gap-2"><span class="text-sm font-medium truncate">${esc(t.name)}</span>${t.status === 'draft' ? '<span class="text-[11px] px-1.5 rounded bg-sunk border border-line text-muted">Draft</span>' : ''}</span>
                   <span class="block text-xs text-muted truncate mt-0.5">${t.types.length ? t.types.map(typeLabel).join(', ') : 'Any exit'} · ${fdate(t.updated)}</span></button></li>`).join('')}
               </ul>
@@ -110,7 +110,7 @@ export function render({ params }) {
                   <div><label class="label" for="subj">Subject</label><input id="subj" name="subject" class="field" value="${esc(cur.subject)}" /></div>
                   <div><label class="label" for="bd">Body</label><textarea id="bd" name="body" rows="14" class="field font-[inherit]">${esc(cur.body)}</textarea>
                     <p class="hint">Insert a field at the cursor:</p>
-                    <div class="flex flex-wrap gap-1.5 mt-1.5">${MERGE_FIELDS.map(([k, l]) => `<button type="button" data-k="${k}" class="mf h-7 px-2 rounded-[6px] border border-line text-xs hover:bg-sunk" title="{{${k}}}">${l}</button>`).join('')}</div>
+                    <div class="flex flex-wrap gap-1.5 mt-1.5">${MERGE_FIELDS.map(([k, l]) => `<button type="button" data-k="${k}" class="mf h-7 px-2 rounded-lg border border-line text-xs hover:bg-sunk" title="{{${k}}}">${l}</button>`).join('')}</div>
                   </div>
                   <fieldset><legend class="label">Suggested for</legend><div class="grid grid-cols-2 gap-1.5">${EXIT_TYPES.map((t) => `<label class="flex items-center gap-2 text-sm"><input type="checkbox" name="types" value="${t.id}" class="size-4 accent-[var(--color-accent)]" ${cur.types.includes(t.id) ? 'checked' : ''} />${t.label}</label>`).join('')}</div></fieldset>
                 </div>
@@ -161,7 +161,7 @@ export function render({ params }) {
         $('#body').innerHTML = `
         <div class="card overflow-x-auto">
           <table class="w-full text-sm min-w-[820px]">
-            <thead class="text-xs text-muted text-left border-b border-line bg-sunk"><tr>
+            <thead class="text-xs text-muted text-left border-b border-line"><tr>
               <th class="font-medium px-5 py-3">Document</th><th class="font-medium px-3 py-3">Used for</th><th class="font-medium px-3 py-3">Signed by</th><th class="font-medium px-3 py-3">Language</th><th class="font-medium px-3 py-3">Version</th><th class="px-5 py-3"></th></tr></thead>
             <tbody class="divide-y divide-line">
               ${st.documents.map((d, i) => `<tr>

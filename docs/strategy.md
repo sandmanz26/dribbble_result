@@ -28,6 +28,9 @@ statuses (accepted, negotiating, and more), rules and documents, settings.
 ## Login pass (9 Nov 2026)
 Owner asked for an image on the login page. Picked an Unsplash photo of an empty desk by a window with a letter left on it (the desk someone leaves behind), warm light that matches the clay accent. A Jakarta skyline was rejected because bank and hotel logos were visible. Split layout: photo with headline and the legal frame on the left, sign-in form on the right; on phones the photo is a banner above the form. Still no password field (phishing flag risk for the shared domain): email with one-time code, or single sign-on.
 
+## Visual pass 2 (9 Nov 2026)
+Owner: use blue, make it rounder and less stiff, it looked AI-generated. Diagnosis: every box identical (white, 1 px border, 10 px corners), icon-in-square tiles with corner arrows, black numbered circles, grey table headers and lines everywhere. Changes: one blue #2457d6 (not the default framework blue, and different from Pathwell's #4c6fff) on a cool ground; borderless cards with soft shadow, 24 to 28 px corners, 14 px filled fields, pill buttons, tabs and a floating pill header; Wix Madefor Display and Text; bento home (tall blue create card, wide list card, two smaller cards) instead of four equal cards; soft round icon tiles; key facts as tinted tiles. Status colours moved so blue only means action: Awaiting response is amber, Negotiating orange.
+
 ## Open
 - Uang pisah formula is a sample PKB rule; the client's PKB decides.
 - Wages, cases and the company are invented. Legal review needed before real use.
