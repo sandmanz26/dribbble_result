@@ -25,6 +25,9 @@ statuses (accepted, negotiating, and more), rules and documents, settings.
   Bersama, BAST, clearance form, settlement statement, paklaring, JKP letter, BPJS report, vendor letter.
 - Login has no password field (an earlier project was flagged as phishing): SSO button, one-time code, demo users.
 
+## Login pass (9 Nov 2026)
+Owner asked for an image on the login page. Picked an Unsplash photo of an empty desk by a window with a letter left on it (the desk someone leaves behind), warm light that matches the clay accent. A Jakarta skyline was rejected because bank and hotel logos were visible. Split layout: photo with headline and the legal frame on the left, sign-in form on the right; on phones the photo is a banner above the form. Still no password field (phishing flag risk for the shared domain): email with one-time code, or single sign-on.
+
 ## Open
 - Uang pisah formula is a sample PKB rule; the client's PKB decides.
 - Wages, cases and the company are invented. Legal review needed before real use.

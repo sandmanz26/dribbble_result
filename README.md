@@ -15,3 +15,5 @@ Icons: Majesticons through `@iconify/tailwind4`. Font: Be Vietnam Pro. One accen
 ```
 npm ci && npm run build   # dist/
 ```
+
+Login photo: Annie Spratt on Unsplash (photo hQEvJZ2FWVM), self-hosted in `public/img/` as WebP, credited on the login page.
