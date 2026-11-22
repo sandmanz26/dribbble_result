@@ -11,7 +11,7 @@ export default function Taster() {
       <header className="tbar">
         <Wordmark />
         <p className="tbar-note">
-          <Icon name="unlock" size={18} />
+          <Icon name="check" size={18} />
           Free lesson. No account needed.
         </p>
         <Link to="/" className="tbar-exit">

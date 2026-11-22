@@ -32,7 +32,7 @@
 .examiner-note { grid-column: 2; grid-row: 2 / span 2; background: var(--ox); color: var(--on-ox); padding: 28px; display: grid; gap: 12px; font-size: 1.125rem; line-height: 1.45; position: sticky; top: 90px; }
 .examiner-who { font-weight: 800; }
 .worked { width: 100%; border-collapse: collapse; }
-.worked td { padding: 12px 0; border-bottom: 1px solid var(--paper-3); }
+.worked td { padding: 12px 0; border-bottom: 1px solid var(--paper-3); } /* taste-skill-ignore: form field or real table */
 .worked td:last-child { text-align: right; font-weight: 800; color: var(--ox); white-space: nowrap; padding-left: 16px; }
 .flow-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px; }
 
@@ -52,8 +52,8 @@
 .answer-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: clamp(24px, 4vw, 56px); align-items: start; }
 .answer-main { display: grid; gap: 12px; }
 .answer-label { font-weight: 800; font-size: 1.125rem; }
-.answer-box { width: 100%; min-height: 320px; resize: vertical; padding: 24px 28px; border: 0; background: var(--sheet); color: var(--graphite); font-size: 1.125rem; line-height: 1.7; box-shadow: inset 0 -3px 0 var(--paper-3); }
-.answer-box:focus { outline: none; box-shadow: inset 0 -3px 0 var(--ox); }
+.answer-box { width: 100%; min-height: 320px; resize: vertical; padding: 24px 28px; border: 0; background: var(--sheet); color: var(--graphite); font-size: 1.125rem; line-height: 1.7; box-shadow: inset 0 -3px 0 var(--paper-3); } /* taste-skill-ignore: form field or real table */
+.answer-box:focus { outline: none; box-shadow: inset 0 -3px 0 var(--ox); } /* taste-skill-ignore: form field or real table */
 .answer-box::placeholder { color: var(--graphite-muted); }
 .answer-bar { display: flex; justify-content: space-between; gap: 16px; font-size: var(--step-small); color: var(--muted); }
 .answer-bar span:first-child { font-weight: 800; color: var(--ox); }
@@ -95,7 +95,7 @@
 .result-side h2 { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 10px; }
 .result-aos { background: var(--sheet); color: var(--graphite); padding: 24px; display: grid; gap: 16px; }
 .result-aos li { display: grid; gap: 8px; }
-.result-aos li > span { display: flex; justify-content: space-between; gap: 12px; font-weight: 700; }
+.result-aos li > span:first-child { display: flex; justify-content: space-between; gap: 12px; font-weight: 700; }
 .result-aos strong { color: var(--ox); }
 .result-good { background: var(--sheet); color: var(--graphite); padding: 24px; }
 .result-good li { display: flex; gap: 8px; padding: 4px 0; }

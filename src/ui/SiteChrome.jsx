@@ -50,10 +50,10 @@ export function SiteNav() {
 
 export function SiteFooter() {
   const letters = ['E', 'x', 'a', 'm', 'A', 'c', 'e']
-  const heights = [100, 72, 78, 84, 100, 70, 80]
+  const heights = [100, 82, 86, 90, 100, 80, 88]
   return (
     <footer className="sfoot on-ox">
-      <div className="sfoot-mark" aria-hidden="true">
+      <div className="sfoot-mark" role="img" aria-label="ExamAce">
         {letters.map((l, i) => (
           <span key={i} style={{ height: `${heights[i]}%` }}>
             {l}

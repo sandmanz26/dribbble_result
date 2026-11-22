@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { Icon, Wordmark } from '../ui/kit.jsx'
 
 const NAVS = {
@@ -35,12 +35,15 @@ export default function Shell({ role, title, sentence, action, children }) {
       <aside className="side" aria-label="App navigation">
         <Wordmark to="/" />
         <nav className="side-nav">
-          {NAVS[role].map(([to, label, icon]) => (
-            <NavLink key={to} to={to} end className="side-link">
-              <Icon name={icon} size={20} />
-              {label}
-            </NavLink>
-          ))}
+          {NAVS[role].map(([to, label, icon]) => {
+            const L = to.includes('#') ? Link : NavLink
+            return (
+              <L key={to} to={to} {...(L === NavLink ? { end: true } : {})} className="side-link">
+                <Icon name={icon} size={20} />
+                {label}
+              </L>
+            )
+          })}
         </nav>
         <div className="side-who">
           <span className="who-mark" aria-hidden="true">
@@ -63,12 +66,15 @@ export default function Shell({ role, title, sentence, action, children }) {
         <main className="canvas-main">{children}</main>
       </div>
       <nav className="tabbar" aria-label="App navigation">
-        {NAVS[role].map(([to, label, icon]) => (
-          <NavLink key={to} to={to} end className="tab">
-            <Icon name={icon} size={22} />
-            <span>{label}</span>
-          </NavLink>
-        ))}
+        {NAVS[role].map(([to, label, icon]) => {
+          const L = to.includes('#') ? Link : NavLink
+          return (
+            <L key={to} to={to} {...(L === NavLink ? { end: true } : {})} className="tab">
+              <Icon name={icon} size={22} />
+              <span>{label}</span>
+            </L>
+          )
+        })}
       </nav>
     </div>
   )

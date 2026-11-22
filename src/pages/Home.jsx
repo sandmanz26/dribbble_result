@@ -235,7 +235,7 @@ function Examiners() {
     <Section className="examiners" aria-labelledby="ex-h">
       <div className="ex-panel on-ox">
         <h2 id="ex-h" className="ex-h" data-rise>
-          Written by people who mark the real thing
+          Written by examiners
         </h2>
         <figure className="ex-photo" data-rise>
           <img className="photo" src="img/examiner-desk.webp" width="1280" height="1600" loading="lazy" alt="An examiner’s desk: a stack of marked scripts, a red pen and a mark scheme" />
@@ -267,31 +267,37 @@ function Examiners() {
 function Families() {
   return (
     <Section className="families" id="families" aria-labelledby="fam-h">
-      <div className="fam-panel p-parent">
-        <h2 id="fam-h" className="fam-h" data-rise>
-          For the people around them
-        </h2>
-        <img className="photo fam-photo" src="img/parent.webp" width="1280" height="1600" loading="lazy" alt="A mother and her son looking at a laptop together at the kitchen table" />
-        <div className="fam-row" data-rise>
-          <div>
-            <h3>Parents</h3>
-            <p>A free parent view: time revised, marks by level and one thing worth asking about at dinner. Not their essays.</p>
+      <h2 id="fam-h" className="h-head fam-h" data-rise>
+        For the people around them
+      </h2>
+      <div className="fam-panels">
+        <div className="fam-panel p-parent">
+          <figure className="fam-photo">
+            <img className="photo" src="img/parent.webp" width="1280" height="1600" loading="lazy" alt="A mother and her son looking at a laptop together at the kitchen table" />
+          </figure>
+          <div className="fam-row" data-rise>
+            <div>
+              <h3>Parents</h3>
+              <p>A free parent view: time revised, marks by level and one thing worth asking about at dinner. Not their essays.</p>
+            </div>
+            <Link to="/parent" className="btn is-paper is-small">
+              See the parent view
+            </Link>
           </div>
-          <Link to="/parent" className="btn is-paper is-small">
-            See the parent view
-          </Link>
         </div>
-      </div>
-      <div className="fam-panel p-teacher">
-        <img className="photo fam-photo" src="img/teacher.webp" width="1280" height="1600" loading="lazy" alt="A teacher marking a stack of exam scripts with a red pen after school" />
-        <div className="fam-row" data-rise>
-          <div>
-            <h3>Teachers</h3>
-            <p>Set a question, let the AI mark first, then check the answers it is least sure of before anyone sees a mark.</p>
+        <div className="fam-panel p-teacher">
+          <figure className="fam-photo">
+            <img className="photo" src="img/teacher.webp" width="1280" height="1600" loading="lazy" alt="A teacher marking a stack of exam scripts with a red pen after school" />
+          </figure>
+          <div className="fam-row" data-rise>
+            <div>
+              <h3>Teachers</h3>
+              <p>Set a question, let the AI mark first, then check the answers it is least sure of before anyone sees a mark.</p>
+            </div>
+            <Link to="/teacher" className="btn is-small">
+              See the teacher view
+            </Link>
           </div>
-          <Link to="/teacher" className="btn is-small">
-            See the teacher view
-          </Link>
         </div>
       </div>
     </Section>

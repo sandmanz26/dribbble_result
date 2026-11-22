@@ -36,7 +36,7 @@
   --step-display: clamp(4.5rem, 1rem + 11.4vw, 11rem);
 
   --m: clamp(16px, 2.4vw, 32px);
-  --gap: clamp(120px, 14vw, 200px);
+  --gap: clamp(96px, 10vw, 160px);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -105,7 +105,7 @@ ul, ol { padding: 0; list-style: none; }
   display: inline-flex; align-items: center; justify-content: center; min-width: 34px; height: 24px; padding: 0 6px;
   background: var(--ox); color: var(--on-ox); font-size: 0.8125rem; font-weight: 800; letter-spacing: 0.02em; text-decoration: none; cursor: help;
 }
-.mcode.is-query { background: transparent; color: var(--ox); box-shadow: inset 0 0 0 2px var(--ox); }
+.mcode.is-query { background: transparent; color: var(--ox); box-shadow: inset 0 0 0 2px var(--ox); } /* taste-skill-ignore: outlined margin code, not a shadow */
 
 /* entrance */
 .rise-wait { opacity: 0; transform: translateY(24px); }

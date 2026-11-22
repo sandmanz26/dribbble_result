@@ -74,7 +74,7 @@ export const WEEK = [
   { day: 'Sun', minutes: 45, lessons: 1, marked: 0 },
 ]
 export const WEEK_TOTAL = WEEK.reduce((s, d) => ({ minutes: s.minutes + d.minutes, lessons: s.lessons + d.lessons, marked: s.marked + d.marked }), { minutes: 0, lessons: 0, marked: 0 })
-export const fmtMinutes = (m) => `${Math.floor(m / 60)} h ${String(m % 60).padStart(2, '0')} m`
+export const fmtMinutes = (m) => `${Math.floor(m / 60)} h ${m % 60} m`
 
 export const NEXT_UP = [
   { kind: 'rewrite', title: 'Rewrite: Are monopolies always against the public interest?', why: 'Your judgement earned 3 of 8 for evaluation. Add a “depends on” and a final verdict.', minutes: 25 },

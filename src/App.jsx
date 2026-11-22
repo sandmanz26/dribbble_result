@@ -76,7 +76,7 @@ function PrototypeMap() {
         </div>
       )}
       <button className="pmap-btn" aria-expanded={open} onClick={() => setOpen((v) => !v)}>
-        <Icon name={open ? 'cross' : 'layout'} size={18} /> Prototype
+        <Icon name={open ? 'cross' : 'layout'} size={18} /> <span className="pmap-label">Prototype</span>
       </button>
     </div>
   )

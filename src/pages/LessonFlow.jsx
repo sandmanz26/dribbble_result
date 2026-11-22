@@ -26,9 +26,14 @@ export default function LessonFlow({ mode = 'taster', onStepChange }) {
   const [attempts, setAttempts] = useState(() => getState().attempts || [])
   const [marking, setMarking] = useState(false)
   const topRef = useRef(null)
+  const firstRender = useRef(true)
 
   useEffect(() => {
     onStepChange && onStepChange(step)
+    if (firstRender.current) {
+      firstRender.current = false
+      return
+    }
     topRef.current && topRef.current.scrollIntoView({ block: 'start' })
   }, [step])
 

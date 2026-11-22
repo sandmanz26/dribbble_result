@@ -70,16 +70,6 @@ export default function Receipt({ headingId = 'receipt-h', compact = false }) {
                 <span className="tnum">{money(p.price)}</span>
               </li>
             ))}
-            {p.gets.map((g) => (
-              <li key={g} className="slip-inc">
-                <span>{g}</span>
-                <span>incl.</span>
-              </li>
-            ))}
-            <li className="slip-inc">
-              <span>First marked answer</span>
-              <span>free</span>
-            </li>
           </ul>
           <div className="slip-bar" />
           <p className="slip-total">
@@ -89,6 +79,15 @@ export default function Receipt({ headingId = 'receipt-h', compact = false }) {
           <Link to={`/start?plan=${plan}`} className="btn slip-btn">
             Start with a free answer <Icon name="arrowRight" />
           </Link>
+          <p className="slip-inc-h">In {p.name}, for each subject</p>
+          <ul className="slip-incs">
+            {['Your first marked answer free', ...p.gets].map((g) => (
+              <li key={g}>
+                <Icon name="check" size={16} />
+                {g}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </div>
