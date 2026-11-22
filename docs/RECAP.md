@@ -289,3 +289,11 @@ Owner's Vercel usage was nearly full. Cause: every push to main rebuilt all 28 p
 
 - Spacing pass (same day): one 4 to 48 px scale and a fixed rhythm on every screen after the owner
   said spacing was still messy. Details in the branch's `docs/strategy.md` section 10.
+
+### wrwpcjz, ExamAce A-Level revision redesign (22 Nov 2026)
+- Brief: Dribbble "User Design" ($5,000, next few weeks). ExamAce is a live AI A-Level revision platform built in Lovable; priority is sign-ups and use: simpler homepage, easier sign-up, landing to first lesson to first marked answer. Three stages: UX audit (paid first job), site + design system, dashboards.
+- Owner asked to work as head of design, creative, product and education consultant, deep research on the best education products (strategy, not their UI), no AI slop, up to 20 Higgsfield credits.
+- Audit of the live site found the cause of low taster use: "Try free lessons, no account needed" lands on sign-in; the taster's exam questions are paywalled; the free marking demo starts with an empty form; the phone homepage overflows. 14 findings at `#/audit` with screenshots.
+- Built: the route (homepage to marked answer in about ten minutes, no account, rewrite loop), sign-up after value without a password, pricing receipt with the real prices, team, design system, student, parent and teacher dashboards with teacher review of AI marks. Research and roast log in the branch's `docs/strategy.md`.
+- Higgsfield: 11 images, 8.25 of the 20 credits used.
+

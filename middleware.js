@@ -37,6 +37,7 @@ const PASSWORDS = {
   jjbkpcm: 'ks-h9h1-mnky', // KhangoSupps retro landing page (random slug, owner's request)
   xvvgwpx: 'fw-mrnz-an6x', // Fuwa Matcha Club, fun matcha cafe (random slug)
   wjkpmsb: 'pt-onft-z3yw', // Pamit offboarding admin for Indonesian companies (random slug)
+  wrwpcjz: 'ex-oucj-sqjl', // ExamAce A-Level revision redesign: audit, site, dashboards (random slug)
   sgrtvtr: 'br-hxes-olfp', // BRTH Labs breath spray site with three design directions (random slug)
   twtkgwd: 'fv-8161-a7br', // Fuwa Matcha Club version 2, reworked away from the reference (random slug)
   qcdxfkx: 'ku-sm6d-1xsm', // KUMO, minimal canned matcha latte (random slug)
