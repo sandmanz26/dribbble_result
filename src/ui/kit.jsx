@@ -39,23 +39,23 @@ export function useReveal() {
     const el = ref.current
     if (!el || !('IntersectionObserver' in window)) return
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    const items = el.querySelectorAll('[data-rise]')
-    items.forEach((n, i) => {
-      n.classList.add('rise-wait')
-      n.style.setProperty('--rise-delay', `${Math.min(i, 6) * 75}ms`)
-    })
+    const items = [...el.querySelectorAll('[data-rise]')]
+    const vh = window.innerHeight
+    // Items already on screen at load show at once; the rest rise as each one arrives.
+    const later = items.filter((n) => n.getBoundingClientRect().top > vh * 0.92)
+    later.forEach((n) => n.classList.add('rise-wait'))
     const io = new IntersectionObserver(
       (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.querySelectorAll('[data-rise]').forEach((n) => n.classList.add('rise-in'))
-            io.unobserve(e.target)
-          }
+        const arriving = entries.filter((e) => e.isIntersecting)
+        arriving.forEach((e, i) => {
+          e.target.style.setProperty('--rise-delay', `${Math.min(i, 5) * 75}ms`)
+          e.target.classList.add('rise-in')
+          io.unobserve(e.target)
         })
       },
-      { threshold: 0.12 },
+      { threshold: 0, rootMargin: '0px 0px -8% 0px' },
     )
-    io.observe(el)
+    later.forEach((n) => io.observe(n))
     return () => io.disconnect()
   }, [])
   return ref

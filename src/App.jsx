@@ -7,6 +7,7 @@ import Pricing from './pages/Pricing.jsx'
 import Team from './pages/Team.jsx'
 import System from './pages/System.jsx'
 import Audit from './pages/Audit.jsx'
+import Flows from './pages/Flows.jsx'
 import StudentHome from './app/StudentHome.jsx'
 import AppLesson from './app/AppLesson.jsx'
 import ParentHome from './app/ParentHome.jsx'
@@ -23,6 +24,7 @@ const TITLES = {
   '/team': 'The examiners · ExamAce',
   '/system': 'Design system · ExamAce',
   '/audit': 'UX audit · ExamAce',
+  '/flows': 'Flows and wireframes · ExamAce',
   '/app': 'Today · ExamAce',
   '/app/lesson': 'Lesson · ExamAce',
   '/parent': 'Maya this week · ExamAce',
@@ -48,7 +50,7 @@ function ScrollAndTitle() {
 
 const MAP = [
   ['Stage 1', [['/audit', 'UX audit: where people get stuck']]],
-  ['Stage 2: site and system', [['/', 'Homepage'], ['/taster/economics', 'Taster lesson to first mark'], ['/start', 'Sign-up'], ['/pricing', 'Pricing'], ['/team', 'Team'], ['/system', 'Design system']]],
+  ['Stage 2: site and system', [['/flows', 'User flows and wireframes'], ['/', 'Homepage'], ['/taster/economics', 'Taster lesson to first mark'], ['/start', 'Sign-up'], ['/pricing', 'Pricing'], ['/team', 'Team'], ['/system', 'Design system']]],
   ['Stage 3: dashboards', [['/app', 'Student'], ['/app/lesson', 'Lesson with tutor'], ['/parent', 'Parent'], ['/teacher', 'Teacher'], ['/teacher/review', 'Teacher checks AI marks']]],
 ]
 
@@ -82,11 +84,11 @@ function PrototypeMap() {
   )
 }
 
-export default function App() {
+function Pages() {
+  const loc = useLocation()
   return (
-    <HashRouter>
-      <ScrollAndTitle />
-      <Routes>
+    <div key={loc.pathname} className="page-enter">
+      <Routes location={loc}>
         <Route path="/" element={<Home />} />
         <Route path="/taster/:subject" element={<Taster />} />
         <Route path="/start" element={<Start />} />
@@ -94,6 +96,7 @@ export default function App() {
         <Route path="/team" element={<Team />} />
         <Route path="/system" element={<System />} />
         <Route path="/audit" element={<Audit />} />
+        <Route path="/flows" element={<Flows />} />
         <Route path="/app" element={<StudentHome />} />
         <Route path="/app/lesson" element={<AppLesson />} />
         <Route path="/parent" element={<ParentHome />} />
@@ -101,6 +104,15 @@ export default function App() {
         <Route path="/teacher/review" element={<TeacherReview />} />
         <Route path="*" element={<Home />} />
       </Routes>
+    </div>
+  )
+}
+
+export default function App() {
+  return (
+    <HashRouter>
+      <ScrollAndTitle />
+      <Pages />
       <PrototypeMap />
     </HashRouter>
   )

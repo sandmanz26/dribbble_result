@@ -157,3 +157,12 @@ export const METRICS = [
   ['Week 2 return', 'New accounts that get a second answer marked within 14 days'],
   ['Paid conversion by route', 'Paid plans from the taster route against the old sign-up route'],
 ]
+
+// The short list for the client: what to change first, how big a change it is in Lovable, and who it helps.
+export const FIRST_FIVE = [
+  { id: 1, change: 'Point the four “Try free lessons” buttons at each subject’s taster lesson', effort: 'An hour', who: 'Students' },
+  { id: 2, change: 'Unlock one exam question at the end of each taster and mark it free', effort: 'A day', who: 'Students, parents' },
+  { id: 4, change: 'Give the homepage a phone layout and a slim cookie bar', effort: 'Two days', who: 'Everyone on a phone' },
+  { id: 5, change: 'Ask for the account after the first mark: role, subject, board, year, email link', effort: 'Three days', who: 'Everyone' },
+  { id: 6, change: 'Say the price one way everywhere: per subject, per month', effort: 'An hour', who: 'Parents' },
+]

@@ -28,6 +28,8 @@ export default function Start() {
   const [school, setSchool] = useState('')
   const [sent, setSent] = useState(false)
   const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)
+  const [touched, setTouched] = useState(false)
+  const emailErr = touched && email && !emailOk ? 'That email looks incomplete: it needs an @ and a domain, like name@school.sch.uk.' : null
 
   const stepCount = role === 'parent' ? 2 : 3
   const step = !role ? 1 : sent ? stepCount + 1 : role === 'student' && !subjects.length ? 2 : 2
@@ -51,7 +53,8 @@ export default function Start() {
           <form className="start-form" onSubmit={(e) => { e.preventDefault(); if (emailOk) setSent(true) }}>
             <label className="field">
               <span>Email</span>
-              <input type="email" inputMode="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" />
+              <input type="email" inputMode="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} onBlur={() => setTouched(true)} aria-invalid={!!emailErr} aria-describedby="email-err" placeholder="you@example.com" />
+                {emailErr && <small id="email-err" className="field-err" role="alert">{emailErr}</small>}
             </label>
             <button className="btn" disabled={!emailOk}>
               Email me a sign-in link <Icon name="arrowRight" />
@@ -130,7 +133,8 @@ export default function Start() {
               </fieldset>
               <label className="field">
                 <span>Your email</span>
-                <input type="email" inputMode="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" />
+                <input type="email" inputMode="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} onBlur={() => setTouched(true)} aria-invalid={!!emailErr} aria-describedby="email-err" placeholder="you@example.com" />
+                {emailErr && <small id="email-err" className="field-err" role="alert">{emailErr}</small>}
                 <small>We send a sign-in link here. No password.</small>
               </label>
               <button className="btn" disabled={!emailOk || !subjects.length}>
@@ -144,7 +148,8 @@ export default function Start() {
             <form className="start-form" onSubmit={finish}>
               <label className="field">
                 <span>Your email</span>
-                <input type="email" inputMode="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" />
+                <input type="email" inputMode="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} onBlur={() => setTouched(true)} aria-invalid={!!emailErr} aria-describedby="email-err" placeholder="you@example.com" />
+                {emailErr && <small id="email-err" className="field-err" role="alert">{emailErr}</small>}
               </label>
               <label className="field">
                 <span>Your child’s email (optional)</span>
@@ -161,7 +166,8 @@ export default function Start() {
             <form className="start-form" onSubmit={finish}>
               <label className="field">
                 <span>School email</span>
-                <input type="email" inputMode="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="name@school.sch.uk" />
+                <input type="email" inputMode="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} onBlur={() => setTouched(true)} aria-invalid={!!emailErr} aria-describedby="email-err" placeholder="name@school.sch.uk" />
+                {emailErr && <small id="email-err" className="field-err" role="alert">{emailErr}</small>}
               </label>
               <label className="field">
                 <span>School or college</span>

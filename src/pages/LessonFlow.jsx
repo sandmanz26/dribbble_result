@@ -22,7 +22,12 @@ const TUTOR = {
 export default function LessonFlow({ mode = 'taster', onStepChange }) {
   const [step, setStep] = useState(0)
   const [answers, setAnswers] = useState({})
-  const [text, setText] = useState('')
+  const [text, setTextRaw] = useState(() => getState().draft || '')
+  const [reached, setReached] = useState(0)
+  const setText = (v) => {
+    setTextRaw(v)
+    setState({ draft: v })
+  }
   const [attempts, setAttempts] = useState(() => getState().attempts || [])
   const [marking, setMarking] = useState(false)
   const topRef = useRef(null)
@@ -37,7 +42,10 @@ export default function LessonFlow({ mode = 'taster', onStepChange }) {
     topRef.current && topRef.current.scrollIntoView({ block: 'start' })
   }, [step])
 
-  const go = (n) => setStep(n)
+  const go = (n) => {
+    setStep(n)
+    setReached((r) => Math.max(r, n))
+  }
 
   const submit = () => {
     const r = markAnswer(text)
@@ -46,21 +54,35 @@ export default function LessonFlow({ mode = 'taster', onStepChange }) {
     setAttempts(next)
     setState({ attempts: next })
     setMarking(true)
-    setStep(3)
+    go(3)
   }
 
   return (
     <div className={`flow flow-${mode}`} ref={topRef}>
       <ol className="flow-steps" aria-label="Lesson steps">
-        {STEPS.map((s, i) => (
-          <li key={s} className={i === step ? 'is-now' : i < step ? 'is-done' : ''} aria-current={i === step ? 'step' : undefined}>
-            <span className="flow-dot">{i < step ? <Icon name="check" size={14} /> : null}</span>
-            {s}
-          </li>
-        ))}
+        {STEPS.map((s, i) => {
+          const canGo = i !== step && i <= reached && !(i === 3 && !attempts.length) && !marking
+          return (
+            <li key={s} className={i === step ? 'is-now' : i <= reached ? 'is-done' : ''} aria-current={i === step ? 'step' : undefined}>
+              {canGo ? (
+                <button className="flow-jump" onClick={() => go(i)}>
+                  <span className="flow-dot">
+                    <Icon name="check" size={14} />
+                  </span>
+                  {s}
+                </button>
+              ) : (
+                <span className="flow-jump is-static">
+                  <span className="flow-dot">{i < step ? <Icon name="check" size={14} /> : null}</span>
+                  {s}
+                </span>
+              )}
+            </li>
+          )
+        })}
       </ol>
 
-      {step === 0 && <Learn onNext={() => go(1)} onSkip={() => go(2)} />}
+      {step === 0 && <Learn onNext={() => go(1)} onSkip={() => go(2)} mode={mode} />}
       {step === 1 && <Checks answers={answers} setAnswers={setAnswers} onNext={() => go(2)} onBack={() => go(0)} />}
       {step === 2 && <Answer text={text} setText={setText} onSubmit={submit} onBack={() => go(1)} attempts={attempts} />}
       {step === 3 && (
@@ -77,7 +99,8 @@ export default function LessonFlow({ mode = 'taster', onStepChange }) {
   )
 }
 
-function Learn({ onNext, onSkip }) {
+function Learn({ onNext, onSkip, mode }) {
+  const [ask, setAsk] = useState(null)
   return (
     <div className="learn">
       <header className="lesson-head">
@@ -107,6 +130,24 @@ function Learn({ onNext, onSkip }) {
       <aside className="examiner-note" aria-label="Examiner’s note">
         <h2 className="examiner-who">{LESSON.author}, A-Level examiner</h2>
         <p>{LESSON.examinerNote}</p>
+        {mode === 'app' && (
+          <div className="note-tutor">
+            <p className="note-tutor-h">Ask the tutor about this lesson</p>
+            <div className="tutor-chips">
+              <button className={`pick is-light${ask === 'inelastic' ? ' is-on' : ''}`} onClick={() => setAsk('inelastic')}>
+                Explain inelastic again
+              </button>
+              <button className={`pick is-light${ask === 'chain' ? ' is-on' : ''}`} onClick={() => setAsk('chain')}>
+                How do I write a chain?
+              </button>
+            </div>
+            {ask && (
+              <p className="tutor-reply" role="status">
+                {TUTOR[ask]()}
+              </p>
+            )}
+          </div>
+        )}
       </aside>
 
       <section className="learn-block" aria-labelledby="worked-h">
@@ -192,6 +233,16 @@ function Checks({ answers, setAnswers, onNext, onBack }) {
 
 function Answer({ text, setText, onSubmit, onBack, attempts }) {
   const words = text.trim() ? text.trim().split(/\s+/).length : 0
+  const [timer, setTimer] = useState(null)
+  useEffect(() => {
+    if (timer === null || timer <= 0) return
+    const t = setTimeout(() => setTimer((x) => x - 1), 1000)
+    return () => clearTimeout(t)
+  }, [timer])
+  const mmss = (n) => `${Math.floor(n / 60)}:${String(n % 60).padStart(2, '0')}`
+  const onKey = (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter' && words >= 8) onSubmit()
+  }
   const last = attempts[attempts.length - 1]
   const lastResult = useMemo(() => (last ? markAnswer(last.text) : null), [last])
   const area = useRef(null)
@@ -230,12 +281,22 @@ function Answer({ text, setText, onSubmit, onBack, attempts }) {
             className="answer-box"
             value={text}
             onChange={(e) => setText(e.target.value)}
+            onKeyDown={onKey}
             placeholder="Write as you would in the exam. Full sentences, no bullet points."
             rows={11}
           />
           <div className="answer-bar">
             <span className="tnum">{words} words</span>
-            <span>Most Level 3 answers to a 9-marker run to 150 to 250 words.</span>
+            <span>{words ? 'Saved as you type.' : 'Most Level 3 answers to a 9-marker run to 150 to 250 words.'}</span>
+            {timer === null ? (
+              <button className="timer-btn" onClick={() => setTimer(QUESTION.suggestedMinutes * 60)}>
+                <Icon name="timer" size={18} /> Time me ({QUESTION.suggestedMinutes} min)
+              </button>
+            ) : (
+              <button className={`timer-btn is-on${timer === 0 ? ' is-up' : ''}`} onClick={() => setTimer(null)} aria-live="off">
+                <Icon name="timer" size={18} /> <span className="tnum">{timer === 0 ? 'Time is up' : mmss(timer)}</span>
+              </button>
+            )}
           </div>
           <div className="starters">
             <p>Stuck? Start a sentence:</p>
@@ -250,6 +311,7 @@ function Answer({ text, setText, onSubmit, onBack, attempts }) {
             <button className="btn" onClick={onSubmit} disabled={words < 8}>
               {words < 8 ? 'Write a few sentences to get marked' : 'Mark my answer'} <Icon name="arrowRight" />
             </button>
+            {words >= 8 && <span className="kbd-hint">or Ctrl + Enter</span>}
             <button className="btn is-quiet" onClick={onBack}>
               Back
             </button>

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Icon, Section } from '../ui/kit.jsx'
 import { SiteFooter, SiteNav } from '../ui/SiteChrome.jsx'
-import { FINDINGS, METRICS, ROUTE_AFTER, ROUTE_BEFORE } from '../data/audit.js'
+import { FINDINGS, FIRST_FIVE, METRICS, ROUTE_AFTER, ROUTE_BEFORE } from '../data/audit.js'
 
 const WHO = [
   ['all', 'Everyone'],
@@ -28,6 +28,26 @@ export default function Audit() {
             first. Each one links to the screen in this prototype that fixes it.
           </p>
         </section>
+
+        <Section className="first-five" aria-labelledby="ff-h">
+          <h2 id="ff-h" className="h-head" data-rise>
+            Fix these five first
+          </h2>
+          <ol className="ff-list" data-rise>
+            {FIRST_FIVE.map((f) => (
+              <li key={f.id}>
+                <span className="ff-change">{f.change}</span>
+                <span className="ff-meta">
+                  <strong>{f.effort}</strong> in Lovable · helps {f.who.toLowerCase()}
+                </span>
+                <a className="link" href={`#finding-${f.id}`} onClick={(e) => { e.preventDefault(); document.getElementById(`finding-${f.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' }) }}>
+                  Finding
+                </a>
+              </li>
+            ))}
+          </ol>
+          <p className="sys-note" data-rise>Together these take under two weeks and open the whole route from homepage to first mark.</p>
+        </Section>
 
         <Section className="route-compare" aria-labelledby="rc-h">
           <h2 id="rc-h" className="h-head" data-rise>
@@ -76,7 +96,7 @@ export default function Audit() {
           </div>
           <ol className="finding-list">
             {list.map((f) => (
-              <li key={f.id} className={`finding is-${f.p.toLowerCase()}`}>
+              <li key={f.id} id={`finding-${f.id}`} className={`finding is-${f.p.toLowerCase()}`}>
                 <div className="finding-meta">
                   <span className="finding-p">{f.p}</span>
                   <span>{P[f.p]}</span>

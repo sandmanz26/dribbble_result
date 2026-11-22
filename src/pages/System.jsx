@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { AoBar, Icon, MarginCode, Section, Wordmark } from '../ui/kit.jsx'
 import { SiteFooter, SiteNav } from '../ui/SiteChrome.jsx'
@@ -29,7 +30,70 @@ const RULES = [
   ['Write like a good teacher', 'Short sentences, British spelling, no exclamation marks, no dashes. Say what happens next.'],
 ]
 
+const CSS_VARS = `/* src/index.css in the Lovable project: replace the :root block */
+@layer base {
+  :root {
+    --background: 0 0% 89%;        /* paper  #e2e2e2 */
+    --foreground: 351 24% 11%;     /* graphite #241618 */
+    --card: 40 10% 94%;            /* sheet  #f2f1ef */
+    --card-foreground: 351 24% 11%;
+    --popover: 40 10% 94%;
+    --popover-foreground: 351 24% 11%;
+    --primary: 356 82% 27%;        /* oxblood #7d0c14: marks and the one action */
+    --primary-foreground: 0 0% 93%;
+    --secondary: 0 0% 84%;         /* paper 2 #d6d6d6: quiet buttons */
+    --secondary-foreground: 356 82% 27%;
+    --muted: 0 0% 84%;
+    --muted-foreground: 349 9% 34%;
+    --accent: 357 32% 88%;         /* oxblood tint #ead6d7: the margin */
+    --accent-foreground: 356 82% 27%;
+    --destructive: 356 82% 27%;
+    --destructive-foreground: 0 0% 93%;
+    --border: 30 2% 78%;           /* paper 3 #c9c8c7 */
+    --input: 30 2% 78%;
+    --ring: 356 82% 27%;
+    --radius: 0rem;                /* square corners everywhere */
+  }
+}`
+
+const TW = `// tailwind.config.ts in the Lovable project: add inside theme.extend
+fontFamily: {
+  sans: ['"Cabinet Grotesk"', 'Helvetica Neue', 'Arial', 'sans-serif'],
+},
+colors: {
+  paper: { DEFAULT: '#e2e2e2', 2: '#d6d6d6', 3: '#c9c8c7' },
+  sheet: '#f2f1ef',
+  ox: { DEFAULT: '#7d0c14', deep: '#5c0810', tint: '#ead6d7' },
+  graphite: { DEFAULT: '#241618', muted: '#5f4f52' },
+},
+fontSize: {
+  small: ['clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem)', '1.45'],
+  body: ['clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem)', '1.5'],
+  lead: ['clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem)', '1.35'],
+  head: ['clamp(2.5rem, 1.2rem + 5vw, 5.5rem)', '0.92'],
+  display: ['clamp(4.5rem, 1rem + 11.4vw, 11rem)', '0.86'],
+},`
+
+const MAP = [
+  ['Button', 'shadcn Button', 'default = oxblood, secondary = quiet, size sm. One default button per screen.'],
+  ['Choice (pick, chip)', 'ToggleGroup / RadioGroup', 'Visible options, never a Select for fewer than eight choices.'],
+  ['Panel', 'Card', 'No shadow: bg-card on bg-background is the separation.'],
+  ['Margin code', 'Badge', 'variant default for earned (K, APP, AN, EV); outline for “?”.'],
+  ['AO bar', 'New component: AoBar', 'One cell per mark, aria-label “3 of 4”. Not a Progress bar: marks are counted, not filled.'],
+  ['Lesson steps', 'Tabs (controlled)', 'Done steps clickable, future steps disabled.'],
+  ['Teacher marks', 'Table + a stepper', 'Least-sure first; Release is the only default button.'],
+  ['Tutor reply', 'Collapsible', 'Opens under the mark, not in a separate chat page.'],
+]
+
+const PHASES = [
+  ['Week 1: tokens', 'Paste the CSS variables and Tailwind extension. Every existing shadcn screen in Lovable takes the new paper, ink and oxblood at once, without rebuilding.'],
+  ['Week 1: the route', 'Point every “Try free lessons” link at the taster. Move the account ask to after the first mark. These two changes need no new design.'],
+  ['Week 2: homepage, sign-up, taster', 'Rebuild them from these screens, one Lovable prompt per section, using the component map.'],
+  ['Week 3: dashboards', 'Student Today, parent view, teacher queue. New data fields: AO marks per answer and the marker’s confidence.'],
+]
+
 export default function System() {
+  const [tab, setTab] = useState('css')
   return (
     <div className="site">
       <SiteNav />
@@ -167,6 +231,55 @@ export default function System() {
               <dt>App</dt>
               <dd>A side rail of four places per role on desktop, a bottom bar of the same four on a phone. The title row says the screen’s one finding.</dd>
             </div>
+          </dl>
+        </Section>
+
+        <Section className="sys-block" aria-labelledby="lv-h">
+          <h2 id="lv-h" className="sys-h" data-rise>
+            Keep it in Lovable
+          </h2>
+          <p className="sys-note" data-rise>
+            ExamAce is built in Lovable, which uses React, Tailwind and shadcn/ui. This system is written to drop into that stack: the colours are shadcn
+            variables, the type scale is Tailwind sizes, and every component maps to a shadcn part. No rebuild, no new framework.
+          </p>
+          <div className="handoff" data-rise>
+            <div className="findings-filter" role="tablist" aria-label="Handoff file">
+              <button role="tab" aria-selected={tab === 'css'} className={`pick${tab === 'css' ? ' is-on' : ''}`} onClick={() => setTab('css')}>
+                index.css
+              </button>
+              <button role="tab" aria-selected={tab === 'tw'} className={`pick${tab === 'tw' ? ' is-on' : ''}`} onClick={() => setTab('tw')}>
+                tailwind.config.ts
+              </button>
+            </div>
+            <pre className="code">
+              <code>{tab === 'css' ? CSS_VARS : TW}</code>
+            </pre>
+          </div>
+          <table className="compare-table map-table" data-rise>
+            <thead>
+              <tr>
+                <th scope="col">ExamAce part</th>
+                <th scope="col">Build it with</th>
+                <th scope="col">Rule</th>
+              </tr>
+            </thead>
+            <tbody>
+              {MAP.map(([a, b, c]) => (
+                <tr key={a}>
+                  <th scope="row">{a}</th>
+                  <td>{b}</td>
+                  <td>{c}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <dl className="phases" data-rise>
+            {PHASES.map(([t, d]) => (
+              <div key={t}>
+                <dt>{t}</dt>
+                <dd>{d}</dd>
+              </div>
+            ))}
           </dl>
         </Section>
 

@@ -220,7 +220,7 @@ function Subjects() {
           <div className="guest-row" key={s.id}>
             <h3>{s.name}</h3>
             <p>{s.boards.join(' · ')}</p>
-            <Link className="link" to="/taster/economics">
+            <Link className="link" to={`/taster/${s.id}`}>
               Free lesson: {s.taster}
             </Link>
           </div>
