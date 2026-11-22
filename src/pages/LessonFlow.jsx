@@ -502,7 +502,7 @@ function Result({ text, attempts, marking, doneMarking, onRewrite, mode }) {
             {mode === 'app' && (
               <div className="keep">
                 <h2>Saved to your record</h2>
-                <p>This mark is in Marked answers, and your AO totals on Today now include it.</p>
+                <p>This mark is now the first row of Marked answers on Today.</p>
                 <Link to="/app" className="btn is-paper">
                   Back to Today <Icon name="arrowRight" />
                 </Link>

@@ -8,7 +8,10 @@ Engagement on the free taster lessons is low.
 The brief has three stages, and this prototype answers all three:
 
 1. A UX audit walked as a student, a parent and a teacher (`#/audit`). This is the paid first job.
-2. The marketing site and design system: homepage, sign-up, taster lesson, pricing and team (`#/`, `#/start`, `#/taster/economics`, `#/pricing`, `#/team`, `#/system`).
+2. The marketing site and design system:
+   - user flows and wireframes (`#/flows`)
+   - homepage, sign-up, taster lesson, pricing and team (`#/`, `#/start`, `#/taster/economics`, `#/pricing`, `#/team`)
+   - the design system with a Lovable handoff (`#/system`)
 3. The dashboards: student, parent and teacher, plus the lesson experience (`#/app`, `#/app/lesson`, `#/parent`, `#/teacher`, `#/teacher/review`).
 
 Roles taken for this work: head of design, head of creative, head of product and education consultant.
@@ -121,3 +124,34 @@ The direction was dealt by taste-skill as "Dressed as something else" (seed 5253
 - The prototype marker in `src/data/marker.js` is rule-based. It stands in for the live AI so the route can be clicked end to end.
 - Team bios and quotes are the client's own, from examace.co.uk. Portraits are to come from the client; initials stand in until then.
 - The parent view, the teacher confidence queue and the drill are proposals. They are new features, not existing ones.
+
+### Round 3: owner asked for tidier UI, smoother UX, and every brief item done properly (23 Nov 2026)
+
+Brief check:
+
+| Brief item | Before this round | Now |
+|---|---|---|
+| UX audit as a short, prioritised list | 14 findings | A "Fix these five first" list added at the top, each with its effort in Lovable and who it helps |
+| User flows | Missing | `#/flows`: student, parent and teacher flows, with each choice point and the moment that matters |
+| Wireframes | Missing | `#/flows`: lo-fi wireframes of homepage, taster, sign-up, pricing and team, with the reasoning, linked to the final screens |
+| Design system: colours, type, components, navigation | Done | Unchanged |
+| Retain Lovable | Not addressed | `#/system` "Keep it in Lovable": shadcn CSS variables, a Tailwind extension, a component map to shadcn, and a four-week rollout |
+| Dashboards and lesson experience from the same system | Done | The in-app lesson now has the tutor beside the examiner's note; the result offers "Back to Today"; the new mark appears as the first row of the ledger |
+
+UX smoothing:
+
+- **Answer drafting.** The draft answer is saved as you type. Ctrl or Cmd + Enter marks it. There is an optional exam timer (11 minutes).
+- **Steps.** Finished steps can be clicked to go back, and each step change scrolls smoothly to the top.
+- **Sign-up.** Email is checked inline, with a plain message.
+- **Subject links.** Each subject's free-lesson link opens that subject and explains honestly that Economics is the built example.
+- **Page changes.** Pages fade in on a route change.
+- **Entrances.** Section entrances now trigger per element, including elements jumped past by anchor links. Before, tall sections could stay hidden.
+
+UI tidying:
+
+- **Subjects card.** The card was squeezed by its section, so the exam-hall photo covered the Economics row. Photos now carry their own aspect ratio.
+- **Reply section.** The reply card no longer hangs over the footer seam.
+- **Route section.** The fields and cards are larger.
+- **Examiners panel.** It is shorter.
+- **Lesson bar on phones.** It is shortened.
+- **Spec numbering.** It is aligned to A-Level AQA 4.1.3.2.

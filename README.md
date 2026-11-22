@@ -38,12 +38,13 @@ Routes (HashRouter):
 | Route | Screen |
 |---|---|
 | `#/audit` | Stage 1 UX audit |
+| `#/flows` | User flows and wireframes |
 | `#/` | Homepage |
 | `#/taster/economics` | Free lesson, ending in a marked answer |
 | `#/start` | Sign-up (`?from=taster`, `?role=teacher`, `?mode=signin`) |
 | `#/pricing` | Pricing |
 | `#/team` | Team |
-| `#/system` | Design system |
+| `#/system` | Design system, with the Lovable handoff |
 | `#/app` | Student dashboard |
 | `#/app/lesson` | Lesson in the app |
 | `#/parent` | Parent dashboard |

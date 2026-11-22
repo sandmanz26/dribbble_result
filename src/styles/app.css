@@ -194,3 +194,4 @@
   .ao-pct { font-size: 1.375rem; }
   .spec li { grid-template-columns: 44px minmax(0, 1fr) 56px 40px; gap: 8px; }
 }
+.ledger tr.is-new td { background: var(--ox-tint); }

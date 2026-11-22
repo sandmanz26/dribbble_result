@@ -105,7 +105,7 @@
 .p-parent { background: var(--paper-2); }
 .p-teacher { background: var(--paper-3); }
 .fam-photo { --ratio: 5 / 4; }
-.fam-photo img { object-position: 50% 35%; transition: transform 0.6s var(--ease-out); }
+.fam-photo img { object-position: 50% 22%; transition: transform 0.6s var(--ease-out); }
 .fam-panel:hover .fam-photo img { transform: scale(1.03); }
 .fam-row { display: flex; align-items: end; justify-content: space-between; gap: 24px; padding: 28px; flex: 1; }
 .fam-row h3 { font-size: 1.375rem; font-weight: 800; letter-spacing: -0.02em; }

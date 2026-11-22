@@ -2,6 +2,9 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Shell, { Panel } from './Shell.jsx'
 import { AoBar, Icon } from '../ui/kit.jsx'
+import { useStore } from '../store.js'
+import { markAnswer } from '../data/marker.js'
+import { QUESTION } from '../data/taster.js'
 import { ANSWERS, AO4_SHARE, DAYS_TO_EXAMS, NEXT_UP, SPEC, STUDENT, WEEK, WEEK_TOTAL, fmtMinutes, scoreOf } from '../data/people.js'
 
 const fmtDate = (d) => new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })
@@ -12,6 +15,12 @@ export default function StudentHome() {
   const c = STUDENT.courses.find((x) => x.id === course)
   const top = NEXT_UP[0]
   const essays = ANSWERS.filter((a) => a.tariff === 25)
+  const st = useStore()
+  const mine = (st.attempts || []).slice(-1).map((a) => {
+    const r = markAnswer(a.text)
+    return { id: 'mine', date: new Date(a.at).toISOString(), q: QUESTION.text, tariff: 9, ao: Object.fromEntries(r.aos.map((x) => [x.id, [x.mark, x.max]])), attempt: st.attempts.length, mine: true }
+  })
+  const ledger = [...mine, ...[...ANSWERS].reverse()]
   const maxDay = Math.max(...WEEK.map((d) => d.minutes))
 
   return (
@@ -97,7 +106,7 @@ export default function StudentHome() {
             </p>
           </Panel>
 
-          <Panel title="Marked answers" id="answers" className="g-answers" aside={<span className="muted tnum">{ANSWERS.length} this term</span>}>
+          <Panel title="Marked answers" id="answers" className="g-answers" aside={<span className="muted tnum">{ledger.length} this term</span>}>
             <table className="ledger">
               <thead>
                 <tr>
@@ -113,14 +122,14 @@ export default function StudentHome() {
                 </tr>
               </thead>
               <tbody>
-                {[...ANSWERS].reverse().map((a) => {
+                {ledger.map((a) => {
                   const s = scoreOf(a)
                   return (
-                    <tr key={a.id}>
+                    <tr key={a.id} className={a.mine ? 'is-new' : ''}>
                       <td className="tnum nowrap">{fmtDate(a.date)}</td>
                       <td>
                         {a.q}
-                        {a.attempt > 1 && <span className="tag">Rewrite</span>}
+                        {a.mine ? <span className="tag">Just now</span> : a.attempt > 1 && <span className="tag">Rewrite</span>}
                       </td>
                       {['AO1', 'AO2', 'AO3', 'AO4'].map((ao) => (
                         <td key={ao}>{a.ao[ao] ? <AoBar mark={a.ao[ao][0]} max={a.ao[ao][1]} size="s" /> : <span className="dash" aria-label="Not assessed on this question">-</span>}</td>
