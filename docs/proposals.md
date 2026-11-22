@@ -440,3 +440,40 @@ Password: ks-h9h1-mnky
 My portfolio: createdybdaniel.com
 
 Product names, nutrition, prices and reviews in the draft are samples. Photos, packshots and the video are AI-generated concept images.
+
+## wrwpcjz, ExamAce (User Design: A-Level edtech marketing site and dashboards)
+
+Hi! A quick note first: what you will see is a draft, made before we have spoken, as proof that I take ExamAce seriously. I would rather show you how I think than describe it. The students, school and marks in it are samples, and every word changes to yours once we talk.
+
+Prototype: https://proposal-virid-eight.vercel.app/wrwpcjz/
+Password: ex-oucj-sqjl
+(Start with "Where people get stuck", then press "Mark my first answer" on the homepage and go all the way to your mark. The Prototype tab on the right lists every screen.)
+
+**Stage 1, the UX audit, is already in the draft.** I went through examace.co.uk as a student, a parent and a teacher and wrote up 14 findings, worst first, each with a screenshot and a fix. The low taster engagement has a clear cause:
+- the "Try free lessons, no account needed" buttons land on the sign-in page
+- the free lesson ends with its exam questions locked behind a subscription, right when a student is ready to be marked
+- the free marking demo starts with an empty form
+- on a phone, the homepage runs off the screen
+
+The audit opens with five fixes that would open the route in under two weeks, all inside Lovable.
+
+**The idea for stages 2 and 3:** the examiner's red pen is the only colour on the site. Red always means marks, from the margin codes on a marked answer (knowledge, application, analysis, evaluation) to the one button on each page: "Mark my first answer".
+
+**What the draft shows:**
+- The route you asked for: homepage, a six-minute lesson, three quick checks, a real 9-mark question with its extract, then the mark. The mark comes with its level, the AO breakdown, the margin codes and one next step. The student can rewrite and see the marks go up. No account until they want to keep the mark.
+- A sign-up that asks who it is for, then subject, board and exam year, then an email. No password.
+- Pricing as a receipt: your real per-subject prices, adding up the subjects a family picks.
+- A team page built on your examiners' real credentials, and a design system covering colour, type, components and navigation.
+- User flows for students, parents and teachers, and the wireframes each final screen came from.
+- Student, parent and teacher dashboards from the same system:
+  - The student sees what to do next, and which AO is losing marks.
+  - The parent sees time revised, levels and one thing worth asking about at dinner.
+  - The teacher checks the AI marks it is least sure of before anyone sees them.
+
+**Staying in Lovable:** the design system is written for the stack Lovable uses. The colours are ready as shadcn variables and a Tailwind config, and every part maps to a shadcn component. You keep building where you build now.
+
+The draft is built in React. It includes research on Up Learn, Seneca, Save My Exams, Atom, Duolingo, tutor2u and others, taking their strategies rather than their looks: value before sign-up, a free first marked answer, rewrite after feedback, and a free parent view.
+
+My portfolio: createdybdaniel.com
+
+Students, school, marks, the extract figures and the 9-mark split are samples for your examiners to check. Photographs are AI-generated for this draft. The marking in the draft follows simple rules and stands in for your AI.
