@@ -296,4 +296,11 @@ Owner's Vercel usage was nearly full. Cause: every push to main rebuilt all 28 p
 - Audit of the live site found the cause of low taster use: "Try free lessons, no account needed" lands on sign-in; the taster's exam questions are paywalled; the free marking demo starts with an empty form; the phone homepage overflows. 14 findings at `#/audit` with screenshots.
 - Built: the route (homepage to marked answer in about ten minutes, no account, rewrite loop), sign-up after value without a password, pricing receipt with the real prices, team, design system, student, parent and teacher dashboards with teacher review of AI marks. Research and roast log in the branch's `docs/strategy.md`.
 - Higgsfield: 11 images, 8.25 of the 20 credits used.
+- Round 3 (23 Nov): owner asked for tidier UI, smoother UX and every brief item done properly. Added:
+  - the user flows and wireframes the brief lists (`#/flows`)
+  - a Lovable handoff on `#/system`, because the client wants to stay in Lovable
+  - a "Fix these five first" list on the audit
+  - draft saving, Ctrl + Enter, an exam timer and clickable steps in the lesson
+
+  Fixed: the photo that covered the Economics row, the footer seam, and entrances that could stay hidden.
 
