@@ -22,6 +22,9 @@
 .lesson-h.is-small { font-size: clamp(2.25rem, 1.2rem + 3vw, 4rem); }
 .lesson-h.is-q { font-size: clamp(1.75rem, 1rem + 2.2vw, 3rem); line-height: 1.04; letter-spacing: -0.03em; }
 .lesson-time { display: inline-flex; align-items: center; gap: 8px; }
+.lesson-start { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; }
+.worked-photo { aspect-ratio: 16 / 7; overflow: hidden; margin: 0 -32px; }
+.worked-photo img { animation: slow-drift 20s ease-in-out infinite alternate; }
 
 .learn { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: 32px clamp(32px, 5vw, 72px); align-items: start; }
 .learn .lesson-head, .learn .flow-actions { grid-column: 1 / -1; }
@@ -30,7 +33,7 @@
 .learn-block p { max-width: 62ch; }
 .formula { font-size: 1.375rem; font-weight: 700; color: var(--ox); background: var(--ox-tint); padding: 16px 20px; }
 .examiner-note { grid-column: 2; grid-row: 2 / span 2; background: var(--ox); color: var(--on-ox); padding: 28px; display: grid; gap: 12px; font-size: 1.125rem; line-height: 1.45; position: sticky; top: 90px; }
-.examiner-who { font-weight: 800; }
+.examiner-who { font-weight: 800; font-size: 1.125rem; }
 .worked { width: 100%; border-collapse: collapse; }
 .worked td { padding: 12px 0; border-bottom: 1px solid var(--paper-3); } /* taste-skill-ignore: form field or real table */
 .worked td:last-child { text-align: right; font-weight: 800; color: var(--ox); white-space: nowrap; padding-left: 16px; }
@@ -121,6 +124,7 @@
   .flow-steps li { font-size: 0.8125rem; gap: 6px; }
   .flow-dot { display: none; }
   .learn-block, .check { padding: 22px 18px; }
+  .worked-photo { margin: 0 -18px; }
   .check-opts { grid-template-columns: 1fr; }
   .answer-box { padding: 18px; font-size: 1.0625rem; min-height: 280px; }
   .answer-bar { flex-direction: column; gap: 2px; }
@@ -128,3 +132,11 @@
   .result-top { grid-template-columns: 1fr; grid-template-areas: 'level' 'mark' 'desc' 'delta'; row-gap: 12px; }
   .script-key .mcode { margin-left: 0; }
 }
+
+/* entrance for each step's parts */
+.learn > *, .checks > *, .answer-main > *, .answer-side > *, .flow-steps li { animation: fade-up 0.7s var(--ease-out) both; }
+.learn > :nth-child(2), .checks > :nth-child(2), .answer-main > :nth-child(2), .answer-side > :nth-child(2), .flow-steps li:nth-child(2) { animation-delay: 70ms; }
+.learn > :nth-child(3), .checks > :nth-child(3), .answer-main > :nth-child(3), .flow-steps li:nth-child(3) { animation-delay: 140ms; }
+.learn > :nth-child(4), .checks > :nth-child(4), .answer-main > :nth-child(4), .flow-steps li:nth-child(4) { animation-delay: 210ms; }
+.learn > :nth-child(n+5), .checks > :nth-child(n+5), .answer-main > :nth-child(n+5) { animation-delay: 280ms; }
+.check-opt.is-right { animation: stamp 0.3s var(--ease-out) both; }

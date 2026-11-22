@@ -85,9 +85,14 @@ function Learn({ onNext, onSkip }) {
           {LESSON.subject} · {LESSON.spec}
         </p>
         <h1 className="lesson-h">{LESSON.title}</h1>
-        <p className="lesson-time">
-          <Icon name="clock" size={18} /> About {LESSON.minutes} minutes, then one exam question
-        </p>
+        <div className="lesson-start">
+          <p className="lesson-time">
+            <Icon name="clock" size={18} /> About {LESSON.minutes} minutes, then one exam question
+          </p>
+          <button className="btn is-quiet is-small" onClick={onSkip}>
+            I know this, go to the question <Icon name="arrowRight" size={18} />
+          </button>
+        </div>
       </header>
 
       <section className="learn-block" aria-labelledby="idea-h">
@@ -100,12 +105,15 @@ function Learn({ onNext, onSkip }) {
       </section>
 
       <aside className="examiner-note" aria-label="Examiner’s note">
-        <p className="examiner-who">{LESSON.author}, A-Level examiner</p>
+        <h2 className="examiner-who">{LESSON.author}, A-Level examiner</h2>
         <p>{LESSON.examinerNote}</p>
       </aside>
 
       <section className="learn-block" aria-labelledby="worked-h">
         <h2 id="worked-h">{LESSON.worked.heading}</h2>
+        <figure className="worked-photo">
+          <img className="photo" src="img/petrol.webp" width="1600" height="900" alt="A driver filling a car at a petrol station on a rainy evening" />
+        </figure>
         <table className="worked">
           <tbody>
             {LESSON.worked.steps.map(([a, b]) => (
@@ -122,9 +130,6 @@ function Learn({ onNext, onSkip }) {
       <div className="flow-actions">
         <button className="btn" onClick={onNext}>
           Check I’ve got it <Icon name="arrowRight" />
-        </button>
-        <button className="btn is-quiet" onClick={onSkip}>
-          I know this, go to the question
         </button>
       </div>
     </div>

@@ -162,8 +162,8 @@
 .reply-btn { width: 100%; min-height: 56px; margin-top: 12px; }
 
 /* footer: the mark, built large */
-.sfoot { padding: 96px var(--m) 32px; }
-.sfoot-mark { display: flex; align-items: flex-end; gap: 4px; height: 28svh; min-height: 200px; }
+.sfoot { padding: 72px var(--m) 32px; }
+.sfoot-mark { display: flex; align-items: flex-end; gap: 4px; height: 24svh; min-height: 180px; }
 .sfoot-mark span { flex: 1; background: var(--on-ox); color: var(--ox); display: flex; align-items: flex-end; justify-content: center; font-weight: 800; font-size: clamp(3rem, 1rem + 9vw, 11rem); line-height: 0.8; letter-spacing: -0.04em; padding-bottom: 0.04em; overflow: hidden; }
 .sfoot-mark span:nth-child(5) { background: var(--ox-tint-2); }
 .sfoot-cols { display: grid; grid-template-columns: repeat(4, 1fr) 2fr; gap: 32px; margin-top: 56px; }

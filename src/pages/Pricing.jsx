@@ -4,7 +4,7 @@ import { SiteFooter, SiteNav } from '../ui/SiteChrome.jsx'
 import Receipt, { PLANS } from './Receipt.jsx'
 
 const ROWS = [
-  ['Free lessons, one in each subject', [true, true, true]],
+  ['Free taster lessons', [true, true, true]],
   ['Your first marked answer', [true, true, true]],
   ['Marked answers each month', ['10', 'Unlimited, fair use', 'Unlimited, fair use']],
   ['Question generator and topic explainer', [true, true, true]],
@@ -14,7 +14,7 @@ const ROWS = [
   ['Extracts and case studies marked in context', [false, true, true]],
   ['Every lesson in your spec, in spec order', [false, false, true]],
   ['AI tutor inside every lesson', [false, false, true]],
-  ['Free parent view', [true, true, true]],
+  ['Free parent view (proposed in this redesign)', [true, true, true]],
 ]
 
 export default function Pricing() {
@@ -22,12 +22,8 @@ export default function Pricing() {
     <div className="site">
       <SiteNav />
       <main id="main">
-        <section className="page-head">
-          <h1 className="page-h">Pricing</h1>
-          <p className="lead">Try a lesson and get an answer marked before you pay anything. Then pay per subject, by the month.</p>
-        </section>
         <section className="pricing-band is-page" aria-labelledby="pp-h">
-          <Receipt headingId="pp-h" />
+          <Receipt headingId="pp-h" asH1 />
         </section>
         <Section className="compare" aria-labelledby="cmp-h">
           <h2 id="cmp-h" className="h-head" data-rise>

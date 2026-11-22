@@ -76,7 +76,8 @@ export default function Start() {
               <Icon name="save" size={20} /> Your mark is waiting: <strong className="tnum">{lastMark.total} / 9</strong>, Level {lastMark.level}, Economics.
             </p>
           )}
-          <h1 className="start-h">{fromTaster ? 'Save your mark and keep going' : 'Start with ExamAce'}</h1>
+          <h1 className="start-h">{fromTaster ? 'Save your mark and keep going' : 'Make a free ExamAce account'}</h1>
+          {!fromTaster && <p className="lead">For A-Level Business, Economics, Psychology and Sociology. Free lessons and a free marked answer, no card.</p>}
 
           {!fromTaster && (
             <section className="start-step" aria-labelledby="who-h">

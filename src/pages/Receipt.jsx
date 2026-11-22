@@ -12,7 +12,8 @@ export const PLANS = [
 
 const money = (n) => `£${n.toFixed(2)}`
 
-export default function Receipt({ headingId = 'receipt-h', compact = false }) {
+export default function Receipt({ headingId = 'receipt-h', compact = false, asH1 = false }) {
+  const H = asH1 ? 'h1' : 'h2'
   const ref = useReveal()
   const [plan, setPlan] = useState('complete')
   const [subjects, setSubjects] = useState(['economics'])
@@ -24,9 +25,9 @@ export default function Receipt({ headingId = 'receipt-h', compact = false }) {
   return (
     <div className="receipt" ref={ref}>
       <div className="receipt-left">
-        <h2 id={headingId} className="h-head" data-rise>
+        <H id={headingId} className={asH1 ? 'page-h' : 'h-head'} data-rise>
           Pay per subject
-        </h2>
+        </H>
         <p className="lead" data-rise>
           One price for each subject you take, monthly, cancel any time. Every plan starts with a free marked answer.
         </p>
