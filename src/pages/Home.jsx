@@ -93,7 +93,7 @@ function RouteCard({ stage }) {
   return (
     <div className="rc">
       <div className="rc-top">
-        <span>Economics · AQA 3.1.3.2</span>
+        <span>Economics · AQA 4.1.3.2</span>
         <span className="tnum">{['6 min', '9 marks', '5 / 9', '7 / 9'][stage]}</span>
       </div>
       <p className="rc-title">{stage === 0 ? 'Price elasticity of demand' : 'Explain why a rise in fuel duty is likely to increase tax revenue.'}</p>

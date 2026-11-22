@@ -26,7 +26,7 @@ button.flow-jump:hover { text-decoration: underline; text-underline-offset: 4px;
 .lesson-h.is-q { font-size: clamp(1.75rem, 1rem + 2.2vw, 3rem); line-height: 1.04; letter-spacing: -0.03em; }
 .lesson-time { display: inline-flex; align-items: center; gap: 8px; }
 .lesson-start { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; }
-.worked-photo { aspect-ratio: 16 / 7; overflow: hidden; margin: 0 -32px; }
+.worked-photo { --ratio: 16 / 7; margin: 0 -32px; }
 .worked-photo img { animation: slow-drift 20s ease-in-out infinite alternate; }
 
 .learn { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: 32px clamp(32px, 5vw, 72px); align-items: start; }

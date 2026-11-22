@@ -14,7 +14,7 @@ export const LESSON = {
   id: 'ped',
   subject: 'Economics',
   title: 'Price elasticity of demand',
-  spec: 'AQA 3.1.3.2 · Edexcel 9EC0 1.2.3 · OCR 2.3',
+  spec: 'AQA 4.1.3.2 · Edexcel 9EC0 1.2.3 · OCR 2.3',
   minutes: 6,
   author: 'Jonathan Pledger',
   examinerNote:

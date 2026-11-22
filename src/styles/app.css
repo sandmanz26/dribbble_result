@@ -22,6 +22,8 @@
 .canvas-main { display: grid; gap: 16px; }
 .canvas-main .flow { max-width: none; }
 .canvas-main .lesson-h { font-size: clamp(2.25rem, 1rem + 3vw, 3.75rem); }
+.canvas-main .lesson-h.is-q { font-size: clamp(1.5rem, 1rem + 1.4vw, 2.25rem); }
+.canvas-main .flow-steps { margin-bottom: 32px; }
 
 .panel { background: var(--sheet); padding: 20px 22px 22px; min-width: 0; }
 .panel-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 14px; }

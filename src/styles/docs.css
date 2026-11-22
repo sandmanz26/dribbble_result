@@ -28,7 +28,7 @@
 .field small { font-weight: 400; font-size: var(--step-small); color: var(--muted); }
 .start-small { font-size: var(--step-small); color: var(--muted); max-width: 52ch; }
 .start-alt { color: var(--muted); }
-.start-grid .start-photo { position: sticky; top: 90px; aspect-ratio: 3 / 4; overflow: hidden; }
+.start-grid .start-photo { position: sticky; top: 90px; --ratio: 3 / 4; }
 .sent { background: var(--ox); color: var(--on-ox); padding: 28px; display: grid; gap: 12px; justify-items: start; animation: fade-up 0.5s var(--ease-out) both; }
 .sent h2 { font-size: 1.75rem; font-weight: 800; }
 .sent .start-small { color: var(--on-ox-muted); }
@@ -50,7 +50,7 @@
 /* team */
 .team-head { grid-template-columns: 1fr 1fr; align-items: end; }
 .team-head .page-h { grid-column: 1 / -1; }
-.team-photo { grid-column: 1 / -1; aspect-ratio: 21 / 9; overflow: hidden; margin-top: 24px; }
+.team-photo { grid-column: 1 / -1; --ratio: 21 / 9; margin-top: 24px; }
 .team-list { padding: 0 var(--m); margin-top: 96px; display: grid; gap: 8px; }
 .person { display: grid; grid-template-columns: 160px minmax(0, 6fr) minmax(0, 5fr); gap: 40px; padding: 40px; background: var(--paper-2); align-items: start; }
 .person:nth-child(2) { background: var(--paper-3); }
@@ -79,7 +79,7 @@
   .start-body { padding: 8px 16px 80px; }
   .start-form .btn { width: 100%; }
   .page-h { font-size: 14vw; }
-  .team-photo { aspect-ratio: 4 / 3; }
+  .team-photo { --ratio: 4 / 3; }
   .person { grid-template-columns: 1fr; padding: 24px 20px; }
   .person-mark { width: 72px; font-size: 1.5rem; padding: 10px; }
 }
@@ -232,7 +232,7 @@ a.fnode-label:hover { text-decoration: underline; text-underline-offset: 3px; }
   .flow-sec, .wire-sec { margin-top: 88px; }
   .wire { padding: 12px; gap: 6px; }
   .wire-row { gap: 6px; }
-  .wire-b { font-size: 0.75rem; padding: 8px; }
+  .wire-b { font-size: 0.8125rem; padding: 8px; }
 }
 
 /* lovable handoff */

@@ -39,7 +39,8 @@ export default function LessonFlow({ mode = 'taster', onStepChange }) {
       firstRender.current = false
       return
     }
-    topRef.current && topRef.current.scrollIntoView({ block: 'start' })
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' })
   }, [step])
 
   const go = (n) => {
@@ -497,6 +498,16 @@ function Result({ text, attempts, marking, doneMarking, onRewrite, mode }) {
                 </p>
               )}
             </div>
+
+            {mode === 'app' && (
+              <div className="keep">
+                <h2>Saved to your record</h2>
+                <p>This mark is in Marked answers, and your AO totals on Today now include it.</p>
+                <Link to="/app" className="btn is-paper">
+                  Back to Today <Icon name="arrowRight" />
+                </Link>
+              </div>
+            )}
 
             {mode === 'taster' && (
               <div className="keep">

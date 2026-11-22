@@ -37,26 +37,37 @@ export function useReveal() {
   const ref = useRef(null)
   useEffect(() => {
     const el = ref.current
-    if (!el || !('IntersectionObserver' in window)) return
+    if (!el) return
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     const items = [...el.querySelectorAll('[data-rise]')]
     const vh = window.innerHeight
     // Items already on screen at load show at once; the rest rise as each one arrives.
     const later = items.filter((n) => n.getBoundingClientRect().top > vh * 0.92)
     later.forEach((n) => n.classList.add('rise-wait'))
-    const io = new IntersectionObserver(
-      (entries) => {
-        const arriving = entries.filter((e) => e.isIntersecting)
-        arriving.forEach((e, i) => {
-          e.target.style.setProperty('--rise-delay', `${Math.min(i, 5) * 75}ms`)
-          e.target.classList.add('rise-in')
-          io.unobserve(e.target)
-        })
-      },
-      { threshold: 0, rootMargin: '0px 0px -8% 0px' },
-    )
-    later.forEach((n) => io.observe(n))
-    return () => io.disconnect()
+    let waiting = later
+    let frame = 0
+    // Reveal everything that has reached the screen, including items jumped past by an anchor link.
+    const check = () => {
+      frame = 0
+      const line = window.innerHeight * 0.92
+      const due = waiting.filter((n) => n.getBoundingClientRect().top < line)
+      due.forEach((n, i) => {
+        n.style.setProperty('--rise-delay', `${Math.min(i, 5) * 75}ms`)
+        n.classList.add('rise-in')
+      })
+      waiting = waiting.filter((n) => !due.includes(n))
+      if (!waiting.length) window.removeEventListener('scroll', onScroll)
+    }
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(check)
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+      if (frame) cancelAnimationFrame(frame)
+    }
   }, [])
   return ref
 }

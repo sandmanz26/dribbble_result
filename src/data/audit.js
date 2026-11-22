@@ -14,7 +14,7 @@ export const FINDINGS = [
   },
   {
     id: 2, p: 'P1', who: ['student', 'parent'],
-    title: 'The taster lesson ends at a paywall, at the moment of most interest',
+    title: 'The free lesson ends at a paywall',
     where: 'Free lesson, “Exam-Style Questions”',
     seen: 'After six sections of teaching, the five exam questions say “Subscribe to Economics to mark your answers… from £7.99/month”. The AI tutor is locked too.',
     why: 'The product’s best moment, the first marked answer, is exactly what the free route withholds. Students leave with a lesson they could get anywhere.',
