@@ -477,3 +477,20 @@ The draft is built in React. It includes research on Up Learn, Seneca, Save My E
 My portfolio: createdybdaniel.com
 
 Students, school, marks, the extract figures and the 9-mark split are samples for your examiners to check. Photographs are AI-generated for this draft. The marking in the draft follows simple rules and stands in for your AI.
+
+### wrwpcjz, ExamAce: short version
+
+Hi! I made a draft before we spoke, so you can see how I work rather than read about it.
+
+Prototype: https://proposal-virid-eight.vercel.app/wrwpcjz/
+Password: ex-oucj-sqjl
+
+What's inside:
+- **Stage 1 UX audit:** 14 findings as a student, parent and teacher, plus the five fixes to do first. The main reason tasters are under-used: "Try free lessons, no account needed" lands on sign-in, and the lesson's exam questions are locked.
+- **Stage 2:** a homepage to first marked answer in about 10 minutes, no account. Also sign-up, pricing, team, user flows, wireframes and a design system.
+- **Stage 3:** student, parent and teacher dashboards and the lesson, from the same system.
+- **Lovable:** the design system comes as shadcn and Tailwind tokens, so you keep building in Lovable.
+
+Portfolio: createdybdaniel.com
+
+Names, marks and photos in the draft are samples.
